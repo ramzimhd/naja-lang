@@ -1,0 +1,25 @@
+{
+  "requirement_id": "QA-04",
+  "commit": "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+  "target": "fresh-git-checkout-windows-x64",
+  "command": [
+    "node",
+    "launch/local/checkout-verification/scripts/validation/check-planning.mjs"
+  ],
+  "tool_versions": {
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "powershell": "7.6.4",
+    "git": "git version 2.51.0.windows.1"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:19:54.9714663+00:00",
+  "log_path": "reports/checks/checkout-evidence-integrity.log",
+  "log_sha256": "af4c1a015bb366747513ac34fc91aa79ece786152a92c42f14e1b394c4fd7431",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

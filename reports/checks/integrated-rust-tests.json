@@ -1,0 +1,28 @@
+{
+  "requirement_id": "CMP-02",
+  "commit": "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+  "target": "x86_64-pc-windows-msvc",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "--offline"
+  ],
+  "tool_versions": {
+    "git": "git version 2.51.0.windows.1",
+    "powershell": "7.6.4",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:19:30.9603004+00:00",
+  "log_path": "reports/checks/integrated-rust-tests.log",
+  "log_sha256": "16dac9db51f5f5f5d67133569636a319275cf1645234690e826fc8d81cfe3218",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

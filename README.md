@@ -25,7 +25,7 @@ With the pinned Rust seed and a working platform linker/SDK:
 cargo build --workspace --locked --offline
 cargo test --workspace --locked --offline
 cargo run --locked --offline -p naja-seed -- check tests/native/fixtures/sum.py
-cargo run --locked --offline -p naja-seed -- build tests/native/fixtures/sum.py --target x86_64-unknown-linux-gnu --output build-sum.elf
+cargo run --locked --offline -p naja-seed -- build tests/native/fixtures/sum.py --target x86_64-unknown-linux-gnu --output target/readme-sum.elf
 ```
 
 The emitted file targets **Linux x86-64**, including when compiled on Windows.

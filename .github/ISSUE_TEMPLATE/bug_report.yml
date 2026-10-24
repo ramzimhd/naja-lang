@@ -1,0 +1,37 @@
+name: Bug report
+description: Report a reproducible problem in an implemented NAJA feature.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        HATCH is experimental. Check bootstrap/README.md for the implemented subset.
+        Report vulnerabilities privately through the repository Security tab.
+        Remove secrets, personal paths and unrelated user data from reproductions.
+  - type: input
+    id: version
+    attributes:
+      label: Compiler version or source commit
+      placeholder: Exact version or full commit hash
+    validations:
+      required: true
+  - type: input
+    id: target
+    attributes:
+      label: Host and emitted target
+      description: Include operating system, architecture and relevant seed tool versions.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction and exact command
+      description: Provide source, arguments and sanitized output. Do not attach private session history.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+      description: Cite a specification or requirement ID where relevant. Distinguish unsupported syntax from incorrect implemented behavior.
+    validations:
+      required: true

@@ -1,0 +1,36 @@
+{
+  "requirement_id": "BE-02",
+  "commit": "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+  "target": "x86_64-pc-windows-msvc-to-linux-x64",
+  "command": [
+    "cargo",
+    "run",
+    "--locked",
+    "--offline",
+    "-p",
+    "naja-seed",
+    "--",
+    "build",
+    "tests/native/fixtures/sum.py",
+    "--target",
+    "x86_64-unknown-linux-gnu",
+    "--output",
+    "target/readme-sum.elf"
+  ],
+  "tool_versions": {
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "powershell": "7.6.4",
+    "git": "git version 2.51.0.windows.1"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:21:53.6722875+00:00",
+  "log_path": "reports/checks/readme-build-example.log",
+  "log_sha256": "a20da19d2baa49cf73b2ea14c25c17a61db1ff6c2cbe542a0e32f83fcc8c7a31",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

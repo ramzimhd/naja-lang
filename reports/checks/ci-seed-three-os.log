@@ -1,0 +1,1029 @@
+seed (macos-15)	Set up job	﻿2026-10-24T13:19:27.1638200Z Current runner version: '2.338.0'
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1653880Z ##[group]Runner Image Provisioner
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1654500Z Hosted Compute Agent
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1654940Z Version: 20260828.587
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1655340Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1655820Z Build Date: 2026-08-28T16:44:25Z
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1656250Z Worker ID: {ba5a326a-974d-471a-92e5-846505eb5795}
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1656730Z Azure Region: westus
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1657180Z ##[endgroup]
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1657990Z ##[group]Operating System
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1658390Z macOS
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1658750Z 15.7.9
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1659130Z 24G830
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1659470Z ##[endgroup]
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1659860Z ##[group]Runner Image
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1660240Z Image: macos-15-arm64
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1660620Z Version: 20260907.0337.1
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1661460Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260907.0337/images/macos/macos-15-arm64-Readme.md
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1662580Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260907.0337
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1663260Z ##[endgroup]
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1663960Z ##[group]GITHUB_TOKEN Permissions
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1665030Z Contents: read
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1665400Z Metadata: read
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1665790Z ##[endgroup]
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1667180Z Secret source: Actions
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1667760Z Cache mode: write
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1668190Z Prepare workflow directory
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1886550Z Prepare all required actions
+seed (macos-15)	Set up job	2026-10-24T13:19:27.1922790Z Getting action download info
+seed (macos-15)	Set up job	2026-10-24T13:19:27.5891220Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+seed (macos-15)	Set up job	2026-10-24T13:19:28.0821710Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+seed (macos-15)	Set up job	2026-10-24T13:19:28.2990720Z Complete job name: seed (macos-15)
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-10-24T13:19:28.3704420Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3705270Z with:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3705630Z   persist-credentials: false
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3706340Z   repository: ramzimhd/naja-lang
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3709280Z   token: ***
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3709600Z   ssh-strict: true
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3709930Z   ssh-user: git
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3710250Z   clean: true
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3710590Z   sparse-checkout-cone-mode: true
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3710970Z   fetch-depth: 1
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3711620Z   fetch-tags: false
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3711950Z   show-progress: true
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3712280Z   lfs: false
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3712710Z   submodules: false
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3713180Z   set-safe-directory: true
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3713600Z   allow-unsafe-pr-checkout: false
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.3714350Z ##[endgroup]
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9260090Z Syncing repository: ramzimhd/naja-lang
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9264100Z ##[group]Getting Git version info
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9266750Z Working directory is '/Users/runner/work/naja-lang/naja-lang'
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9269490Z [command]/opt/homebrew/bin/git version
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9961940Z git version 2.55.0
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9980300Z ##[endgroup]
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9992010Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/02b76cf7-e0bf-4185-be4b-9a7161335871/.gitconfig'
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9996080Z Temporarily overriding HOME='/Users/runner/work/_temp/02b76cf7-e0bf-4185-be4b-9a7161335871' before making global git config changes
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9997930Z Adding repository directory to the temporary git global config as a safe directory
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:28.9999300Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/naja-lang/naja-lang
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0160920Z Deleting the contents of '/Users/runner/work/naja-lang/naja-lang'
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0164200Z ##[group]Initializing the repository
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0167490Z [command]/opt/homebrew/bin/git init /Users/runner/work/naja-lang/naja-lang
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0401300Z hint: Using 'master' as the name for the initial branch. This default branch name
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0402860Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0404150Z hint: to use in all of your new repositories, which will suppress this warning,
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0405240Z hint: call:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0405700Z hint:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0407390Z hint: 	git config --global init.defaultBranch <name>
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0408200Z hint:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0408970Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0410220Z hint: 'development'. The just-created branch can be renamed via this command:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0411140Z hint:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0411510Z hint: 	git branch -m <name>
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0412010Z hint:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0412740Z hint: Disable this message with "git config set advice.defaultBranchName false"
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0414360Z Initialized empty Git repository in /Users/runner/work/naja-lang/naja-lang/.git/
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0418930Z [command]/opt/homebrew/bin/git remote add origin https://github.com/ramzimhd/naja-lang
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0543660Z ##[endgroup]
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0545160Z ##[group]Disabling automatic garbage collection
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0546580Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0632640Z ##[endgroup]
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0633910Z ##[group]Setting up auth
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0637820Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.0734950Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.2020450Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.2087420Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.3320090Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.3325980Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.4417070Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.4485310Z ##[endgroup]
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.4486540Z ##[group]Fetching the repository
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.4493520Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6e702caec0dae3ec90a92d57490387f97d7e09a8:refs/remotes/origin/main
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8847940Z From https://github.com/ramzimhd/naja-lang
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8849260Z  * [new ref]         6e702caec0dae3ec90a92d57490387f97d7e09a8 -> origin/main
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8851670Z ##[endgroup]
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8852440Z ##[group]Determining the checkout info
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8853320Z ##[endgroup]
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8856840Z [command]/opt/homebrew/bin/git sparse-checkout disable
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8933950Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8993690Z ##[group]Checking out the ref
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.8995440Z [command]/opt/homebrew/bin/git checkout --progress --force -B main refs/remotes/origin/main
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.9569480Z Switched to a new branch 'main'
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.9598280Z branch 'main' set up to track 'origin/main'.
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.9602400Z ##[endgroup]
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.9697200Z [command]/opt/homebrew/bin/git log -1 --format=%H
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.9766170Z 6e702caec0dae3ec90a92d57490387f97d7e09a8
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.9770750Z ##[group]Removing auth
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.9775200Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.9836760Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.0823880Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.0877200Z http.https://github.com/.extraheader
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.0889720Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.0962140Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.1821400Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.1904550Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+seed (macos-15)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.3006540Z ##[endgroup]
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	﻿2026-10-24T13:19:30.3335270Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.3336490Z with:
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.3337150Z   node-version: 24.11.0
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.3337910Z   check-latest: false
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.3338670Z   always-auth: false
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.3345220Z   token: ***
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.3346150Z ##[endgroup]
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.5079360Z Attempting to download 24.11.0...
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.5375280Z (node:12011) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:30.5381330Z (Use `node --trace-deprecation ...` to show where the warning was created)
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:31.4234550Z Acquiring 24.11.0 - arm64 from https://github.com/actions/node-versions/releases/download/24.11.0-18894910158/node-24.11.0-darwin-arm64.tar.gz
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:32.0659060Z Extracting ...
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:32.0811420Z [command]/usr/bin/tar xz --strip 1 -C /Users/runner/work/_temp/2d92327c-f7ff-488b-9b85-3dee708649f9 -f /Users/runner/work/_temp/4868af06-e40c-40d1-94ef-c7c958515e45
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:33.5710730Z Adding to the cache ...
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:36.1985060Z ##[group]Environment details
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:36.6590480Z node: v24.11.0
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:36.6592860Z npm: 11.6.1
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:36.6597800Z yarn: 1.22.22
+seed (macos-15)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:36.6601130Z ##[endgroup]
+seed (macos-15)	Prepare pinned seed	﻿2026-10-24T13:19:36.6886910Z ##[group]Run rustup toolchain install 1.97.1 --profile minimal --component rustfmt --component clippy --no-self-update
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:36.6887940Z ^[[36;1mrustup toolchain install 1.97.1 --profile minimal --component rustfmt --component clippy --no-self-update^[[0m
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:36.6995690Z shell: /bin/bash -e {0}
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:36.6996690Z ##[endgroup]
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:36.8976210Z info: syncing channel updates for 1.97.1-aarch64-apple-darwin
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:37.0546900Z info: latest update on 2026-07-16 for version 1.97.1 (8bab26f4f 2026-07-14)
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:37.0552130Z info: downloading 5 components
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:45.4319060Z 
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:45.6263410Z   1.97.1-aarch64-apple-darwin installed - rustc 1.97.1 (8bab26f4f 2026-07-14)
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:45.6264720Z info: self-update is disabled for this build of rustup
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:45.6268530Z info: any updates to rustup will need to be fetched with your system package manager
+seed (macos-15)	Prepare pinned seed	2026-10-24T13:19:45.6268920Z 
+seed (macos-15)	Check readable formatting	﻿2026-10-24T13:19:45.6424710Z ##[group]Run cargo fmt --all -- --check
+seed (macos-15)	Check readable formatting	2026-10-24T13:19:45.6425090Z ^[[36;1mcargo fmt --all -- --check^[[0m
+seed (macos-15)	Check readable formatting	2026-10-24T13:19:45.6470900Z shell: /bin/bash -e {0}
+seed (macos-15)	Check readable formatting	2026-10-24T13:19:45.6471210Z ##[endgroup]
+seed (macos-15)	Execute source tests offline	﻿2026-10-24T13:19:45.9599010Z ##[group]Run cargo test --workspace --locked --offline
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:45.9599530Z ^[[36;1mcargo test --workspace --locked --offline^[[0m
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:45.9703750Z shell: /bin/bash -e {0}
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:45.9705140Z ##[endgroup]
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:46.1723320Z    Compiling naja-frontend v0.1.0 (/Users/runner/work/naja-lang/naja-lang/bootstrap/frontend)
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:46.1724170Z    Compiling naja-native v0.0.1 (/Users/runner/work/naja-lang/naja-lang/backends/native)
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:46.6268200Z    Compiling naja-seed v0.0.1 (/Users/runner/work/naja-lang/naja-lang/bootstrap/driver)
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8710750Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 3.82s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8727750Z      Running unittests src/lib.rs (target/debug/deps/naja_frontend-5bead3b830965ef1)
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8779100Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8779970Z running 0 tests
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8780330Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8782730Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8784640Z      Running ../../tests/syntax/frontend.rs (target/debug/deps/syntax-bf450653959a0232)
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8785500Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8810090Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8812980Z running 35 tests
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8826860Z test aliases_attributes_and_keywords_are_plain_identifiers_at_lexical_stage ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8827520Z test arbitrary_integer_lexemes_are_never_narrowed ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8828210Z test blank_and_comment_lines_do_not_change_indentation ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8828780Z test brackets_suppress_logical_newlines_and_indentation ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8829280Z test bytes_reject_literal_non_ascii_data ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8829890Z test cell_separator_remains_an_ordinary_comment ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8830530Z test comments_and_strings_do_not_open_delimiters ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8831040Z test delimiter_failures_are_precise ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8831640Z test empty_and_trivia_only_sources_are_lossless ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8832210Z test explicit_line_continuation_is_retained_and_does_not_indent ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8832810Z test float_lexemes_include_exponent_signs ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8833510Z test formatted_and_template_strings_are_explicitly_unsupported ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8834110Z test formfeed_resets_indentation_columns ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8834660Z test imaginary_literals_have_explicit_unsupported_diagnostic ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8835250Z test indentation_and_eof_dedent_are_structural_empty_spans ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8835930Z test inserting_trivia_preserves_significant_token_spelling ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8836470Z test integer_radices_and_separators ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8837050Z test invalid_numbers_are_diagnosed_without_losing_source ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8837680Z test lf_crlf_and_cr_have_same_structural_tokens ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8838300Z test lossless_cst_has_contiguous_token_ranges_and_tracks_line_depth ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8839150Z test marker_candidates_are_never_textually_rewritten ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8839710Z test multiline_string_does_not_create_indentation_events ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8840360Z test non_ascii_whitespace_does_not_misclassify_previous_ascii_identifier ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8841080Z test nul_is_rejected_even_in_strings_and_comments ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8841560Z test operators_use_longest_match ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8842140Z test standard_same_line_suite_is_preserved ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8842640Z test string_prefixes_quotes_raw_escapes_and_triples ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8843410Z test tabs_and_spaces_are_checked_at_equal_and_deeper_columns ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8843990Z test tokens_preserve_names_operators_and_trivia ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8845740Z test unfinished_explicit_continuation_is_rejected ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8846450Z test unicode_identifiers_have_honest_temporary_unsupported_diagnostic ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8847130Z test unicode_user_data_and_byte_spans_are_preserved ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8848600Z test unmatched_dedent_has_exact_source_span ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8849170Z test unterminated_strings_recover_without_losing_newline ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8898210Z test bounded_character_combinations_are_always_lossless_and_terminate ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8898850Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8899420Z test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8900040Z      Running unittests src/lib.rs (target/debug/deps/naja_native-151c73200bdd3121)
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8900340Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8945200Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8950310Z running 2 tests
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8952330Z      Running unittests src/lib.rs (target/debug/deps/naja_seed-c8d0335cb623e793)
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8953960Z test tests::reject_out_of_frame_access ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8955850Z test tests::deterministic_elf_has_no_interpreter_and_no_writable_executable_segment ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8956190Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8956580Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8956950Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8999390Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.8999970Z running 5 tests
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9002490Z test tests::comments_crlf_and_parenthesized_multiline_have_same_binary ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9003130Z test tests::compile_loops_branches_and_precedence ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9004070Z test tests::accept_minimum_integer_and_standard_same_line_suite ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9004840Z test tests::reject_hosted_integer_narrowing_unsupported_features_and_bad_scopes ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9457490Z test tests::same_line_suites_count_toward_depth_and_statement_limits ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9457900Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9458690Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9459500Z      Running unittests src/main.rs (target/debug/deps/naja-c81766bb156f1763)
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9459890Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9486280Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9486480Z running 1 test
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9493600Z test tests::diagnostic_output_is_bounded_and_retains_original_unicode_crlf_positions ... ok
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9494150Z    Doc-tests naja_frontend
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9496480Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9497530Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:49.9498770Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0396910Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0401010Z running 0 tests
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0401300Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0401940Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0402380Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0409690Z    Doc-tests naja_native
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0642890Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0643440Z running 0 tests
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0643680Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0644410Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0644840Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0654270Z    Doc-tests naja_seed
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0898310Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0899240Z running 0 tests
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0899660Z 
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0900650Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (macos-15)	Execute source tests offline	2026-10-24T13:19:50.0901510Z 
+seed (macos-15)	Check compiler warnings	﻿2026-10-24T13:19:50.1067660Z ##[group]Run cargo clippy --workspace --all-targets --locked --offline -- -D warnings
+seed (macos-15)	Check compiler warnings	2026-10-24T13:19:50.1068290Z ^[[36;1mcargo clippy --workspace --all-targets --locked --offline -- -D warnings^[[0m
+seed (macos-15)	Check compiler warnings	2026-10-24T13:19:50.1115200Z shell: /bin/bash -e {0}
+seed (macos-15)	Check compiler warnings	2026-10-24T13:19:50.1115440Z ##[endgroup]
+seed (macos-15)	Check compiler warnings	2026-10-24T13:19:50.2742140Z     Checking naja-frontend v0.1.0 (/Users/runner/work/naja-lang/naja-lang/bootstrap/frontend)
+seed (macos-15)	Check compiler warnings	2026-10-24T13:19:50.2843990Z     Checking naja-native v0.0.1 (/Users/runner/work/naja-lang/naja-lang/backends/native)
+seed (macos-15)	Check compiler warnings	2026-10-24T13:19:50.4344840Z     Checking naja-seed v0.0.1 (/Users/runner/work/naja-lang/naja-lang/bootstrap/driver)
+seed (macos-15)	Check compiler warnings	2026-10-24T13:19:50.6753590Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.44s
+seed (macos-15)	Build experimental compiler offline	﻿2026-10-24T13:19:50.6835460Z ##[group]Run cargo build --workspace --locked --offline
+seed (macos-15)	Build experimental compiler offline	2026-10-24T13:19:50.6835860Z ^[[36;1mcargo build --workspace --locked --offline^[[0m
+seed (macos-15)	Build experimental compiler offline	2026-10-24T13:19:50.6873480Z shell: /bin/bash -e {0}
+seed (macos-15)	Build experimental compiler offline	2026-10-24T13:19:50.6873690Z ##[endgroup]
+seed (macos-15)	Build experimental compiler offline	2026-10-24T13:19:50.8077420Z    Compiling naja-seed v0.0.1 (/Users/runner/work/naja-lang/naja-lang/bootstrap/driver)
+seed (macos-15)	Build experimental compiler offline	2026-10-24T13:19:51.0974900Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.33s
+seed (macos-15)	Check planning and evidence integrity	﻿2026-10-24T13:19:51.1024410Z ##[group]Run node scripts/validation/check-planning.mjs
+seed (macos-15)	Check planning and evidence integrity	2026-10-24T13:19:51.1024790Z ^[[36;1mnode scripts/validation/check-planning.mjs^[[0m
+seed (macos-15)	Check planning and evidence integrity	2026-10-24T13:19:51.1060670Z shell: /bin/bash -e {0}
+seed (macos-15)	Check planning and evidence integrity	2026-10-24T13:19:51.1060920Z ##[endgroup]
+seed (macos-15)	Check planning and evidence integrity	2026-10-24T13:19:51.2495530Z Planning integrity: PASS
+seed (macos-15)	Check planning and evidence integrity	2026-10-24T13:19:51.2496360Z Scope: 147 requirements (139 mandatory, 8 future), 38 tasks, 19 gates.
+seed (macos-15)	Check planning and evidence integrity	2026-10-24T13:19:51.2496950Z Verified statuses: 1 requirements, 1 tasks, 0 gates.
+seed (macos-15)	Check planning and evidence integrity	2026-10-24T13:19:51.2585660Z This result does not establish compiler behavior or HATCH release acceptance.
+seed (macos-15)	Execute planning mutation tests	﻿2026-10-24T13:19:51.2669040Z ##[group]Run node --test tests/planning/*.test.mjs
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:51.2669480Z ^[[36;1mnode --test tests/planning/*.test.mjs^[[0m
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:51.2706730Z shell: /bin/bash -e {0}
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:51.2707010Z ##[endgroup]
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4554190Z ✔ baseline reports the actual scope and no fabricated verification (26.929833ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4572520Z ✔ rejects duplicate IDs in requirements (15.234333ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4574470Z ✔ rejects duplicate IDs in tasks (13.139333ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4574990Z ✔ rejects duplicate IDs in release-gates (13.77575ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4575750Z ✔ rejects an unknown implementation status (14.709125ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4576320Z ✔ rejects missing task dependencies and primary requirements (23.249916ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4576860Z ✔ rejects direct and indirect dependency cycles (28.297459ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4577570Z ✔ rejects missing gates and mismatched bidirectional requirement mappings (19.582875ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4578180Z ✔ rejects missing gate requirements and duplicate references (42.356792ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4579030Z ✔ rejects removing an obligation or reclassifying mandatory scope (25.186667ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4579720Z ✔ permits additive IDs without resetting earlier scope (30.276708ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4580380Z ✔ rejects missing specification files and malformed planning JSON (21.701834ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4581150Z ✔ rejects active development without exactly one integrator (18.949083ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4581870Z ✔ permits distinct confirmed paths for contributors on the same task (18.794875ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4582550Z ✔ rejects cross-owner path overlap including case differences and parent scopes (14.619958ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4583190Z ✔ does not confuse adjacent directories with overlapping scopes (21.701625ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4583750Z ✔ rejects shared branches or worktrees across active owners (27.989583ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4584320Z ✔ rejects equivalent ownership scopes with repeated separators (24.301083ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4584920Z ✔ rejects equivalent worktrees with case and separator differences (15.987125ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4597930Z ✔ completed assignments do not reserve active paths (16.058125ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4598530Z ✔ rejects path traversal and unsupported ownership globs (17.202333ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4599180Z ✔ rejects missing active tasks and malformed collection values without crashing (20.068417ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4599950Z ✔ rejects verified requirements, tasks and gates without passed evidence (18.817ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4601190Z ✔ implemented status does not claim verification or require invented evidence (20.284792ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4601890Z ✔ rejects missing evidence records even for an unverified subject (19.713792ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4602590Z ✔ valid retained passed evidence supports a matching verified requirement and task (17.260125ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4603280Z ✔ failed and not_run records are retained but do not establish verified status (105.570834ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4603950Z ✔ rejects a passed record with a nonzero exit or no retained log (32.421334ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4605330Z ✔ rejects a tampered or empty retained log (30.197166ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4605930Z ✔ rejects evidence logs outside the repository through traversal or a junction (32.854458ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4606680Z ✔ rejects evidence for a different requirement or task primary requirement (28.529292ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4607470Z ✔ honors evidence schema required fields, types and additionalProperties false (15.979916ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4608290Z ✔ rejects truncated or overlong commit hashes between SHA-1 and SHA-256 lengths (47.909291ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4608910Z ✔ fails closed when evidence schema adds unsupported constraints (12.693084ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4609600Z ✔ rejects impossible calendar dates rather than normalizing them into another month (19.594875ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4611380Z ✔ a verified gate needs passed evidence for every verified mapped requirement (23.860209ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4612490Z ✔ CLI returns distinct success, validation failure and usage error exits (129.211292ms)
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4680350Z ℹ tests 37
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4681720Z ℹ suites 0
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4681960Z ℹ pass 37
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4682200Z ℹ fail 0
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4682610Z ℹ cancelled 0
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4682910Z ℹ skipped 0
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4683180Z ℹ todo 0
+seed (macos-15)	Execute planning mutation tests	2026-10-24T13:19:52.4683580Z ℹ duration_ms 1124.522542
+seed (macos-15)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	﻿2026-10-24T13:19:52.4786670Z Post job cleanup.
+seed (macos-15)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:52.6364470Z (node:12766) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+seed (macos-15)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:52.6365560Z (Use `node --trace-deprecation ...` to show where the warning was created)
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-10-24T13:19:52.6533500Z Post job cleanup.
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.7594120Z [command]/opt/homebrew/bin/git version
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.7835210Z git version 2.55.0
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.7877130Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/1a673a9e-7298-4943-bdbb-2e0d8f4f5e1b/.gitconfig'
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.7889320Z Temporarily overriding HOME='/Users/runner/work/_temp/1a673a9e-7298-4943-bdbb-2e0d8f4f5e1b' before making global git config changes
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.7891430Z Adding repository directory to the temporary git global config as a safe directory
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.7893360Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/naja-lang/naja-lang
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.8020750Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.8089820Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.9006050Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.9067110Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.9841840Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (macos-15)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:52.9900070Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+seed (macos-15)	Complete job	﻿2026-10-24T13:19:53.0986730Z Cleaning up orphan processes
+seed (macos-15)	Complete job	2026-10-24T13:19:53.6603870Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+seed (windows-2025)	Set up job	﻿2026-10-24T13:19:26.0523599Z Current runner version: '2.338.0'
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1976134Z ##[group]Runner Image Provisioner
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1976935Z Hosted Compute Agent
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1977374Z Version: 20261021.618
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1977861Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1978399Z Build Date: 2026-10-21T00:45:21Z
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1978909Z Worker ID: {0ee584aa-719e-4d4d-be7e-08ce61a44e98}
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1979513Z Region: mexicocentral
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1979942Z Cloud: Azure
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1980381Z ##[endgroup]
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1981521Z ##[group]Operating System
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1982029Z Microsoft Windows Server 2025
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1982492Z 10.0.26100
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1982873Z Datacenter
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1983263Z ##[endgroup]
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1983665Z ##[group]Runner Image
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1984294Z Image: windows-2025-vs2026
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1984771Z Version: 20261021.278.1
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1985653Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261021.278/images/windows/Windows2025-VS2026-Readme.md
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1988484Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261021.278
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1989445Z ##[endgroup]
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1990423Z ##[group]GITHUB_TOKEN Permissions
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1991925Z Contents: read
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1992409Z Metadata: read
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1992824Z ##[endgroup]
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1994543Z Secret source: Actions
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1995543Z Cache mode: write
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.1996149Z Prepare workflow directory
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.2266198Z Prepare all required actions
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.2305389Z Getting action download info
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.4884503Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.6565677Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+seed (windows-2025)	Set up job	2026-10-24T13:19:26.8862303Z Complete job name: seed (windows-2025)
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-10-24T13:19:27.0053115Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0054131Z with:
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0054452Z   persist-credentials: false
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0054842Z   repository: ramzimhd/naja-lang
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0057909Z   token: ***
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0058213Z   ssh-strict: true
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0058531Z   ssh-user: git
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0058829Z   clean: true
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0059144Z   sparse-checkout-cone-mode: true
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0059527Z   fetch-depth: 1
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0059827Z   fetch-tags: false
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0060137Z   show-progress: true
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0060450Z   lfs: false
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0060735Z   submodules: false
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0061051Z   set-safe-directory: true
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0061406Z   allow-unsafe-pr-checkout: false
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0061918Z ##[endgroup]
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.1261488Z Syncing repository: ramzimhd/naja-lang
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.1263845Z ##[group]Getting Git version info
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.1264859Z Working directory is 'D:\a\naja-lang\naja-lang'
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.1949850Z [command]"C:\Program Files\Git\bin\git.exe" version
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.6798680Z git version 2.56.0.windows.2
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.6842342Z ##[endgroup]
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.6860158Z Temporarily overriding HOME='D:\a\_temp\d4e0e4b0-ca43-402b-a79a-4e90db3f9360' before making global git config changes
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.6869606Z Adding repository directory to the temporary git global config as a safe directory
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.6871197Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\naja-lang\naja-lang
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.7428640Z Deleting the contents of 'D:\a\naja-lang\naja-lang'
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.7433252Z ##[group]Initializing the repository
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.7440810Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\naja-lang\naja-lang
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.8538588Z Initialized empty Git repository in D:/a/naja-lang/naja-lang/.git/
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.8579031Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/ramzimhd/naja-lang
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.9297237Z ##[endgroup]
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.9298244Z ##[group]Disabling automatic garbage collection
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.9304496Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.9609936Z ##[endgroup]
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.9610918Z ##[group]Setting up auth
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.9612087Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.9903896Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.6571816Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:29.6872777Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.1612372Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.1906862Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.6685360Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.7008441Z ##[endgroup]
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.7009006Z ##[group]Fetching the repository
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:30.7023296Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6e702caec0dae3ec90a92d57490387f97d7e09a8:refs/remotes/origin/main
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.1061547Z From https://github.com/ramzimhd/naja-lang
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.1062386Z  * [new ref]         6e702caec0dae3ec90a92d57490387f97d7e09a8 -> origin/main
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.1097425Z ##[endgroup]
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.1097838Z ##[group]Determining the checkout info
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.1099426Z ##[endgroup]
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.1107478Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.1709927Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.2046273Z ##[group]Checking out the ref
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.2055015Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.2878987Z Switched to a new branch 'main'
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.3013125Z branch 'main' set up to track 'origin/main'.
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.3050374Z ##[endgroup]
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.3605922Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.3888237Z 6e702caec0dae3ec90a92d57490387f97d7e09a8
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.3921424Z ##[group]Removing auth
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.3928360Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.4236993Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.8805138Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.9062474Z http.https://github.com/.extraheader
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.9093091Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:32.9377093Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:33.3882564Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:33.4171779Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+seed (windows-2025)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:33.8455177Z ##[endgroup]
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	﻿2026-10-24T13:19:33.8883536Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:33.8883932Z with:
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:33.8884101Z   node-version: 24.11.0
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:33.8884275Z   check-latest: false
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:33.8884440Z   always-auth: false
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:33.8886701Z   token: ***
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:33.8886864Z ##[endgroup]
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:34.0215343Z Attempting to download 24.11.0...
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:34.0358335Z (node:5612) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:34.0359477Z (Use `node --trace-deprecation ...` to show where the warning was created)
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:35.0114337Z Acquiring 24.11.0 - x64 from https://github.com/actions/node-versions/releases/download/24.11.0-18894910158/node-24.11.0-win32-x64.7z
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:35.5291725Z Extracting ...
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:37.5195708Z Adding to the cache ...
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:42.3075058Z ##[group]Environment details
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:44.4725163Z node: v24.11.0
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:44.4725508Z npm: 11.6.1
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:44.4725717Z yarn: 1.22.22
+seed (windows-2025)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:44.4726261Z ##[endgroup]
+seed (windows-2025)	Prepare pinned seed	﻿2026-10-24T13:19:44.4994257Z ##[group]Run rustup toolchain install 1.97.1 --profile minimal --component rustfmt --component clippy --no-self-update
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:44.4995002Z ^[[36;1mrustup toolchain install 1.97.1 --profile minimal --component rustfmt --component clippy --no-self-update^[[0m
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:44.5988182Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:44.5988506Z ##[endgroup]
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:45.4139232Z info: syncing channel updates for 1.97.1-x86_64-pc-windows-msvc
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:46.2242842Z info: latest update on 2026-07-16 for version 1.97.1 (8bab26f4f 2026-07-14)
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:46.2313067Z info: downloading 5 components
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:54.4305695Z 
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:54.4584603Z   1.97.1-x86_64-pc-windows-msvc installed - rustc 1.97.1 (8bab26f4f 2026-07-14)
+seed (windows-2025)	Prepare pinned seed	2026-10-24T13:19:54.4585161Z 
+seed (windows-2025)	Check readable formatting	﻿2026-10-24T13:19:54.6020466Z ##[group]Run cargo fmt --all -- --check
+seed (windows-2025)	Check readable formatting	2026-10-24T13:19:54.6020791Z ^[[36;1mcargo fmt --all -- --check^[[0m
+seed (windows-2025)	Check readable formatting	2026-10-24T13:19:54.6077791Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+seed (windows-2025)	Check readable formatting	2026-10-24T13:19:54.6078092Z ##[endgroup]
+seed (windows-2025)	Execute source tests offline	﻿2026-10-24T13:19:57.0917836Z ##[group]Run cargo test --workspace --locked --offline
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:19:57.0918269Z ^[[36;1mcargo test --workspace --locked --offline^[[0m
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:19:57.0971396Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:19:57.0971678Z ##[endgroup]
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:19:57.4575708Z    Compiling naja-frontend v0.1.0 (D:\a\naja-lang\naja-lang\bootstrap\frontend)
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:19:57.4576779Z    Compiling naja-native v0.0.1 (D:\a\naja-lang\naja-lang\backends\native)
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:19:57.8480703Z    Compiling naja-seed v0.0.1 (D:\a\naja-lang\naja-lang\bootstrap\driver)
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8613684Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 3.49s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8625876Z      Running unittests src\lib.rs (target\debug\deps\naja_frontend-298569e2e3f3bd7d.exe)
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8709755Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8710099Z running 0 tests
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8710297Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8710778Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8711282Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8723956Z      Running ..\..\tests\syntax\frontend.rs (target\debug\deps\syntax-d3ba570a629fe964.exe)
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8798106Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8798370Z running 35 tests
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8804282Z test aliases_attributes_and_keywords_are_plain_identifiers_at_lexical_stage ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8805111Z test arbitrary_integer_lexemes_are_never_narrowed ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8805696Z test blank_and_comment_lines_do_not_change_indentation ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8807162Z test brackets_suppress_logical_newlines_and_indentation ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8808994Z test cell_separator_remains_an_ordinary_comment ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8809566Z test bytes_reject_literal_non_ascii_data ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8813087Z test comments_and_strings_do_not_open_delimiters ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8814186Z test delimiter_failures_are_precise ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8814674Z test empty_and_trivia_only_sources_are_lossless ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8817373Z test explicit_line_continuation_is_retained_and_does_not_indent ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8818339Z test float_lexemes_include_exponent_signs ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8820384Z test formatted_and_template_strings_are_explicitly_unsupported ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8821231Z test formfeed_resets_indentation_columns ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8822092Z test imaginary_literals_have_explicit_unsupported_diagnostic ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8824932Z test indentation_and_eof_dedent_are_structural_empty_spans ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8826188Z test inserting_trivia_preserves_significant_token_spelling ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8826942Z test integer_radices_and_separators ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8830940Z test invalid_numbers_are_diagnosed_without_losing_source ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8831929Z test lossless_cst_has_contiguous_token_ranges_and_tracks_line_depth ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8832577Z test lf_crlf_and_cr_have_same_structural_tokens ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8836341Z test multiline_string_does_not_create_indentation_events ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8837477Z test marker_candidates_are_never_textually_rewritten ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8838725Z test non_ascii_whitespace_does_not_misclassify_previous_ascii_identifier ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8841227Z test nul_is_rejected_even_in_strings_and_comments ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8842134Z test operators_use_longest_match ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8842598Z test standard_same_line_suite_is_preserved ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8845892Z test tabs_and_spaces_are_checked_at_equal_and_deeper_columns ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8846617Z test tokens_preserve_names_operators_and_trivia ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8847443Z test string_prefixes_quotes_raw_escapes_and_triples ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8849684Z test unfinished_explicit_continuation_is_rejected ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8851058Z test unicode_identifiers_have_honest_temporary_unsupported_diagnostic ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8854175Z test unicode_user_data_and_byte_spans_are_preserved ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8854517Z test unmatched_dedent_has_exact_source_span ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8854855Z test unterminated_strings_recover_without_losing_newline ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8924313Z test bounded_character_combinations_are_always_lossless_and_terminate ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8924713Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8925086Z test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8925455Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.8940353Z      Running unittests src\lib.rs (target\debug\deps\naja_native-daf01da31dc65e94.exe)
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9016667Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9017077Z running 2 tests
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9020018Z test tests::reject_out_of_frame_access ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9020872Z test tests::deterministic_elf_has_no_interpreter_and_no_writable_executable_segment ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9021499Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9022061Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9023530Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9037056Z      Running unittests src\lib.rs (target\debug\deps\naja_seed-8dfcca3870206426.exe)
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9132923Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9133272Z running 5 tests
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9143220Z test tests::accept_minimum_integer_and_standard_same_line_suite ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9144087Z test tests::comments_crlf_and_parenthesized_multiline_have_same_binary ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9144793Z test tests::compile_loops_branches_and_precedence ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9145480Z test tests::reject_hosted_integer_narrowing_unsupported_features_and_bad_scopes ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9668575Z test tests::same_line_suites_count_toward_depth_and_statement_limits ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9669335Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9669944Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9670512Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9688547Z      Running unittests src\main.rs (target\debug\deps\naja-61df0a414df09a6c.exe)
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9773211Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9773716Z running 1 test
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9786722Z test tests::diagnostic_output_is_bounded_and_retains_original_unicode_crlf_positions ... ok
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9787203Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9787624Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9788051Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:00.9798860Z    Doc-tests naja_frontend
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0262053Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0262576Z running 0 tests
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0262788Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0263196Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0263476Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0330900Z    Doc-tests naja_native
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0648513Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0649075Z running 0 tests
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0649241Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0649545Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0649868Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.0708082Z    Doc-tests naja_seed
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.1051887Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.1052610Z running 0 tests
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.1052820Z 
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.1053269Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (windows-2025)	Execute source tests offline	2026-10-24T13:20:01.1053726Z 
+seed (windows-2025)	Check compiler warnings	﻿2026-10-24T13:20:01.2164690Z ##[group]Run cargo clippy --workspace --all-targets --locked --offline -- -D warnings
+seed (windows-2025)	Check compiler warnings	2026-10-24T13:20:01.2165308Z ^[[36;1mcargo clippy --workspace --all-targets --locked --offline -- -D warnings^[[0m
+seed (windows-2025)	Check compiler warnings	2026-10-24T13:20:01.2219279Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+seed (windows-2025)	Check compiler warnings	2026-10-24T13:20:01.2219581Z ##[endgroup]
+seed (windows-2025)	Check compiler warnings	2026-10-24T13:20:02.4216815Z     Checking naja-frontend v0.1.0 (D:\a\naja-lang\naja-lang\bootstrap\frontend)
+seed (windows-2025)	Check compiler warnings	2026-10-24T13:20:02.4217637Z     Checking naja-native v0.0.1 (D:\a\naja-lang\naja-lang\backends\native)
+seed (windows-2025)	Check compiler warnings	2026-10-24T13:20:02.6097263Z     Checking naja-seed v0.0.1 (D:\a\naja-lang\naja-lang\bootstrap\driver)
+seed (windows-2025)	Check compiler warnings	2026-10-24T13:20:02.8483768Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.49s
+seed (windows-2025)	Build experimental compiler offline	﻿2026-10-24T13:20:02.9685528Z ##[group]Run cargo build --workspace --locked --offline
+seed (windows-2025)	Build experimental compiler offline	2026-10-24T13:20:02.9686101Z ^[[36;1mcargo build --workspace --locked --offline^[[0m
+seed (windows-2025)	Build experimental compiler offline	2026-10-24T13:20:02.9770020Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+seed (windows-2025)	Build experimental compiler offline	2026-10-24T13:20:02.9770464Z ##[endgroup]
+seed (windows-2025)	Build experimental compiler offline	2026-10-24T13:20:03.2936953Z    Compiling naja-seed v0.0.1 (D:\a\naja-lang\naja-lang\bootstrap\driver)
+seed (windows-2025)	Build experimental compiler offline	2026-10-24T13:20:03.7078148Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
+seed (windows-2025)	Check planning and evidence integrity	﻿2026-10-24T13:20:03.8067415Z ##[group]Run node scripts/validation/check-planning.mjs
+seed (windows-2025)	Check planning and evidence integrity	2026-10-24T13:20:03.8067808Z ^[[36;1mnode scripts/validation/check-planning.mjs^[[0m
+seed (windows-2025)	Check planning and evidence integrity	2026-10-24T13:20:03.8121940Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+seed (windows-2025)	Check planning and evidence integrity	2026-10-24T13:20:03.8122226Z ##[endgroup]
+seed (windows-2025)	Check planning and evidence integrity	2026-10-24T13:20:04.1581258Z Planning integrity: PASS
+seed (windows-2025)	Check planning and evidence integrity	2026-10-24T13:20:04.1582065Z Scope: 147 requirements (139 mandatory, 8 future), 38 tasks, 19 gates.
+seed (windows-2025)	Check planning and evidence integrity	2026-10-24T13:20:04.1584959Z Verified statuses: 1 requirements, 1 tasks, 0 gates.
+seed (windows-2025)	Check planning and evidence integrity	2026-10-24T13:20:04.1585377Z This result does not establish compiler behavior or HATCH release acceptance.
+seed (windows-2025)	Execute planning mutation tests	﻿2026-10-24T13:20:04.2546738Z ##[group]Run node --test tests/planning/*.test.mjs
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:04.2547109Z ^[[36;1mnode --test tests/planning/*.test.mjs^[[0m
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:04.2601000Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:04.2601284Z ##[endgroup]
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1546788Z ✔ baseline reports the actual scope and no fabricated verification (82.9097ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1549232Z ✔ rejects duplicate IDs in requirements (43.2425ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1549845Z ✔ rejects duplicate IDs in tasks (44.1047ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1554158Z ✔ rejects duplicate IDs in release-gates (50.7662ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1554991Z ✔ rejects an unknown implementation status (40.3408ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1555949Z ✔ rejects missing task dependencies and primary requirements (41.1394ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1557187Z ✔ rejects direct and indirect dependency cycles (56.4398ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1558423Z ✔ rejects missing gates and mismatched bidirectional requirement mappings (178.2099ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1559735Z ✔ rejects missing gate requirements and duplicate references (90.0073ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1560818Z ✔ rejects removing an obligation or reclassifying mandatory scope (149.8204ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1566529Z ✔ permits additive IDs without resetting earlier scope (50.177ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1567529Z ✔ rejects missing specification files and malformed planning JSON (62.7912ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1568567Z ✔ rejects active development without exactly one integrator (58.1213ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1587380Z ✔ permits distinct confirmed paths for contributors on the same task (46.6134ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1588574Z ✔ rejects cross-owner path overlap including case differences and parent scopes (45.5901ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1589697Z ✔ does not confuse adjacent directories with overlapping scopes (49.0539ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1590511Z ✔ rejects shared branches or worktrees across active owners (63.9823ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1591612Z ✔ rejects equivalent ownership scopes with repeated separators (148.2919ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1602807Z ✔ rejects equivalent worktrees with case and separator differences (102.5791ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1605300Z ✔ completed assignments do not reserve active paths (43.3625ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1618355Z ✔ rejects path traversal and unsupported ownership globs (46.0296ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1619449Z ✔ rejects missing active tasks and malformed collection values without crashing (57.0951ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1650548Z ✔ rejects verified requirements, tasks and gates without passed evidence (43.8513ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1651618Z ✔ implemented status does not claim verification or require invented evidence (71.297ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1652844Z ✔ rejects missing evidence records even for an unverified subject (97.8009ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1653545Z ✔ valid retained passed evidence supports a matching verified requirement and task (58.0217ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1654145Z ✔ failed and not_run records are retained but do not establish verified status (867.6714ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1655308Z ✔ rejects a passed record with a nonzero exit or no retained log (73.9793ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1655843Z ✔ rejects a tampered or empty retained log (186.3255ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1656584Z ✔ rejects evidence logs outside the repository through traversal or a junction (57.0008ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1657450Z ✔ rejects evidence for a different requirement or task primary requirement (58.192ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1658295Z ✔ honors evidence schema required fields, types and additionalProperties false (41.7329ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1659193Z ✔ rejects truncated or overlong commit hashes between SHA-1 and SHA-256 lengths (100.5117ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1660081Z ✔ fails closed when evidence schema adds unsupported constraints (39.4265ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1666495Z ✔ rejects impossible calendar dates rather than normalizing them into another month (55.2659ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1667331Z ✔ a verified gate needs passed evidence for every verified mapped requirement (76.2145ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1670063Z ✔ CLI returns distinct success, validation failure and usage error exits (209.3006ms)
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1794148Z ℹ tests 37
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1794361Z ℹ suites 0
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1794533Z ℹ pass 37
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1794693Z ℹ fail 0
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1794854Z ℹ cancelled 0
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1795028Z ℹ skipped 0
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1795179Z ℹ todo 0
+seed (windows-2025)	Execute planning mutation tests	2026-10-24T13:20:08.1795361Z ℹ duration_ms 3674.4605
+seed (windows-2025)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	﻿2026-10-24T13:20:08.3464665Z Post job cleanup.
+seed (windows-2025)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:20:08.4689377Z (node:4264) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+seed (windows-2025)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:20:08.4690013Z (Use `node --trace-deprecation ...` to show where the warning was created)
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-10-24T13:20:08.4947567Z Post job cleanup.
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:08.6259451Z [command]"C:\Program Files\Git\bin\git.exe" version
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:08.6535829Z git version 2.56.0.windows.2
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:08.6594041Z Temporarily overriding HOME='D:\a\_temp\f606008b-ce3c-4a5b-b3f2-cfed1354b865' before making global git config changes
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:08.6596168Z Adding repository directory to the temporary git global config as a safe directory
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:08.6604894Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\naja-lang\naja-lang
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:08.6928265Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:08.7240596Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:09.1920142Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:09.2212613Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:09.6680718Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (windows-2025)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:20:09.6974365Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+seed (windows-2025)	Complete job	﻿2026-10-24T13:20:10.1586146Z Cleaning up orphan processes
+seed (windows-2025)	Complete job	2026-10-24T13:20:10.1751886Z Terminate orphan process: pid (6268) (vctip)
+seed (windows-2025)	Complete job	2026-10-24T13:20:10.1857767Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+seed (ubuntu-24.04)	Set up job	﻿2026-10-24T13:19:25.8115068Z Current runner version: '2.338.0'
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8135647Z ##[group]Runner Image Provisioner
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8136235Z Hosted Compute Agent
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8136658Z Version: 20261021.618
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8137091Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8137700Z Build Date: 2026-10-21T00:45:21Z
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8138160Z Worker ID: {fbfea214-2513-4e56-b22d-2b351179950d}
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8138583Z Region: centralus
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8138951Z Cloud: Azure
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8139323Z ##[endgroup]
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8140149Z ##[group]Operating System
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8140572Z Ubuntu
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8140895Z 24.04.5
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8141203Z LTS
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8141597Z ##[endgroup]
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8141956Z ##[group]Runner Image
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8142407Z Image: ubuntu-24.04
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8142755Z Version: 20261012.334.1
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8143374Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8144522Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8145120Z ##[endgroup]
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8145800Z ##[group]GITHUB_TOKEN Permissions
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8147151Z Contents: read
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8147659Z Metadata: read
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8147993Z ##[endgroup]
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8149528Z Secret source: Actions
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8150085Z Cache mode: write
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8150629Z Prepare workflow directory
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8377026Z Prepare all required actions
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:25.8411271Z Getting action download info
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:26.0715116Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:26.1750635Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+seed (ubuntu-24.04)	Set up job	2026-10-24T13:19:26.3353641Z Complete job name: seed (ubuntu-24.04)
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-10-24T13:19:26.3965752Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3966300Z with:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3966545Z   persist-credentials: false
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3966835Z   repository: ramzimhd/naja-lang
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3969166Z   token: ***
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3969401Z   ssh-strict: true
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3969645Z   ssh-user: git
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3969877Z   clean: true
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3970127Z   sparse-checkout-cone-mode: true
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3970418Z   fetch-depth: 1
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3970656Z   fetch-tags: false
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3970901Z   show-progress: true
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3971148Z   lfs: false
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3971374Z   submodules: false
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3971620Z   set-safe-directory: true
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3971895Z   allow-unsafe-pr-checkout: false
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.3972253Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4681576Z Syncing repository: ramzimhd/naja-lang
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4682715Z ##[group]Getting Git version info
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4683200Z Working directory is '/home/runner/work/naja-lang/naja-lang'
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4683793Z [command]/usr/bin/git version
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4742784Z git version 2.55.0
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4756544Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4767006Z Temporarily overriding HOME='/home/runner/work/_temp/5d2478fd-cc63-4f2b-aa50-fc16d8723057' before making global git config changes
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4768228Z Adding repository directory to the temporary git global config as a safe directory
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4770927Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/naja-lang/naja-lang
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4817352Z Deleting the contents of '/home/runner/work/naja-lang/naja-lang'
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4820872Z ##[group]Initializing the repository
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4823895Z [command]/usr/bin/git init /home/runner/work/naja-lang/naja-lang
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4924628Z hint: Using 'master' as the name for the initial branch. This default branch name
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4925883Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4926708Z hint: to use in all of your new repositories, which will suppress this warning,
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4927932Z hint: call:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4928306Z hint:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4928767Z hint: 	git config --global init.defaultBranch <name>
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4929231Z hint:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4929553Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4930064Z hint: 'development'. The just-created branch can be renamed via this command:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4930478Z hint:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4930713Z hint: 	git branch -m <name>
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4930980Z hint:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4931323Z hint: Disable this message with "git config set advice.defaultBranchName false"
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4931893Z Initialized empty Git repository in /home/runner/work/naja-lang/naja-lang/.git/
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.4936429Z [command]/usr/bin/git remote add origin https://github.com/ramzimhd/naja-lang
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5094365Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5094930Z ##[group]Disabling automatic garbage collection
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5098169Z [command]/usr/bin/git config --local gc.auto 0
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5130404Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5130875Z ##[group]Setting up auth
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5135963Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5162546Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5468090Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5494202Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5670478Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5698202Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5874967Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5906862Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5907822Z ##[group]Fetching the repository
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.5913363Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6e702caec0dae3ec90a92d57490387f97d7e09a8:refs/remotes/origin/main
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9322034Z From https://github.com/ramzimhd/naja-lang
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9322928Z  * [new ref]         6e702caec0dae3ec90a92d57490387f97d7e09a8 -> origin/main
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9326687Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9327463Z ##[group]Determining the checkout info
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9329201Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9333551Z [command]/usr/bin/git sparse-checkout disable
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9374856Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9397048Z ##[group]Checking out the ref
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9400121Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9509013Z Switched to a new branch 'main'
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9513717Z branch 'main' set up to track 'origin/main'.
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9518517Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9548163Z [command]/usr/bin/git log -1 --format=%H
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9566203Z 6e702caec0dae3ec90a92d57490387f97d7e09a8
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9573051Z ##[group]Removing auth
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9575303Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9597194Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9771979Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9793359Z http.https://github.com/.extraheader
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9798901Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:26.9828393Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0001801Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0039215Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+seed (ubuntu-24.04)	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:27.0206166Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	﻿2026-10-24T13:19:27.0464890Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.0465815Z with:
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.0466108Z   node-version: 24.11.0
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.0466508Z   check-latest: false
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.0466780Z   always-auth: false
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.0469468Z   token: ***
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.0469763Z ##[endgroup]
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.1415738Z Attempting to download 24.11.0...
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.1488239Z (node:2134) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.1489891Z (Use `node --trace-deprecation ...` to show where the warning was created)
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:27.9936692Z Acquiring 24.11.0 - x64 from https://github.com/actions/node-versions/releases/download/24.11.0-18894910158/node-24.11.0-linux-x64.tar.gz
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:28.5627167Z Extracting ...
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:28.5726523Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/0fd41f63-f41b-4669-bbd4-493162f92913 -f /home/runner/work/_temp/f6579d69-bc7d-4429-93cb-b138c07a07ae
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:29.5541923Z Adding to the cache ...
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:31.3214358Z ##[group]Environment details
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:31.4809997Z node: v24.11.0
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:31.4810387Z npm: 11.6.1
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:31.4810577Z yarn: 1.22.22
+seed (ubuntu-24.04)	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:31.4810989Z ##[endgroup]
+seed (ubuntu-24.04)	Prepare pinned seed	﻿2026-10-24T13:19:31.4973553Z ##[group]Run rustup toolchain install 1.97.1 --profile minimal --component rustfmt --component clippy --no-self-update
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:31.4974107Z ^[[36;1mrustup toolchain install 1.97.1 --profile minimal --component rustfmt --component clippy --no-self-update^[[0m
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:31.5193354Z shell: /usr/bin/bash -e {0}
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:31.5193598Z ##[endgroup]
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:31.5671667Z info: syncing channel updates for 1.97.1-x86_64-unknown-linux-gnu
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:31.8948900Z info: latest update on 2026-07-16 for version 1.97.1 (8bab26f4f 2026-07-14)
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:31.8949593Z info: downloading 5 components
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:39.3110432Z 
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:39.3176282Z   1.97.1-x86_64-unknown-linux-gnu installed - rustc 1.97.1 (8bab26f4f 2026-07-14)
+seed (ubuntu-24.04)	Prepare pinned seed	2026-10-24T13:19:39.3176828Z 
+seed (ubuntu-24.04)	Check readable formatting	﻿2026-10-24T13:19:39.3256535Z ##[group]Run cargo fmt --all -- --check
+seed (ubuntu-24.04)	Check readable formatting	2026-10-24T13:19:39.3256763Z ^[[36;1mcargo fmt --all -- --check^[[0m
+seed (ubuntu-24.04)	Check readable formatting	2026-10-24T13:19:39.3311475Z shell: /usr/bin/bash -e {0}
+seed (ubuntu-24.04)	Check readable formatting	2026-10-24T13:19:39.3311634Z ##[endgroup]
+seed (ubuntu-24.04)	Execute source tests offline	﻿2026-10-24T13:19:39.3964239Z ##[group]Run cargo test --workspace --locked --offline
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:39.3964507Z ^[[36;1mcargo test --workspace --locked --offline^[[0m
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:39.4019057Z shell: /usr/bin/bash -e {0}
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:39.4019216Z ##[endgroup]
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:39.4551847Z    Compiling naja-frontend v0.1.0 (/home/runner/work/naja-lang/naja-lang/bootstrap/frontend)
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:39.4552890Z    Compiling naja-native v0.0.1 (/home/runner/work/naja-lang/naja-lang/backends/native)
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:39.6370198Z    Compiling naja-seed v0.0.1 (/home/runner/work/naja-lang/naja-lang/bootstrap/driver)
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2485741Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.82s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2488879Z      Running unittests src/lib.rs (target/debug/deps/naja_frontend-ef058faa01416992)
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2498876Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2499258Z running 0 tests
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2499441Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2499750Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2500029Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2501033Z      Running ../../tests/syntax/frontend.rs (target/debug/deps/syntax-fa650201e0952b13)
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2509817Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2509917Z running 35 tests
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2513088Z test aliases_attributes_and_keywords_are_plain_identifiers_at_lexical_stage ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2513767Z test blank_and_comment_lines_do_not_change_indentation ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2514480Z test arbitrary_integer_lexemes_are_never_narrowed ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2515097Z test cell_separator_remains_an_ordinary_comment ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2515707Z test brackets_suppress_logical_newlines_and_indentation ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2516345Z test bytes_reject_literal_non_ascii_data ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2516905Z test comments_and_strings_do_not_open_delimiters ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2517686Z test explicit_line_continuation_is_retained_and_does_not_indent ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2518271Z test delimiter_failures_are_precise ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2518822Z test empty_and_trivia_only_sources_are_lossless ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2519401Z test float_lexemes_include_exponent_signs ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2520025Z test formatted_and_template_strings_are_explicitly_unsupported ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2520658Z test formfeed_resets_indentation_columns ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2521337Z test imaginary_literals_have_explicit_unsupported_diagnostic ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2521913Z test integer_radices_and_separators ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2522497Z test indentation_and_eof_dedent_are_structural_empty_spans ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2523155Z test inserting_trivia_preserves_significant_token_spelling ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2523867Z test invalid_numbers_are_diagnosed_without_losing_source ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2524520Z test lf_crlf_and_cr_have_same_structural_tokens ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2525157Z test lossless_cst_has_contiguous_token_ranges_and_tracks_line_depth ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2525899Z test multiline_string_does_not_create_indentation_events ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2526610Z test non_ascii_whitespace_does_not_misclassify_previous_ascii_identifier ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2527276Z test nul_is_rejected_even_in_strings_and_comments ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2528134Z test marker_candidates_are_never_textually_rewritten ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2528673Z test operators_use_longest_match ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2529184Z test standard_same_line_suite_is_preserved ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2529759Z test string_prefixes_quotes_raw_escapes_and_triples ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2530393Z test tabs_and_spaces_are_checked_at_equal_and_deeper_columns ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2531018Z test tokens_preserve_names_operators_and_trivia ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2531608Z test unfinished_explicit_continuation_is_rejected ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2532279Z test unicode_identifiers_have_honest_temporary_unsupported_diagnostic ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2532939Z test unicode_user_data_and_byte_spans_are_preserved ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2533788Z test unmatched_dedent_has_exact_source_span ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2534394Z test unterminated_strings_recover_without_losing_newline ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2581748Z test bounded_character_combinations_are_always_lossless_and_terminate ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2582016Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2582361Z test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2582658Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2584678Z      Running unittests src/lib.rs (target/debug/deps/naja_native-3aedc24aa099ae85)
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2594169Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2594286Z running 2 tests
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2596234Z test tests::reject_out_of_frame_access ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2596743Z test tests::deterministic_elf_has_no_interpreter_and_no_writable_executable_segment ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2597057Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2597372Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2597762Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2598399Z      Running unittests src/lib.rs (target/debug/deps/naja_seed-0bd487b6a2ad2922)
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2606292Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2606376Z running 5 tests
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2609428Z test tests::accept_minimum_integer_and_standard_same_line_suite ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2630381Z test tests::comments_crlf_and_parenthesized_multiline_have_same_binary ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2630697Z test tests::compile_loops_branches_and_precedence ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2631005Z test tests::reject_hosted_integer_narrowing_unsupported_features_and_bad_scopes ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2938151Z test tests::same_line_suites_count_toward_depth_and_statement_limits ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2938487Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2938800Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2939079Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2941625Z      Running unittests src/main.rs (target/debug/deps/naja-bb6f1229b5389bfe)
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2951685Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2951850Z running 1 test
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2961719Z test tests::diagnostic_output_is_bounded_and_retains_original_unicode_crlf_positions ... ok
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2962035Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2962331Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2962519Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.2963298Z    Doc-tests naja_frontend
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3120661Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3121127Z running 0 tests
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3121254Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3121497Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3121716Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3132176Z    Doc-tests naja_native
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3264575Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3264891Z running 0 tests
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3265056Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3265400Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3265658Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3274432Z    Doc-tests naja_seed
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3406703Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3407316Z running 0 tests
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3407478Z 
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3407916Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+seed (ubuntu-24.04)	Execute source tests offline	2026-10-24T13:19:40.3408122Z 
+seed (ubuntu-24.04)	Check compiler warnings	﻿2026-10-24T13:19:40.3457184Z ##[group]Run cargo clippy --workspace --all-targets --locked --offline -- -D warnings
+seed (ubuntu-24.04)	Check compiler warnings	2026-10-24T13:19:40.3457776Z ^[[36;1mcargo clippy --workspace --all-targets --locked --offline -- -D warnings^[[0m
+seed (ubuntu-24.04)	Check compiler warnings	2026-10-24T13:19:40.3509758Z shell: /usr/bin/bash -e {0}
+seed (ubuntu-24.04)	Check compiler warnings	2026-10-24T13:19:40.3509923Z ##[endgroup]
+seed (ubuntu-24.04)	Check compiler warnings	2026-10-24T13:19:40.4185956Z     Checking naja-frontend v0.1.0 (/home/runner/work/naja-lang/naja-lang/bootstrap/frontend)
+seed (ubuntu-24.04)	Check compiler warnings	2026-10-24T13:19:40.4186827Z     Checking naja-native v0.0.1 (/home/runner/work/naja-lang/naja-lang/backends/native)
+seed (ubuntu-24.04)	Check compiler warnings	2026-10-24T13:19:40.5229407Z     Checking naja-seed v0.0.1 (/home/runner/work/naja-lang/naja-lang/bootstrap/driver)
+seed (ubuntu-24.04)	Check compiler warnings	2026-10-24T13:19:40.6631302Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
+seed (ubuntu-24.04)	Build experimental compiler offline	﻿2026-10-24T13:19:40.6745516Z ##[group]Run cargo build --workspace --locked --offline
+seed (ubuntu-24.04)	Build experimental compiler offline	2026-10-24T13:19:40.6745914Z ^[[36;1mcargo build --workspace --locked --offline^[[0m
+seed (ubuntu-24.04)	Build experimental compiler offline	2026-10-24T13:19:40.6810781Z shell: /usr/bin/bash -e {0}
+seed (ubuntu-24.04)	Build experimental compiler offline	2026-10-24T13:19:40.6811095Z ##[endgroup]
+seed (ubuntu-24.04)	Build experimental compiler offline	2026-10-24T13:19:40.8071374Z    Compiling naja-seed v0.0.1 (/home/runner/work/naja-lang/naja-lang/bootstrap/driver)
+seed (ubuntu-24.04)	Build experimental compiler offline	2026-10-24T13:19:40.9835246Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
+seed (ubuntu-24.04)	Execute emitted Linux machine code	﻿2026-10-24T13:19:41.1260844Z ##[group]Run node scripts/test-native.mjs
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.1261111Z ^[[36;1mnode scripts/test-native.mjs^[[0m
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.1314375Z shell: /usr/bin/bash -e {0}
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.1314536Z ##[endgroup]
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2250416Z PASS sum exit=0 sha256=afe2943f64a1d41cfe357a51e3dcab9e4c0935d3759b9d72d0612b8ce7d2558e
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2285286Z PASS signed-boundaries exit=0 sha256=729de1668f48c4d7a0d2b60daf6c4a2819055a840d9fdfb2a09e987d832dbc82
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2319633Z PASS precedence exit=0 sha256=023a06fd4336e9eb9ffec527a1d2636193a3ec8d00c65425c70b3052166ca825
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2365270Z PASS comparison-0 exit=0 sha256=472d3e0cf06ce7811a83b2bc42fb708f09a1f48cc38e66f07ddeb5e0dfdd9ff7
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2403057Z PASS comparison-1 exit=0 sha256=884b79d4901458ec26adfe7125c72c82bdeac6a13ac9d62f1642f02ea61d0d5e
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2437177Z PASS comparison-2 exit=0 sha256=786502f675cd75506b2c5e9afb052acc46046623d7f43b13e593dbc5ba9d0c9c
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2473052Z PASS comparison-3 exit=0 sha256=f076608ea5883af36aaf7e0067d8b5858bd7b6aa22510b724bbae2cb362cacce
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2506806Z PASS comparison-4 exit=0 sha256=ecf4b81be22bec2127651efb032ec5ecd3660e9be8f84b708660f0b6f85f8e8a
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2540365Z PASS comparison-5 exit=0 sha256=d6ccc34b557509db14acfe27cc94e9a0e1312a89236c653b689823e775bf9092
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2575382Z PASS nested-control exit=0 sha256=aa4f9b002c485bfd7ffadaa3afd7f516da247b75b674b4387790e6088503cd6e
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2606638Z PASS overflow-add exit=101 sha256=a3a38b144ad2d94f4923469395a41721b29354b1cbd23f5638808b5c8c868988
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2638649Z PASS overflow-subtract exit=101 sha256=afab459c1204f98ff72ba339e77decf1aaef477dc6079df9448f067e75a9073d
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2673731Z PASS overflow-multiply exit=101 sha256=753365d92f8f51589cb9237d8136a1a4f07a7865ba283c306e5391c453be9a60
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2710769Z PASS overflow-negate exit=101 sha256=19567c3ca94511df3554f49d55fbb24869027c5e1c1b1213c25bc7c3de2a9cef
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2748160Z PASS Unicode path café exit=0 sha256=22bb73154a9690a7a588f034c17cc508941ee3357bacaa327beb33091ca991c7
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2773750Z PASS refused output overwrite; original artifact preserved
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2808508Z PASS output failure exit=102
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2827930Z PASS rejected hosted-int before output creation
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2845334Z PASS rejected unsupported-import before output creation
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2862591Z PASS rejected uninitialized before output creation
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2879839Z PASS rejected bare-int-after-import before output creation
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2897275Z PASS rejected lexical-error before output creation
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2918173Z PASS rejected expression-limit before output creation
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.2958604Z PASS repeated compilation produces identical unsigned ELF bytes
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.3018371Z PASS default Linux SIGPIPE termination exit=141 (documented policy)
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.3018716Z 25 native/CLI checks passed; target Linux x86-64 (native host).
+seed (ubuntu-24.04)	Execute emitted Linux machine code	2026-10-24T13:19:41.3019275Z Limits: experimental explicit i64 only; no clean-host, full grammar, self-hosting, performance or release proof.
+seed (ubuntu-24.04)	Check planning and evidence integrity	﻿2026-10-24T13:19:41.3267151Z ##[group]Run node scripts/validation/check-planning.mjs
+seed (ubuntu-24.04)	Check planning and evidence integrity	2026-10-24T13:19:41.3267819Z ^[[36;1mnode scripts/validation/check-planning.mjs^[[0m
+seed (ubuntu-24.04)	Check planning and evidence integrity	2026-10-24T13:19:41.3340138Z shell: /usr/bin/bash -e {0}
+seed (ubuntu-24.04)	Check planning and evidence integrity	2026-10-24T13:19:41.3340414Z ##[endgroup]
+seed (ubuntu-24.04)	Check planning and evidence integrity	2026-10-24T13:19:41.4301681Z Planning integrity: PASS
+seed (ubuntu-24.04)	Check planning and evidence integrity	2026-10-24T13:19:41.4302230Z Scope: 147 requirements (139 mandatory, 8 future), 38 tasks, 19 gates.
+seed (ubuntu-24.04)	Check planning and evidence integrity	2026-10-24T13:19:41.4302654Z Verified statuses: 1 requirements, 1 tasks, 0 gates.
+seed (ubuntu-24.04)	Check planning and evidence integrity	2026-10-24T13:19:41.4303084Z This result does not establish compiler behavior or HATCH release acceptance.
+seed (ubuntu-24.04)	Execute planning mutation tests	﻿2026-10-24T13:19:41.5057828Z ##[group]Run node --test tests/planning/*.test.mjs
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:41.5058142Z ^[[36;1mnode --test tests/planning/*.test.mjs^[[0m
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:41.5110646Z shell: /usr/bin/bash -e {0}
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:41.5110797Z ##[endgroup]
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1687855Z ✔ baseline reports the actual scope and no fabricated verification (119.616043ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1690616Z ✔ rejects duplicate IDs in requirements (144.093861ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1691213Z ✔ rejects duplicate IDs in tasks (88.735621ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1691479Z ✔ rejects duplicate IDs in release-gates (205.628441ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1691801Z ✔ rejects an unknown implementation status (239.807264ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1692232Z ✔ rejects missing task dependencies and primary requirements (240.363428ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1692751Z ✔ rejects direct and indirect dependency cycles (219.050707ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1693374Z ✔ rejects missing gates and mismatched bidirectional requirement mappings (169.224116ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1693904Z ✔ rejects missing gate requirements and duplicate references (199.722428ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1694459Z ✔ rejects removing an obligation or reclassifying mandatory scope (203.491714ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1708777Z ✔ permits additive IDs without resetting earlier scope (254.373153ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1721948Z ✔ rejects missing specification files and malformed planning JSON (87.543574ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1726777Z ✔ rejects active development without exactly one integrator (9.382145ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1727379Z ✔ permits distinct confirmed paths for contributors on the same task (6.913334ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1728148Z ✔ rejects cross-owner path overlap including case differences and parent scopes (6.370712ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1728760Z ✔ does not confuse adjacent directories with overlapping scopes (5.619243ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1729329Z ✔ rejects shared branches or worktrees across active owners (8.631388ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1729886Z ✔ rejects equivalent ownership scopes with repeated separators (5.824915ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1730485Z ✔ rejects equivalent worktrees with case and separator differences (5.476086ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1731025Z ✔ completed assignments do not reserve active paths (5.738194ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1731513Z ✔ rejects path traversal and unsupported ownership globs (5.59679ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1732111Z ✔ rejects missing active tasks and malformed collection values without crashing (8.58036ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1732774Z ✔ rejects verified requirements, tasks and gates without passed evidence (6.036226ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1733416Z ✔ implemented status does not claim verification or require invented evidence (5.725304ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1734024Z ✔ rejects missing evidence records even for an unverified subject (6.513619ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1734693Z ✔ valid retained passed evidence supports a matching verified requirement and task (7.619244ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1735363Z ✔ failed and not_run records are retained but do not establish verified status (27.577347ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1735969Z ✔ rejects a passed record with a nonzero exit or no retained log (16.509112ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1736445Z ✔ rejects a tampered or empty retained log (8.821856ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1737008Z ✔ rejects evidence logs outside the repository through traversal or a junction (10.400056ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1737774Z ✔ rejects evidence for a different requirement or task primary requirement (12.96964ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1738443Z ✔ honors evidence schema required fields, types and additionalProperties false (7.150314ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1739124Z ✔ rejects truncated or overlong commit hashes between SHA-1 and SHA-256 lengths (21.439473ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1739733Z ✔ fails closed when evidence schema adds unsupported constraints (6.493749ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1740393Z ✔ rejects impossible calendar dates rather than normalizing them into another month (10.769877ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1741083Z ✔ a verified gate needs passed evidence for every verified mapped requirement (26.256441ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1742093Z ✔ CLI returns distinct success, validation failure and usage error exits (91.009926ms)
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1867442Z ℹ tests 37
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1867763Z ℹ suites 0
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1867945Z ℹ pass 37
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1868115Z ℹ fail 0
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1868300Z ℹ cancelled 0
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1868493Z ℹ skipped 0
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1868958Z ℹ todo 0
+seed (ubuntu-24.04)	Execute planning mutation tests	2026-10-24T13:19:44.1869166Z ℹ duration_ms 2560.965
+seed (ubuntu-24.04)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	﻿2026-10-24T13:19:44.1975867Z Post job cleanup.
+seed (ubuntu-24.04)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:44.2787052Z (node:3024) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+seed (ubuntu-24.04)	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-24T13:19:44.2787664Z (Use `node --trace-deprecation ...` to show where the warning was created)
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-10-24T13:19:44.2914823Z Post job cleanup.
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3486318Z [command]/usr/bin/git version
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3515072Z git version 2.55.0
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3537468Z Temporarily overriding HOME='/home/runner/work/_temp/44279907-a08c-4b15-97e8-f62eef6f5248' before making global git config changes
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3538352Z Adding repository directory to the temporary git global config as a safe directory
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3540791Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/naja-lang/naja-lang
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3572397Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3598404Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3779697Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3805938Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.3988587Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+seed (ubuntu-24.04)	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-24T13:19:44.4015207Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+seed (ubuntu-24.04)	Complete job	﻿2026-10-24T13:19:44.4313525Z Cleaning up orphan processes
+seed (ubuntu-24.04)	Complete job	2026-10-24T13:19:44.4590775Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

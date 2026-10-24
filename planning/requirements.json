@@ -12,8 +12,10 @@
       "spec": "docs/11_ENVIRONMENT_GITHUB.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
-      "evidence": []
+      "status": "verified",
+      "evidence": [
+        "reports/checks/public-repository.json"
+      ]
     },
     {
       "id": "GOV-02",
@@ -204,7 +206,7 @@
       "spec": "docs/03_LANGUAGE_AND_COMPATIBILITY.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
+      "status": "implemented",
       "evidence": []
     },
     {
@@ -1014,10 +1016,11 @@
       "spec": "docs/14_RELEASE_ACCEPTANCE.md",
       "release_required": true,
       "origin": "design",
-      "status": "in_progress",
+      "status": "verified",
       "evidence": [
-        "reports/checks/planning-mutation-tests.json",
-        "reports/checks/planning-integrity-initial.json"
+        "reports/checks/ci-seed-three-os.json",
+        "reports/checks/integrated-planning-tests.json",
+        "reports/checks/checkout-evidence-integrity.json"
       ]
     },
     {
@@ -1402,7 +1405,7 @@
       "spec": "docs/20_ENGLISH_LANGUAGE_POLICY.md",
       "release_required": true,
       "origin": "founder_request_and_design_revision_1.2",
-      "status": "not_started",
+      "status": "in_progress",
       "evidence": []
     },
     {

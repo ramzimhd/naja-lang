@@ -13,7 +13,7 @@
         "reports/environment/",
         "scripts/dev/inventory.ps1"
       ],
-      "status": "active"
+      "status": "released"
     },
     {
       "task_id": "T02",
@@ -26,7 +26,9 @@
         "scripts/dev/test-setup.ps1",
         "scripts/dev/test-setup.sh",
         "bootstrap/toolchains.json",
-        "docs/decisions/0001-seed-toolchain.md"
+        "docs/decisions/0001-seed-toolchain.md",
+        "bootstrap/manifest.json",
+        "reports/independence-seed.json"
       ],
       "status": "completed"
     },
@@ -99,7 +101,27 @@
         "bootstrap/README.md",
         "docs/decisions/0002-native-seed-spike.md"
       ],
-      "status": "active"
+      "status": "released"
+    },
+    {
+      "task_id": "T35",
+      "owner": "/root/frontend",
+      "branch": "agent/frontend-T05",
+      "worktree": "../naja-worktrees/frontend",
+      "paths": [
+        "reports/language/ENGLISH_AUDIT.md"
+      ],
+      "status": "completed"
+    },
+    {
+      "task_id": "T03",
+      "owner": "/root/planning_validation",
+      "branch": "agent/planning-validation-T04",
+      "worktree": "../naja-worktrees/planning-validation",
+      "paths": [
+        "reports/governance/PUBLICATION_REVIEW.md"
+      ],
+      "status": "completed"
     }
   ],
   "coordination": "Single integrator allocates and merges. This file alone is not a distributed lock."

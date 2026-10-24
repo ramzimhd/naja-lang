@@ -1,0 +1,7 @@
+Recorded command: node launch/local/checkout-verification/scripts/validation/check-planning.mjs
+Recorded exit code: 0
+--- captured output ---
+Planning integrity: PASS
+Scope: 147 requirements (139 mandatory, 8 future), 38 tasks, 19 gates.
+Verified statuses: 1 requirements, 1 tasks, 0 gates.
+This result does not establish compiler behavior or HATCH release acceptance.

@@ -1,0 +1,6 @@
+Recorded command: cargo run --locked --offline -p naja-seed -- check tests/native/fixtures/sum.py
+Recorded exit code: 0
+--- captured output ---
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
+     Running `target\debug\naja.exe check tests/native/fixtures/sum.py`
+Checked experimental i64 subset: tests/native/fixtures/sum.py

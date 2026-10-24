@@ -1,0 +1,32 @@
+{
+  "requirement_id": "CMP-02",
+  "commit": "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+  "target": "x86_64-pc-windows-msvc",
+  "command": [
+    "cargo",
+    "run",
+    "--locked",
+    "--offline",
+    "-p",
+    "naja-seed",
+    "--",
+    "check",
+    "tests/native/fixtures/sum.py"
+  ],
+  "tool_versions": {
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "powershell": "7.6.4",
+    "git": "git version 2.51.0.windows.1"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:21:52.6020132+00:00",
+  "log_path": "reports/checks/readme-check-example.log",
+  "log_sha256": "34d357ececa1b0de3f5ae9dc5e1fe3b5baed7518f79ba72e76798c33d11f74c3",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

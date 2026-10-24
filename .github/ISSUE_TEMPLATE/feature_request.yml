@@ -1,0 +1,22 @@
+name: Feature request
+description: Propose behavior or an improvement with an explicit scope.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and intended behavior
+      description: Describe the use case and link relevant HATCH requirement IDs.
+    validations:
+      required: true
+  - type: textarea
+    id: contract
+    attributes:
+      label: Correctness, resource and compatibility constraints
+      description: Include error cases and limits. Do not silently reduce existing acceptance requirements.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Alternatives and evidence
+      description: Separate measured results from targets or estimates. No universal compatibility, safety or performance claim is assumed.

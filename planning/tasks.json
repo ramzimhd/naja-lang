@@ -51,10 +51,12 @@
         "NOTICE"
       ],
       "primary_requirement": "GOV-01",
-      "status": "in_progress",
+      "status": "verified",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": []
+      "evidence": [
+        "reports/checks/public-repository.json"
+      ]
     },
     {
       "id": "T04",
@@ -69,12 +71,12 @@
         "planning/"
       ],
       "primary_requirement": "QA-04",
-      "status": "in_progress",
+      "status": "implemented",
       "owner": "/root",
       "branch": "agent/integrator-H0",
       "evidence": [
-        "reports/checks/planning-mutation-tests.json",
-        "reports/checks/planning-integrity-initial.json"
+        "reports/checks/ci-seed-three-os.json",
+        "reports/checks/integrated-planning-tests.json"
       ]
     },
     {
@@ -661,9 +663,9 @@
         "editors/vscode/"
       ],
       "primary_requirement": "EN-01",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
       "evidence": []
     },
     {

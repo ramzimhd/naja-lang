@@ -1,0 +1,6 @@
+Recorded command: cargo run --locked --offline -p naja-seed -- build tests/native/fixtures/sum.py --target x86_64-unknown-linux-gnu --output target/readme-sum.elf
+Recorded exit code: 0
+--- captured output ---
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `target\debug\naja.exe build tests/native/fixtures/sum.py --target x86_64-unknown-linux-gnu --output target/readme-sum.elf`
+Built Linux x86-64 ELF: target/readme-sum.elf (4596 bytes)

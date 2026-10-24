@@ -1,0 +1,30 @@
+{
+  "requirement_id": "QA-04",
+  "commit": "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+  "target": "GitHub hosted ubuntu-24.04 x64, windows-2025 x64, macos-15 arm64",
+  "command": [
+    "gh",
+    "run",
+    "view",
+    "40097632722",
+    "--repo",
+    "ramzimhd/naja-lang",
+    "--log"
+  ],
+  "tool_versions": {
+    "runner_versions": "See retained per-job logs",
+    "node": "24.11.0",
+    "rustc": "1.97.1",
+    "gh": "gh version 2.95.0 (2026-06-17)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:23:16.7124899+00:00",
+  "log_path": "reports/checks/ci-seed-three-os.log",
+  "log_sha256": "68be293a6cae386dc187a8b081fbb1de794f075b13d30d142280181a6e1f9c87",
+  "limitations": [
+    "All three hosted seed build/test jobs succeeded. This is not clean-user NAJA product installation or autonomous rebuilding.",
+    "Native emitted Linux code executed only in the Linux job; the corresponding Windows/macOS step was intentionally skipped because emitted files target Linux only.",
+    "Full job metadata is retained separately. No paid/larger runners, artifact uploads or caches were enabled."
+  ]
+}

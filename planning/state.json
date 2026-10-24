@@ -4,21 +4,17 @@
   "generation": "HATCH",
   "development_started": true,
   "current_gate": "H0",
-  "repository_url": null,
-  "last_verified_commit": "9b1eb39c7f95c37368988598be8930ac9a578e34",
+  "repository_url": "https://github.com/ramzimhd/naja-lang",
+  "last_verified_commit": "6e702caec0dae3ec90a92d57490387f97d7e09a8",
   "active_tasks": [
     "T02",
-    "T03",
     "T04",
-    "T05"
+    "T05",
+    "T35"
   ],
-  "blockers": [
-    "Public repository creation awaits workspace GitHub CLI device authorization.",
-    "T02 native Linux/macOS installation verification and installer mutation paths remain not_run.",
-    "HATCH complete grammar, hosted semantics, autonomy, cells, VSIX and productivity gates remain open."
-  ],
-  "last_checkpoint": "2026-10-24T13:18:06.3516081+00:00",
-  "note": "T01/ENV-01 verified with exact command/log. Seed source tests and independent ELF execution passed, scoped to explicit i64. Shell setup fixture checks do not verify native Linux/macOS installation. Full grammar, autonomy, cells, VSIX and productivity remain incomplete.",
+  "blockers": [],
+  "last_checkpoint": "2026-10-24T09:26:07.8784901-04:00",
+  "note": "Public repository created and anonymous access verified; Apache-2.0 selected by the owner. At source 6e702ca, seed CI passed on Windows, Linux and macOS, with 25 native checks on Linux. Only scoped requirements/tasks are verified; no release gate is complete. Setup installer/target checks, full grammar, hosted semantics, autonomy, cells, VSIX and productivity remain incomplete. No external account blocker remains.",
   "official_language": "en",
   "package_revision": "1.2"
 }

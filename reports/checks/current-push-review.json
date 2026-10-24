@@ -1,0 +1,22 @@
+{
+  "requirement_id": "GOV-05",
+  "commit": "71beda30607176e1e128b2753b8c4896adbe4566",
+  "target": "staged public source tree",
+  "command": [
+    "node",
+    "scripts/publication-audit.mjs"
+  ],
+  "tool_versions": {
+    "git": "git version 2.51.0.windows.1",
+    "node": "v24.11.0"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:28:27.695Z",
+  "log_path": "reports/checks/current-push-review.log",
+  "log_sha256": "3804764fc0a11f7a3367d355e0c69451fc0d014408a0f94aa0d67631e2d5ddc3",
+  "limitations": [
+    "Scans exact staged blobs plus separate integrator review of staged changes. This is the current push, not a recreated first-push transcript.",
+    "Bounded scanner patterns cannot prove absence of every secret/private fact. The generated report is reviewed separately before staging."
+  ]
+}
