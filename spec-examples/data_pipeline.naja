@@ -1,0 +1,8 @@
+# Proposed standard-library API, not a verified benchmark implementation.
+from naja import Data
+
+sales = Data.csv("sales.csv", schema={"region": str, "amount": int})
+summary = (sales.where(lambda row: row.amount >= 0)
+    .group_by("region", max_groups=4096)
+    .sum("amount"))
+summary.write_csv("summary.csv", atomic=True)

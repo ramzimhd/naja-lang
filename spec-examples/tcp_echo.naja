@@ -1,0 +1,2 @@
+from naja import Network
+Network.App.Server.TCP(8080).run(on_receive=lambda msg: msg.data)

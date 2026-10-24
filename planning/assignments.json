@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "integrator": null,
+  "assignments": [],
+  "coordination": "Single integrator allocates and merges. This file alone is not a distributed lock."
+}

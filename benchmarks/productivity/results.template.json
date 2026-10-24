@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "package_revision": "1.2",
+  "status": "not_run",
+  "results": [
+    {
+      "case_id": "DX01",
+      "status": "not_run",
+      "commit": null,
+      "reference_target": null,
+      "counts": {
+        "naja": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "rust": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "cpp": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        }
+      },
+      "ratios": {
+        "naja_over_rust": null,
+        "naja_over_cpp": null
+      },
+      "behavior_tests": null,
+      "resource_results": null,
+      "timing": {
+        "population": null,
+        "runs": [],
+        "median_initial_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "median_change_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "uncertainty_method": null
+      },
+      "evidence_paths": [],
+      "limitations": [
+        "Not implemented or measured by this documentation package."
+      ]
+    },
+    {
+      "case_id": "DX02",
+      "status": "not_run",
+      "commit": null,
+      "reference_target": null,
+      "counts": {
+        "naja": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "rust": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "cpp": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        }
+      },
+      "ratios": {
+        "naja_over_rust": null,
+        "naja_over_cpp": null
+      },
+      "behavior_tests": null,
+      "resource_results": null,
+      "timing": {
+        "population": null,
+        "runs": [],
+        "median_initial_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "median_change_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "uncertainty_method": null
+      },
+      "evidence_paths": [],
+      "limitations": [
+        "Not implemented or measured by this documentation package."
+      ]
+    },
+    {
+      "case_id": "DX03",
+      "status": "not_run",
+      "commit": null,
+      "reference_target": null,
+      "counts": {
+        "naja": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "rust": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "cpp": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        }
+      },
+      "ratios": {
+        "naja_over_rust": null,
+        "naja_over_cpp": null
+      },
+      "behavior_tests": null,
+      "resource_results": null,
+      "timing": {
+        "population": null,
+        "runs": [],
+        "median_initial_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "median_change_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "uncertainty_method": null
+      },
+      "evidence_paths": [],
+      "limitations": [
+        "Not implemented or measured by this documentation package."
+      ]
+    },
+    {
+      "case_id": "DX04",
+      "status": "not_run",
+      "commit": null,
+      "reference_target": null,
+      "counts": {
+        "naja": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "rust": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "cpp": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        }
+      },
+      "ratios": {
+        "naja_over_rust": null,
+        "naja_over_cpp": null
+      },
+      "behavior_tests": null,
+      "resource_results": null,
+      "timing": {
+        "population": null,
+        "runs": [],
+        "median_initial_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "median_change_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "uncertainty_method": null
+      },
+      "evidence_paths": [],
+      "limitations": [
+        "Not implemented or measured by this documentation package."
+      ]
+    },
+    {
+      "case_id": "DX05",
+      "status": "not_run",
+      "commit": null,
+      "reference_target": null,
+      "counts": {
+        "naja": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "rust": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "cpp": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        }
+      },
+      "ratios": {
+        "naja_over_rust": null,
+        "naja_over_cpp": null
+      },
+      "behavior_tests": null,
+      "resource_results": null,
+      "timing": {
+        "population": null,
+        "runs": [],
+        "median_initial_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "median_change_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "uncertainty_method": null
+      },
+      "evidence_paths": [],
+      "limitations": [
+        "Not implemented or measured by this documentation package."
+      ]
+    },
+    {
+      "case_id": "DX06",
+      "status": "not_run",
+      "commit": null,
+      "reference_target": null,
+      "counts": {
+        "naja": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "rust": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        },
+        "cpp": {
+          "formatted_lines": null,
+          "delimiter_only_lines": null,
+          "normalized_task_lines": null,
+          "task_config_lines": null,
+          "generated_output_lines": null,
+          "test_lines_reported_separately": null,
+          "file_ledger": []
+        }
+      },
+      "ratios": {
+        "naja_over_rust": null,
+        "naja_over_cpp": null
+      },
+      "behavior_tests": null,
+      "resource_results": null,
+      "timing": {
+        "population": null,
+        "runs": [],
+        "median_initial_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "median_change_seconds": {
+          "naja": null,
+          "rust": null,
+          "cpp": null
+        },
+        "uncertainty_method": null
+      },
+      "evidence_paths": [],
+      "limitations": [
+        "Not implemented or measured by this documentation package."
+      ]
+    }
+  ]
+}

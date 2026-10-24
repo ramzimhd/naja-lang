@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "project": "NAJA",
+  "generation": "HATCH",
+  "development_started": false,
+  "current_gate": "H0",
+  "repository_url": null,
+  "last_verified_commit": null,
+  "active_tasks": [],
+  "blockers": [],
+  "last_checkpoint": null,
+  "note": "Specification package only. No compiler, VSIX or productivity results are provided. Merge into active repositories by ID; never overwrite real progress or evidence.",
+  "official_language": "en",
+  "package_revision": "1.2"
+}

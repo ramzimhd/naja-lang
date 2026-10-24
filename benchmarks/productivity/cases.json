@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "package_revision": "1.2",
+  "status": "specification_template",
+  "scope_note": "Proposed mandatory matched cases. Register exact inputs, versions, targets, counting rules and budgets before benchmark implementation. No results are supplied.",
+  "required_ratio_vs_each_baseline": 0.25,
+  "required_baselines": [
+    "rust",
+    "cpp"
+  ],
+  "cases": [
+    {
+      "id": "DX01",
+      "title": "Freestanding microkernel",
+      "profile": "core",
+      "target_policy": "x86_64 QEMU machine and boot protocol to pin before implementation",
+      "required_behavior": [
+        "serial startup",
+        "boot memory inspection",
+        "bounded periodic timer interrupt",
+        "fixed tick output",
+        "clean halt"
+      ],
+      "negative_cases": [
+        "unsupported boot input",
+        "invalid memory map entry",
+        "interrupt setup failure policy"
+      ],
+      "status": "not_registered",
+      "reference_hardware": null,
+      "pinned_machine_boot_contract": null,
+      "input_fixtures": [],
+      "output_contract": null,
+      "resource_budgets": null,
+      "accepted_libraries": {
+        "naja": [],
+        "rust": [],
+        "cpp": []
+      },
+      "source_manifests": {
+        "naja": null,
+        "rust": null,
+        "cpp": null
+      },
+      "registration_commit": null,
+      "registration_sha256": null,
+      "reviewer": null
+    },
+    {
+      "id": "DX02",
+      "title": "Framed TCP echo",
+      "profile": "hosted",
+      "target_policy": "Windows x64 / Linux x64 / macOS arm64",
+      "required_behavior": [
+        "loopback",
+        "length-prefixed frames",
+        "partial reads/writes",
+        "multiple clients",
+        "deadlines",
+        "bounded resources",
+        "graceful cancellation"
+      ],
+      "negative_cases": [
+        "oversized length",
+        "fragmented frames",
+        "slow clients",
+        "peer disconnect",
+        "bind error"
+      ],
+      "status": "not_registered",
+      "reference_hardware": null,
+      "pinned_machine_boot_contract": "not_applicable",
+      "input_fixtures": [],
+      "output_contract": null,
+      "resource_budgets": null,
+      "accepted_libraries": {
+        "naja": [],
+        "rust": [],
+        "cpp": []
+      },
+      "source_manifests": {
+        "naja": null,
+        "rust": null,
+        "cpp": null
+      },
+      "registration_commit": null,
+      "registration_sha256": null,
+      "reviewer": null
+    },
+    {
+      "id": "DX03",
+      "title": "HTTP JSON application",
+      "profile": "hosted",
+      "target_policy": "Windows x64 / Linux x64 / macOS arm64",
+      "required_behavior": [
+        "health route",
+        "validated JSON route",
+        "deterministic response",
+        "correct status",
+        "bounded requests",
+        "logging",
+        "shutdown"
+      ],
+      "negative_cases": [
+        "malformed HTTP",
+        "malformed JSON",
+        "missing fields",
+        "oversized body",
+        "cancelled request"
+      ],
+      "status": "not_registered",
+      "reference_hardware": null,
+      "pinned_machine_boot_contract": "not_applicable",
+      "input_fixtures": [],
+      "output_contract": null,
+      "resource_budgets": null,
+      "accepted_libraries": {
+        "naja": [],
+        "rust": [],
+        "cpp": []
+      },
+      "source_manifests": {
+        "naja": null,
+        "rust": null,
+        "cpp": null
+      },
+      "registration_commit": null,
+      "registration_sha256": null,
+      "reviewer": null
+    },
+    {
+      "id": "DX04",
+      "title": "CLI file utility",
+      "profile": "hosted",
+      "target_policy": "Windows x64 / Linux x64 / macOS arm64",
+      "required_behavior": [
+        "arguments",
+        "streamed text transformation",
+        "Unicode",
+        "input/output errors",
+        "cancellation",
+        "declared output commit"
+      ],
+      "negative_cases": [
+        "invalid options",
+        "bad input",
+        "permission failure",
+        "output failure",
+        "interruption"
+      ],
+      "status": "not_registered",
+      "reference_hardware": null,
+      "pinned_machine_boot_contract": "not_applicable",
+      "input_fixtures": [],
+      "output_contract": null,
+      "resource_budgets": null,
+      "accepted_libraries": {
+        "naja": [],
+        "rust": [],
+        "cpp": []
+      },
+      "source_manifests": {
+        "naja": null,
+        "rust": null,
+        "cpp": null
+      },
+      "registration_commit": null,
+      "registration_sha256": null,
+      "reviewer": null
+    },
+    {
+      "id": "DX05",
+      "title": "CSV aggregation",
+      "profile": "hosted",
+      "target_policy": "Windows x64 / Linux x64 / macOS arm64",
+      "required_behavior": [
+        "explicit schema",
+        "validation",
+        "filter",
+        "bounded group-by",
+        "sum",
+        "deterministic output",
+        "declared output commit"
+      ],
+      "negative_cases": [
+        "quoted delimiters",
+        "missing values",
+        "bad numeric fields",
+        "large records",
+        "group limit",
+        "output failure"
+      ],
+      "status": "not_registered",
+      "reference_hardware": null,
+      "pinned_machine_boot_contract": "not_applicable",
+      "input_fixtures": [],
+      "output_contract": null,
+      "resource_budgets": null,
+      "accepted_libraries": {
+        "naja": [],
+        "rust": [],
+        "cpp": []
+      },
+      "source_manifests": {
+        "naja": null,
+        "rust": null,
+        "cpp": null
+      },
+      "registration_commit": null,
+      "registration_sha256": null,
+      "reviewer": null
+    },
+    {
+      "id": "DX06",
+      "title": "JSONL-to-CSV pipeline",
+      "profile": "hosted",
+      "target_policy": "Windows x64 / Linux x64 / macOS arm64",
+      "required_behavior": [
+        "streaming input",
+        "pinned schema",
+        "projection/transformation",
+        "deterministic CSV",
+        "memory bound",
+        "cancellation",
+        "cleanup"
+      ],
+      "negative_cases": [
+        "malformed JSON line",
+        "wrong types",
+        "missing fields",
+        "large records",
+        "write failure",
+        "interruption"
+      ],
+      "status": "not_registered",
+      "reference_hardware": null,
+      "pinned_machine_boot_contract": "not_applicable",
+      "input_fixtures": [],
+      "output_contract": null,
+      "resource_budgets": null,
+      "accepted_libraries": {
+        "naja": [],
+        "rust": [],
+        "cpp": []
+      },
+      "source_manifests": {
+        "naja": null,
+        "rust": null,
+        "cpp": null
+      },
+      "registration_commit": null,
+      "registration_sha256": null,
+      "reviewer": null
+    }
+  ]
+}

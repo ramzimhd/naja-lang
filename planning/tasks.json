@@ -1,0 +1,720 @@
+{
+  "schema_version": 1,
+  "tasks": [
+    {
+      "id": "T01",
+      "milestone": "H0",
+      "title": "Inspect the host and protect the workspace",
+      "depends_on": [],
+      "planned_paths": [
+        "launch/local/"
+      ],
+      "primary_requirement": "ENV-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T02",
+      "milestone": "H0",
+      "title": "Install and pin the Python-free seed tools",
+      "depends_on": [
+        "T01"
+      ],
+      "planned_paths": [
+        "scripts/dev/",
+        "bootstrap/"
+      ],
+      "primary_requirement": "ENV-02",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T03",
+      "milestone": "H0",
+      "title": "Create and document the public GitHub repository",
+      "depends_on": [
+        "T01"
+      ],
+      "planned_paths": [
+        "README.md",
+        "docs/",
+        "LICENSE",
+        "NOTICE"
+      ],
+      "primary_requirement": "GOV-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T04",
+      "milestone": "H0",
+      "title": "Establish real CI, evidence and progress tracking",
+      "depends_on": [
+        "T02",
+        "T03"
+      ],
+      "planned_paths": [
+        ".github/",
+        "planning/"
+      ],
+      "primary_requirement": "QA-04",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T05",
+      "milestone": "H1",
+      "title": "Implement lexer, CST, grammar baseline and diagnostics",
+      "depends_on": [
+        "T04"
+      ],
+      "planned_paths": [
+        "bootstrap/frontend/",
+        "tests/syntax/"
+      ],
+      "primary_requirement": "CMP-02",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T06",
+      "milestone": "H1",
+      "title": "Implement block markers and source maps",
+      "depends_on": [
+        "T05"
+      ],
+      "planned_paths": [
+        "bootstrap/frontend/",
+        "tests/blocks/"
+      ],
+      "primary_requirement": "SYN-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T07",
+      "milestone": "H1",
+      "title": "Implement contextual aliases and manifests",
+      "depends_on": [
+        "T05"
+      ],
+      "planned_paths": [
+        "bootstrap/frontend/",
+        "tests/aliases/"
+      ],
+      "primary_requirement": "SYN-05",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T08",
+      "milestone": "H2",
+      "title": "Implement resolution, types, HIR/MIR and validation",
+      "depends_on": [
+        "T06",
+        "T07"
+      ],
+      "planned_paths": [
+        "bootstrap/semantic/",
+        "bootstrap/ir/"
+      ],
+      "primary_requirement": "SEM-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T09",
+      "milestone": "H3",
+      "title": "Build initial native backend and ELF linking",
+      "depends_on": [
+        "T08"
+      ],
+      "planned_paths": [
+        "backends/native/",
+        "linker/"
+      ],
+      "primary_requirement": "BE-02",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T10",
+      "milestone": "H3",
+      "title": "Write the first compiler modules in NAJA",
+      "depends_on": [
+        "T09"
+      ],
+      "planned_paths": [
+        "compiler/"
+      ],
+      "primary_requirement": "BOOT-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T11",
+      "milestone": "H4",
+      "title": "Implement runtime, memory and HATCH semantics",
+      "depends_on": [
+        "T08",
+        "T09"
+      ],
+      "planned_paths": [
+        "runtime/",
+        "tests/semantic/"
+      ],
+      "primary_requirement": "SEM-10",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T12",
+      "milestone": "H4",
+      "title": "Implement standard library, modules and CLI tools",
+      "depends_on": [
+        "T10",
+        "T11"
+      ],
+      "planned_paths": [
+        "stdlib/",
+        "tools/"
+      ],
+      "primary_requirement": "CLI-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T13",
+      "milestone": "H4",
+      "title": "Implement iteration, async and structured resources",
+      "depends_on": [
+        "T11"
+      ],
+      "planned_paths": [
+        "runtime/",
+        "stdlib/async/"
+      ],
+      "primary_requirement": "SEM-08",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T14",
+      "milestone": "H5",
+      "title": "Implement core/hardware/FFI and freestanding proof",
+      "depends_on": [
+        "T09",
+        "T11"
+      ],
+      "planned_paths": [
+        "core/",
+        "stdlib/hardware/",
+        "tests/system/"
+      ],
+      "primary_requirement": "SYS-05",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T15",
+      "milestone": "H5",
+      "title": "Verify Windows/Linux/macOS and package native products",
+      "depends_on": [
+        "T12"
+      ],
+      "planned_paths": [
+        "backends/",
+        "runtime/platform/",
+        "distribution/"
+      ],
+      "primary_requirement": "ENV-05",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T16",
+      "milestone": "H6",
+      "title": "Implement native TCP, events, framing and limits",
+      "depends_on": [
+        "T12",
+        "T13"
+      ],
+      "planned_paths": [
+        "stdlib/net/",
+        "tests/network/"
+      ],
+      "primary_requirement": "NET-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T17",
+      "milestone": "H6",
+      "title": "Implement concise HTTP and strict network acceptance",
+      "depends_on": [
+        "T16"
+      ],
+      "planned_paths": [
+        "stdlib/http/",
+        "examples/network/"
+      ],
+      "primary_requirement": "NET-02",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T18",
+      "milestone": "H7",
+      "title": "Build VS Code adapter and first LSP diagnostics",
+      "depends_on": [
+        "T06",
+        "T07"
+      ],
+      "planned_paths": [
+        "editors/vscode/",
+        "language-server/"
+      ],
+      "primary_requirement": "IDE-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T19",
+      "milestone": "H7",
+      "title": "Implement semantic navigation, rename, formatting and projects",
+      "depends_on": [
+        "T12",
+        "T18"
+      ],
+      "planned_paths": [
+        "language-server/",
+        "editors/vscode/"
+      ],
+      "primary_requirement": "IDE-04",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T20",
+      "milestone": "H7",
+      "title": "Implement real native debugging, DAP and source maps",
+      "depends_on": [
+        "T09",
+        "T11",
+        "T18"
+      ],
+      "planned_paths": [
+        "debug-adapter/",
+        "tests/debug/"
+      ],
+      "primary_requirement": "IDE-08",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T21",
+      "milestone": "H7",
+      "title": "Complete VSIX: tests, trust and target end-to-end workflows",
+      "depends_on": [
+        "T15",
+        "T19",
+        "T20",
+        "T32"
+      ],
+      "planned_paths": [
+        "editors/vscode/",
+        "tests/editor/"
+      ],
+      "primary_requirement": "IDE-07",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T22",
+      "milestone": "H8",
+      "title": "Port the required build closure to NAJA",
+      "depends_on": [
+        "T10",
+        "T12",
+        "T19",
+        "T20",
+        "T37"
+      ],
+      "planned_paths": [
+        "compiler/",
+        "runtime/",
+        "tools/",
+        "language-server/",
+        "debug-adapter/",
+        "backends/native/",
+        "linker/"
+      ],
+      "primary_requirement": "BOOT-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T23",
+      "milestone": "H8",
+      "title": "Prove B1/B2/B3 and isolated independence",
+      "depends_on": [
+        "T22",
+        "T33"
+      ],
+      "planned_paths": [
+        "bootstrap/",
+        "tests/bootstrap/",
+        "reports/"
+      ],
+      "primary_requirement": "BOOT-04",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T24",
+      "milestone": "H9",
+      "title": "Implement numerical and bounded quantum extension libraries",
+      "depends_on": [
+        "T12",
+        "T14"
+      ],
+      "planned_paths": [
+        "extensions/",
+        "examples/domains/"
+      ],
+      "primary_requirement": "EXT-03",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T25",
+      "milestone": "H9",
+      "title": "Harden with fuzzing and negative tests",
+      "depends_on": [
+        "T11",
+        "T17",
+        "T20",
+        "T23",
+        "T31"
+      ],
+      "planned_paths": [
+        "tests/",
+        "reports/"
+      ],
+      "primary_requirement": "QA-03",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T26",
+      "milestone": "H9",
+      "title": "Publish reproducible performance measurements",
+      "depends_on": [
+        "T15",
+        "T23",
+        "T34"
+      ],
+      "planned_paths": [
+        "benchmarks/",
+        "docs/"
+      ],
+      "primary_requirement": "REL-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T27",
+      "milestone": "H9",
+      "title": "Run full acceptance and adversarial audit",
+      "depends_on": [
+        "T14",
+        "T17",
+        "T21",
+        "T23",
+        "T24",
+        "T25",
+        "T26",
+        "T34",
+        "T35",
+        "T38"
+      ],
+      "planned_paths": [
+        "reports/"
+      ],
+      "primary_requirement": "REL-04",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T28",
+      "milestone": "H9",
+      "title": "Publish HATCH distributions, VSIX and release notes",
+      "depends_on": [
+        "T27"
+      ],
+      "planned_paths": [
+        "distribution/",
+        "docs/",
+        "CHANGELOG.md"
+      ],
+      "primary_requirement": "REL-03",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T29",
+      "milestone": "H2",
+      "title": "Specify shared-frontend cells and session protocol",
+      "depends_on": [
+        "T08"
+      ],
+      "planned_paths": [
+        "docs/",
+        "compiler/frontend/",
+        "tools/session/protocol/"
+      ],
+      "primary_requirement": "INT-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T30",
+      "milestone": "H4",
+      "title": "Implement the first persistent native-compiled session",
+      "depends_on": [
+        "T29",
+        "T09",
+        "T11",
+        "T12"
+      ],
+      "planned_paths": [
+        "tools/session/",
+        "backends/native/",
+        "linker/",
+        "tests/interactive/"
+      ],
+      "primary_requirement": "INT-02",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T31",
+      "milestone": "H5",
+      "title": "Implement session versions, cache, interruption and targets",
+      "depends_on": [
+        "T30",
+        "T13",
+        "T15"
+      ],
+      "planned_paths": [
+        "tools/session/",
+        "runtime/",
+        "tests/interactive/"
+      ],
+      "primary_requirement": "INT-05",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T32",
+      "milestone": "H7",
+      "title": "Implement VS Code cells, selection, state and export",
+      "depends_on": [
+        "T31",
+        "T18",
+        "T19"
+      ],
+      "planned_paths": [
+        "editors/vscode/",
+        "tools/session/",
+        "tests/interactive/"
+      ],
+      "primary_requirement": "INT-13",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T33",
+      "milestone": "H8",
+      "title": "Port session and loader into the NAJA closure",
+      "depends_on": [
+        "T31",
+        "T22"
+      ],
+      "planned_paths": [
+        "tools/session/",
+        "linker/",
+        "runtime/",
+        "tests/bootstrap/"
+      ],
+      "primary_requirement": "INT-16",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T34",
+      "milestone": "H9",
+      "title": "Verify native cells and protect AOT performance",
+      "depends_on": [
+        "T32",
+        "T33",
+        "T23"
+      ],
+      "planned_paths": [
+        "tests/interactive/",
+        "benchmarks/",
+        "reports/interactive/"
+      ],
+      "primary_requirement": "PERF-03",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T35",
+      "milestone": "H0",
+      "title": "Migrate all official surfaces to English and preserve progress",
+      "depends_on": [
+        "T03"
+      ],
+      "planned_paths": [
+        "docs/",
+        "prompts/",
+        "planning/",
+        "editors/vscode/"
+      ],
+      "primary_requirement": "EN-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T36",
+      "milestone": "H2",
+      "title": "Preregister matched productivity cases and measurement rules",
+      "depends_on": [
+        "T04"
+      ],
+      "planned_paths": [
+        "benchmarks/productivity/",
+        "docs/"
+      ],
+      "primary_requirement": "PROD-15",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T37",
+      "milestone": "H6",
+      "title": "Implement reusable microkernel, application and native data APIs",
+      "depends_on": [
+        "T12",
+        "T14",
+        "T17",
+        "T36"
+      ],
+      "planned_paths": [
+        "stdlib/",
+        "core/",
+        "tests/productivity/",
+        "examples/"
+      ],
+      "primary_requirement": "PROD-07",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    },
+    {
+      "id": "T38",
+      "milestone": "H9",
+      "title": "Execute fair code/time/resource comparisons and publish evidence",
+      "depends_on": [
+        "T21",
+        "T23",
+        "T24",
+        "T34",
+        "T37"
+      ],
+      "planned_paths": [
+        "benchmarks/productivity/",
+        "reports/productivity/"
+      ],
+      "primary_requirement": "PROD-01",
+      "status": "not_started",
+      "owner": null,
+      "branch": null,
+      "evidence": []
+    }
+  ]
+}

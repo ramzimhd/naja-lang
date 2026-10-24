@@ -1,0 +1,11 @@
+# Copy to launch/local/config.toml only if needed. Never store secrets here.
+schema = 1
+project_name = "NAJA"
+generation = "HATCH"
+repository_name = "naja-lang"
+# owner = ""  # Resolve from the authorized identity; do not guess.
+role = "integrator"
+# workspace = ""  # Select a dedicated directory after inspection.
+license_proposal = "Apache-2.0"
+reference_autonomy_target = "x86_64-unknown-linux-gnu"
+official_language = "en"

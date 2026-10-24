@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "gates": [
+    {
+      "id": "R01",
+      "status": "not_started",
+      "requirement_ids": [
+        "GOV-01",
+        "GOV-02",
+        "GOV-03",
+        "GOV-04",
+        "GOV-05",
+        "GOV-06"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R02",
+      "status": "not_started",
+      "requirement_ids": [
+        "ENV-01",
+        "ENV-02",
+        "ENV-03",
+        "ENV-04",
+        "ENV-05",
+        "ENV-06"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R03",
+      "status": "not_started",
+      "requirement_ids": [
+        "IND-01",
+        "IND-02",
+        "IND-03",
+        "IND-04",
+        "IND-05"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R04",
+      "status": "not_started",
+      "requirement_ids": [
+        "CMP-01",
+        "CMP-02",
+        "CMP-03",
+        "CMP-04",
+        "CMP-05"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R05",
+      "status": "not_started",
+      "requirement_ids": [
+        "SYN-01",
+        "SYN-02",
+        "SYN-03",
+        "SYN-04",
+        "SYN-05",
+        "SYN-06",
+        "SYN-07",
+        "SYN-08",
+        "SYN-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R06",
+      "status": "not_started",
+      "requirement_ids": [
+        "SEM-01",
+        "SEM-02",
+        "SEM-03",
+        "SEM-04",
+        "SEM-05",
+        "SEM-06",
+        "SEM-07",
+        "SEM-08",
+        "SEM-09",
+        "SEM-10"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R07",
+      "status": "not_started",
+      "requirement_ids": [
+        "CLI-01",
+        "CLI-02",
+        "CLI-03",
+        "CLI-04",
+        "CLI-05",
+        "CLI-06"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R08",
+      "status": "not_started",
+      "requirement_ids": [
+        "BE-01",
+        "BE-02",
+        "BE-03",
+        "BE-04",
+        "BE-05"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R09",
+      "status": "not_started",
+      "requirement_ids": [
+        "BOOT-01",
+        "BOOT-02",
+        "BOOT-03",
+        "BOOT-04",
+        "BOOT-05",
+        "BOOT-06",
+        "BOOT-07"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R10",
+      "status": "not_started",
+      "requirement_ids": [
+        "SYS-01",
+        "SYS-02",
+        "SYS-03",
+        "SYS-04",
+        "SYS-05",
+        "SYS-06"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R11",
+      "status": "not_started",
+      "requirement_ids": [
+        "NET-01",
+        "NET-02",
+        "NET-03",
+        "NET-04",
+        "NET-05",
+        "NET-06",
+        "NET-07"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R12",
+      "status": "not_started",
+      "requirement_ids": [
+        "IDE-01",
+        "IDE-02",
+        "IDE-03",
+        "IDE-04",
+        "IDE-05",
+        "IDE-06",
+        "IDE-07",
+        "IDE-08",
+        "IDE-09",
+        "IDE-10",
+        "IDE-11"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R13",
+      "status": "not_started",
+      "requirement_ids": [
+        "EXT-01",
+        "EXT-02",
+        "EXT-03",
+        "EXT-04"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R14",
+      "status": "not_started",
+      "requirement_ids": [
+        "QA-01",
+        "QA-02",
+        "QA-03",
+        "QA-04",
+        "QA-05"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R15",
+      "status": "not_started",
+      "requirement_ids": [
+        "REL-01",
+        "REL-02",
+        "REL-03",
+        "REL-04",
+        "REL-05"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R16",
+      "status": "not_started",
+      "requirement_ids": [
+        "INT-01",
+        "INT-02",
+        "INT-03",
+        "INT-04",
+        "INT-05",
+        "INT-06",
+        "INT-07",
+        "INT-08",
+        "INT-09",
+        "INT-10",
+        "INT-11",
+        "INT-12",
+        "INT-13",
+        "INT-14",
+        "INT-15",
+        "INT-16"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R17",
+      "status": "not_started",
+      "requirement_ids": [
+        "PERF-01",
+        "PERF-02",
+        "PERF-03",
+        "PERF-04"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R18",
+      "status": "not_started",
+      "requirement_ids": [
+        "EN-01",
+        "EN-02",
+        "EN-03",
+        "EN-04",
+        "EN-05",
+        "EN-06"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "R19",
+      "status": "not_started",
+      "requirement_ids": [
+        "PROD-01",
+        "PROD-02",
+        "PROD-03",
+        "PROD-04",
+        "PROD-05",
+        "PROD-06",
+        "PROD-07",
+        "PROD-08",
+        "PROD-09",
+        "PROD-10",
+        "PROD-11",
+        "PROD-12",
+        "PROD-13",
+        "PROD-14",
+        "PROD-15",
+        "PROD-16"
+      ],
+      "evidence": []
+    }
+  ]
+}

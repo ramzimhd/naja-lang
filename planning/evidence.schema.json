@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NAJA HATCH Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "requirement_id",
+    "commit",
+    "target",
+    "command",
+    "tool_versions",
+    "exit_code",
+    "result",
+    "timestamp",
+    "log_path",
+    "limitations"
+  ],
+  "properties": {
+    "requirement_id": {
+      "type": "string"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40,64}$"
+    },
+    "target": {
+      "type": "string"
+    },
+    "command": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "tool_versions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "exit_code": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "result": {
+      "enum": [
+        "passed",
+        "failed",
+        "blocked",
+        "not_run"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "log_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "log_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

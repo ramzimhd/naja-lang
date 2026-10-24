@@ -1,0 +1,2 @@
+from naja import Network
+Network.App.Server.HTTP(8080).run(on_request=lambda req: "Hello NAJA")

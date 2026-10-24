@@ -1,0 +1,26 @@
+# Private local state
+launch/local/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*credentials*
+*token*.local
+# Build and cache artifacts
+target/
+node_modules/
+.naja/cache/
+build/
+dist/
+*.vsix
+# Publish only reviewed, sanitized evidence
+logs/local/
+reports/local/
+.DS_Store
+Thumbs.db
+# Private session history, state and output
+.naja/sessions/
+.naja/history/

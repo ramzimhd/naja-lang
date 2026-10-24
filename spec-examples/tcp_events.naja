@@ -1,0 +1,14 @@
+from naja import Network
+
+server = Network.App.Server.TCP(8080)
+
+@server.on_receive
+def receive(msg):(0)
+    print(msg.peer)
+    return msg.data
+
+@server.on_error
+def failure(error):(0)
+    print(error.message)
+
+server.run()

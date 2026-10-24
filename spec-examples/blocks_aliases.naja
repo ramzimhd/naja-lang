@@ -1,0 +1,6 @@
+# Grammar and alias contract; not an executed compiler example.
+if 0 equalTo 1:(0)
+    if 2 notEqualTo 3:(1)
+        display("hello")
+else:(0)
+    display("NAJA HATCH")

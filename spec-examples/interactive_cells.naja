@@ -1,0 +1,11 @@
+# API contract to implement; no NAJA execution has been verified here.
+# %% Data
+values = [10, 20, 30]
+
+# %% Calculation
+average = sum(values) / len(values)
+print(average)
+
+# %% Use
+if average >= 20:(0)
+    print("Average is sufficient")

@@ -1,0 +1,11 @@
+# Contract: redefinition preserves explicit old function references.
+# %% Initial version
+def calculate(x):(0)
+    return x + 1
+previous = calculate
+
+# %% New binding
+def calculate(x):(0)
+    return x + 2
+print(previous(10))  # Expected: 11
+print(calculate(10))  # Expected: 12
