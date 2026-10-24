@@ -1,0 +1,14 @@
+[package]
+name = "naja-frontend"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.97.1"
+license = "Apache-2.0"
+description = "Initial independent, lossless NAJA source frontend"
+
+[lib]
+path = "src/lib.rs"
+
+[[test]]
+name = "syntax"
+path = "../../tests/syntax/frontend.rs"
