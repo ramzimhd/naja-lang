@@ -10,9 +10,9 @@
         "launch/local/"
       ],
       "primary_requirement": "ENV-01",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
       "evidence": []
     },
     {
@@ -27,9 +27,9 @@
         "bootstrap/"
       ],
       "primary_requirement": "ENV-02",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
       "evidence": []
     },
     {
@@ -46,9 +46,9 @@
         "NOTICE"
       ],
       "primary_requirement": "GOV-01",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
       "evidence": []
     },
     {
@@ -64,9 +64,9 @@
         "planning/"
       ],
       "primary_requirement": "QA-04",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
       "evidence": []
     },
     {
@@ -81,9 +81,9 @@
         "tests/syntax/"
       ],
       "primary_requirement": "CMP-02",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
       "evidence": []
     },
     {

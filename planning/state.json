@@ -2,14 +2,14 @@
   "schema_version": 1,
   "project": "NAJA",
   "generation": "HATCH",
-  "development_started": false,
+  "development_started": true,
   "current_gate": "H0",
   "repository_url": null,
   "last_verified_commit": null,
-  "active_tasks": [],
-  "blockers": [],
+  "active_tasks": ["T01", "T02", "T03", "T04", "T05"],
+  "blockers": ["Public repository creation awaits workspace GitHub CLI device authorization.", "T02 native Linux/macOS installation verification and installer mutation paths remain not_run.", "HATCH complete grammar, hosted semantics, autonomy, cells, VSIX and productivity gates remain open."],
   "last_checkpoint": null,
-  "note": "Specification package only. No compiler, VSIX or productivity results are provided. Merge into active repositories by ID; never overwrite real progress or evidence.",
+  "note": "Development started from preserved specification commit 684f59efb35ec10e5fa43026e616c3df358108ea. Experimental explicit-i64 frontend/native spike implemented; pending integrated evidence. Early T04/T05 groundwork does not satisfy incomplete predecessor tasks. No HATCH release, self-hosting, VSIX or productivity result is claimed.",
   "official_language": "en",
   "package_revision": "1.2"
 }

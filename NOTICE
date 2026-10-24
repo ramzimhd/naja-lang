@@ -1,0 +1,12 @@
+NAJA HATCH
+
+The owner selected the Apache License, Version 2.0 on October 24, 2026.
+The founding specifications were supplied by the project owner. Implementation
+and verification are AI-assisted; no independent external audit is claimed.
+
+The current Cargo workspace has no external crate dependencies. Rust/Cargo and
+the host SDK are seed development tools, not bundled NAJA implementation sources.
+Their licenses and official origins are inventoried in bootstrap/toolchains.json.
+
+This notice is an initial provenance record, not a completed release SBOM or
+assurance that future dependencies have already been audited.

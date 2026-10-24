@@ -1,0 +1,37 @@
+name: Experimental seed checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  seed:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24.11.0
+          check-latest: false
+      - name: Prepare pinned seed
+        run: rustup toolchain install 1.97.1 --profile minimal --component rustfmt --component clippy --no-self-update
+      - name: Check readable formatting
+        run: cargo fmt --all -- --check
+      - name: Execute source tests offline
+        run: cargo test --workspace --locked --offline
+      - name: Check compiler warnings
+        run: cargo clippy --workspace --all-targets --locked --offline -- -D warnings
+      - name: Build experimental compiler offline
+        run: cargo build --workspace --locked --offline
+      - name: Execute emitted Linux machine code
+        if: runner.os == 'Linux'
+        run: node scripts/test-native.mjs
+      - name: Check planning and evidence integrity
+        run: node scripts/validation/check-planning.mjs
+      - name: Execute planning mutation tests
+        run: node --test tests/planning/*.test.mjs

@@ -24,3 +24,7 @@ Thumbs.db
 # Private session history, state and output
 .naja/sessions/
 .naja/history/
+# Original reading attachments remain local until separately reviewed.
+/reading/
+/DOSSIER_DE_SYNTHESE.md
+/naja logo.png
