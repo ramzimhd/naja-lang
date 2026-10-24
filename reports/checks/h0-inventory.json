@@ -1,0 +1,27 @@
+{
+  "requirement_id": "ENV-01",
+  "commit": "d9846dd83389562841beea040061e56d1ff95508",
+  "target": "x86_64-pc-windows-msvc",
+  "command": [
+    "pwsh",
+    "-NoProfile",
+    "-File",
+    "scripts/dev/inventory.ps1"
+  ],
+  "tool_versions": {
+    "powershell": "7.6.4",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "git": "git version 2.51.0.windows.1",
+    "node": "v24.11.0"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:14:31.0740582+00:00",
+  "log_path": "reports/checks/h0-inventory.log",
+  "log_sha256": "4e03f8881a4986761573f454859230020e6950f891047de662bac9ead5b71125",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

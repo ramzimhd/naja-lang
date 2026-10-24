@@ -2,13 +2,105 @@
   "schema_version": 1,
   "integrator": "/root",
   "assignments": [
-    { "task_id": "T01", "owner": "/root", "branch": "agent/integrator-H0", "worktree": ".", "paths": ["launch/", "planning/", "reports/environment/", "scripts/dev/inventory.ps1"], "status": "active" },
-    { "task_id": "T02", "owner": "/root/seed_setup", "branch": "agent/seed-setup-T02", "worktree": "../naja-worktrees/seed-setup", "paths": ["scripts/dev/setup.ps1", "scripts/dev/setup.sh", "scripts/dev/test-setup.ps1", "scripts/dev/test-setup.sh", "bootstrap/toolchains.json", "docs/decisions/0001-seed-toolchain.md"], "status": "completed" },
-    { "task_id": "T05", "owner": "/root/frontend", "branch": "agent/frontend-T05", "worktree": "../naja-worktrees/frontend", "paths": ["bootstrap/frontend/", "tests/syntax/"], "status": "completed" },
-    { "task_id": "T04", "owner": "/root/planning_validation", "branch": "agent/planning-validation-T04", "worktree": "../naja-worktrees/planning-validation", "paths": ["scripts/validation/", "tests/planning/"], "status": "completed" },
-    { "task_id": "T04", "owner": "/root/seed_setup", "branch": "agent/seed-setup-T02", "worktree": "../naja-worktrees/seed-setup", "paths": ["scripts/validation/", "tests/planning/"], "status": "active" },
-    { "task_id": "T05", "owner": "/root/planning_validation", "branch": "agent/planning-validation-T04", "worktree": "../naja-worktrees/planning-validation", "paths": ["compatibility/"], "status": "active" },
-    { "task_id": "T03", "owner": "/root", "branch": "agent/integrator-H0", "worktree": ".", "paths": ["README.md", "LICENSE", "NOTICE", "CONTRIBUTING.md", "SECURITY.md", "CODE_OF_CONDUCT.md", ".github/", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml", ".gitattributes", ".gitignore", "bootstrap/driver/", "backends/native/", "tests/native/", "scripts/test-native.mjs", "scripts/record-check.ps1", "bootstrap/README.md", "docs/decisions/0002-native-seed-spike.md"], "status": "active" }
+    {
+      "task_id": "T01",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "worktree": ".",
+      "paths": [
+        "launch/",
+        "planning/",
+        "reports/environment/",
+        "scripts/dev/inventory.ps1"
+      ],
+      "status": "active"
+    },
+    {
+      "task_id": "T02",
+      "owner": "/root/seed_setup",
+      "branch": "agent/seed-setup-T02",
+      "worktree": "../naja-worktrees/seed-setup",
+      "paths": [
+        "scripts/dev/setup.ps1",
+        "scripts/dev/setup.sh",
+        "scripts/dev/test-setup.ps1",
+        "scripts/dev/test-setup.sh",
+        "bootstrap/toolchains.json",
+        "docs/decisions/0001-seed-toolchain.md"
+      ],
+      "status": "completed"
+    },
+    {
+      "task_id": "T05",
+      "owner": "/root/frontend",
+      "branch": "agent/frontend-T05",
+      "worktree": "../naja-worktrees/frontend",
+      "paths": [
+        "bootstrap/frontend/",
+        "tests/syntax/"
+      ],
+      "status": "completed"
+    },
+    {
+      "task_id": "T04",
+      "owner": "/root/planning_validation",
+      "branch": "agent/planning-validation-T04",
+      "worktree": "../naja-worktrees/planning-validation",
+      "paths": [
+        "scripts/validation/",
+        "tests/planning/"
+      ],
+      "status": "completed"
+    },
+    {
+      "task_id": "T04",
+      "owner": "/root/seed_setup",
+      "branch": "agent/seed-setup-T02",
+      "worktree": "../naja-worktrees/seed-setup",
+      "paths": [
+        "scripts/validation/",
+        "tests/planning/"
+      ],
+      "status": "completed"
+    },
+    {
+      "task_id": "T05",
+      "owner": "/root/planning_validation",
+      "branch": "agent/planning-validation-T04",
+      "worktree": "../naja-worktrees/planning-validation",
+      "paths": [
+        "compatibility/"
+      ],
+      "status": "completed"
+    },
+    {
+      "task_id": "T03",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "worktree": ".",
+      "paths": [
+        "README.md",
+        "LICENSE",
+        "NOTICE",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "CODE_OF_CONDUCT.md",
+        ".github/",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        ".gitattributes",
+        ".gitignore",
+        "bootstrap/driver/",
+        "backends/native/",
+        "tests/native/",
+        "scripts/test-native.mjs",
+        "scripts/record-check.ps1",
+        "bootstrap/README.md",
+        "docs/decisions/0002-native-seed-spike.md"
+      ],
+      "status": "active"
+    }
   ],
   "coordination": "Single integrator allocates and merges. This file alone is not a distributed lock."
 }

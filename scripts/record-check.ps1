@@ -14,6 +14,11 @@ try {
     if ($RequirementId -notin $requirements.requirements.id) { throw 'Unknown requirement ID' }
     $commit = (& git rev-parse HEAD).Trim()
     if ($LASTEXITCODE -ne 0) { throw 'Cannot identify source commit' }
+    $trackedChanges = & git status --porcelain --untracked-files=no
+    $untracked = @(& git ls-files --others --exclude-standard)
+    if ($trackedChanges -or ($untracked | Where-Object { -not $_.StartsWith('reports/checks/') })) {
+        throw 'Commit source changes before recording checks; only new reports/checks artifacts may be untracked'
+    }
     $directory = Join-Path $root 'reports/checks'
     [System.IO.Directory]::CreateDirectory($directory) | Out-Null
     $logPath = Join-Path $directory "$Name.log"
@@ -27,7 +32,8 @@ try {
     if ($null -eq $code) { throw 'Command did not provide a process exit code' }
     $sanitized = $captured.Replace($root, '<workspace>').Replace($root.Replace('\','/'), '<workspace>')
     if ($env:USERPROFILE) { $sanitized = $sanitized.Replace($env:USERPROFILE, '<user>').Replace($env:USERPROFILE.Replace('\','/'), '<user>') }
-    [System.IO.File]::WriteAllText($logPath, $sanitized, [System.Text.UTF8Encoding]::new($false))
+    $log = "Recorded command: $Tool $($ToolArguments -join ' ')`nRecorded exit code: $code`n--- captured output ---`n$sanitized"
+    [System.IO.File]::WriteAllText($logPath, $log, [System.Text.UTF8Encoding]::new($false))
     $record = [ordered]@{
         requirement_id = $RequirementId
         commit = $commit

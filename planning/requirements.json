@@ -23,7 +23,7 @@
       "spec": "docs/11_ENVIRONMENT_GITHUB.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
+      "status": "implemented",
       "evidence": []
     },
     {
@@ -34,7 +34,7 @@
       "spec": "docs/11_ENVIRONMENT_GITHUB.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
+      "status": "implemented",
       "evidence": []
     },
     {
@@ -67,7 +67,7 @@
       "spec": "docs/11_ENVIRONMENT_GITHUB.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
+      "status": "implemented",
       "evidence": []
     },
     {
@@ -78,8 +78,10 @@
       "spec": "docs/11_ENVIRONMENT_GITHUB.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
-      "evidence": []
+      "status": "verified",
+      "evidence": [
+        "reports/checks/h0-inventory.json"
+      ]
     },
     {
       "id": "ENV-02",
@@ -89,8 +91,11 @@
       "spec": "docs/11_ENVIRONMENT_GITHUB.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
-      "evidence": []
+      "status": "implemented",
+      "evidence": [
+        "reports/checks/seed-setup-windows.json",
+        "reports/checks/seed-setup-shell-fixtures.json"
+      ]
     },
     {
       "id": "ENV-03",
@@ -210,8 +215,12 @@
       "spec": "docs/03_LANGUAGE_AND_COMPATIBILITY.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
-      "evidence": []
+      "status": "in_progress",
+      "evidence": [
+        "reports/checks/seed-rust-tests.json",
+        "reports/checks/seed-format-recorded.json",
+        "reports/checks/seed-clippy.json"
+      ]
     },
     {
       "id": "CMP-03",
@@ -540,8 +549,11 @@
       "spec": "docs/05_ARCHITECTURE.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
-      "evidence": []
+      "status": "in_progress",
+      "evidence": [
+        "reports/checks/seed-offline-build.json",
+        "reports/checks/seed-native-execution.json"
+      ]
     },
     {
       "id": "BE-03",
@@ -1002,8 +1014,11 @@
       "spec": "docs/14_RELEASE_ACCEPTANCE.md",
       "release_required": true,
       "origin": "design",
-      "status": "not_started",
-      "evidence": []
+      "status": "in_progress",
+      "evidence": [
+        "reports/checks/planning-mutation-tests.json",
+        "reports/checks/planning-integrity-initial.json"
+      ]
     },
     {
       "id": "QA-05",

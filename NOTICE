@@ -10,3 +10,9 @@ Their licenses and official origins are inventoried in bootstrap/toolchains.json
 
 This notice is an initial provenance record, not a completed release SBOM or
 assurance that future dependencies have already been audited.
+
+Python Software Foundation and contributors provide the upstream Python 3.15.0
+language/grammar reference. compatibility/baseline.json identifies and hashes
+its pinned LICENSE and source references. Only production identifiers, source
+coordinates and audit metadata are retained here; upstream implementation code
+and grammar rule bodies are not copied or relicensed.

@@ -20,8 +20,10 @@ The inventory script records private paths only under ignored `launch/local/`.
 The GitHub connector resolves the authorized public account `ramzimhd`.
 `ramzimhd/naja-lang` returned 404; this was an availability observation, not
 repository creation. GitHub CLI and browser were signed out. Git Credential
-Manager lists the same account; stored credentials were not extracted. Public
-repository creation awaits a working authorized login. The owner explicitly
+Manager lists the same account. After the device-flow login remained pending,
+the configured Git credential helper supplied authentication directly to an
+ephemeral CLI environment; no token was displayed or written into project files.
+The CLI API independently confirmed the same account ID. The owner explicitly
 selected Apache-2.0 in this session.
 
 No elevation, firewall change, reboot, paid service or Python installation was

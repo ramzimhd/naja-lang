@@ -10,10 +10,12 @@
         "launch/local/"
       ],
       "primary_requirement": "ENV-01",
-      "status": "in_progress",
+      "status": "verified",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": []
+      "evidence": [
+        "reports/checks/h0-inventory.json"
+      ]
     },
     {
       "id": "T02",
@@ -30,7 +32,10 @@
       "status": "in_progress",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": []
+      "evidence": [
+        "reports/checks/seed-setup-windows.json",
+        "reports/checks/seed-setup-shell-fixtures.json"
+      ]
     },
     {
       "id": "T03",
@@ -67,7 +72,10 @@
       "status": "in_progress",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": []
+      "evidence": [
+        "reports/checks/planning-mutation-tests.json",
+        "reports/checks/planning-integrity-initial.json"
+      ]
     },
     {
       "id": "T05",
@@ -84,7 +92,9 @@
       "status": "in_progress",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": []
+      "evidence": [
+        "reports/checks/seed-rust-tests.json"
+      ]
     },
     {
       "id": "T06",

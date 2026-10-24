@@ -1,0 +1,9 @@
+[PATH] rustup <user>\.cargo\bin\rustup.exe
+[PATH] git C:\Program Files\Git\cmd\git.exe
+[PASS] real-seed-check expected=0 actual=0
+[PASS] reject-wrong-cargo-pin expected=1 actual=1
+[PASS] reject-malformed-pin expected=2 actual=2
+[PASS] missing-exact-toolchain-dry-run expected=1 actual=1
+[PASS] sufficient-install-no-op expected=0 actual=0
+[PASS] rustup-settings-and-inventory-unchanged
+All six Windows setup checks passed. Native linking and product acceptance are separate checks.

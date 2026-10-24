@@ -1,0 +1,28 @@
+{
+  "requirement_id": "BE-02",
+  "commit": "d9846dd83389562841beea040061e56d1ff95508",
+  "target": "x86_64-pc-windows-msvc",
+  "command": [
+    "cargo",
+    "build",
+    "--workspace",
+    "--locked",
+    "--offline"
+  ],
+  "tool_versions": {
+    "powershell": "7.6.4",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "git": "git version 2.51.0.windows.1",
+    "node": "v24.11.0"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:14:35.7878446+00:00",
+  "log_path": "reports/checks/seed-offline-build.log",
+  "log_sha256": "171c0f65babfc4727788943326a107f6d466d1aef68eeba6f3f5d9dcd1e41304",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

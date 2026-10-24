@@ -5,11 +5,20 @@
   "development_started": true,
   "current_gate": "H0",
   "repository_url": null,
-  "last_verified_commit": null,
-  "active_tasks": ["T01", "T02", "T03", "T04", "T05"],
-  "blockers": ["Public repository creation awaits workspace GitHub CLI device authorization.", "T02 native Linux/macOS installation verification and installer mutation paths remain not_run.", "HATCH complete grammar, hosted semantics, autonomy, cells, VSIX and productivity gates remain open."],
-  "last_checkpoint": null,
-  "note": "Development started from preserved specification commit 684f59efb35ec10e5fa43026e616c3df358108ea. Experimental explicit-i64 frontend/native spike implemented; pending integrated evidence. Early T04/T05 groundwork does not satisfy incomplete predecessor tasks. No HATCH release, self-hosting, VSIX or productivity result is claimed.",
+  "last_verified_commit": "9b1eb39c7f95c37368988598be8930ac9a578e34",
+  "active_tasks": [
+    "T02",
+    "T03",
+    "T04",
+    "T05"
+  ],
+  "blockers": [
+    "Public repository creation awaits workspace GitHub CLI device authorization.",
+    "T02 native Linux/macOS installation verification and installer mutation paths remain not_run.",
+    "HATCH complete grammar, hosted semantics, autonomy, cells, VSIX and productivity gates remain open."
+  ],
+  "last_checkpoint": "2026-10-24T13:18:06.3516081+00:00",
+  "note": "T01/ENV-01 verified with exact command/log. Seed source tests and independent ELF execution passed, scoped to explicit i64. Shell setup fixture checks do not verify native Linux/macOS installation. Full grammar, autonomy, cells, VSIX and productivity remain incomplete.",
   "official_language": "en",
   "package_revision": "1.2"
 }

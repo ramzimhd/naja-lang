@@ -1,0 +1,32 @@
+{
+  "requirement_id": "CMP-02",
+  "commit": "d9846dd83389562841beea040061e56d1ff95508",
+  "target": "x86_64-pc-windows-msvc",
+  "command": [
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "--offline",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "tool_versions": {
+    "node": "v24.11.0",
+    "powershell": "7.6.4",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "git": "git version 2.51.0.windows.1"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:15:12.7222386+00:00",
+  "log_path": "reports/checks/seed-clippy.log",
+  "log_sha256": "15d07e0a160c151a1c4f4e5bc1d934afb52a8afb3cc776f08af2d4cb500b6f8d",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

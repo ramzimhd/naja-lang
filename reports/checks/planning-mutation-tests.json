@@ -1,0 +1,26 @@
+{
+  "requirement_id": "QA-04",
+  "commit": "9ab66857ee5a1e636182de19c4746e47ab1c2b18",
+  "target": "windows-x64-node24",
+  "command": [
+    "node",
+    "--test",
+    "tests/planning/*.test.mjs"
+  ],
+  "tool_versions": {
+    "node": "v24.11.0",
+    "git": "git version 2.51.0.windows.1",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "powershell": "7.6.4",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-24T13:15:46.1857243+00:00",
+  "log_path": "reports/checks/planning-mutation-tests.log",
+  "log_sha256": "739c5f29b0e00f591797cfe00deeea77219eecb2fcb44ae37f0a47e675e8ade3",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

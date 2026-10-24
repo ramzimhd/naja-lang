@@ -1,0 +1,45 @@
+✔ baseline reports the actual scope and no fabricated verification (275.519ms)
+✔ rejects duplicate IDs in requirements (231.43ms)
+✔ rejects duplicate IDs in tasks (239.6374ms)
+✔ rejects duplicate IDs in release-gates (262.2322ms)
+✔ rejects an unknown implementation status (268.0666ms)
+✔ rejects missing task dependencies and primary requirements (281.9149ms)
+✔ rejects direct and indirect dependency cycles (331.505ms)
+✔ rejects missing gates and mismatched bidirectional requirement mappings (264.9135ms)
+✔ rejects missing gate requirements and duplicate references (329.5629ms)
+✔ rejects removing an obligation or reclassifying mandatory scope (268.7332ms)
+✔ permits additive IDs without resetting earlier scope (300.3502ms)
+✔ rejects missing specification files and malformed planning JSON (448.6917ms)
+✔ rejects active development without exactly one integrator (499.0754ms)
+✔ permits distinct confirmed paths for contributors on the same task (334.4208ms)
+✔ rejects cross-owner path overlap including case differences and parent scopes (324.9228ms)
+✔ does not confuse adjacent directories with overlapping scopes (349.9413ms)
+✔ rejects shared branches or worktrees across active owners (437.2947ms)
+✔ rejects equivalent ownership scopes with repeated separators (435.0917ms)
+✔ rejects equivalent worktrees with case and separator differences (341.1659ms)
+✔ completed assignments do not reserve active paths (362.9518ms)
+✔ rejects path traversal and unsupported ownership globs (331.9028ms)
+✔ rejects missing active tasks and malformed collection values without crashing (483.1733ms)
+✔ rejects verified requirements, tasks and gates without passed evidence (441.6387ms)
+✔ implemented status does not claim verification or require invented evidence (412.6501ms)
+✔ rejects missing evidence records even for an unverified subject (429.8758ms)
+✔ valid retained passed evidence supports a matching verified requirement and task (434.3094ms)
+✔ failed and not_run records are retained but do not establish verified status (1454.8633ms)
+✔ rejects a passed record with a nonzero exit or no retained log (615.7053ms)
+✔ rejects a tampered or empty retained log (503.4014ms)
+✔ rejects evidence logs outside the repository through traversal or a junction (536.5102ms)
+✔ rejects evidence for a different requirement or task primary requirement (563.426ms)
+✔ honors evidence schema required fields, types and additionalProperties false (340.172ms)
+✔ rejects truncated or overlong commit hashes between SHA-1 and SHA-256 lengths (860.7588ms)
+✔ fails closed when evidence schema adds unsupported constraints (391.0344ms)
+✔ rejects impossible calendar dates rather than normalizing them into another month (473.5053ms)
+✔ a verified gate needs passed evidence for every verified mapped requirement (560.2719ms)
+✔ CLI returns distinct success, validation failure and usage error exits (736.3819ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16333.3791

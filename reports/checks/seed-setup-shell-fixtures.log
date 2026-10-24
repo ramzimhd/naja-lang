@@ -1,0 +1,11 @@
+[PASS] baseline expected=0 actual=0
+[PASS] idempotent expected=0 actual=0
+[PASS] reject-punctuation expected=1 actual=1
+[PASS] reject-wrong-cargo expected=1 actual=1
+[PASS] missing-component-dry-run expected=1 actual=1
+[PASS] reject-lookalike-toolchain expected=1 actual=1
+[PASS] reject-custom-origin expected=2 actual=2
+[PASS] reject-checksum expected=2 actual=2
+[PASS] invalid-manifest-pin expected=2 actual=2
+[PASS] invalid-scope expected=2 actual=2
+All 10 offline setup-logic checks passed. Fixtures do not verify actual Linux/macOS toolchain availability.
