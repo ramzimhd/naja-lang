@@ -1,3 +1,5 @@
 * text=auto eol=lf
 *.png binary
 *.docx binary
+# Evidence hashes cover retained bytes, including original line endings.
+reports/checks/*.log -text
