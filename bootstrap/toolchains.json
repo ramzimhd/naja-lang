@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "verified_on": "2026-10-24",
+  "rust_version": "1.97.1",
+  "cargo_version": "1.97.1",
+  "rust_profile": "minimal",
+  "rust_components": "rustfmt,clippy",
+  "git_version": "2.51.0",
+  "node_version": "24.11.0",
+  "npm_version": "11.6.1",
+  "code_version": "1.142.0",
+  "gh_version": "2.95.0",
+  "rust_manifest_url": "https://static.rust-lang.org/dist/channel-rust-1.97.1.toml",
+  "rust_manifest_sha256": "03569b1886ceb5c05276b50c8431ab111de944cd6140fe1fa7d821dd8e0f29cf",
+  "targets": [
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu",
+    "aarch64-apple-darwin"
+  ],
+  "node_archives": [
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "url": "https://nodejs.org/dist/v24.11.0/node-v24.11.0-win-x64.zip",
+      "sha256": "1054540bce22b54ec7e50ebc078ec5d090700a77657607a58f6a64df21f49fdd"
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "url": "https://nodejs.org/dist/v24.11.0/node-v24.11.0-linux-x64.tar.xz",
+      "sha256": "46da9a098973ab7ba4fca76945581ecb2eaf468de347173897044382f10e0a0a"
+    },
+    {
+      "target": "aarch64-apple-darwin",
+      "url": "https://nodejs.org/dist/v24.11.0/node-v24.11.0-darwin-arm64.tar.gz",
+      "sha256": "0be2ab2816a4fa02d1acff014a434f29f56d8d956f5af6a98b70ced6c5f4d201"
+    }
+  ],
+  "references": {
+    "rustup": "https://rust-lang.github.io/rustup/installation/index.html",
+    "rust_toolchains": "https://rust-lang.github.io/rustup/concepts/toolchains.html",
+    "rust_license": "https://github.com/rust-lang/rust/blob/1.97.1/COPYRIGHT",
+    "node_release": "https://nodejs.org/en/blog/release/v24.11.0",
+    "node_checksums": "https://nodejs.org/dist/v24.11.0/SHASUMS256.txt",
+    "node_license": "https://github.com/nodejs/node/blob/v24.11.0/LICENSE",
+    "npm_release": "https://github.com/npm/cli/releases/tag/v11.6.1",
+    "npm_license": "https://github.com/npm/cli/blob/v11.6.1/LICENSE",
+    "git": "https://git-scm.com/install/",
+    "git_release": "https://github.com/git/git/releases/tag/v2.51.0",
+    "git_license": "https://github.com/git/git/blob/v2.51.0/COPYING",
+    "github_cli": "https://github.com/cli/cli/releases/tag/v2.95.0",
+    "github_cli_license": "https://github.com/cli/cli/blob/v2.95.0/LICENSE",
+    "vscode": "https://code.visualstudio.com/updates/v1_142",
+    "vscode_license": "https://code.visualstudio.com/license"
+  },
+  "limits": [
+    "Pins describe the selected development environment, not a NAJA distribution dependency closure.",
+    "Existing binaries are checked for reported versions; this does not authenticate their original installers.",
+    "Node archive checksums are provenance records only; setup does not install Node or run npm installers.",
+    "Rustup verifies component downloads; setup checks the pinned release manifest before an explicit Rust installation.",
+    "Git, GitHub CLI and VS Code are inspected and never automatically replaced by setup.",
+    "Native linker/SDK functionality and product acceptance require separate executed build tests."
+  ]
+}
