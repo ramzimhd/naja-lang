@@ -27,7 +27,9 @@ An active development state requires one `integrator` identity string in
 `completed`, `released` and `expired` do not reserve paths. Separate active owners
 need distinct branches and worktrees and non-overlapping path scopes. Scopes are
 repository-relative files or directories, optionally ending with `/**`. Matching
-is case insensitive so conflicts visible on Windows are also rejected on Linux.
+is case insensitive and collapses repeated path separators so conflicts visible
+on Windows are also rejected on Linux. Worktree identities normalize slash
+direction and case under the same portable coordination policy.
 The validator checks coordination metadata; it does not create an atomic
 reservation, confirm a worktree's existence or act as a distributed lock.
 
@@ -51,7 +53,8 @@ using the requirement's evidence or the gate's own references. Historical failed
 records may coexist with later successful records. The validator does not infer
 which result supersedes another.
 
-The checker validates commit syntax, not Git object existence, execution honesty,
+The checker accepts only full 40-character SHA-1 or 64-character SHA-256 lowercase
+commit hashes. It validates syntax, not Git object existence, execution honesty,
 release-commit coverage, source/log provenance or sufficient behavioral coverage.
 Those require review and reproducible execution under documents 13 and 14.
 Synthetic logs in unit-test temporary directories exercise rejection behavior and

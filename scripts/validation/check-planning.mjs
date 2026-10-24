@@ -20,7 +20,7 @@ const pad = number => String(number).padStart(2, '0');
 const isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const nonempty = value => typeof value === 'string' && value.trim().length > 0;
 const arrayOrEmpty = value => Array.isArray(value) ? value : [];
-const hashPattern = /^[0-9a-f]{40,64}$/;
+const hashPattern = /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/;
 const schemaKeywords = new Set([
   '$schema', 'title', 'description', 'type', 'required', 'properties',
   'additionalProperties', 'items', 'minItems', 'enum', 'pattern', 'format',
@@ -41,7 +41,7 @@ function scopePath(root, value) {
   const normalized = value?.replaceAll('\\', '/').replace(/\/\*\*$/, '/');
   repositoryPath(root, normalized);
   if (/[?*\[\]{}]/.test(normalized)) throw new Error('only a trailing /** scope is supported');
-  return normalized.replace(/\/+$/, '').toLowerCase();
+  return path.posix.normalize(normalized).replace(/\/+$/, '').toLowerCase();
 }
 
 function pathOverlaps(left, right) {
@@ -307,7 +307,8 @@ export function validatePlanning(rootDirectory) {
       const a = activeAssignments[left];
       const b = activeAssignments[right];
       if (a.owner === b.owner) continue;
-      const worktreeOf = assignment => path.resolve(root, typeof assignment.worktree === 'string' ? assignment.worktree : '');
+      const worktreeOf = assignment => path.resolve(root,
+        typeof assignment.worktree === 'string' ? assignment.worktree.replaceAll('\\', '/') : '').toLowerCase();
       if (a.branch === b.branch || worktreeOf(a) === worktreeOf(b)) {
         error('assignment_isolation', `${a.location} and ${b.location} share a branch or worktree across owners`);
       }
@@ -339,6 +340,7 @@ export function validatePlanning(rootDirectory) {
     for (const field of ['target', 'commit', 'timestamp']) {
       if (!nonempty(record[field])) error('evidence_record', `${reference}.${field} must be nonempty`);
     }
+    if (!hashPattern.test(record.commit ?? '')) error('evidence_record', `${reference}.commit must be a full lowercase SHA-1 or SHA-256 commit hash`);
     if (!Array.isArray(record.command) || record.command.some(value => !nonempty(value))) error('evidence_record', `${reference}.command must contain nonempty command arguments`);
     if (!isObject(record.tool_versions) || Object.keys(record.tool_versions).length === 0
         || Object.values(record.tool_versions).some(value => !nonempty(value))) {

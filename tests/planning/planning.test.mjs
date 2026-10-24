@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -234,6 +234,30 @@ test('rejects shared branches or worktrees across active owners', t => {
   rejects(root, 'assignment_isolation');
 });
 
+test('rejects equivalent ownership scopes with repeated separators', t => {
+  const root = fixture(t);
+  edit(root, 'assignments', document => {
+    document.integrator = 'agent-a';
+    document.assignments = [
+      assignment('agent-a', 'branch-a', '../worktree-a', ['scripts/validation/']),
+      assignment('agent-b', 'branch-b', '../worktree-b', ['scripts//validation/']),
+    ];
+  });
+  rejects(root, 'path_overlap');
+});
+
+test('rejects equivalent worktrees with case and separator differences', t => {
+  const root = fixture(t);
+  edit(root, 'assignments', document => {
+    document.integrator = 'agent-a';
+    document.assignments = [
+      assignment('agent-a', 'branch-a', '../Worktree-a', ['scripts/dev/']),
+      assignment('agent-b', 'branch-b', '..\\worktree-A', ['scripts/validation/']),
+    ];
+  });
+  rejects(root, 'assignment_isolation');
+});
+
 test('completed assignments do not reserve active paths', t => {
   const root = fixture(t);
   edit(root, 'assignments', document => {
@@ -338,6 +362,24 @@ test('rejects a tampered or empty retained log', t => {
   rejects(root, 'false_pass');
 });
 
+test('rejects evidence logs outside the repository through traversal or a junction', t => {
+  const root = fixture(t);
+  const outside = mkdtempSync(path.join(os.tmpdir(), 'naja-planning-outside-test-'));
+  t.after(() => {
+    const absolute = path.resolve(outside);
+    assert.equal(path.dirname(absolute), path.resolve(os.tmpdir()));
+    assert.ok(path.basename(absolute).startsWith('naja-planning-outside-test-'));
+    rmSync(absolute, { recursive: true, force: true });
+  });
+  writeFileSync(path.join(outside, 'external.log'), 'Synthetic external log; not acceptance evidence.\n');
+  const escaped = path.relative(root, path.join(outside, 'external.log')).replaceAll('\\', '/');
+  verifiedRequirement(root, 'GOV-01', evidence(root, 'GOV-01', record => { record.log_path = escaped; record.log_sha256 = null; }));
+  rejects(root, 'file_reference');
+  symlinkSync(outside, path.join(root, 'reports/evidence/external'), 'junction');
+  evidence(root, 'GOV-01', record => { record.log_path = 'reports/evidence/external/external.log'; record.log_sha256 = null; });
+  rejects(root, 'file_reference');
+});
+
 test('rejects evidence for a different requirement or task primary requirement', t => {
   const root = fixture(t);
   const reference = evidence(root, 'GOV-02');
@@ -357,6 +399,20 @@ test('honors evidence schema required fields, types and additionalProperties fal
   }));
   const result = rejects(root, 'evidence_schema');
   assert.ok(result.errors.filter(error => error.code === 'evidence_schema').length >= 3);
+});
+
+test('rejects truncated or overlong commit hashes between SHA-1 and SHA-256 lengths', t => {
+  const root = fixture(t);
+  verifiedRequirement(root, 'GOV-01', evidence(root, 'GOV-01', record => { record.commit = 'a'.repeat(41); }));
+  rejects(root, 'evidence_record');
+  evidence(root, 'GOV-01', record => { record.commit = 'a'.repeat(63); });
+  rejects(root, 'evidence_record');
+  evidence(root, 'GOV-01', record => { record.commit = 'a'.repeat(64); });
+  assert.equal(validatePlanning(root).ok, true);
+  edit(root, 'state', document => { document.last_verified_commit = 'a'.repeat(41); });
+  rejects(root, 'state');
+  edit(root, 'state', document => { document.last_verified_commit = 'a'.repeat(64); });
+  assert.equal(validatePlanning(root).ok, true);
 });
 
 test('fails closed when evidence schema adds unsupported constraints', t => {
