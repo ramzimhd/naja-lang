@@ -1,0 +1,625 @@
+{
+  "schema_version": 1,
+  "project": "NAJA",
+  "generation": "HATCH",
+  "stage": "B0",
+  "status": "partial-seed-inventory",
+  "source_commit": "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+  "report": "reports/independence-seed.json",
+  "scope": "Experimental Rust debug seed and one emitted Linux ELF; no release or final autonomous closure claim.",
+  "source_hash_policy": "Raw Git blob bytes at the pinned source commit, not newline-converted checkout text.",
+  "source_files": [
+    {
+      "path": "Cargo.toml",
+      "role": "seed-build-source",
+      "git_blob_sha1": "9bf949360133a2fb30518007fac02eebb7b8f22b",
+      "git_blob_bytes": 249,
+      "git_blob_sha256": "275d5333f331ae0348ee4af64120cf6ab35ecd16771a8d1bdc66ceff06d1cf8d"
+    },
+    {
+      "path": "Cargo.lock",
+      "role": "seed-build-source",
+      "git_blob_sha1": "eacb6fe88f8e552025df10eeff8d6b3e67356163",
+      "git_blob_bytes": 312,
+      "git_blob_sha256": "3ef9bd2bde0047b7df4ed166781b7bb0799f6b5cc9fbc452ab9092ba075e5c41"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "role": "seed-build-source",
+      "git_blob_sha1": "010f002cf56497ce0a1b4ac124a2e2d86a97bc3d",
+      "git_blob_bytes": 86,
+      "git_blob_sha256": "559f488c181e0e9e77cf17c29de663977f036ec7ff2e2060585714bf53c52d62"
+    },
+    {
+      "path": "bootstrap/driver/Cargo.toml",
+      "role": "seed-build-source",
+      "git_blob_sha1": "fb5bf045f3f2b1e0471934a5ef6e6dfcb53ce4a3",
+      "git_blob_bytes": 310,
+      "git_blob_sha256": "3f3d70018f54a91c2ad4b9fc4985ff5aed39cb4d7f2ef901d87c243451b9b053"
+    },
+    {
+      "path": "bootstrap/driver/src/main.rs",
+      "role": "seed-build-source",
+      "git_blob_sha1": "b6acd9fa9e0b10c2073e567a53199d1e57cf4ff0",
+      "git_blob_bytes": 7019,
+      "git_blob_sha256": "07dfa0f048d28700317ce4eeb5da4bf9601dc82be9f990d37f5df1d210d96c98"
+    },
+    {
+      "path": "bootstrap/driver/src/lib.rs",
+      "role": "seed-build-source",
+      "git_blob_sha1": "153112c1ec2a6a6d9c8cb3618c25798270d325e9",
+      "git_blob_bytes": 16065,
+      "git_blob_sha256": "1144ce47e005439cbe681b463d82403b702c5968ad3ce41f0864e4b0610088ee"
+    },
+    {
+      "path": "bootstrap/frontend/Cargo.toml",
+      "role": "seed-build-source",
+      "git_blob_sha1": "cd35cebea3daf35f74a5e7d8f4415101a4e6a57c",
+      "git_blob_bytes": 275,
+      "git_blob_sha256": "ebf4000633b4188ede0ceed92cbd692fd9fc1e4f2ea252c42564969d51e2838d"
+    },
+    {
+      "path": "bootstrap/frontend/src/lib.rs",
+      "role": "seed-build-source",
+      "git_blob_sha1": "157b56b74b18ecc66aba0dcd00e1c8a3aadf70e9",
+      "git_blob_bytes": 6325,
+      "git_blob_sha256": "4dc85c767325766aec26cfc669085ca5f63b92493d46fbfc241b0513c18c0258"
+    },
+    {
+      "path": "bootstrap/frontend/src/lexer.rs",
+      "role": "seed-build-source",
+      "git_blob_sha1": "98d61410650e20c02ffaa5f53ded1d1215452dc6",
+      "git_blob_bytes": 20796,
+      "git_blob_sha256": "e03d72b277fe9a1dc177de81ad0371e5865ce7a62e0d08253b966a4c7c2f5161"
+    },
+    {
+      "path": "backends/native/Cargo.toml",
+      "role": "seed-build-source",
+      "git_blob_sha1": "d7992a9a235e9b4fdaed9e5ff0eda201a80ed2d7",
+      "git_blob_bytes": 162,
+      "git_blob_sha256": "b7ba4ee4ab90e5a44bc2101d60e201b708b1ec9990742c29a4cfa405c1f3f360"
+    },
+    {
+      "path": "backends/native/src/lib.rs",
+      "role": "seed-build-source",
+      "git_blob_sha1": "56a51bd7d1ccdd66cb6d94540b164f860317b81a",
+      "git_blob_bytes": 12210,
+      "git_blob_sha256": "4cd09b581f562967d6f17046a3fbd7eb617c58f9388c6597ec43b0cc7286aeb3"
+    },
+    {
+      "path": "tests/native/fixtures/sum.py",
+      "role": "test-only",
+      "git_blob_sha1": "4fb00a02f5307d541417afa46cd58b4e686d62ff",
+      "git_blob_bytes": 293,
+      "git_blob_sha256": "2661b32c69b05edb3f67fe21dc98dfb4b54faad03c068ba5edbb4de3db4d6676"
+    },
+    {
+      "path": "tests/syntax/frontend.rs",
+      "role": "test-only",
+      "git_blob_sha1": "df3556d951a91adb54eeb0f610ab0f29b8198b21",
+      "git_blob_bytes": 18232,
+      "git_blob_sha256": "71c2b3f88686619ed7367132197d79d5af0eced7aff994d84370a1a36bf24634"
+    },
+    {
+      "path": "scripts/test-native.mjs",
+      "role": "test-only",
+      "git_blob_sha1": "b2c995165b30c71c7a7cfaf05d39f1825f417c43",
+      "git_blob_bytes": 7353,
+      "git_blob_sha256": "30451d6aa56f81db8a0ef8405665f602912de2f322ce2df15f37e6c207c07c00"
+    }
+  ],
+  "crate_graph": {
+    "packages": [
+      {
+        "name": "naja-frontend",
+        "version": "0.1.0",
+        "license": "Apache-2.0",
+        "manifest_path": "bootstrap/frontend/Cargo.toml",
+        "source": "workspace-path",
+        "edition": "2024",
+        "rust_version": "1.97.1",
+        "links": null,
+        "features": {},
+        "dependencies": [],
+        "targets": [
+          {
+            "name": "naja_frontend",
+            "kind": [
+              "lib"
+            ],
+            "crate_types": [
+              "lib"
+            ],
+            "source": "bootstrap/frontend/src/lib.rs"
+          },
+          {
+            "name": "syntax",
+            "kind": [
+              "test"
+            ],
+            "crate_types": [
+              "bin"
+            ],
+            "source": "tests/syntax/frontend.rs"
+          }
+        ]
+      },
+      {
+        "name": "naja-native",
+        "version": "0.0.1",
+        "license": "Apache-2.0",
+        "manifest_path": "backends/native/Cargo.toml",
+        "source": "workspace-path",
+        "edition": "2024",
+        "rust_version": "1.97.1",
+        "links": null,
+        "features": {},
+        "dependencies": [],
+        "targets": [
+          {
+            "name": "naja_native",
+            "kind": [
+              "lib"
+            ],
+            "crate_types": [
+              "lib"
+            ],
+            "source": "backends/native/src/lib.rs"
+          }
+        ]
+      },
+      {
+        "name": "naja-seed",
+        "version": "0.0.1",
+        "license": "Apache-2.0",
+        "manifest_path": "bootstrap/driver/Cargo.toml",
+        "source": "workspace-path",
+        "edition": "2024",
+        "rust_version": "1.97.1",
+        "links": null,
+        "features": {},
+        "dependencies": [
+          {
+            "name": "naja-frontend",
+            "kind": "normal",
+            "optional": false,
+            "source": "workspace-path",
+            "path": "bootstrap/frontend"
+          },
+          {
+            "name": "naja-native",
+            "kind": "normal",
+            "optional": false,
+            "source": "workspace-path",
+            "path": "backends/native"
+          }
+        ],
+        "targets": [
+          {
+            "name": "naja_seed",
+            "kind": [
+              "lib"
+            ],
+            "crate_types": [
+              "lib"
+            ],
+            "source": "bootstrap/driver/src/lib.rs"
+          },
+          {
+            "name": "naja",
+            "kind": [
+              "bin"
+            ],
+            "crate_types": [
+              "bin"
+            ],
+            "source": "bootstrap/driver/src/main.rs"
+          }
+        ]
+      }
+    ],
+    "resolve_nodes": [
+      {
+        "name": "naja-frontend",
+        "dependencies": [],
+        "features": []
+      },
+      {
+        "name": "naja-native",
+        "dependencies": [],
+        "features": []
+      },
+      {
+        "name": "naja-seed",
+        "dependencies": [
+          "naja-frontend",
+          "naja-native"
+        ],
+        "features": []
+      }
+    ],
+    "external_registry_or_git_packages": 0,
+    "custom_build_targets": 0,
+    "proc_macro_targets": 0,
+    "native_links_declarations": 0,
+    "limitation": "Cargo metadata omits Rust sysroot/compiler internals, host SDK/linker and OS dependencies."
+  },
+  "temporary_seed_toolchain": {
+    "host": "x86_64-pc-windows-msvc",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "rustdoc": "rustdoc 1.97.1 (8bab26f4f 2026-07-14)",
+    "profile": "minimal",
+    "components": [
+      "rustfmt",
+      "clippy"
+    ],
+    "provenance_manifest": "bootstrap/toolchains.json",
+    "executable_files": [
+      {
+        "path": "bin/rustc.exe",
+        "bytes": 110592,
+        "sha256": "cf79cfd77b0a144c56a0a6af6bf10bcdf095a73718cd4bf2b9d4fe2d2cbded55"
+      },
+      {
+        "path": "bin/cargo.exe",
+        "bytes": 31278592,
+        "sha256": "ddfbad20b31b918d3439d070945ec59bbfe037a6ec0ab5b584459e69c8b37d1b"
+      },
+      {
+        "path": "bin/rustdoc.exe",
+        "bytes": 11912192,
+        "sha256": "0c6ccda72363b77afc177b2c9a75ced422e3b88c0930ec1aab552e83a40e381e"
+      }
+    ],
+    "installed_target_support_files": [
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/liballoc-87fb57237703c7e7.rlib",
+        "bytes": 667476,
+        "sha256": "b15f4542d933be7d67d88ce0df84b52a29b374708fcaad6231a6295ca67db9c4"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/liballoc-87fb57237703c7e7.rmeta",
+        "bytes": 7406698,
+        "sha256": "73b8576352f459d9d13ae60e842467dd8cf681a2bb040b00b42a3573156b9528"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libcfg_if-17b5feb2688e8da7.rlib",
+        "bytes": 4280,
+        "sha256": "3f6a7d0f59ba8394c3191c96c51bbd517910cfb34d3c72e6a0e553c45b93acb7"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libcfg_if-17b5feb2688e8da7.rmeta",
+        "bytes": 5503,
+        "sha256": "14a70d32a5d2f9353bc6cb31bf700e5c1d1e162f0b3726a6be963c41eb759f3a"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libcompiler_builtins-ce654cf527ce7df8.rlib",
+        "bytes": 3059590,
+        "sha256": "5c2ba0181a45744d4cc1eca6369193443c4682ace39178920cf388ff19704e47"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libcompiler_builtins-ce654cf527ce7df8.rmeta",
+        "bytes": 1975489,
+        "sha256": "76c4955545a8b06c3ac0591828e1b8f0441c838688c2b3d3230b9c7daeb54a28"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libcore-cf5ef8f9edb2b6bd.rlib",
+        "bytes": 2314352,
+        "sha256": "3772dc2eb5376d705b81c2746d605fe556961dd38c9d778fc6b244b4923af9fb"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libcore-cf5ef8f9edb2b6bd.rmeta",
+        "bytes": 64186735,
+        "sha256": "1c4c02023a9ee46b61aea75cf56cb908dbbbaf15ab7cae2c1b054dd9bb368601"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libgetopts-63c87bf656180066.rlib",
+        "bytes": 523230,
+        "sha256": "840606f15ae132eb863e174ce6cd75e06d917bd185bd9934c336db1a88f06282"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libgetopts-63c87bf656180066.rmeta",
+        "bytes": 217503,
+        "sha256": "dc6ba0d00c109bd8d6a26bcd0e2dd0ead2c391a3ac7c2614f3063d206df70b31"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libhashbrown-d36d08601ec23735.rlib",
+        "bytes": 34540,
+        "sha256": "13db071b97c42c4848a8c7ccb20c66335af63c82104f796a9b66f9df06df86c9"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libhashbrown-d36d08601ec23735.rmeta",
+        "bytes": 1700301,
+        "sha256": "14ae059e4a1e286167782a3fe739c39d400f09304deacd387b170174e6d53fb5"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libpanic_abort-7bee198819d30888.rlib",
+        "bytes": 9030,
+        "sha256": "98449f4dc1e30e97b96b55e0085682ee3ca4006d5b293986b5190b440e546b0d"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libpanic_abort-7bee198819d30888.rmeta",
+        "bytes": 2906,
+        "sha256": "c67694621cd199aad865a4d008815fcc588c6798fedbdd684f7074be5bbafef1"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libpanic_unwind-f714b742ea2703a4.rlib",
+        "bytes": 29936,
+        "sha256": "140e27cb6243beab7a0b04b27f3e7557154b84ab2ba93a6fcdc37e052e803fad"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libpanic_unwind-f714b742ea2703a4.rmeta",
+        "bytes": 19464,
+        "sha256": "ca9b6f86ebc123cfa23ffbf4d116b42f305341298c3ba210ee13d577f31ca0a3"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libproc_macro-eb5361a424d20ef2.rlib",
+        "bytes": 2819072,
+        "sha256": "0ea4ce9377518b5f2cc002dca35c8ffb4690ee0abe053dd9886ce462165a694c"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libproc_macro-eb5361a424d20ef2.rmeta",
+        "bytes": 1100460,
+        "sha256": "3bd0311f8e56fa1fc47a31fe973b5a1e28f52babc92c86027e33207fb5d05e91"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libprofiler_builtins-b46d56135138cb58.rlib",
+        "bytes": 376468,
+        "sha256": "faed7f4988dad26f97d007af8a94b582284e1fc8831d393e6ee697a649a952b5"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libprofiler_builtins-b46d56135138cb58.rmeta",
+        "bytes": 1343,
+        "sha256": "69624356644db7ff797a7646c1f5cb8e19f10bde5d5992eeb2afef4543f6870f"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_demangle-2b049fac4bb9f18a.rlib",
+        "bytes": 217496,
+        "sha256": "4911acf9428ff5617dfaf757687b84ec44b3be0170db22623b0c650160a39f90"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_demangle-2b049fac4bb9f18a.rmeta",
+        "bytes": 90945,
+        "sha256": "2df0803a1df83512f22ac2865f95fa6d3b108b40a7a7fecb8fd93429bf7dce77"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_literal_escaper-3b135b62cfd31bf8.rlib",
+        "bytes": 4526,
+        "sha256": "20eecf937e136d641f837e7c687858505bfe50748c1949ab430da500aaf4a194"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_literal_escaper-3b135b62cfd31bf8.rmeta",
+        "bytes": 122843,
+        "sha256": "3f8a76aaed44c90d31e9e5b3a4a79cc7396b2fbfc6d6d73575de93aaa36e31dd"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_std_workspace_alloc-b37431f0b8bc51d4.rlib",
+        "bytes": 4662,
+        "sha256": "60c2b2824234065de8bd024dcac8f1da9e0f80716569899aa2602b1a8d4a5160"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_std_workspace_alloc-b37431f0b8bc51d4.rmeta",
+        "bytes": 2165,
+        "sha256": "877e9df5bf04fac02464c94f2d8d9c717a91aaec929d1ca45153a8917a966b11"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_std_workspace_core-60d1e6d1166a33b4.rlib",
+        "bytes": 4652,
+        "sha256": "86c4bc76d2d3722d7ec471a1d32c45d36dbf832e768107b34ad83faa4a85886e"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_std_workspace_core-60d1e6d1166a33b4.rmeta",
+        "bytes": 5937,
+        "sha256": "83651a6450a1f2431772edec4ab4e57c9faf252f466177d1c62b7ac162bd53b8"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_std_workspace_std-1aea871a990e777a.rlib",
+        "bytes": 4636,
+        "sha256": "b77783ee78a1babbb146db90840c1d7fe4ce10be671692a7729930b2f3047a90"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/librustc_std_workspace_std-1aea871a990e777a.rmeta",
+        "bytes": 6853,
+        "sha256": "6d4cfebebc16d94b8c4ea13d05bd15b0e580311f181b1015dd4266ac724901d8"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libstd-ad7efb1bc85901be.rlib",
+        "bytes": 5646442,
+        "sha256": "4680f4982f8a2dce11140fa9c3a48d9bc7130b7e0936c03ca458d6e180b2da34"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libstd-ad7efb1bc85901be.rmeta",
+        "bytes": 9584343,
+        "sha256": "607b34acb4ee0403c7bc32a441e5a6c10f921602b26e666e2b9cee921b3802a0"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libstd_detect-5f713681f2cbd266.rlib",
+        "bytes": 54702,
+        "sha256": "89aa6a2c88b93db1af08df1b95a9c016f39ae0b92a8e8bc901c74e4989f28528"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libstd_detect-5f713681f2cbd266.rmeta",
+        "bytes": 578953,
+        "sha256": "d66ac7b7b9c9d7587b90e90bf79cc592896090177bc707dc57ee2f5a61bbb1e4"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libsysroot-25bf08ec630a5d59.rlib",
+        "bytes": 4422,
+        "sha256": "983cbe30e3ead621fd4cba4ddc969b46d141e094fc0da7fec475e91edfbc4c14"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libsysroot-25bf08ec630a5d59.rmeta",
+        "bytes": 1961,
+        "sha256": "7c8992071d352274fc7b92cd1bbab004d7dc62147b6d7f8aac11f97094139e0f"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libtest-a55db7a77a277664.rlib",
+        "bytes": 5372796,
+        "sha256": "b97523c064732c32e322569fdb954a59f40859909a328b76853ee8f06442c293"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libtest-a55db7a77a277664.rmeta",
+        "bytes": 1022512,
+        "sha256": "6686f2f57582f5fcfa7771dc2f22ceae28d9362bf9141837b65dbd8cd4e97972"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libunwind-c0ec228d03fbdf58.rlib",
+        "bytes": 4410,
+        "sha256": "9d4f57be0990d21ecbad5c4f456e3023921d7911af5ee3af9f48f3307fc774e7"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libunwind-c0ec228d03fbdf58.rmeta",
+        "bytes": 1761,
+        "sha256": "75eee97fc343059ee9f880bb4ca46ccde175a51e0c6e8b6e8a98076cd5aedef0"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libwindows_link-e554f8198c348704.rlib",
+        "bytes": 4486,
+        "sha256": "bd6807f902778d399ece87c54b78d5af50ed40bb53fd3c2fc501c0bc5dc99ac2"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/libwindows_link-e554f8198c348704.rmeta",
+        "bytes": 3751,
+        "sha256": "b06723a3d23dad85f2d0c402b18200052f37be1ff888007286bbb9050a94bf5b"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/std-ad7efb1bc85901be.dll",
+        "bytes": 822784,
+        "sha256": "2761789c2b8403b9e73c7d0753f0d4e4438c79d30e2f4dc5a5999ee3089a2902"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/std-ad7efb1bc85901be.dll.lib",
+        "bytes": 769278,
+        "sha256": "b0be7430ffc903a17ba1c8249aee65968b6e7354c524d9afcbe12009024b1dce"
+      },
+      {
+        "path": "lib/rustlib/x86_64-pc-windows-msvc/lib/std-ad7efb1bc85901be.pdb",
+        "bytes": 5885952,
+        "sha256": "b26974adef8b89732f26429bc9d044492ec0a2eb9b9193a8bc3151adbe175456"
+      }
+    ],
+    "inventory_limit": "All files present in the selected target-libdir are inventoried. Presence does not prove each file was linked. Exact static members and the compiler toolchain transitive closure were not traced.",
+    "llvm_role": "LLVM 22.1.6 is part of the temporary prebuilt Rust compiler. The bounded NAJA emitter directly builds machine code and ELF bytes; it does not call LLVM APIs."
+  },
+  "host_native_tools": {
+    "observed_tools": [
+      {
+        "name": "dumpbin.exe",
+        "product_version": "14.51.36260.0",
+        "signature": "Valid",
+        "signer": "Microsoft Corporation",
+        "sha256": "357c989e1c926841df4e6e97c25a60b205b30110cd6db39bde8d81a627e48ebb"
+      },
+      {
+        "name": "link.exe",
+        "product_version": "14.51.36260.0",
+        "signature": "Valid",
+        "signer": "Microsoft Corporation",
+        "sha256": "a8c42e25c91ca2453e1110540ac08f0fc12d7539454a11b9af8baeecb469837d"
+      }
+    ],
+    "pe_linker_header_version": "14.51",
+    "installed_windows_sdk_versions": [
+      "10.0.19041.0",
+      "10.0.26100.0"
+    ],
+    "selected_sdk_version": null,
+    "limit": "PE headers report linker 14.51. The exact original linker command, selected SDK/import libraries and linker member inputs are not established by this inventory."
+  },
+  "seed_artifact": {
+    "path": "target/debug/naja.exe",
+    "bytes": 449536,
+    "sha256": "6e7d9286227998f429f62f5b3ff4173b47cca75aca19ca0d8ac1f35e53cd4b6b",
+    "format": "PE32+ x86-64 Windows console executable",
+    "profile": "debug; unoptimized with debuginfo",
+    "authenticode": "NotSigned",
+    "release": false,
+    "version_output": "naja 0.0.1 HATCH experimental Rust seed; native target Linux x86-64; no self-hosting claim",
+    "direct_pe_imports": [
+      "api-ms-win-core-synch-l1-2-0.dll",
+      "KERNEL32.dll",
+      "ntdll.dll",
+      "VCRUNTIME140.dll",
+      "api-ms-win-crt-runtime-l1-1-0.dll",
+      "api-ms-win-crt-math-l1-1-0.dll",
+      "api-ms-win-crt-stdio-l1-1-0.dll",
+      "api-ms-win-crt-locale-l1-1-0.dll",
+      "api-ms-win-crt-heap-l1-1-0.dll"
+    ],
+    "limit": "Direct static imports only; API-set forwarding, transitive DLLs and runtime loading were not exhaustively traced."
+  },
+  "emitted_artifact": {
+    "path": "target/native-execution-v3dInJ/sum.elf",
+    "input_path": "target/native-execution-v3dInJ/sum.py",
+    "input_sha256": "b8f151d114d2f2c885b75dd51dfd0bd50da42d0309e56185839ee132d5dfb549",
+    "bytes": 4596,
+    "sha256": "afe2943f64a1d41cfe357a51e3dcab9e4c0935d3759b9d72d0612b8ce7d2558e",
+    "target": "x86_64-unknown-linux-gnu",
+    "format": "ELF64 little-endian ET_EXEC x86-64",
+    "entry_point": "0x401000",
+    "program_headers": [
+      {
+        "type": "PT_LOAD",
+        "flags": "R E",
+        "file_size": 4596,
+        "memory_size": 4596,
+        "alignment": 4096
+      },
+      {
+        "type": "PT_GNU_STACK",
+        "flags": "RW",
+        "file_size": 0,
+        "memory_size": 0,
+        "alignment": 16
+      }
+    ],
+    "interpreter": null,
+    "dynamic_section": false,
+    "shared_library_dependencies": [],
+    "required_os_services": [
+      "Linux x86-64 ELF loader, process stack and inherited file descriptors",
+      "Linux x86-64 syscall write (1) to stdout/stderr and exit (60)"
+    ],
+    "source_call_path": [
+      "bootstrap/driver/src/main.rs:run",
+      "bootstrap/driver/src/lib.rs:compile",
+      "bootstrap/driver/src/lib.rs:check",
+      "backends/native/src/lib.rs:emit_elf"
+    ],
+    "limits": [
+      "Explicitly constructed checked i64 subset only; no hosted arbitrary-precision int or complete grammar.",
+      "Source at most 1 MiB; 128 locals; 128 expression levels; 64 suite levels; 10000 statements/operations.",
+      "No runtime loop quota or sandbox; user OS rights apply.",
+      "Fixed-base ET_EXEC and unsigned debug seed are not a hardened standalone release."
+    ]
+  },
+  "workflow_dependencies": {
+    "seed_build": [
+      "Pinned prebuilt Rust/Cargo and bundled target support",
+      "Host MSVC-compatible linker and Windows SDK/UCRT import libraries",
+      "Windows operating system"
+    ],
+    "normal_seed_tests": [
+      "Rust/Cargo/rustdoc plus host build prerequisites",
+      "Node.js 24.11.0 for scripts/test-native.mjs",
+      "Linux x86-64 execution; locally Ubuntu WSL via wsl.exe",
+      "chmod, timeout, sh/bash and head used by the native test harness"
+    ],
+    "inventory_only": [
+      "Git 2.51.0.windows.1",
+      "PowerShell 7.6.4",
+      "Microsoft-signed dumpbin 14.51.36260.0",
+      "GNU readelf 2.42 in Ubuntu WSL"
+    ],
+    "closure_boundary": "Node/WSL are current test aids, not emitted ELF libraries. Rust/Cargo/LLVM are temporary seed infrastructure, not a final NAJA distribution contract."
+  },
+  "future_mandatory_work": [
+    "Port compiler/backend/linker/runtime/library and the required source closure to NAJA.",
+    "Implement actual B1/B2/B3 and compiler evolution written in NAJA.",
+    "Execute clean-host distribution and offline autonomous rebuild proofs.",
+    "Trace process trees, network use, transitive tools/libraries and target primitives; verify deterministic builds.",
+    "Verify Windows x64, Linux x64 and macOS arm64 product distributions."
+  ],
+  "final_closure_verified": false
+}

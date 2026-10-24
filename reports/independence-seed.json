@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "project": "NAJA",
+  "generation": "HATCH",
+  "audit_kind": "B0 seed closure inventory",
+  "result": "partial",
+  "timestamp": "2026-10-24T13:27:00.389Z",
+  "source_commit": "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+  "observed_worktree_head": "c63444a8f60e9e4a0bfb1d6f598da26a14d859ed",
+  "tracked_source_equivalence_to_source_commit_exit_code": 0,
+  "manifest_path": "bootstrap/manifest.json",
+  "manifest_sha256": "8939383811a407a34ae7a10573e8490a954557fb28e77462c42bcf8e37172c4b",
+  "host": "Windows x64",
+  "observed_debug_artifact_sha256": "6e7d9286227998f429f62f5b3ff4173b47cca75aca19ca0d8ac1f35e53cd4b6b",
+  "observed_elf_sha256": "afe2943f64a1d41cfe357a51e3dcab9e4c0935d3759b9d72d0612b8ce7d2558e",
+  "path_policy": "Repository artifacts use relative paths. Tool names represent the inspected executable; MSVC executable hashes/signatures identify the selected installed tools. User and installation prefixes are omitted.",
+  "tool_versions": {
+    "rustc": "1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo": "1.97.1 (c980f4866 2026-06-30)",
+    "rustdoc": "rustdoc 1.97.1 (8bab26f4f 2026-07-14)",
+    "node": "v24.11.0",
+    "git": "2.51.0.windows.1",
+    "powershell": "7.6.4",
+    "dumpbin": "14.51.36260.0",
+    "readelf": "GNU readelf (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.",
+    "wsl_kernel": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64 GNU/Linux"
+  },
+  "observations": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "c63444a8f60e9e4a0bfb1d6f598da26a14d859ed\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+        "--",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        "bootstrap/driver/Cargo.toml",
+        "bootstrap/driver/src/main.rs",
+        "bootstrap/driver/src/lib.rs",
+        "bootstrap/frontend/Cargo.toml",
+        "bootstrap/frontend/src/lib.rs",
+        "bootstrap/frontend/src/lexer.rs",
+        "backends/native/Cargo.toml",
+        "backends/native/src/lib.rs",
+        "tests/native/fixtures/sum.py",
+        "tests/syntax/frontend.rs",
+        "scripts/test-native.mjs"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "d9846dd83389562841beea040061e56d1ff95508",
+        "6e702caec0dae3ec90a92d57490387f97d7e09a8",
+        "--",
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        "bootstrap/driver/Cargo.toml",
+        "bootstrap/driver/src/main.rs",
+        "bootstrap/driver/src/lib.rs",
+        "bootstrap/frontend/Cargo.toml",
+        "bootstrap/frontend/src/lib.rs",
+        "bootstrap/frontend/src/lexer.rs",
+        "backends/native/Cargo.toml",
+        "backends/native/src/lib.rs",
+        "tests/native/fixtures/sum.py",
+        "tests/syntax/frontend.rs",
+        "scripts/test-native.mjs"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": ""
+    },
+    {
+      "command": [
+        "cargo",
+        "tree",
+        "--workspace",
+        "--offline",
+        "--locked",
+        "--target",
+        "all"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "naja-frontend v0.1.0 (.\\bootstrap\\frontend)\n\nnaja-native v0.0.1 (.\\backends\\native)\n\nnaja-seed v0.0.1 (.\\bootstrap\\driver)\n├── naja-frontend v0.1.0 (.\\bootstrap\\frontend)\n└── naja-native v0.0.1 (.\\backends\\native)\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "metadata",
+        "--offline",
+        "--locked",
+        "--format-version",
+        "1"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "output": "Normalized Cargo graph retained in bootstrap/manifest.json; absolute local paths omitted."
+    },
+    {
+      "command": [
+        "rustc",
+        "-vV"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.97.1\nLLVM version: 22.1.6\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "-V"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "cargo 1.97.1 (c980f4866 2026-06-30)\n"
+    },
+    {
+      "command": [
+        "rustdoc",
+        "-V"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "rustdoc 1.97.1 (8bab26f4f 2026-07-14)\n"
+    },
+    {
+      "command": [
+        "target/debug/naja.exe",
+        "--version"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "naja 0.0.1 HATCH experimental Rust seed; native target Linux x86-64; no self-hosting claim\n"
+    },
+    {
+      "command": [
+        "git",
+        "show",
+        "6e702caec0dae3ec90a92d57490387f97d7e09a8:<path>"
+      ],
+      "iteration": "Every source_files path in bootstrap/manifest.json",
+      "exit_code": 0,
+      "hash_method": "SHA-256 over the raw stdout Buffer from git show, without newline or encoding normalization. Git rev-parse COMMIT:PATH supplies the blob object ID.",
+      "result": "14 source/test blob records retained."
+    },
+    {
+      "command": [
+        "dumpbin.exe",
+        "/nologo",
+        "/dependents",
+        "target/debug/naja.exe"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "\r\nDump of file target\\debug\\naja.exe\r\n\r\nFile Type: EXECUTABLE IMAGE\r\n\r\n  Image has the following dependencies:\r\n\r\n    api-ms-win-core-synch-l1-2-0.dll\r\n    KERNEL32.dll\r\n    ntdll.dll\r\n    VCRUNTIME140.dll\r\n    api-ms-win-crt-runtime-l1-1-0.dll\r\n    api-ms-win-crt-math-l1-1-0.dll\r\n    api-ms-win-crt-stdio-l1-1-0.dll\r\n    api-ms-win-crt-locale-l1-1-0.dll\r\n    api-ms-win-crt-heap-l1-1-0.dll\r\n\r\n  Summary\r\n\r\n        1000 .data\r\n        5000 .pdata\r\n       1B000 .rdata\r\n        1000 .reloc\r\n       4E000 .text\r\n"
+    },
+    {
+      "command": [
+        "dumpbin.exe",
+        "/nologo",
+        "/headers",
+        "target/debug/naja.exe"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "\r\nDump of file target\\debug\\naja.exe\r\n\r\nPE signature found\r\n\r\nFile Type: EXECUTABLE IMAGE\r\n\r\nFILE HEADER VALUES\r\n            8664 machine (x64)\r\n               5 number of sections\r\n        6ADCAE7E time date stamp Sat Oct 24 09:11:26 2026\r\n               0 file pointer to symbol table\r\n               0 number of symbols\r\n              F0 size of optional header\r\n              22 characteristics\r\n                   Executable\r\n                   Application can handle large (>2GB) addresses\r\n\r\nOPTIONAL HEADER VALUES\r\n             20B magic # (PE32+)\r\n           14.51 linker version\r\n           4DA00 size of code\r\n           20000 size of initialized data\r\n               0 size of uninitialized data\r\n           4C9A0 entry point (000000014004C9A0) mainCRTStartup\r\n            1000 base of code\r\n       140000000 image base (0000000140000000 to 0000000140070FFF)\r\n            1000 section alignment\r\n             200 file alignment\r\n            6.00 operating system version\r\n            0.00 image version\r\n            6.00 subsystem version\r\n               0 Win32 version\r\n           71000 size of image\r\n             400 size of headers\r\n               0 checksum\r\n               3 subsystem (Windows CUI)\r\n            8160 DLL characteristics\r\n                   High Entropy Virtual Addresses\r\n                   Dynamic base\r\n                   NX compatible\r\n                   Terminal Server Aware\r\n          100000 size of stack reserve\r\n            1000 size of stack commit\r\n          100000 size of heap reserve\r\n            1000 size of heap commit\r\n               0 loader flags\r\n              10 number of directories\r\n               0 [       0] RVA [size] of Export Directory\r\n           69014 [      C8] RVA [size] of Import Directory\r\n               0 [       0] RVA [size] of Resource Directory\r\n           6B000 [    4794] RVA [size] of Exception Directory\r\n               0 [       0] RVA [size] of Certificates Directory\r\n           70000 [     690] RVA [size] of Base Relocation Directory\r\n           5F4D0 [      54] RVA [size] of Debug Directory\r\n               0 [       0] RVA [size] of Architecture Directory\r\n               0 [       0] RVA [size] of Global Pointer Directory\r\n           5F580 [      28] RVA [size] of Thread Storage Directory\r\n           5F390 [     140] RVA [size] of Load Configuration Directory\r\n               0 [       0] RVA [size] of Bound Import Directory\r\n           4F000 [     2E8] RVA [size] of Import Address Table Directory\r\n               0 [       0] RVA [size] of Delay Import Directory\r\n               0 [       0] RVA [size] of COM Descriptor Directory\r\n               0 [       0] RVA [size] of Reserved Directory\r\n\r\n\r\nSECTION HEADER #1\r\n   .text name\r\n   4D8C8 virtual size\r\n    1000 virtual address (0000000140001000 to 000000014004E8C7)\r\n   4DA00 size of raw data\r\n     400 file pointer to raw data (00000400 to 0004DDFF)\r\n       0 file pointer to relocation table\r\n       0 file pointer to line numbers\r\n       0 number of relocations\r\n       0 number of line numbers\r\n60000020 flags\r\n         Code\r\n         Execute Read\r\n\r\nSECTION HEADER #2\r\n  .rdata name\r\n   1AB24 virtual size\r\n   4F000 virtual address (000000014004F000 to 0000000140069B23)\r\n   1AC00 size of raw data\r\n   4DE00 file pointer to raw data (0004DE00 to 000689FF)\r\n       0 file pointer to relocation table\r\n       0 file pointer to line numbers\r\n       0 number of relocations\r\n       0 number of line numbers\r\n40000040 flags\r\n         Initialized Data\r\n         Read Only\r\n\r\n  Debug Directories\r\n\r\n        Time Type        Size      RVA  Pointer\r\n    -------- ------- -------- -------- --------\r\n    6ADCAE7E cv            21 0005F678    5E478    Format: RSDS, {31711B57-C17D-4239-BDB6-C0B5B53379FB}, 1, naja.pdb\r\n    6ADCAE7E feat          14 0005F69C    5E49C    Counts: Pre-VC++ 11.00=221, C/C++=32, /GS=32, /sdl=0, guardN=32\r\n    6ADCAE7E coffgrp      330 0005F6B0    5E4B0\r\n\r\nSECTION HEADER #3\r\n   .data name\r\n     2F0 virtual size\r\n   6A000 virtual address (000000014006A000 to 000000014006A2EF)\r\n     200 size of raw data\r\n   68A00 file pointer to raw data (00068A00 to 00068BFF)\r\n       0 file pointer to relocation table\r\n       0 file pointer to line numbers\r\n       0 number of relocations\r\n       0 number of line numbers\r\nC0000040 flags\r\n         Initialized Data\r\n         Read Write\r\n\r\nSECTION HEADER #4\r\n  .pdata name\r\n    4794 virtual size\r\n   6B000 virtual address (000000014006B000 to 000000014006F793)\r\n    4800 size of raw data\r\n   68C00 file pointer to raw data (00068C00 to 0006D3FF)\r\n       0 file pointer to relocation table\r\n       0 file pointer to line numbers\r\n       0 number of relocations\r\n       0 number of line numbers\r\n40000040 flags\r\n         Initialized Data\r\n         Read Only\r\n\r\nSECTION HEADER #5\r\n  .reloc name\r\n     690 virtual size\r\n   70000 virtual address (0000000140070000 to 000000014007068F)\r\n     800 size of raw data\r\n   6D400 file pointer to raw data (0006D400 to 0006DBFF)\r\n       0 file pointer to relocation table\r\n       0 file pointer to line numbers\r\n       0 number of relocations\r\n       0 number of line numbers\r\n42000040 flags\r\n         Initialized Data\r\n         Discardable\r\n         Read Only\r\n\r\n  Summary\r\n\r\n        1000 .data\r\n        5000 .pdata\r\n       1B000 .rdata\r\n        1000 .reloc\r\n       4E000 .text\r\n"
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--",
+        "readelf",
+        "-W",
+        "-h",
+        "-l",
+        "-d",
+        "target/native-execution-v3dInJ/sum.elf"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "ELF Header:\n  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 \n  Class:                             ELF64\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - System V\n  ABI Version:                       0\n  Type:                              EXEC (Executable file)\n  Machine:                           Advanced Micro Devices X86-64\n  Version:                           0x1\n  Entry point address:               0x401000\n  Start of program headers:          64 (bytes into file)\n  Start of section headers:          0 (bytes into file)\n  Flags:                             0x0\n  Size of this header:               64 (bytes)\n  Size of program headers:           56 (bytes)\n  Number of program headers:         2\n  Size of section headers:           0 (bytes)\n  Number of section headers:         0\n  Section header string table index: 0\n\nProgram Headers:\n  Type           Offset   VirtAddr           PhysAddr           FileSiz  MemSiz   Flg Align\n  LOAD           0x000000 0x0000000000400000 0x0000000000400000 0x0011f4 0x0011f4 R E 0x1000\n  GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0x10\n\nThere is no dynamic section in this file.\n"
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--",
+        "readelf",
+        "--version"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "GNU readelf (GNU Binutils for Ubuntu) 2.42\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n"
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--",
+        "uname",
+        "-srmo"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64 GNU/Linux\n"
+    },
+    {
+      "command": [
+        "rustc",
+        "--print",
+        "sysroot"
+      ],
+      "exit_code": 0,
+      "output": "User-scoped installation prefix omitted; toolchain-relative inventory follows in the manifest."
+    },
+    {
+      "command": [
+        "rustc",
+        "--print",
+        "target-libdir"
+      ],
+      "exit_code": 0,
+      "output": "User-scoped installation prefix omitted; toolchain-relative inventory follows in the manifest."
+    },
+    {
+      "operation": "Read reports/checks/seed-native-execution.json and its retained log; hash raw log bytes and match the observed sum ELF digest.",
+      "exit_code": 0,
+      "result": "Log hash matches its evidence record; it reports sum exit=0 and 25 native/CLI checks. This audit did not rerun the emitted program."
+    },
+    {
+      "command_template": "Get-AuthenticodeSignature -LiteralPath <MSVC-tool>; (Get-Item -LiteralPath <MSVC-tool>).VersionInfo; Get-FileHash -LiteralPath <MSVC-tool> -Algorithm SHA256",
+      "iteration": "dumpbin.exe and link.exe in the inspected MSVC tools directory",
+      "exit_code": 0,
+      "result": [
+        {
+          "name": "dumpbin.exe",
+          "product_version": "14.51.36260.0",
+          "signature": "Valid",
+          "signer": "Microsoft Corporation",
+          "sha256": "357c989e1c926841df4e6e97c25a60b205b30110cd6db39bde8d81a627e48ebb"
+        },
+        {
+          "name": "link.exe",
+          "product_version": "14.51.36260.0",
+          "signature": "Valid",
+          "signer": "Microsoft Corporation",
+          "sha256": "a8c42e25c91ca2453e1110540ac08f0fc12d7539454a11b9af8baeecb469837d"
+        }
+      ]
+    },
+    {
+      "command_template": "Get-AuthenticodeSignature -LiteralPath target/debug/naja.exe; Get-FileHash -LiteralPath target/debug/naja.exe -Algorithm SHA256",
+      "exit_code": 0,
+      "result": {
+        "signature": "NotSigned",
+        "sha256": "6e7d9286227998f429f62f5b3ff4173b47cca75aca19ca0d8ac1f35e53cd4b6b"
+      }
+    }
+  ],
+  "source_review": {
+    "scope": "Five Rust compiler/emitter source files, all three package manifests, workspace/lock/toolchain files, and native/syntax test sources.",
+    "findings": [
+      "Direct source lexing/checking feeds an in-process AST-to-x86-64 emitter, branch patcher and ELF writer.",
+      "No process-spawning API, foreign compiler/linker delegation, FFI import, embedded interpreter, opaque compiler seed inclusion or external code generator was found in these compiler crates. std::process::ExitCode supplies CLI status only.",
+      "Native print/error routines and instruction bytes are reviewable generator source; they are not an embedded compiler executable.",
+      "Zero external Cargo dependencies does not remove Rust standard library, host linker/SDK or operating-system dependencies."
+    ],
+    "method": "Read source/manifests; inspect Cargo metadata/tree; use source search as a secondary check; inspect PE imports and ELF headers.",
+    "process_trace": "not_run",
+    "network_observation": "not_run",
+    "limit": "Static review and binary headers are scoped observations, not execution traces proving all possible behavior."
+  },
+  "historical_native_execution": {
+    "evidence_path": "reports/checks/seed-native-execution.json",
+    "log_path": "reports/checks/seed-native-execution.log",
+    "evidence_commit": "d9846dd83389562841beea040061e56d1ff95508",
+    "log_sha256": "acc4177e7e15a5eeb0e4450be2f03946c8ab4a23ef84e5c85aea85ae33d398df",
+    "observed_log_hash_matches": true,
+    "observed_sum_elf_hash_matches": true,
+    "recorded_checks": 25,
+    "source_closure_diff_to_audited_commit_exit_code": 0,
+    "execution_rerun_by_this_audit": false
+  },
+  "independence_levels": {
+    "I0": {
+      "result": "not_run",
+      "observation": "Reviewed source/test paths require no Python; no execution on a Python-absent environment was performed."
+    },
+    "I1": {
+      "result": "not_run",
+      "observation": "Existing unsigned Windows debug seed only; no clean-host standalone distribution proof."
+    },
+    "I2": {
+      "result": "not_implemented",
+      "observation": "Compiler/emitter/runtime routines remain Rust source."
+    },
+    "I3": {
+      "result": "partial",
+      "observation": "Bounded Rust-based direct ELF emission is observed without interpreter/dynamic imports. The mandatory NAJA-native autonomous backend/linker closure remains future work."
+    },
+    "I4": {
+      "result": "partial",
+      "observation": "Seed/source/debug hashes inventoried; no B1/B2/B3 fixed point or release reproducibility proof."
+    }
+  },
+  "bootstrap_stages": {
+    "B0": "observed experimental debug seed only",
+    "B1": "not_implemented",
+    "B2": "not_run",
+    "B3": "not_run"
+  },
+  "limits": [
+    "The existing compiler was not rebuilt during this read-only inventory; source equality is not cryptographic proof of the existing binary build provenance.",
+    "The emitted sample was inspected and matched retained historical execution evidence; native execution was not rerun by this audit.",
+    "The prebuilt Rust toolchain was not rebuilt from source. Upstream rustc source-build dependencies remain outside the required NAJA seed-use workflow.",
+    "No Python installation or execution occurred; no Python-absent host was prepared.",
+    "No process/syscall trace, network observation, restricted environment, transitive DLL audit or clean-host proof was performed.",
+    "Selected SDK version and exact linker member inputs remain untraced.",
+    "No macOS execution, final source closure, self-hosting, release signing, standalone installation or HATCH completion is claimed.",
+    "This inventory marks no mandatory requirement or release gate verified."
+  ],
+  "final_closure_verified": false
+}
