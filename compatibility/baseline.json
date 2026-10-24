@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "project": "NAJA",
+  "generation": "HATCH",
+  "status": "reference_pinned_only",
+  "checked_at": "2026-10-24T13:14:49.668Z",
+  "requirement_ids": [
+    "CMP-01",
+    "CMP-02",
+    "CMP-03",
+    "CMP-04",
+    "CMP-05"
+  ],
+  "reference": {
+    "language": "Python",
+    "series": "3.15",
+    "edition": "3.15.0",
+    "release_page": "https://www.python.org/downloads/release/python-3150/",
+    "release_date": "2026-10-09",
+    "availability": "available_stable_release",
+    "selection": "The project targets the 3.15 series; this baseline freezes the available 3.15.0 release. A newer patch edition does not update the baseline automatically.",
+    "repository": "https://github.com/python/cpython",
+    "tag": "v3.15.0",
+    "tag_ref": "refs/tags/v3.15.0",
+    "tag_object_sha1": "7212e49729737c864e3f17b69ed83c8443c75acf",
+    "tagged_at": "2026-10-09T11:16:41Z",
+    "commit": "d220409a13b77de7a6c30abe16ea90db01528edc",
+    "tree_sha1": "9877a96876c985862e38d100d139e414dc447122",
+    "tag_signature": {
+      "verified": false,
+      "reason": "unsigned",
+      "source": "GitHub Git tag API"
+    },
+    "commit_signature": {
+      "verified": false,
+      "reason": "unsigned",
+      "source": "GitHub Git commit API"
+    },
+    "ref_api": "https://api.github.com/repos/python/cpython/git/ref/tags/v3.15.0",
+    "tag_api": "https://api.github.com/repos/python/cpython/git/tags/7212e49729737c864e3f17b69ed83c8443c75acf",
+    "commit_api": "https://api.github.com/repos/python/cpython/git/commits/d220409a13b77de7a6c30abe16ea90db01528edc"
+  },
+  "upstream_tree_chain": [
+    {
+      "path": "",
+      "sha1": "9877a96876c985862e38d100d139e414dc447122"
+    },
+    {
+      "path": "Grammar",
+      "sha1": "b5bc774187647dd49e8519b2e41e5a80c9390ac7"
+    },
+    {
+      "path": "Doc",
+      "sha1": "6f52e8d54dba7ab92757fd27640d8b48802b3e47"
+    },
+    {
+      "path": "Doc/reference",
+      "sha1": "5f174034daf03dc1152cdc3544cb869485fb39f9"
+    }
+  ],
+  "grammar": {
+    "path": "Grammar/python.gram",
+    "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Grammar/python.gram",
+    "byte_length": 76067,
+    "sha256": "36722c947a268326f585c12c1be2b7be62cb8034ad0ccebc85807b41795a30e6",
+    "git_blob_sha1": "4408d69d9a06e1a25541d074695b9f17b018b140",
+    "http_status": 200,
+    "git_tree_metadata_matches": true
+  },
+  "tokens": {
+    "path": "Grammar/Tokens",
+    "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Grammar/Tokens",
+    "byte_length": 1893,
+    "sha256": "df3d2cdd8228a17594316b6feda01e3ea5c3fc2c679778cd7864398540bb3423",
+    "git_blob_sha1": "0547e6ed08f79ae397836c1b426af7760f7199ce",
+    "http_status": 200,
+    "git_tree_metadata_matches": true
+  },
+  "english_reference_sources": [
+    {
+      "path": "Doc/reference/grammar.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Doc/reference/grammar.rst",
+      "byte_length": 995,
+      "sha256": "decf8aa789e571e2ba0eeb906154b2e8e6441c2050ddb1e33f010865e2de171b",
+      "git_blob_sha1": "0ce8e42ddf3b0c0dd1f4d1e2f9e4b885685e7c00",
+      "http_status": 200,
+      "git_tree_metadata_matches": true
+    },
+    {
+      "path": "Doc/reference/introduction.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Doc/reference/introduction.rst",
+      "byte_length": 9115,
+      "sha256": "3b1c31ffcfc03a0d65c4d94091c2a5e3c6892e90683e472643ac95a67a15953d",
+      "git_blob_sha1": "c62240b18cfe554b565265c363d13b7ebc37cbf2",
+      "http_status": 200,
+      "git_tree_metadata_matches": true
+    },
+    {
+      "path": "Doc/reference/lexical_analysis.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Doc/reference/lexical_analysis.rst",
+      "byte_length": 50990,
+      "sha256": "1e249882d4f745150dc0a39188a67fa6e46fd204f6a4c0066382d12c20872c19",
+      "git_blob_sha1": "f3ed1539493b6addb286f4fd59dcebbd8a6d6308",
+      "http_status": 200,
+      "git_tree_metadata_matches": true
+    },
+    {
+      "path": "Doc/reference/expressions.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Doc/reference/expressions.rst",
+      "byte_length": 102776,
+      "sha256": "4d287fcfb9a6aa85ea43ace5a237292ace40683918550a1464d54d0d8614838b",
+      "git_blob_sha1": "c3f23209c85b32463c6bc3f4e1677e7d3bf421d7",
+      "http_status": 200,
+      "git_tree_metadata_matches": true
+    },
+    {
+      "path": "Doc/reference/compound_stmts.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Doc/reference/compound_stmts.rst",
+      "byte_length": 74839,
+      "sha256": "2e11848a0f188df2036c302d16ab917e26c8c4c6537d3d3e6e4b82cf784e4678",
+      "git_blob_sha1": "c13860eb3e9319abd4d22cddea14faf96d5be585",
+      "http_status": 200,
+      "git_tree_metadata_matches": true
+    },
+    {
+      "path": "Doc/reference/simple_stmts.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Doc/reference/simple_stmts.rst",
+      "byte_length": 44962,
+      "sha256": "64fdc985b7445cd6ff397dd4547c086fa47e929ba553ee179ed64ccf93a9e3a5",
+      "git_blob_sha1": "a964b43ebee17466a833f320db5097ebfebb5d58",
+      "http_status": 200,
+      "git_tree_metadata_matches": true
+    },
+    {
+      "path": "Doc/reference/datamodel.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Doc/reference/datamodel.rst",
+      "byte_length": 157455,
+      "sha256": "8e86e989809a555d7436eeeef645f92f0cc08859d6c81f7cd4a28707c5264678",
+      "git_blob_sha1": "06176be88e073926bff40764185897a0da15a0c7",
+      "http_status": 200,
+      "git_tree_metadata_matches": true
+    }
+  ],
+  "license_reference": {
+    "path": "LICENSE",
+    "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/LICENSE",
+    "byte_length": 13804,
+    "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231",
+    "git_blob_sha1": "20cf39097c68baa17cc566b64e76d34ebf034044",
+    "http_status": 200,
+    "git_tree_metadata_matches": true
+  },
+  "local_specification_snapshots": [
+    {
+      "path": "docs/03_LANGUAGE_AND_COMPATIBILITY.md",
+      "source_commit": "684f59efb35ec10e5fa43026e616c3df358108ea",
+      "byte_basis": "Git blob bytes, without checkout line-ending conversion",
+      "byte_length": 6186,
+      "sha256": "539f21303fd0b47d39bcc3546b13c95c483f155f6d5e9351ac0dff6c44e39229"
+    },
+    {
+      "path": "docs/04_BLOCKS_AND_ALIASES.md",
+      "source_commit": "684f59efb35ec10e5fa43026e616c3df358108ea",
+      "byte_basis": "Git blob bytes, without checkout line-ending conversion",
+      "byte_length": 5263,
+      "sha256": "292f90d7ad66b75455575deeb31c470014d3828fd5ce93a46e30abf03a2cd8af"
+    },
+    {
+      "path": "docs/17_SOURCES.md",
+      "source_commit": "684f59efb35ec10e5fa43026e616c3df358108ea",
+      "byte_basis": "Git blob bytes, without checkout line-ending conversion",
+      "byte_length": 5946,
+      "sha256": "bc322f78128b62e46cd2f3a60df252304ec137da42e1061b4a2ce3900c9a5a7f"
+    }
+  ],
+  "inventory": {
+    "path": "compatibility/productions.json",
+    "sha256": "de9d3498676d5147f521ace829f7549cc46872e4281bf35ef91f524dc2827c72",
+    "byte_basis": "Git blob bytes, without checkout line-ending conversion",
+    "production_count": 278,
+    "syntax_count": 209,
+    "diagnostic_count": 69,
+    "duplicate_identifiers": 0,
+    "unrecognized_top_level_declarations": 0
+  },
+  "source_attribution": {
+    "owner": "Python Software Foundation and contributors",
+    "use": "Reference-only hashes, production identifiers and source coordinates. No upstream grammar rule bodies, implementation actions or documentation paragraphs are vendored.",
+    "license": "Consult the pinned upstream LICENSE reference above; no upstream source is relicensed as NAJA code.",
+    "notice_integration": "The integrator maintains the root NOTICE; this scoped contribution does not edit it."
+  },
+  "verification": {
+    "status": "reference_bytes_checked",
+    "tools": {
+      "node": "v24.11.0",
+      "git": "2.51.0.windows.1"
+    },
+    "host_target": "win32-x64",
+    "python_executed": false,
+    "python_installed_for_this_work": false,
+    "reference_cache": "Private temporary files; not required for a build or normal test run.",
+    "commands": [
+      {
+        "argv": [
+          "git",
+          "ls-remote",
+          "https://github.com/python/cpython.git",
+          "refs/tags/v3.15.0",
+          "refs/tags/v3.15.0^{}"
+        ],
+        "exit_code": 0,
+        "result": {
+          "tag_object": "7212e49729737c864e3f17b69ed83c8443c75acf",
+          "peeled_commit": "d220409a13b77de7a6c30abe16ea90db01528edc"
+        }
+      },
+      {
+        "argv": [
+          "node",
+          "--input-type=module"
+        ],
+        "stdin_description": "Fetch immutable raw URLs with fetch and hash response ArrayBuffer bytes with SHA-256. Compute SHA-1 of blob header plus bytes; compare all ten sources with official Git tree metadata. Inventory declarations and reject duplicates or unmatched top-level lines. Pin local specification Git blob hashes.",
+        "exit_code": 0,
+        "result": {
+          "source_files_checked": 10,
+          "source_blob_matches": 10,
+          "productions": 278,
+          "unique_productions": 278,
+          "unrecognized_declarations": 0
+        }
+      }
+    ]
+  },
+  "adaptations": {
+    "status": "specified_not_fully_implemented",
+    "rules": [
+      {
+        "id": "standard-py",
+        "contract": "Keep .py standard by default at the pinned edition; contextual aliases are disabled in that dialect.",
+        "evidence": []
+      },
+      {
+        "id": "naja-depth-and-aliases",
+        "contract": "Only the agreed :(x) depth markers and project-context aliases extend .naja. Their grammar, ambiguity and semantic tests remain separate obligations under document 04.",
+        "evidence": []
+      },
+      {
+        "id": "independent-frontend",
+        "contract": "Upstream C actions, return types and parser internals are reference annotations. NAJA owns its frontend, object model and diagnostics; no CPython execution or parser delegation is permitted.",
+        "evidence": []
+      },
+      {
+        "id": "diagnostic-productions",
+        "contract": "Keep invalid_ declarations visible as diagnostic rows. They are not silently dropped from this inventory or credited as successful parses.",
+        "evidence": []
+      }
+    ]
+  },
+  "compatibility": {
+    "complete_productions_parsed": 0,
+    "complete_productions_supported": 0,
+    "complete_productions_verified": 0,
+    "last_verified_commit": null,
+    "semantics": {
+      "status": "not_verified",
+      "evidence": []
+    },
+    "standard_library": {
+      "status": "not_verified",
+      "evidence": []
+    },
+    "cpython_abi": {
+      "status": "unsupported",
+      "evidence": []
+    }
+  },
+  "limitations": [
+    "This is a pinned source inventory, not a parser conformance or runtime test result.",
+    "All complete-production matrix claims remain false and test results remain not_run until positive and negative NAJA tests justify a scoped update.",
+    "The lexer and any bounded expression parser do not establish complete upstream-production coverage.",
+    "Raw HTTPS bytes match the official Git tree objects; unsigned upstream tag and commit metadata do not establish a cryptographically signed release.",
+    "The mutable docs.python.org/3.15 pages observed during research identify 3.15.1. This baseline hashes English source documentation at the fixed 3.15.0 commit instead.",
+    "Reference acquisition uses network access during this audit only; the compiler, normal tests and user workflows must remain independent of CPython and live reference downloads."
+  ]
+}
