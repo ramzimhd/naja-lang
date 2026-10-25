@@ -28,6 +28,8 @@ pub const MAX_CLASS_METHODS: usize = 128;
 pub const MAX_OBJECT_FIELDS: usize = 128;
 pub const MAX_ATTRIBUTE_NAMES: usize = 1024;
 pub const MAX_ATTRIBUTE_NAME_BYTES: usize = 256;
+pub const MAX_MAPPING_ENTRIES: usize = 128;
+pub const MAX_MAPPING_KEY_WORK: usize = 1_000_000;
 // The shared native array constructor has one defensive capacity check.
 const _: () = assert!(MAX_LIST_ELEMENTS == MAX_TUPLE_ELEMENTS);
 const HELPER_STACK_RESERVE: i32 = 4096;
@@ -66,6 +68,13 @@ pub struct Method {
     pub function: usize,
 }
 
+#[derive(Clone, Copy, Debug)]
+pub enum Relation {
+    Compare(Comparison),
+    In,
+    NotIn,
+}
+
 #[derive(Clone, Debug)]
 pub enum Expression {
     Integer(String),
@@ -97,6 +106,11 @@ pub enum Expression {
     Construct(usize, Vec<Self>),
     GetAttribute(Box<Self>, String),
     MethodCall(Box<Self>, String, Vec<Self>),
+    Dict(Vec<(Self, Self)>),
+    Set(Vec<Self>),
+    Contains(Box<Self>, Box<Self>),
+    DictKeys(Box<Self>),
+    RelationChain(Box<Self>, Vec<(Relation, Self)>),
 }
 
 #[derive(Clone, Debug)]
@@ -178,6 +192,42 @@ impl Validator<'_> {
             Expression::Text(value) => value.len(),
             Expression::Bytes(value) => value.len(),
             Expression::Boolean(_) | Expression::None => 0,
+            Expression::Dict(pairs) => {
+                if pairs.len() > MAX_MAPPING_ENTRIES {
+                    return Err("dynamic dictionary literal exceeds 128 pairs".into());
+                }
+                for (key, value) in pairs {
+                    self.expression(key, initialized, depth + 1)?;
+                    self.expression(value, initialized, depth + 1)?;
+                }
+                0
+            }
+            Expression::Set(elements) => {
+                if elements.len() > MAX_MAPPING_ENTRIES {
+                    return Err("dynamic set literal exceeds 128 elements".into());
+                }
+                for element in elements {
+                    self.expression(element, initialized, depth + 1)?;
+                }
+                0
+            }
+            Expression::DictKeys(value) => {
+                self.expression(value, initialized, depth + 1)?;
+                0
+            }
+            Expression::RelationChain(first, rest) => {
+                if rest.is_empty() || rest.len() > MAX_CHAIN_COMPARISONS {
+                    return Err("dynamic relation chain requires 1..128 relations".into());
+                }
+                self.expression(first, initialized, depth + 1)?;
+                for (index, (_, value)) in rest.iter().enumerate() {
+                    if index != 0 {
+                        self.account()?;
+                    }
+                    self.expression(value, initialized, depth + 1)?;
+                }
+                0
+            }
             Expression::Construct(index, arguments) => {
                 let class = self
                     .classes
@@ -289,6 +339,7 @@ impl Validator<'_> {
             | Expression::FloorDivide(left, right)
             | Expression::Modulo(left, right)
             | Expression::Index(left, right)
+            | Expression::Contains(left, right)
             | Expression::Compare(_, left, right)
             | Expression::And(left, right)
             | Expression::Or(left, right) => {
@@ -507,6 +558,61 @@ impl Emitter {
             ),
             Expression::None => self.code.lea(Ax, self.runtime.none_value),
             Expression::Local(slot) => self.code.load(Ax, Bp, -8 * (*slot as i32 + 1)),
+            Expression::Dict(pairs) => {
+                self.code.call(self.runtime.dict);
+                self.push_value(Ax);
+                for (key, value) in pairs {
+                    self.expression(key)?;
+                    self.push_value(Ax);
+                    self.expression(value)?;
+                    self.code.mov(Dx, Ax);
+                    self.code.pop(Si);
+                    self.code.load(Di, Sp, 0);
+                    self.code.call(self.runtime.dict_set);
+                }
+                self.code.pop(Ax);
+            }
+            Expression::Set(elements) => {
+                self.code.call(self.runtime.set);
+                self.push_value(Ax);
+                for element in elements {
+                    self.expression(element)?;
+                    self.code.mov(Si, Ax);
+                    self.code.load(Di, Sp, 0);
+                    self.code.call(self.runtime.set_add);
+                }
+                self.code.pop(Ax);
+            }
+            Expression::DictKeys(value) => {
+                self.expression(value)?;
+                self.code.call(self.runtime.dict_keys);
+            }
+            Expression::Contains(element, container) => {
+                self.operands(element, container)?;
+                let condition = self.relation_flags(Relation::In);
+                self.boolean(condition);
+            }
+            Expression::RelationChain(first, rest) => {
+                let false_ = self.code.label();
+                let end = self.code.label();
+                self.expression(first)?;
+                self.push_value(Ax);
+                for (relation, right) in rest {
+                    self.expression(right)?;
+                    self.code.mov(Si, Ax);
+                    self.code.pop(Di);
+                    self.push_value(Si);
+                    let condition = self.relation_flags(*relation);
+                    self.code.j(condition ^ 1, false_);
+                }
+                self.code.pop(Ax);
+                self.code.lea(Ax, self.runtime.true_value);
+                self.code.jump(end);
+                self.code.bind(false_);
+                self.code.pop(Ax);
+                self.code.lea(Ax, self.runtime.false_value);
+                self.code.bind(end);
+            }
             Expression::Construct(index, arguments) => {
                 for argument in arguments {
                     self.expression(argument)?;
@@ -697,6 +803,20 @@ impl Emitter {
             }
         }
         Ok(())
+    }
+    fn relation_flags(&mut self, relation: Relation) -> u8 {
+        match relation {
+            Relation::Compare(comparison) => self.comparison_flags(comparison),
+            Relation::In | Relation::NotIn => {
+                self.code.call(self.runtime.contains);
+                self.code.immediate(7, Ax, 0);
+                if matches!(relation, Relation::In) {
+                    0x85
+                } else {
+                    0x84
+                }
+            }
+        }
     }
     fn comparison_flags(&mut self, comparison: Comparison) -> u8 {
         self.code.call(self.runtime.compare);

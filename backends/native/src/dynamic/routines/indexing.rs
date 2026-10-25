@@ -19,9 +19,17 @@ impl Runtime {
         const VALUE: i32 = -64;
         let enter = c.label();
         c.bind(self.index);
+        c.load(R10, Di, 0);
+        c.immediate(7, R10, 8);
+        c.j(0x84, self.dict_get);
+        c.immediate(7, R10, 9);
+        c.j(0x84, self.type_error);
         c.zero(R10);
         c.jump(enter);
         c.bind(self.set_index);
+        c.load(R10, Di, 0);
+        c.immediate(7, R10, 8);
+        c.j(0x84, self.dict_set);
         c.imm(R10, 1);
         c.bind(enter);
         c.push(Bp);

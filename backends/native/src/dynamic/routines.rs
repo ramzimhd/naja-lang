@@ -1,6 +1,7 @@
 //! Native tagged-value routines; numeric kernels are shared with hosted integers.
 //! Descriptor: tag:u64, data:pointer, byte_length:u64. Tags 0=int,1=text,2=bytes,
-//! 3=bool (pointer to integer zero/one),4=None,5=tuple,6=list (count at+16),7=instance.
+//! 3=bool (pointer to integer zero/one),4=None,5=tuple,6=list (count at+16),7=instance,
+//! 8=ordered dictionary,9=set (fixed-capacity table and count at+16).
 //! No user pointer API exists here.
 use super::ARENA_BYTES;
 use crate::hosted::{
@@ -10,6 +11,7 @@ use crate::hosted::{
 mod division;
 mod files;
 mod indexing;
+mod mappings;
 mod objects;
 mod tuples;
 mod utf8;
@@ -40,6 +42,14 @@ pub(super) struct Runtime {
     pub method_arity: usize,
     pub init_error: usize,
     pub initializer_result: usize,
+    pub dict: usize,
+    pub set: usize,
+    pub dict_get: usize,
+    pub dict_set: usize,
+    pub set_add: usize,
+    pub contains: usize,
+    pub dict_keys: usize,
+    mapping_check: usize,
     object_check: usize,
     object_compare: usize,
     tuple_check: usize,
@@ -95,6 +105,14 @@ impl Runtime {
             method_arity: c.label(),
             init_error: c.label(),
             initializer_result: c.label(),
+            dict: c.label(),
+            set: c.label(),
+            dict_get: c.label(),
+            dict_set: c.label(),
+            set_add: c.label(),
+            contains: c.label(),
+            dict_keys: c.label(),
+            mapping_check: c.label(),
             object_check: c.label(),
             object_compare: c.label(),
             tuple_check: c.label(),
@@ -131,6 +149,7 @@ impl Runtime {
         self.tuples(c, integers);
         self.indexing(c, integers);
         self.files(c, integers);
+        self.mappings(c, integers);
         self.concatenation(c, integers);
         self.comparison(c, integers);
         self.truthiness(c);
@@ -163,6 +182,10 @@ impl Runtime {
         // checked arena allocation. Guard tags before interpreting payloads.
         c.bind(self.check);
         c.load(Dx, Ax, 0);
+        c.immediate(7, Dx, 8);
+        c.j(0x84, self.mapping_check);
+        c.immediate(7, Dx, 9);
+        c.j(0x84, self.mapping_check);
         c.immediate(7, Dx, 7);
         c.j(0x84, self.object_check);
         c.immediate(7, Dx, 6);
@@ -265,6 +288,11 @@ impl Runtime {
         c.load(Dx, Ax, 0);
         c.immediate(7, Dx, 7);
         c.j(0x84, self.type_error);
+        let mapping_length = c.label();
+        c.immediate(7, Dx, 8);
+        c.j(0x84, mapping_length);
+        c.immediate(7, Dx, 9);
+        c.j(0x84, mapping_length);
         let text = c.label();
         c.immediate(7, Dx, 1);
         c.j(0x84, text);
@@ -274,6 +302,7 @@ impl Runtime {
         c.immediate(7, Dx, 5);
         c.j(0x82, self.type_error);
         c.bind(length);
+        c.bind(mapping_length);
         c.load(Ax, Ax, 16);
         c.jump(self.small_integer);
         c.bind(text);
@@ -471,6 +500,10 @@ impl Runtime {
         let length = c.label();
         let value = c.label();
         let true_ = c.label();
+        c.immediate(7, Dx, 8);
+        c.j(0x84, length);
+        c.immediate(7, Dx, 9);
+        c.j(0x84, length);
         c.immediate(7, Dx, 7);
         c.j(0x84, true_);
         c.immediate(7, Dx, 4);
