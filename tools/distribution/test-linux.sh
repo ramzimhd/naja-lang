@@ -4,8 +4,8 @@ umask 077
 [ "$#" -eq 2 ] || exit 2
 out=$1
 scripts=$2
-work=$(cat "$out/linux-location.txt")
-case "$work" in /tmp/naja-distribution.*) ;; *) exit 2;; esac
+work=$(mktemp -d /tmp/naja-distribution.XXXXXXXX)
+printf '%s\n' "$work" > "$out/test-location.txt"
 root=$work/rootfs
 mkdir "$root" "$work/unpacked"
 tar -xzf "$out/naja-linux-x86_64-unsigned.tar.gz" -C "$work/unpacked"

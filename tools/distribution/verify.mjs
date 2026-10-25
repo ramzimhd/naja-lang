@@ -5,20 +5,22 @@ import { mkdir, mkdtemp, readFile, writeFile, lstat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SOURCE, stagePackage, sha256, inspectReports } from './package.mjs';
+import { retainedPreparation } from './prepared.mjs';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const start = Date.now(), commands = [];
-assert.deepEqual(process.argv.slice(2), []);
+const args = process.argv.slice(2); assert.ok(!args.length || args.length === 2 && args[0] === '--prepared', 'Usage: node verify.mjs [--prepared ABSOLUTE_PRIOR_OUTPUT]');
 assert.equal(process.platform, 'win32', 'This bounded orchestrator currently targets the observed Windows/Ubuntu WSL environment.');
 await mkdir(path.join(root, 'tools/distribution/artifacts'), { recursive: true });
 const out = await mkdtemp(path.join(root, 'tools/distribution/artifacts/verify-'));
 let helperSource = null;
+let reused = null;
 function sanitize(value) {
   if (typeof value === 'string') { for (const [prefix, replacement] of [[root.replace(/[\\/]$/, ''), '<repo>'], [process.env.USERPROFILE, '<profile>']]) if (prefix) value = value.replaceAll(prefix, replacement).replaceAll(prefix.replaceAll('\\', '/'), replacement); return value.replace(/\/mnt\/c\/naja-worktrees\/planning-validation/g, '<repo>').replace(/\/tmp\/naja-distribution\.[A-Za-z0-9]+/g, '<private-linux>').replace(/\/home\/[^\s/]+/g, '<home>'); }
   if (Array.isArray(value)) return value.map(sanitize);
   if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, sanitize(child)]));
   return value;
 }
-async function retain(state, error = null, extra = {}) { await writeFile(path.join(out, 'result.json'), JSON.stringify(sanitize({ schema_version: 1, contract_revision: '1.3', state, compiler_source: SOURCE, helper_source: helperSource, observed_at: new Date().toISOString(), host: 'Windows x64 / Ubuntu 24.04 WSL x86-64', node: process.version, commands, error, ...extra }), null, 2) + '\n'); }
+async function retain(state, error = null, extra = {}) { await writeFile(path.join(out, 'result.json'), JSON.stringify(sanitize({ schema_version: 1, contract_revision: '1.3', state, compiler_source: SOURCE, helper_source: helperSource, reused_preparation: reused, observed_at: new Date().toISOString(), host: 'Windows x64 / Ubuntu 24.04 WSL x86-64', node: process.version, commands, error, ...extra }), null, 2) + '\n'); }
 async function command(label, tool, args, budget = 10000, cap = 2097152) {
   assert.ok(Date.now() - start + budget <= 1200000, 'Overall verification deadline');
   const buffers = { stdout: [], stderr: [] }; let total = 0;
@@ -41,11 +43,17 @@ try {
   assert.equal((await command('source-control', 'git', ['diff', SOURCE, '--', 'bootstrap/', 'backends/', 'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', 'third_party/'])).length, 0);
   assert.equal((await command('untracked-compiler-control', 'git', ['ls-files', '--others', '--exclude-standard', '--', 'bootstrap/', 'backends/', 'third_party/'])).length, 0);
   await command('package-units', process.execPath, ['--test', 'tests/distribution/package.test.mjs']);
-  const source = await command('source-archive', 'git', ['archive', '--format=tar', SOURCE], 10000, 67108864); await writeFile(path.join(out, 'source.tar'), source, { flag: 'wx' });
+  if (args.length) {
+    const prior = await retainedPreparation(args[1], root); reused = prior.record;
+    for (const [name, bytes] of prior.files) { const target = path.join(out, name); await mkdir(path.dirname(target), { recursive: true }); await writeFile(target, bytes, { flag: 'wx' }); }
+  } else {
+    const source = await command('source-archive', 'git', ['archive', '--format=tar', SOURCE], 10000, 67108864); await writeFile(path.join(out, 'source.tar'), source, { flag: 'wx' });
+  }
   const linuxOut = (await command('wsl-output-path', 'wsl.exe', ['--distribution', 'Ubuntu', '--exec', '/usr/bin/wslpath', '-a', out])).toString().trim();
   const scripts = (await command('wsl-script-path', 'wsl.exe', ['--distribution', 'Ubuntu', '--exec', '/usr/bin/wslpath', '-a', path.join(root, 'tools/distribution')])).toString().trim();
-  await command('prepare-and-offline-build', 'wsl.exe', ['--distribution', 'Ubuntu', '--exec', '/usr/bin/timeout', '-k', '5', '900', '/bin/sh', scripts + '/prepare-linux.sh', linuxOut], 910000);
-  const inspection = Object.fromEntries(await Promise.all(['dynamic', 'program', 'versions'].map(async name => [name, await readFile(path.join(out, 'linux-build', name + '.txt'), 'utf8')])));
+  if (!reused) await command('prepare-and-offline-build', 'wsl.exe', ['--distribution', 'Ubuntu', '--exec', '/usr/bin/timeout', '-k', '5', '900', '/bin/sh', scripts + '/prepare-linux.sh', linuxOut], 910000);
+  const inspection = {};
+  for (const [name, flags] of [['dynamic', ['-dW']], ['program', ['-lW']], ['versions', ['--version-info', '-W']]]) inspection[name] = (await command('inspect-' + name, 'wsl.exe', ['--distribution', 'Ubuntu', '--exec', '/usr/bin/readelf', ...flags, linuxOut + '/linux-build/naja'])).toString('utf8');
   const dependencyReport = inspectReports(inspection);
   const packaged = await stagePackage({ binary: path.join(out, 'linux-build/naja'), inspection, rustLicenses: path.join(out, 'linux-build/rust-licenses'), output: path.join(out, 'package') });
   await command('archive-package', 'wsl.exe', ['--distribution', 'Ubuntu', '--exec', '/usr/bin/tar', '--sort=name', '--mtime=@0', '--owner=0', '--group=0', '--numeric-owner', '-czf', linuxOut + '/naja-linux-x86_64-unsigned.tar.gz', '-C', linuxOut + '/package', '.']);

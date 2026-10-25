@@ -27,6 +27,13 @@ directory. Inspect failures before retrying. Each retry creates new output.
 Do not interpret an empty PATH as a clean host: only the separately inventoried
 copied-userland checks can support that narrower scoped observation.
 
+After a retained preparation passes but a later stage fails, the explicit
+`--prepared ABSOLUTE_PRIOR_OUTPUT` option audits its source/contract, successful
+preparation record, raw log hashes and compiler/license/archive bytes, then
+copies only fixed inputs into a new exclusive output. It does not rerun stored
+commands or authenticate log honesty. Namespace tests always use a new private
+directory. Old logs and partial work remain unchanged.
+
 `package.mjs` can separately stage validated explicit inputs into a new directory:
 
 ```text

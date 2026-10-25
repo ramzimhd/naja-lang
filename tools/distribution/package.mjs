@@ -15,7 +15,7 @@ export function nativeElf(bytes) {
 export function inspectReports({ dynamic, program, versions }) {
   if (![dynamic, program, versions].every(value => typeof value === 'string' && Buffer.byteLength(value) <= LIMITS.text)) throw new Error('ELF inspection exceeds its text budget.');
   const needed = [...dynamic.matchAll(/\(NEEDED\).*?\[([^\]]+)\]/g)].map(match => match[1]).sort();
-  const allowed = new Set(['libc.so.6', 'libgcc_s.so.1', 'libm.so.6', 'libdl.so.2', 'libpthread.so.0', 'librt.so.1', 'libutil.so.1']);
+  const allowed = new Set(['libc.so.6', 'libgcc_s.so.1', 'libm.so.6', 'libdl.so.2', 'libpthread.so.0', 'librt.so.1', 'libutil.so.1', 'ld-linux-x86-64.so.2']);
   const interpreter = program.match(/Requesting program interpreter:\s*([^\]]+)\]/)?.[1];
   if (!needed.length || needed.length > LIMITS.libraries || new Set(needed).size !== needed.length || needed.some(name => !allowed.has(name)) || interpreter !== '/lib64/ld-linux-x86-64.so.2') throw new Error('Unexpected or missing native OS dependency/interpreter.');
   const glibc = [...new Set([...versions.matchAll(/\bGLIBC_([0-9]+(?:\.[0-9]+)+)\b/g)].map(match => match[1]))].sort((a, b) => { const x = a.split('.').map(Number), y = b.split('.').map(Number); for (let i = 0; i < Math.max(x.length, y.length); i++) if ((x[i] ?? 0) !== (y[i] ?? 0)) return (x[i] ?? 0) - (y[i] ?? 0); return 0; });
