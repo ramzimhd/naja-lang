@@ -1,23 +1,27 @@
-//! Explicit, bounded project alias loading. Manifest semantics and imports are
-//! not implemented here; a regular UTF-8 `naja.toml` is only an ownership marker.
+//! Explicit, bounded project alias loading with schema-1 manifest validation.
+//! Unsupported capabilities reject; dependency/import resolution remains open.
 
-use naja_frontend::{ALIAS_CONFIG_MAX_BYTES, AliasEnvironment, AliasTable, Dialect, parse_aliases};
+use naja_frontend::{
+    ALIAS_CONFIG_MAX_BYTES, AliasEnvironment, AliasTable, Dialect, Span, parse_aliases,
+};
+use naja_seed::manifest::{Edition, MANIFEST_MAX_BYTES, Profile, ProjectManifest, parse_manifest};
 use std::{
     fs::{self, File, Metadata},
     io::{ErrorKind, Read},
     path::{Component, Path, PathBuf},
 };
 
-pub const MANIFEST_MARKER_MAX_BYTES: usize = 64 * 1024;
+// Retain the existing exported limit name; the bytes now contain a parsed manifest.
+pub const MANIFEST_MARKER_MAX_BYTES: usize = MANIFEST_MAX_BYTES;
 const MAX_PATH_BYTES: usize = 32 * 1024;
 const MAX_PATH_COMPONENTS: usize = 128;
-const ALIAS_POLICY: &str =
-    "explicit-project-root-v1;module-owner-only;no-links;manifest-marker-only;naja-only";
+const ALIAS_POLICY: &str = "explicit-project-root-v2;module-owner-only;no-links;manifest-schema-1;dialect=naja;edition=2026.1;profile=hosted;require_block_levels=false;target=x86_64-unknown-linux-gnu;dependencies=unsupported;entry=declarative";
 
 /// Load only `project_root/naja.alias` for an explicitly owned `.naja` module.
 /// Relative module paths are relative to the supplied root. Missing aliases
-/// return `Ok(None)` after validating the root, module and manifest marker.
+/// return `Ok(None)` after validating root/module ownership and the manifest.
 /// Python dialect activation is an error before any filesystem access.
+/// The CLI's explicit SOURCE selects the module; manifest entry is metadata.
 ///
 /// All path components are checked for links/reparse points, canonical module
 /// containment is component-based, and nested project markers are boundaries.
@@ -54,11 +58,28 @@ pub fn load_aliases(
     }
     reject_nested_projects(&root, relative)?;
 
-    let marker_path = root.join("naja.toml");
-    let marker = read_bounded(&marker_path, MANIFEST_MARKER_MAX_BYTES, "naja.toml marker")?;
-    if marker.trim().is_empty() {
-        return Err("NJA030: naja.toml must be a nonempty UTF-8 project marker; full manifest parsing is not implemented".into());
-    }
+    let manifest_path = root.join("naja.toml");
+    let manifest_source = read_bounded(
+        &manifest_path,
+        MANIFEST_MARKER_MAX_BYTES,
+        "naja.toml manifest",
+    )?;
+    let manifest = parse_manifest(&manifest_source).map_err(|errors| {
+        let mut message = format!(
+            "NJA030: invalid project manifest {}",
+            manifest_path.display()
+        );
+        for error in errors {
+            use std::fmt::Write;
+            let _ = write!(
+                message,
+                "\n  {} at manifest bytes {}..{}: {}",
+                error.code, error.span.start, error.span.end, error.message
+            );
+        }
+        message
+    })?;
+    check_manifest_capabilities(&manifest, &manifest_path)?;
     let alias_path = root.join("naja.alias");
     match fs::symlink_metadata(&alias_path) {
         Err(error) if error.kind() == ErrorKind::NotFound => return Ok(None),
@@ -79,6 +100,7 @@ pub fn load_aliases(
             policy: ALIAS_POLICY,
         },
     )
+    .and_then(|table| table.with_project_manifest(&manifest_source))
     .map(Some)
     .map_err(|errors| {
         let mut message = format!(
@@ -95,6 +117,65 @@ pub fn load_aliases(
         }
         message
     })
+}
+
+fn check_manifest_capabilities(manifest: &ProjectManifest, path: &Path) -> Result<(), String> {
+    if manifest.dialect.value != Dialect::Naja2026 {
+        return Err(manifest_refusal(
+            path,
+            manifest.dialect.span,
+            "The manifest dialect must be naja for explicit .naja project alias loading; Python compatibility cannot activate these aliases.",
+        ));
+    }
+    if manifest.edition.value != Edition::Naja2026_1 {
+        return Err(manifest_refusal(
+            path,
+            manifest.edition.span,
+            "Only NAJA edition 2026.1 is supported for this project loader.",
+        ));
+    }
+    if manifest.profile.value != Profile::Hosted {
+        return Err(manifest_refusal(
+            path,
+            manifest.profile.span,
+            "The declared profile is not enforced by this loader; only hosted is currently supported.",
+        ));
+    }
+    if manifest.style.require_block_levels.value {
+        return Err(manifest_refusal(
+            path,
+            manifest.style.require_block_levels.span,
+            "require_block_levels=true is not enforced by this loader and cannot be activated silently.",
+        ));
+    }
+    for target in &manifest.targets {
+        if target.value.0 != "x86_64-unknown-linux-gnu" {
+            return Err(manifest_refusal(
+                path,
+                target.span,
+                "The declared target is unavailable; this seed supports only x86_64-unknown-linux-gnu.",
+            ));
+        }
+    }
+    if let Some(dependency) = manifest.dependencies.first() {
+        return Err(manifest_refusal(
+            path,
+            dependency.name.span,
+            "Declared local dependencies require a resolver and lock/hash validation, which are not implemented; dependency configuration cannot be activated silently.",
+        ));
+    }
+    Ok(())
+}
+
+fn manifest_refusal(path: &Path, span: Option<Span>, message: &str) -> String {
+    let position = span.map_or_else(
+        || "at a defaulted manifest setting".to_owned(),
+        |span| format!("at manifest bytes {}..{}", span.start, span.end),
+    );
+    format!(
+        "NJA030: unsupported project manifest {} {position}: {message}",
+        path.display()
+    )
 }
 
 fn check_requested_path(path: &Path, label: &str) -> Result<(), String> {

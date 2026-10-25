@@ -3,7 +3,9 @@
 This is the schema-1 parser contract selected before its implementation tests.
 It is a declarative TOML subset, not full TOML, a dependency resolver, lockfile
 implementation, capability grant or a claim that every declared target runs.
-The independent module is not yet wired into the project loader or CLI.
+The explicit project alias loader now validates this subset and refuses declared
+capabilities it cannot enforce; see [README.md](README.md). The pure parser still
+recognizes broader metadata than that loader can activate.
 
 ## Field layout
 
@@ -26,6 +28,9 @@ path = "vendor/geometry"
 # Optional metadata, not a verified tree hash or lock/resolution claim:
 sha256 = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 ```
+
+This example demonstrates parser metadata. The current explicit alias loader
+rejects its Windows target and declared dependency rather than activating them.
 
 Only root `schema`, the `[project]` fields above, `[style]` and individual
 `[dependencies.NAME]` tables are accepted. An empty `[dependencies]` namespace
@@ -109,5 +114,13 @@ and 0 ignored on the Windows development host using Rust/Cargo 1.97.1. Scoped
 Clippy (`cargo clippy --locked --offline -p naja-seed --test manifest -- -D
 warnings`), rustfmt and authored whitespace checks also exited 0. The tests
 include 1,200 deterministic scalar mutations; this is not an external audit or
-a full TOML conformance claim. The module remains awaiting integrator review
-and production loader wiring.
+a full TOML conformance claim. That parser-only result precedes the explicit
+project loader wiring described below and in the adjacent README.
+
+The current explicit loader accepts only NAJA 2026.1, hosted, optional/false
+block-level requirements, no declared local dependencies and omitted targets or
+`x86_64-unknown-linux-gnu`. Other recognized metadata rejects with an original
+manifest field span; recognition does not confer capability. Entry is still
+declarative metadata because the explicit CLI SOURCE selects the module. Exact
+original manifest bytes are bound into each returned alias table's identity;
+comments and metadata changes invalidate that identity without rewriting source.

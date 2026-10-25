@@ -11,6 +11,20 @@ use std::{
 
 static NEXT_FIXTURE: AtomicU64 = AtomicU64::new(0);
 const ALIASES: &str = "[operators]\n\"==\" = \"equalTo\"\n[builtins]\n\"print\" = \"display\"\n";
+const MANIFEST: &str = "[project]\nname = \"test\"\n";
+
+fn maximum_manifest() -> String {
+    let mut source = MANIFEST.to_owned();
+    while source.len() < MANIFEST_MARKER_MAX_BYTES {
+        let bytes = (MANIFEST_MARKER_MAX_BYTES - source.len()).min(8192);
+        source.push('#');
+        if bytes > 1 {
+            source.push_str(&"x".repeat(bytes - 2));
+            source.push('\n');
+        }
+    }
+    source
+}
 
 struct Fixture {
     base: PathBuf,
@@ -32,7 +46,7 @@ impl Fixture {
     fn project(&self, name: &str) -> PathBuf {
         let root = self.base.join(name);
         fs::create_dir(&root).unwrap();
-        fs::write(root.join("naja.toml"), "[project]\nname = \"test\"\n").unwrap();
+        fs::write(root.join("naja.toml"), MANIFEST).unwrap();
         fs::write(root.join("main.naja"), "print(1)\n").unwrap();
         root
     }
@@ -98,7 +112,7 @@ fn ordinary_project_uses_shared_alias_service_and_preserves_raw_config() {
 }
 
 #[test]
-fn absent_root_alias_is_optional_after_ownership_and_marker_validation() {
+fn absent_root_alias_is_optional_after_ownership_and_manifest_validation() {
     let fixture = Fixture::new();
     let root = fixture.project("optional");
     assert!(
@@ -200,20 +214,16 @@ fn additional_extensions_and_parent_traversal_are_explicitly_unsupported() {
 }
 
 #[test]
-fn manifest_is_a_bounded_utf8_marker_without_a_full_toml_claim() {
+fn manifest_is_bounded_utf8_parsed_configuration_instead_of_arbitrary_marker_text() {
     let fixture = Fixture::new();
     let root = fixture.project("marker");
     for contents in ["", " \t\r\n", "\u{2003}"] {
         fs::write(root.join("naja.toml"), contents).unwrap();
-        failure(&root, Path::new("main.naja"), "nonempty");
+        failure(&root, Path::new("main.naja"), "invalid project manifest");
     }
     fs::write(root.join("naja.toml"), b"\xff").unwrap();
     failure(&root, Path::new("main.naja"), "UTF-8");
-    fs::write(
-        root.join("naja.toml"),
-        "x".repeat(MANIFEST_MARKER_MAX_BYTES),
-    )
-    .unwrap();
+    fs::write(root.join("naja.toml"), maximum_manifest()).unwrap();
     assert!(
         load_aliases(&root, Path::new("main.naja"), Dialect::Naja2026)
             .unwrap()
@@ -225,13 +235,207 @@ fn manifest_is_a_bounded_utf8_marker_without_a_full_toml_claim() {
     )
     .unwrap();
     failure(&root, Path::new("main.naja"), "limit of 65536");
-    // Successful marker validation intentionally says nothing about manifest
-    // grammar, declared dialect/profile or dependencies.
     fs::write(root.join("naja.toml"), "not valid TOML; marker only").unwrap();
+    failure(&root, Path::new("main.naja"), "invalid project manifest");
+}
+
+#[test]
+fn manifest_parser_errors_retain_exact_original_codes_and_utf8_byte_spans() {
+    let fixture = Fixture::new();
+    let root = fixture.project("manifest-spans");
+    let source = "# 世界\r\nschema = \"1\"\r\n[project]\r\nname = \"café\"\r\n";
+    fs::write(root.join("naja.toml"), source).unwrap();
+    fs::write(root.join("naja.alias"), b"\xff").unwrap();
+    let start = source.find("\"1\"").unwrap();
+    let error = failure(
+        &root,
+        Path::new("main.naja"),
+        &format!("M0006 at manifest bytes {start}..{}", start + 3),
+    );
+    assert!(error.contains("naja.toml"));
+    assert!(!error.contains("invalid alias configuration"));
+    assert_eq!(fs::read_to_string(root.join("naja.toml")).unwrap(), source);
+    assert_eq!(fs::read(root.join("naja.alias")).unwrap(), b"\xff");
+    for source in [
+        "[project]\nname = \"x\"\nunknown = true\n",
+        "[project]\nname = \"x\"\nname = \"x\"\n",
+        "[project]\nname = \"x\"\n[style]\nrequire_block_levels = \"true\"\n",
+        "schema = 2\n[project]\nname = \"x\"\n",
+        "[project]\nname = \"x\"\nentry = \"../outside.naja\"\n",
+        "[project]\nname = \"x\"\n[dependencies.a]\n",
+    ] {
+        fs::write(root.join("naja.toml"), source).unwrap();
+        failure(&root, Path::new("main.naja"), "at manifest bytes");
+    }
+}
+
+#[test]
+fn unavailable_manifest_capabilities_reject_before_alias_inspection_even_when_aliases_are_absent() {
+    let fixture = Fixture::new();
+    for aliases in [false, true] {
+        let root = fixture.project(&format!("capabilities-{aliases}"));
+        if aliases {
+            fs::write(root.join("naja.alias"), b"\xff").unwrap();
+        }
+        for (fields, message, value_spelling) in [
+            (
+                "dialect = \"python\"",
+                "manifest dialect must be naja",
+                "\"python\"",
+            ),
+            ("profile = \"core\"", "only hosted", "\"core\""),
+            ("profile = \"embedded\"", "only hosted", "\"embedded\""),
+            (
+                "target = \"x86_64-pc-windows-msvc\"",
+                "declared target is unavailable",
+                "\"x86_64-pc-windows-msvc\"",
+            ),
+            (
+                "targets = [\"x86_64-unknown-linux-gnu\", \"custom-vendor-device\"]",
+                "declared target is unavailable",
+                "\"custom-vendor-device\"",
+            ),
+            (
+                "[style]\nrequire_block_levels = true",
+                "require_block_levels=true is not enforced",
+                "true",
+            ),
+            (
+                "[dependencies.a]\npath = \"../sibling\"",
+                "dependencies require a resolver",
+                ".a]",
+            ),
+            (
+                "[dependencies.a]\npath = \"missing-owner\"\nsha256 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+                "dependencies require a resolver",
+                ".a]",
+            ),
+        ] {
+            let source = format!("# 世界\r\n{MANIFEST}{fields}\n");
+            fs::write(root.join("naja.toml"), &source).unwrap();
+            let error = failure(&root, Path::new("main.naja"), message);
+            let start = source.find(value_spelling).unwrap();
+            let (start, end) = if value_spelling == ".a]" {
+                (start + 1, start + 2)
+            } else {
+                (start, start + value_spelling.len())
+            };
+            assert!(
+                error.contains(&format!("at manifest bytes {start}..{end}")),
+                "{error}"
+            );
+            assert!(!error.contains("invalid alias configuration"));
+            assert_eq!(fs::read_to_string(root.join("naja.toml")).unwrap(), source);
+        }
+    }
+}
+
+#[test]
+fn supported_explicit_metadata_and_empty_dependencies_allow_loading_while_entry_stays_declarative()
+{
+    let fixture = Fixture::new();
+    let root = fixture.project("supported-metadata");
+    let source = concat!(
+        "schema = 1\n[project]\nname = \"café 数据\"\ndialect = \"naja\"\n",
+        "edition = \"2026.1\"\nprofile = \"hosted\"\nentry = \"not-present/other.naja\"\n",
+        "targets = [\"x86_64-unknown-linux-gnu\"]\n[style]\nrequire_block_levels = false\n[dependencies]\n"
+    );
+    fs::write(root.join("naja.toml"), source).unwrap();
+    assert!(!root.join("not-present").exists());
     assert!(
         load_aliases(&root, Path::new("main.naja"), Dialect::Naja2026)
             .unwrap()
             .is_none()
+    );
+    fixture.aliases(&root);
+    assert_eq!(
+        load_aliases(&root, Path::new("main.naja"), Dialect::Naja2026)
+            .unwrap()
+            .unwrap()
+            .source(),
+        ALIASES
+    );
+    assert!(!root.join("not-present").exists());
+    assert_eq!(
+        fs::read_to_string(root.join("main.naja")).unwrap(),
+        "print(1)\n"
+    );
+}
+
+#[test]
+fn table_identity_includes_exact_manifest_bytes_and_effective_loader_policy() {
+    let fixture = Fixture::new();
+    let root = fixture.project("manifest-identity");
+    fixture.aliases(&root);
+    let variants = [
+        MANIFEST.to_owned(),
+        format!("{MANIFEST}# changed raw comment\n"),
+        format!("schema = 1\n{MANIFEST}"),
+        format!("{MANIFEST}dialect = \"naja\"\n"),
+        format!("{MANIFEST}edition = \"2026.1\"\n"),
+        format!("{MANIFEST}profile = \"hosted\"\n"),
+        format!("{MANIFEST}[style]\nrequire_block_levels = false\n"),
+        format!("{MANIFEST}target = \"x86_64-unknown-linux-gnu\"\n"),
+        format!("{MANIFEST}entry = \"unselected.naja\"\n"),
+        MANIFEST.replace('\n', "\r\n"),
+    ];
+    let mut identities = std::collections::BTreeSet::new();
+    for source in variants {
+        fs::write(root.join("naja.toml"), &source).unwrap();
+        let table = load_aliases(&root, Path::new("main.naja"), Dialect::Naja2026)
+            .unwrap()
+            .unwrap();
+        assert_eq!(table.source(), ALIASES);
+        let identity = table.cache_identity();
+        assert!(
+            identity
+                .windows(source.len())
+                .any(|bytes| bytes == source.as_bytes())
+        );
+        for field in [
+            "explicit-project-root-v2",
+            "manifest-schema-1",
+            "edition=2026.1",
+            "profile=hosted",
+            "require_block_levels=false",
+            "entry=declarative",
+        ] {
+            assert!(
+                identity
+                    .windows(field.len())
+                    .any(|bytes| bytes == field.as_bytes())
+            );
+        }
+        assert!(identities.insert(identity.to_vec()));
+        assert_eq!(
+            identity,
+            load_aliases(&root, Path::new("main.naja"), Dialect::Naja2026)
+                .unwrap()
+                .unwrap()
+                .cache_identity()
+        );
+    }
+}
+
+#[test]
+fn maximum_alias_and_manifest_bytes_are_both_retained_without_a_policy_limit_increase() {
+    let fixture = Fixture::new();
+    let root = fixture.project("maximum-identity");
+    let manifest = maximum_manifest();
+    let aliases = format!("#{}", "x".repeat(ALIAS_CONFIG_MAX_BYTES - 1));
+    fs::write(root.join("naja.toml"), &manifest).unwrap();
+    fs::write(root.join("naja.alias"), &aliases).unwrap();
+    let table = load_aliases(&root, Path::new("main.naja"), Dialect::Naja2026)
+        .unwrap()
+        .unwrap();
+    assert_eq!(table.source(), aliases);
+    assert!(table.entries().is_empty());
+    assert!(table.cache_identity().len() > manifest.len() + aliases.len());
+    assert!(
+        table
+            .cache_identity()
+            .windows(manifest.len())
+            .any(|bytes| bytes == manifest.as_bytes())
     );
 }
 
@@ -248,7 +452,7 @@ fn marker_config_and_module_must_be_ordinary_files() {
     fs::create_dir(root.join("naja.toml")).unwrap();
     failure(&root, Path::new("main.naja"), "ordinary file");
     fs::remove_dir(root.join("naja.toml")).unwrap();
-    fs::write(root.join("naja.toml"), "marker").unwrap();
+    fs::write(root.join("naja.toml"), MANIFEST).unwrap();
     fs::create_dir(root.join("naja.alias")).unwrap();
     failure(&root, Path::new("main.naja"), "ordinary file");
 }
@@ -344,7 +548,7 @@ fn nested_project_markers_stop_parent_aliases_and_require_explicit_ownership() {
     fixture.aliases(&root);
     let nested = root.join("dependency");
     fs::create_dir(&nested).unwrap();
-    fs::write(nested.join("naja.toml"), "nested marker").unwrap();
+    fs::write(nested.join("naja.toml"), MANIFEST).unwrap();
     fs::write(nested.join("entry.naja"), "print(1)").unwrap();
     failure(
         &root,
@@ -356,6 +560,13 @@ fn nested_project_markers_stop_parent_aliases_and_require_explicit_ownership() {
             .unwrap()
             .is_none()
     );
+    fs::write(nested.join("naja.toml"), "invalid child manifest").unwrap();
+    failure(
+        &root,
+        Path::new("dependency/entry.naja"),
+        "nested project marker",
+    );
+    failure(&nested, Path::new("entry.naja"), "invalid project manifest");
 }
 
 #[test]
