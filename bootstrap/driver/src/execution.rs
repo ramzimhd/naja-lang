@@ -516,13 +516,16 @@ fn visit(
         if kind.is_symlink() {
             continue;
         }
+        let entry_name = entry.file_name();
+        let name = entry_name
+            .to_str()
+            .ok_or("NJA014: test discovery names must be Unicode")?;
         let path = entry.path();
         if kind.is_dir() {
             visit(root, &path, depth + 1, entries, files)?;
         } else if kind.is_file()
-            && entry.file_name().to_str().is_some_and(|name| {
-                name.starts_with("test_") && (name.ends_with(".naja") || name.ends_with(".py"))
-            })
+            && name.starts_with("test_")
+            && (name.ends_with(".naja") || name.ends_with(".py"))
         {
             if files.len() == MAX_TESTS {
                 return Err("NJA014: test discovery exceeds 256 program files".into());
@@ -530,9 +533,14 @@ fn visit(
             let name = path
                 .strip_prefix(root)
                 .map_err(|_| "NJA014: invalid test path")?
-                .to_str()
-                .ok_or("NJA014: test names must be Unicode")?
-                .replace('\\', "/");
+                .iter()
+                .map(|component| {
+                    component
+                        .to_str()
+                        .ok_or("NJA014: test names must be Unicode")
+                })
+                .collect::<Result<Vec<_>, _>>()?
+                .join("/");
             files.push(TestFile { path, name });
         }
     }
@@ -689,6 +697,41 @@ mod tests {
                 fs::remove_file(path).unwrap();
             }
         }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn discovery_preserves_unix_backslashes_and_rejects_nonunicode_names() {
+        use std::os::unix::ffi::OsStringExt;
+        let artifact = Artifact::create(b"x", &std::env::temp_dir()).unwrap();
+        let flat = artifact.directory.join("test_folder\\test_value.py");
+        let directory = artifact.directory.join("test_folder");
+        fs::create_dir(&directory).unwrap();
+        let nested = directory.join("test_value.py");
+        fs::write(&flat, b"print(1)").unwrap();
+        fs::write(&nested, b"print(2)").unwrap();
+        let names = discover(&artifact.directory, None)
+            .unwrap()
+            .into_iter()
+            .map(|file| file.name)
+            .collect::<Vec<_>>();
+        assert_eq!(
+            names,
+            ["test_folder/test_value.py", "test_folder\\test_value.py"]
+        );
+        let invalid = artifact
+            .directory
+            .join(OsString::from_vec(b"test_\xff.py".to_vec()));
+        fs::write(&invalid, b"print(3)").unwrap();
+        assert!(
+            discover(&artifact.directory, None)
+                .unwrap_err()
+                .contains("must be Unicode")
+        );
+        fs::remove_file(invalid).unwrap();
+        fs::remove_file(flat).unwrap();
+        fs::remove_file(nested).unwrap();
+        fs::remove_dir(directory).unwrap();
     }
 
     #[cfg(unix)]

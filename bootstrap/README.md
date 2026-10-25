@@ -10,7 +10,9 @@ linker; generated Linux ELF files use the independent emitter instead.
 
 `naja lex` produces original-source byte spans and lossless tokens. `naja check`
 checks the experimental executable subset. `naja build` emits a fresh Linux x86-64
-ELF file and never executes source. Commands not shown by `naja --help` are not
+ELF file and never executes source. `naja run` and program-file `naja test` execute
+compiled code on Linux x86-64, with an explicit WSL adapter on Windows. See
+[CLI execution](../tests/cli/README.md). Commands not shown by `naja --help` are not
 implemented. The frontend's logical-line CST and suite metadata are not a complete
 grammar parser. `.naja` selects edition 2026.1; `.py` retains the separate
 compatibility dialect. Both use the same frontend implementation.
@@ -20,7 +22,10 @@ compatibility dialect. Both use the same frontend implementation.
 Without an initial core import, ordinary decimal integer literals and inferred
 assignments use native immutable multi-limb values. `name: int = expression` is
 also supported. Unary `+`/`-`, binary `+`/`-`/`*`, explicit comparisons, `if`/`else`,
-`while` and `print` execute in the generated program. Integer spelling never
+`while` and `print` execute in the generated program. `assert` accepts one explicit
+comparison, always executes when reached and reports `NJA204`/exit 104 on failure.
+It is not an assumed optimizer contract or recoverable exception implementation.
+Integer spelling never
 passes through a fixed-width or floating-point representation. Definite
 initialization intersects conditional paths and assumes a loop may execute zero
 times. Unicode names use canonical NFKC symbol keys; keywords retain raw spelling.

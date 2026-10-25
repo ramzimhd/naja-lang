@@ -19,6 +19,9 @@ file need not match that pattern. A filter is a case-sensitive substring of that
 relative name. Discovery bounds, applied before filtering, are 256 selected
 files, 4096 visited entries and 16 directory levels below the supplied root.
 Entries identified as symlinks are skipped; an explicit symlink path is rejected.
+Discovery diagnoses names that cannot be represented as Unicode instead of
+silently omitting them. Literal backslashes on Unix remain filename characters;
+only actual directory separators become `/` in reports.
 Concurrent filesystem replacement is not a protected security boundary. Empty
 selection is an operational error. Run `programs/` for the two passing examples;
 the deliberately failing `cases/` names do not match discovery patterns.

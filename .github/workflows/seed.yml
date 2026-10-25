@@ -38,12 +38,15 @@ jobs:
         run: |
           node scripts/test-hosted.mjs
           node scripts/test-hosted-language.mjs
+          node scripts/test-cli.mjs
       - name: Check planning and evidence integrity
         run: node scripts/validation/check-planning.mjs
       - name: Execute planning mutation tests
         run: node --test tests/planning/*.test.mjs
       - name: Check additive foundation contracts
         run: node scripts/validation/check-foundations.mjs
+      - name: Check public continuity observation
+        run: node scripts/validation/check-continuity.mjs
       - name: Execute contract mutation tests
         run: node --test tests/foundations/*.test.mjs
       - name: Exercise disposable recovery repositories

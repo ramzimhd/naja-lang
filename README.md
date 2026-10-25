@@ -46,7 +46,15 @@ execution tests on Windows with Ubuntu WSL or Linux x86-64:
 node scripts/test-native.mjs
 node scripts/test-hosted.mjs
 node scripts/test-hosted-language.mjs
+node scripts/test-cli.mjs
 ```
+
+The CLI also builds and executes programs with `naja run SOURCE`; on Windows,
+select the local Linux adapter explicitly with `--runner wsl`. `naja test PATH`
+runs deterministic program-file discovery, supports native comparison assertions,
+and provides bounded, lossless machine reports. See
+[execution limits and options](tests/cli/README.md). This does not yet provide
+the complete HATCH test framework or native Windows/macOS application execution.
 
 The commands above were executed on Windows x64, with ELF execution in Ubuntu
 WSL. This is not a clean-host installation or macOS support claim. Node is used
