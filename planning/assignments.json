@@ -243,7 +243,20 @@
         "bootstrap/driver/src/doctor.rs",
         "bootstrap/driver/src/scaffold.rs",
         "bootstrap/driver/tests/scaffold.rs",
-        "scripts/test-project-cli.mjs"
+        "scripts/test-project-cli.mjs",
+        "bootstrap/driver/src/source_reports.rs",
+        "scripts/test-check-json.mjs",
+        "scripts/test-index-language.mjs",
+        "scripts/test-tuples-language.mjs",
+        "scripts/test-lists-language.mjs",
+        "scripts/test-values-language.mjs",
+        "scripts/test-vscode.mjs",
+        "tests/tuples-source/",
+        "tests/lists-source/",
+        "editor/vscode/",
+        "tests/vscode/",
+        "reports/governance/",
+        "reports/migrations/"
       ],
       "status": "active",
       "history": [
@@ -336,17 +349,16 @@
     {
       "task_id": "T12",
       "owner": "/root/seed_setup",
-      "branch": "agent/cli-execution-v13",
-      "base_commit": "551214d92976357b55614ebad4d9e5bfafc7b1e0",
+      "branch": "agent/native-files-v13",
+      "base_commit": "aba7307c9c044f83dc3129581744529a627b1d08",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
-        "bootstrap/driver/src/main.rs",
-        "bootstrap/driver/src/execution.rs",
-        "tests/cli/",
-        "scripts/test-cli.mjs"
+        "backends/native/",
+        "scripts/test-files.mjs",
+        "tests/files/"
       ],
-      "status": "completed",
-      "deliverable": "Native run and deterministic program-file test CLI, explicit WSL adapter, bounded artifacts and machine reports.",
+      "status": "active",
+      "deliverable": "Frozen bounded native file IO/UTF8 core; native execution and source integration pending.",
       "acceptance_commands": [
         [
           "cargo",
@@ -368,7 +380,50 @@
         "planning/"
       ],
       "handoff": "Scoped commit/report to sole integrator.",
-      "integrated_commit": "a1bd34f"
+      "history": [
+        {
+          "task_id": "T12",
+          "owner": "/root/seed_setup",
+          "branch": "agent/cli-execution-v13",
+          "base_commit": "551214d92976357b55614ebad4d9e5bfafc7b1e0",
+          "worktree": "../naja-worktrees/seed-setup",
+          "paths": [
+            "bootstrap/driver/src/main.rs",
+            "bootstrap/driver/src/execution.rs",
+            "tests/cli/",
+            "scripts/test-cli.mjs"
+          ],
+          "status": "completed",
+          "deliverable": "Native run and deterministic program-file test CLI, explicit WSL adapter, bounded artifacts and machine reports.",
+          "acceptance_commands": [
+            [
+              "cargo",
+              "test",
+              "-p",
+              "naja-seed",
+              "--locked",
+              "--offline"
+            ],
+            [
+              "node",
+              "scripts/test-cli.mjs"
+            ]
+          ],
+          "forbidden_paths": [
+            "bootstrap/driver/src/lib.rs",
+            "backends/",
+            "Cargo.lock",
+            "planning/"
+          ],
+          "handoff": "Scoped commit/report to sole integrator.",
+          "integrated_commit": "a1bd34f"
+        }
+      ],
+      "released_paths": [
+        "bootstrap/driver/src/values.rs"
+      ],
+      "published_core_commit": "39c4b3fbd20e4fcabd4b00c8faa23d2b3189edd2",
+      "published_height_commit": "ea1dbdf4bad17e96c9cec21539431759beecf965"
     },
     {
       "task_id": "T04",
@@ -440,16 +495,16 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/native-tuples-v13",
-      "base_commit": "834014bf178471958fee0d7cefa2e9621dfce634",
+      "branch": "agent/native-lists-v13",
+      "base_commit": "4e7f0c19e7dc927dcfb425ddc43d9a5411401e08",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
         "backends/native/",
-        "scripts/test-tuples.mjs",
-        "tests/tuples/"
+        "scripts/test-lists.mjs",
+        "tests/lists/"
       ],
       "status": "completed",
-      "deliverable": "Immutable Tuple backend with len/truth/exact index; unsupported print/comparison/arithmetic explicitly reject. Core7b84d3b + separate height7ab20ff + proof38e3b13 await root integration.",
+      "deliverable": "Bounded native lists, fixed-count shared mutation, cycles and frozen native proof; remaining semantics stay open.",
       "acceptance_commands": [
         [
           "node",
@@ -523,8 +578,42 @@
           ],
           "status": "completed",
           "integrated_commit": "bc52279/bf46638/36ea3cd"
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/seed_setup",
+          "branch": "agent/native-tuples-v13",
+          "base_commit": "834014bf178471958fee0d7cefa2e9621dfce634",
+          "worktree": "../naja-worktrees/seed-setup",
+          "paths": [
+            "backends/native/",
+            "scripts/test-tuples.mjs",
+            "tests/tuples/"
+          ],
+          "status": "completed",
+          "deliverable": "Immutable Tuple backend with len/truth/exact index; unsupported print/comparison/arithmetic explicitly reject. Core7b84d3b + separate height7ab20ff + proof38e3b13 await root integration.",
+          "acceptance_commands": [
+            [
+              "node",
+              "scripts/test-index.mjs"
+            ],
+            [
+              "cargo",
+              "test",
+              "--workspace",
+              "--locked",
+              "--offline"
+            ]
+          ],
+          "forbidden_paths": [
+            "bootstrap/driver/",
+            "planning/",
+            "Cargo.lock"
+          ],
+          "handoff": "Backend and height paths explicitly released; root owns source integration."
         }
-      ]
+      ],
+      "integrated_commit": "ac26eff/2dbe10d/2a382d4"
     },
     {
       "task_id": "T12",
@@ -613,15 +702,15 @@
     {
       "task_id": "T11",
       "owner": "/root/frontend",
-      "branch": "agent/tuples-source-harness-v13",
-      "base_commit": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "branch": "agent/lists-source-harness-v13",
+      "base_commit": "662bcdcff3a5742d9271b5f449becaa724503d78",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
-        "scripts/test-tuples-language.mjs",
-        "tests/tuples-source/"
+        "scripts/test-lists-language.mjs",
+        "tests/lists-source/"
       ],
-      "status": "active",
-      "deliverable": "Frozen actual-source tuple cases; preparation only until root supplies integrated source.",
+      "status": "completed",
+      "deliverable": "Frozen 167-case actual list source harness and executed pinned report; all passed.",
       "acceptance_commands": [
         [
           "cargo",
@@ -670,8 +759,33 @@
           ],
           "status": "completed",
           "integrated_commit": "c55c484/0a746e1"
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/frontend",
+          "branch": "agent/tuples-source-harness-v13",
+          "base_commit": "797dda666fa41bb4924c8011a37603e84c1b0662",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "scripts/test-tuples-language.mjs",
+            "tests/tuples-source/"
+          ],
+          "status": "active",
+          "deliverable": "Frozen actual-source tuple cases; preparation only until root supplies integrated source.",
+          "acceptance_commands": [
+            [
+              "cargo",
+              "test",
+              "-p",
+              "naja-seed",
+              "--locked",
+              "--offline"
+            ]
+          ],
+          "handoff": "Report only; root integrates findings."
         }
-      ]
+      ],
+      "integrated_commit": "c30f0e9/7f139c7"
     },
     {
       "task_id": "T12",
@@ -724,14 +838,14 @@
     {
       "task_id": "T11",
       "owner": "/root/recovery_review",
-      "branch": "agent/project-cli-review-v13",
-      "base_commit": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "branch": "agent/lists-review-v13",
+      "base_commit": "aba7307c9c044f83dc3129581744529a627b1d08",
       "worktree": "../naja-worktrees/recovery-review",
       "paths": [
-        "reports/reviews/PROJECT_CLI_V13.md"
+        "reports/reviews/LISTS_V13.md"
       ],
       "status": "completed",
-      "deliverable": "Independent doctor/init path, empty-PATH, native workflow and partial-output collision review; authoring failures retained.",
+      "deliverable": "Independent list/source/JSON review with retained failed probe assumptions; no actionable product defect.",
       "history": [
         {
           "branch": "agent/divrem-review-v13",
@@ -759,9 +873,72 @@
           ],
           "status": "completed",
           "integrated_commit": "f8127f6"
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/recovery_review",
+          "branch": "agent/project-cli-review-v13",
+          "base_commit": "797dda666fa41bb4924c8011a37603e84c1b0662",
+          "worktree": "../naja-worktrees/recovery-review",
+          "paths": [
+            "reports/reviews/PROJECT_CLI_V13.md"
+          ],
+          "status": "completed",
+          "deliverable": "Independent doctor/init path, empty-PATH, native workflow and partial-output collision review; authoring failures retained.",
+          "integrated_commit": "3a8a037"
+        },
+        {
+          "branch": "agent/tuples-review-v13",
+          "base_commit": "b0456b62796dffc2042094567df65c1901429b10",
+          "paths": [
+            "reports/reviews/TUPLES_V13.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "a956839"
         }
       ],
-      "integrated_commit": "3a8a037"
+      "integrated_commit": "f2d6c74"
+    },
+    {
+      "task_id": "T12",
+      "owner": "/root/frontend",
+      "branch": "agent/files-source-harness-v13",
+      "base_commit": "91d94d15ec273e5c71ec6c8d95e5baa824861148",
+      "worktree": "../naja-worktrees/frontend",
+      "paths": [
+        "scripts/test-files-language.mjs",
+        "tests/files-source/"
+      ],
+      "status": "active",
+      "deliverable": "Prepare frozen actual file/conversion source cases; no native execution until root supplies integrated source."
+    },
+    {
+      "task_id": "T18",
+      "owner": "/root/planning_validation",
+      "branch": "agent/vscode-preview-v13",
+      "base_commit": "662bcdcff3a5742d9271b5f449becaa724503d78",
+      "worktree": "../naja-worktrees/planning-validation",
+      "paths": [
+        "editor/vscode/",
+        "scripts/test-vscode.mjs",
+        "tests/vscode/"
+      ],
+      "status": "completed",
+      "integrated_commit": "e3285d4/d924b89",
+      "deliverable": "Unsigned CLI-preview VSIX, twelve unit/nine compiler groups and isolated CLI installation; actual editor workflows and native LSP/DAP remain open."
+    },
+    {
+      "task_id": "T18",
+      "owner": "/root/recovery_review",
+      "branch": "agent/vscode-review-v13",
+      "base_commit": "862e911d97b7fc8c9c61aa0da830f5550370488d",
+      "worktree": "../naja-worktrees/recovery-review",
+      "paths": [
+        "reports/reviews/VSCODE_PREVIEW_V13.md"
+      ],
+      "status": "completed",
+      "deliverable": "Independent candidate VSIX/adapter review: 37 groups and three output controls passed; actual IDE workflow remains untested.",
+      "integrated_commit": "5d84aed"
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

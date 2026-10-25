@@ -1,76 +1,97 @@
 # NAJA implementation progress — October 25, 2026
 
 Revision 1.3; NAJA edition 2026.1; sole integrator /root. FC1 and HATCH remain
-incomplete. All 19 inherited gates and all new L/C/FC1 contracts remain open.
+incomplete. All 19 inherited gates and all L/C/FC1 contracts remain open.
 The 147 inherited requirements and 38 tasks retain their identifiers/history.
 
-Exact source 797dda666fa41bb4924c8011a37603e84c1b0662 passed 21 retained records:
+Exact compiler source 91d94d15ec273e5c71ec6c8d95e5baa824861148 passed 26 retained
+command records in reports/checks/v13-collections-integrated-*.json and paired
+sanitized raw logs:
 
 | Executed scope | Actual result |
 | --- | --- |
-| Locked/offline Rust workspace | 235 passed; zero failed/ignored |
-| Checked-i64 native / hosted integer IR / integer source | 36 / 14 / 23 checks |
-| Tagged values and division IR | 85 checks; 8,194 independent outputs |
-| Direct native function IR | 43 checks; 294 independent outputs |
-| Native scalar indexing IR | 72 checks; 2,107 independent outputs |
-| Actual values / functions / indexing source | 106 / 76 / 83 checks; zero not_run |
+| Locked/offline Rust workspace | 247 passed; zero failed or ignored |
+| Fixed i64 / hosted integer IR / integer source | 36 / 14 / 23 checks |
+| Tagged values/division / direct function IR | 85 / 43 checks; 8,194 / 294 oracle outputs |
+| Scalar indexing / tuple / mutable list IR | 72 / 76 / 97 checks; 2,107 / 259 / 385 oracle outputs |
+| Actual values / functions / indexing source | 108 / 76 / 83 checks |
+| Actual tuple / mutable list source | 137 / 167 checks; zero not_run |
 | Native run/test CLI / compiler boundaries | 43 / 25 checks |
+| Original UTF-16 structured diagnostics | 21 checks |
 | Full init/doctor project workflow | 23 checks; zero not_run |
 | Explicit compile-only project workflow | 20 passed; 3 native cases not_run |
 | Formatting, Clippy, build, three validators, scoped whitespace | Passed |
 
-Commands, versions, exits, sanitized raw logs and hashes are in
-reports/checks/v13-index-project-*.json and paired logs. Windows x64 compiled the
-seed; Linux x86-64 programs actually ran through explicit local Ubuntu WSL.
-Compile-only outcomes do not claim native Windows/macOS execution. The earlier
-126 Node integrity/recorder cases remain pinned to 432ee9d. Public d065460 passed
-Linux/Windows/macOS CI at run40230539152; this later publication needs its own CI.
+Windows x64 built the temporary Rust seed; actual emitted programs ran on local
+Linux x86-64 WSL. Compile-only modes do not claim Windows/macOS emitted-target
+execution. The 126 Node planning/recovery/recorder cases separately passed at
+aba7307; they were not relabeled or needlessly repeated after fixture-only work.
+Public a65dddf passed all three CI hosts at run40232200667. This new publication
+needs its own exact-SHA CI observation.
 
-Private integrity audit/checkpoint 10 advanced retained source under actual fence 2.
-The evidence-only dirty state assessed ready with explicit acknowledgement before
-metadata edits. Integrity auditing is not coverage, log-honesty or milestone
-acceptance proof. Later review/evidence commits do not inherit a tested identity.
+Private integrity audit/checkpoint 12 advanced retained compiler source to
+91d94d1 under actual fence 2 and assessed ready before these metadata edits.
+A later ordinary checkpoint must capture publication state. Integrity auditing
+checks selected report consistency, not coverage, log honesty or gate acceptance.
+Later adapter/review/evidence commits keep their separate tested identities.
 
-Ordinary native Int/Text/Bytes/Bool/None support exact arithmetic including signed
-floor division/remainder, concatenation, comparisons/chains, short circuiting,
-len, assertions, branches/loops and annotations. First-order functions use real
-calls/returns, isolated frames and once-only arguments, with unsupported binding
-forms rejected. Text/Bytes indexing now accepts exact Int/Bool indices, negative
-from end, returns scalar Text or unsigned byte Int and reports bounds exit107.
-The shared frontend retains suites, Unicode 17 XID/NFKC and original positions.
+The shared parser now lowers empty/singleton/multiple parenthesized tuples and
+fixed-count mutable lists, len/truth/index and single-subscript assignments.
+List mutation evaluates the value, sequence and index once in that order; ordinary
+write-like function calls will retain their own argument order. Aliases, parameters,
+returned/nested targets and shallow self/indirect cycles preserve descriptors.
+Each collection has at most 128 elements. Tuple/list display, comparisons and
+numeric operations explicitly fail type105 and remain required semantic work.
+Resizing, iteration, unpacking and richer collection behavior remain open.
 
-Explicit project roots parse bounded schema 1 manifests and reject unavailable
-capabilities before contextual aliases. Alias identity includes exact manifest
-bytes. Init exclusively creates three validated files without executing them;
-doctor separates declared capabilities, explicit runner preparation and user
-execution. Real empty-PATH init/check/build calls succeeded; they do not remove
-OS libraries or establish a clean host or autonomy closure.
+Existing exact arbitrary integers, Text/Bytes/Bool/None, signed division/remainder,
+first-order calls/returns, shared suites, Unicode 17 XID/NFKC, explicit project
+aliases/manifests and exclusive init/doctor remain. Structured check JSON uses
+original zero-based UTF-16 ranges, a 32-diagnostic cap and an omitted count.
+Check/build execute no user source. Unsupported bindings and capabilities reject.
 
-Independent indexing review at 834014b found no actionable defect across 77 source
-cases/3,528 oracle outputs plus 8 corruption controls. Its original fixture error
-remains retained. Independent doctor/init review at 797dda6 found none across 72
-ordinary cases plus namespace/native probes and one actual exclusive-create
-collision: foreign bytes and partial output were retained, and retry refused.
-The probe's launcher/watcher authoring failures remain failed. Earlier division,
-function and compiler-stack/input reviews retain their original source pins.
+An unsigned experimental VSIX exists locally at
+editor/vscode/artifacts/naja-cli-preview-0.0.1.vsix: 15,947 bytes, SHA-256
+4ec98c344702801e6195f364578c500914ad1c75e4dec18d8898dca7531759a0.
+It contains nine reviewed entries and zero runtime npm dependencies. Official
+vsce 4.0.0 packaged it; VS Code 1.142.0 installed/listed it in an isolated profile.
+The current adapter passed 12 unit tests and nine real-compiler groups at
+7c8248c, retained in reports/checks/v13-editor-integrated.json. The original
+package/install observations keep their aa41435/662bcdc pins. Actual editor UI
+workflows, native LSP/DAP, cells and complete tooling acceptance remain not_run
+or unimplemented. This is a locally retained preview, not a published release.
 
-All failures remain visible. The old macOS fixture failure and Linux diagnostic
-expectation were corrected and passed later d065460 CI. The old value fixture
-failure at 432ee9d remains alongside later valid-manifest checks. During project
-harness authoring, its own capture files tripped a read-only assertion; captures
-were separated, original harness/failures preserved, and full/compile-only modes
-then passed. No semantic expectation, validation policy or budget was relaxed.
+Independent tuple review at b0456b6 found no actionable defect across 77 source
+cases/257 outputs and 53 IR cases; list review at aba7307 found none across 91
+source cases/638 outputs, separate IR corruption/resource controls and eight
+focused JSON behaviors. Their failed reviewer assumptions remain failed, including
+an oversized unrolled source fixture and two diagnostic-count oracles. Independent VSIX artifact/adapter review found no actionable defect across 37
+groups and three output controls, including actual CLI build/run through a mock
+host. Its original candidate/compiler pins remain separate; actual IDE UI was
+not run.
 
-Temporary limits remain compiler stack 8 MiB; native arena 64 MiB without reclamation;
-call depth 256; source stack2 MiB/4 KiB helper reserve with documented OS assumptions;
-and one million limb pairs for general division. Process diagnostics are not
-catchable exceptions. There is no runtime loop quota, sandbox or hostile-race
-filesystem confinement claim.
+Failures remain visible. The unchanged older indexing baseline at b0456b6 failed
+an obsolete tuple-index compile rejection (79 passed, one failed, three not_run).
+At aba7307, 25 combined commands passed and the older fixed-i64 harness failed
+an unprefixed list rejection. Focused native proofs preceded fixture migration;
+the fixed-domain replacement and all 26 integrated commands then passed at91d94d1.
+See reports/migrations/COLLECTION_BASELINES_2026-10-25.md. The earlier macOS/Linux
+CI failures, manifest/capture fixtures and compiler stack/input findings retain
+their original records. The tuple authoring log's retained excerpt explicitly
+states that its original full log was overwritten; it is not presented as raw.
 
-Immutable tuples are the next scoped integration; their backend and source
-harness preparation are separate from this evidence. Mutable collections/classes,
-floats, complete functions/modules, productive libraries, B1–B3/reference closure
-in NAJA, cells, LSP/DAP/VSIX, clean-host products and human productivity sessions
-remain required. The old independence inventory needs expanded-closure evidence.
-No unattended provider runner, paid fallback or ownership transfer is running.
-Continue after checkpoints while authorized work and capacity remain.
+Limits remain compiler stack 8 MiB; native arena 64 MiB without reclamation;
+256 active calls; 2 MiB source stack plus 4 KiB helper reserve with ordinary OS
+stack assumptions; and one million limb pairs for general division. No runtime
+loop quota, catchable exception system, sandbox, hostile filesystem confinement
+or process-tree cancellation guarantee is claimed.
+
+Next: publish reviewed evidence and verify new CI, then integrate the released
+native file/UTF-8 core and explicit source APIs. The backend and independent source
+harness are active in separate assigned worktrees; no file-API result is borrowed
+from these collection checks. Classes, floats, full modules/functions/libraries,
+B1–B3 and the NAJA reference closure, native cells, platform products and real
+human productivity sessions remain required. The historical independence
+inventory needs expanded-closure revalidation. Continue after checkpoints while
+authorized work and execution capacity remain; no unattended provider runner or
+paid fallback exists.

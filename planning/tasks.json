@@ -107,8 +107,16 @@
         "reports/checks/v13-integrated-functions-language.json",
         "reports/checks/v13-index-project-rust.json",
         "reports/checks/v13-index-project-index-language.json",
-        "reports/checks/v13-index-project-project-cli.json"
-      ]
+        "reports/checks/v13-index-project-project-cli.json",
+        "reports/checks/v13-collections-integrated-check-json.json",
+        "reports/checks/v13-collections-integrated-lists-language.json",
+        "reports/checks/v13-collections-integrated-lists.json",
+        "reports/checks/v13-collections-integrated-rust.json",
+        "reports/checks/v13-collections-integrated-tuples-language.json",
+        "reports/checks/v13-collections-integrated-tuples.json",
+        "reports/checks/v13-editor-integrated.json"
+      ],
+      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
     },
     {
       "id": "T06",
@@ -135,9 +143,16 @@
         "reports/checks/v13-integrated-functions-language.json",
         "reports/checks/v13-index-project-rust.json",
         "reports/checks/v13-index-project-index-language.json",
-        "reports/checks/v13-index-project-project-cli.json"
+        "reports/checks/v13-index-project-project-cli.json",
+        "reports/checks/v13-collections-integrated-check-json.json",
+        "reports/checks/v13-collections-integrated-lists-language.json",
+        "reports/checks/v13-collections-integrated-lists.json",
+        "reports/checks/v13-collections-integrated-rust.json",
+        "reports/checks/v13-collections-integrated-tuples-language.json",
+        "reports/checks/v13-collections-integrated-tuples.json",
+        "reports/checks/v13-editor-integrated.json"
       ],
-      "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
+      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
     },
     {
       "id": "T07",
@@ -164,8 +179,16 @@
         "reports/checks/v13-integrated-functions-language.json",
         "reports/checks/v13-index-project-rust.json",
         "reports/checks/v13-index-project-index-language.json",
-        "reports/checks/v13-index-project-project-cli.json"
-      ]
+        "reports/checks/v13-index-project-project-cli.json",
+        "reports/checks/v13-collections-integrated-check-json.json",
+        "reports/checks/v13-collections-integrated-lists-language.json",
+        "reports/checks/v13-collections-integrated-lists.json",
+        "reports/checks/v13-collections-integrated-rust.json",
+        "reports/checks/v13-collections-integrated-tuples-language.json",
+        "reports/checks/v13-collections-integrated-tuples.json",
+        "reports/checks/v13-editor-integrated.json"
+      ],
+      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
     },
     {
       "id": "T08",
@@ -180,10 +203,19 @@
         "bootstrap/ir/"
       ],
       "primary_requirement": "SEM-01",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
-      "evidence": []
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "evidence": [
+        "reports/checks/v13-collections-integrated-check-json.json",
+        "reports/checks/v13-collections-integrated-lists-language.json",
+        "reports/checks/v13-collections-integrated-lists.json",
+        "reports/checks/v13-collections-integrated-rust.json",
+        "reports/checks/v13-collections-integrated-tuples-language.json",
+        "reports/checks/v13-collections-integrated-tuples.json",
+        "reports/checks/v13-editor-integrated.json"
+      ],
+      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
     },
     {
       "id": "T09",
@@ -210,9 +242,16 @@
         "reports/checks/v13-integrated-functions-language.json",
         "reports/checks/v13-index-project-rust.json",
         "reports/checks/v13-index-project-index-language.json",
-        "reports/checks/v13-index-project-project-cli.json"
+        "reports/checks/v13-index-project-project-cli.json",
+        "reports/checks/v13-collections-integrated-check-json.json",
+        "reports/checks/v13-collections-integrated-lists-language.json",
+        "reports/checks/v13-collections-integrated-lists.json",
+        "reports/checks/v13-collections-integrated-rust.json",
+        "reports/checks/v13-collections-integrated-tuples-language.json",
+        "reports/checks/v13-collections-integrated-tuples.json",
+        "reports/checks/v13-editor-integrated.json"
       ],
-      "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
+      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
     },
     {
       "id": "T10",
@@ -256,9 +295,16 @@
         "reports/checks/v13-integrated-functions-language.json",
         "reports/checks/v13-index-project-rust.json",
         "reports/checks/v13-index-project-index-language.json",
-        "reports/checks/v13-index-project-project-cli.json"
+        "reports/checks/v13-index-project-project-cli.json",
+        "reports/checks/v13-collections-integrated-check-json.json",
+        "reports/checks/v13-collections-integrated-lists-language.json",
+        "reports/checks/v13-collections-integrated-lists.json",
+        "reports/checks/v13-collections-integrated-rust.json",
+        "reports/checks/v13-collections-integrated-tuples-language.json",
+        "reports/checks/v13-collections-integrated-tuples.json",
+        "reports/checks/v13-editor-integrated.json"
       ],
-      "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
+      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
     },
     {
       "id": "T12",
@@ -287,9 +333,16 @@
         "reports/checks/v13-integrated-functions-language.json",
         "reports/checks/v13-index-project-rust.json",
         "reports/checks/v13-index-project-index-language.json",
-        "reports/checks/v13-index-project-project-cli.json"
+        "reports/checks/v13-index-project-project-cli.json",
+        "reports/checks/v13-collections-integrated-check-json.json",
+        "reports/checks/v13-collections-integrated-lists-language.json",
+        "reports/checks/v13-collections-integrated-lists.json",
+        "reports/checks/v13-collections-integrated-rust.json",
+        "reports/checks/v13-collections-integrated-tuples-language.json",
+        "reports/checks/v13-collections-integrated-tuples.json",
+        "reports/checks/v13-editor-integrated.json"
       ],
-      "note": "Basic native run/test CLI slice is in progress; libraries/module/full CLI obligations remain open."
+      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
     },
     {
       "id": "T13",
@@ -393,10 +446,19 @@
         "language-server/"
       ],
       "primary_requirement": "IDE-01",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
-      "evidence": []
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "evidence": [
+        "reports/checks/v13-collections-integrated-check-json.json",
+        "reports/checks/v13-collections-integrated-lists-language.json",
+        "reports/checks/v13-collections-integrated-lists.json",
+        "reports/checks/v13-collections-integrated-rust.json",
+        "reports/checks/v13-collections-integrated-tuples-language.json",
+        "reports/checks/v13-collections-integrated-tuples.json",
+        "reports/checks/v13-editor-integrated.json"
+      ],
+      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
     },
     {
       "id": "T19",
