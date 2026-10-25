@@ -20,7 +20,7 @@
   "host": "win32-x64",
   "target": "x86_64-unknown-linux-gnu",
   "harness_sha256": "9305262115d2e8282f1e621a1dba47a15ddaf36ac945257fc23fe4e5b46f0bfc",
-  "fixture_index_sha256": "3aa873689b266e8865e1e6aabfb92cc5c7cf67ef59ce85378d79d16984635d29",
+  "fixture_index_sha256": "956ce17ebb381d9654a28ee22807a860a752da6b3346237ad540ca7546b7f375",
   "budgets": {
     "native_seconds": 5,
     "cli_ms": 20000,
@@ -61,6 +61,13 @@
       "directory": "target/mappings-language-2AqDEI",
       "plan_sha256": "87ea551c6ff01d39908bdb2b7df7a4870fac715384bd2bd3858c8cac5a80ed7a",
       "summary_sha256": "663c7fea1c493b6793c9271603cce93aea913b4a0ae2e73b7a5df986bd7e09cc"
+    },
+    {
+      "directory": "target/mappings-language-TE4yHJ",
+      "purpose": "Post-failure alias quoting correction only; all 202 native outcomes not_run.",
+      "source_commit": "58b122d5a3c61c56946161d194273f59d567d343",
+      "plan_sha256": "43b789ae97eca0b97e0bd879cec9d22ab72909320c598361d0e8283218c8f6ea",
+      "summary_sha256": "9db287780cf55e1e85bdd9609293ada690efe57fb3827f06a63f223d850780b3"
     }
   ],
   "counts": {
@@ -97,7 +104,8 @@
     "No compiler mapping source parsing, code generation or native mapping behavior executed by this preparation.",
     "Native execution requires a later integrator-supplied exact source commit and validates the frozen identities/budgets.",
     "Expected failures are frozen language outcomes, not observed results.",
-    "No full-container, mapping protocol, structural equality, tuple/object hashing, reclamation, FC1 or HATCH claim."
+    "No full-container, mapping protocol, structural equality, tuple/object hashing, reclamation, FC1 or HATCH claim.",
+    "Revision 2 corrects only alias fixture syntax; the original failed run remains failed and is retained separately. No corrected native execution has occurred."
   ],
   "results": [
     {
@@ -3332,5 +3340,31 @@
       "expected_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "result": "not_run"
     }
-  ]
+  ],
+  "preparation_revision": 2,
+  "latest_preparation_source_commit": "58b122d5a3c61c56946161d194273f59d567d343",
+  "source_integration_commit": "b2f4fe02e0e26fcb56643479f6958bde5bbf550f",
+  "post_failure_correction": {
+    "reason": "Original frozen alias fixture used unsupported unquoted print/len keys and correctly failed NJA030/A0003; preparation defect, not a production compiler defect.",
+    "authorized_change": "Only quote the two print/len keys in project/naja.alias, then update corresponding identities and preparation/evidence narrative.",
+    "original_preparation_commit": "93d2be2a9314653726ec83a055a56d9fb792fa21",
+    "original_preparation_file_sha256": "59eda4dc9a33fc0456c242af2f5ace08de8d0021424e36a32a8d3d085ad95e01",
+    "original_alias_config_sha256": "005db0c79b2d85f61ea0c20d984abf671e444c6baff930eee9ed981daa09f691",
+    "corrected_alias_config_sha256": "83a34d67f874f8e9e91506f57a34ecb41264e35ea13185dec2ff2cf5db7101f8",
+    "original_fixture_index_sha256": "3aa873689b266e8865e1e6aabfb92cc5c7cf67ef59ce85378d79d16984635d29",
+    "corrected_fixture_index_sha256": "956ce17ebb381d9654a28ee22807a860a752da6b3346237ad540ca7546b7f375",
+    "original_failed_source_commit": "b2f4fe02e0e26fcb56643479f6958bde5bbf550f",
+    "original_failure_report_commit": "58b122d5a3c61c56946161d194273f59d567d343",
+    "original_failure_json_sha256": "210e74e278a4137657271a39fffb942e8ed5df243ece206f023c1aec818593bd",
+    "original_failed_outcomes": {
+      "passed": 11,
+      "failed": 1,
+      "not_run": 190
+    },
+    "original_failure_preserved": true,
+    "harness_and_all_source_case_identities_unchanged": true,
+    "expectations_and_budgets_unchanged": true,
+    "production_parser_unchanged": true,
+    "corrected_preparation_native_outcomes": "All 202 not_run pending a new exact integrated source commit from the integrator."
+  }
 }

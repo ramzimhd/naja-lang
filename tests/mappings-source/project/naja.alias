@@ -1,5 +1,5 @@
 [operators]
 "==" = "equalTo"
 [builtins]
-print = "表示"
-len = "長さ"
+"print" = "表示"
+"len" = "長さ"

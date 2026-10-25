@@ -124,5 +124,15 @@ preserved.
 The first unchanged source run failed on the frozen alias fixture's invalid
 unquoted keys. Its original observation and 190 pending cases are retained in
 [FAILED_RUN_2026-10-25.md](FAILED_RUN_2026-10-25.md) and
-[FAILED_RESULTS_2026-10-25.json](FAILED_RESULTS_2026-10-25.json). The preparation
-and failure remain unchanged; this is not a source-suite pass.
+[FAILED_RESULTS_2026-10-25.json](FAILED_RESULTS_2026-10-25.json). The original
+preparation and failure remain preserved under their recorded identities; this
+is not a source-suite pass.
+
+Preparation revision 2 corrects only the two invalid alias keys to
+`"print"` and `"len"`, as separately authorized after recording that failure.
+Its `PREPARATION.json` records original and corrected config/index identities,
+the original preparation and failure commits, and the unchanged harness, case
+identities, expectations and budgets. The original failed run remains failed;
+all 202 outcomes of the corrected preparation are `not_run` until a new exact
+integrated source commit is supplied and executed. No parser relaxation or
+other case change accompanies this correction.
