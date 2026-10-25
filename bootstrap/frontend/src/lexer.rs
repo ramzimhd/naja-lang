@@ -780,7 +780,7 @@ impl Lexer<'_> {
     fn number(&mut self) {
         let start = self.offset;
         let mut kind = TokenKind::Integer;
-        let mut valid_integer = false;
+        let mut valid_decimal_number = false;
         let bytes = self.source.as_bytes();
         let base = if bytes.get(start) == Some(&b'0') {
             match bytes.get(start + 1) {
@@ -813,19 +813,10 @@ impl Lexer<'_> {
                 );
             }
         } else {
-            self.decimal_digits();
-            if self.byte() == Some(b'.') {
+            let (end, float) = decimal_core_end(self.source, start);
+            self.offset = end;
+            if float {
                 kind = TokenKind::Float;
-                self.offset += 1;
-                self.decimal_digits();
-            }
-            if matches!(self.byte(), Some(b'e' | b'E')) {
-                kind = TokenKind::Float;
-                self.offset += 1;
-                if matches!(self.byte(), Some(b'+' | b'-')) {
-                    self.offset += 1;
-                }
-                self.decimal_digits();
             }
             if matches!(self.byte(), Some(b'j' | b'J')) {
                 self.offset += 1;
@@ -845,7 +836,7 @@ impl Lexer<'_> {
             } else {
                 let lexeme = &self.source[start..self.offset];
                 let valid = valid_decimal(lexeme, kind == TokenKind::Float);
-                valid_integer = valid && kind == TokenKind::Integer;
+                valid_decimal_number = valid;
                 if !valid {
                     self.error(
                         "F0006",
@@ -872,27 +863,22 @@ impl Lexer<'_> {
             }
             if self.dialect == Dialect::Naja2026
                 && base.is_none()
-                && valid_integer
-                && self.source[suffix..].chars().next().is_some_and(is_start)
+                && valid_decimal_number
+                && valid_typed_suffix(&self.source[suffix..self.offset])
             {
-                kind = TokenKind::TypedInteger;
+                kind = if kind == TokenKind::Integer {
+                    TokenKind::TypedInteger
+                } else {
+                    TokenKind::TypedDecimal
+                };
             } else {
                 self.error("F0006", if self.dialect == Dialect::Naja2026 {
-                    "Typed literals currently require an unambiguous decimal integer; use an explicit constructor."
+                    "Typed literals require an unambiguous decimal number; use an explicit constructor."
                 } else { "Invalid suffix on number literal; typed literal construction is not implemented here." }, start, self.offset);
             }
         }
         self.push(kind, start, self.offset);
         self.logical_content = true;
-    }
-
-    fn decimal_digits(&mut self) {
-        while self
-            .byte()
-            .is_some_and(|ch| ch.is_ascii_digit() || ch == b'_')
-        {
-            self.offset += 1;
-        }
     }
 
     fn symbol_or_invalid(&mut self) {
@@ -941,6 +927,68 @@ impl Lexer<'_> {
         }
         self.logical_content = true;
     }
+}
+
+/// Recover the original numeric and suffix ranges of either typed token.
+/// Decimal tokens validate their core and raw suffix; the integer branch keeps
+/// the existing `typed_integer_spans` contract. Callers must reject lexing
+/// diagnostics before execution. Neither branch resolves a class, converts a
+/// number, normalizes a name or allocates expanded numeric strings.
+pub fn typed_literal_spans(source: &str, token: &Token) -> Option<(Span, Span)> {
+    if token.kind == TokenKind::TypedInteger {
+        return crate::typed_integer_spans(source, token);
+    }
+    if token.kind != TokenKind::TypedDecimal {
+        return None;
+    }
+    let text = source.get(token.span.start..token.span.end)?;
+    let (end, float) = decimal_core_end(text, 0);
+    if !float || !valid_decimal(&text[..end], true) || !valid_typed_suffix(&text[end..]) {
+        return None;
+    }
+    Some((
+        Span::new(token.span.start, token.span.start + end),
+        Span::new(token.span.start + end, token.span.end),
+    ))
+}
+
+fn decimal_digits_end(bytes: &[u8], mut offset: usize) -> usize {
+    while bytes
+        .get(offset)
+        .is_some_and(|byte| byte.is_ascii_digit() || *byte == b'_')
+    {
+        offset += 1;
+    }
+    offset
+}
+
+// Maximal decimal scanning is shared with the public span helper. Incomplete
+// exponents/separators remain in the core for validation, never a shorter retry.
+fn decimal_core_end(source: &str, start: usize) -> (usize, bool) {
+    let bytes = source.as_bytes();
+    let mut offset = decimal_digits_end(bytes, start);
+    let mut float = false;
+    if bytes.get(offset) == Some(&b'.') {
+        float = true;
+        offset = decimal_digits_end(bytes, offset + 1);
+    }
+    if matches!(bytes.get(offset), Some(b'e' | b'E')) {
+        float = true;
+        offset += 1;
+        if matches!(bytes.get(offset), Some(b'+' | b'-')) {
+            offset += 1;
+        }
+        offset = decimal_digits_end(bytes, offset);
+    }
+    (offset, float)
+}
+
+fn valid_typed_suffix(suffix: &str) -> bool {
+    let mut chars = suffix.chars();
+    chars
+        .next()
+        .is_some_and(|first| is_start(first) && !matches!(first, '_' | 'e' | 'E' | 'j' | 'J'))
+        && chars.all(is_continue)
 }
 
 fn valid_digit_group(digits: &str, radix: u32) -> bool {

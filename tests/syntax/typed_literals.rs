@@ -71,8 +71,6 @@ fn suffix_support_preserves_numeric_classification_and_rejects_ambiguous_forms()
     for source in [
         "10Elephant",
         "10Joule",
-        "1e3Parcel",
-        "1.5Parcel",
         "0x10Parcel",
         "10_Parcel",
         "01Parcel",
@@ -92,6 +90,20 @@ fn suffix_support_preserves_numeric_classification_and_rejects_ambiguous_forms()
                 .tokens
                 .iter()
                 .any(|t| t.kind == TokenKind::TypedInteger)
+        );
+    }
+    // ADR-008 deliberately migrates these two earlier lexical refusals. The
+    // original Stage A proof remains historical; capability checks are semantic.
+    for source in ["1e3Parcel", "1.5Parcel"] {
+        let lexed = lex_with_dialect(source, Dialect::Naja2026);
+        assert!(lexed.diagnostics.is_empty(), "{:?}", lexed.diagnostics);
+        assert_eq!(lexed.reconstruct(), source);
+        assert_eq!(lexed.tokens[0].kind, TokenKind::TypedDecimal);
+        assert!(
+            lex_with_dialect(source, Dialect::Python)
+                .diagnostics
+                .iter()
+                .any(|diagnostic| diagnostic.code == "F0006")
         );
     }
 }
