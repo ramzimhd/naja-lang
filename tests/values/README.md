@@ -130,6 +130,12 @@ domain APIs, clean-host installation and remaining FC1/HATCH requirements stay
 open. A passing result only verifies the supplied source/native cases on its
 recorded source and target.
 
+After direct function support was integrated, the old negative fixture containing
+only a plain `def`/`return` became supported. The unsupported-function check now
+uses a default parameter, whose semantics remain unimplemented. Historical
+84-case sources/results remain unchanged. Real function execution is covered
+separately; parser acceptance alone is not counted as native verification.
+
 ## Signed division source extension
 
 The harness now additionally compiles ordinary `.py` and `.naja` `//`/`%` source.

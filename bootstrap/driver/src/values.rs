@@ -6,6 +6,7 @@ pub(crate) trait Values {
     type Expression;
     type Condition;
     type Statement;
+    type Function;
     const HOSTED: bool;
     const DYNAMIC: bool = false;
     fn integer(text: String) -> Result<Self::Expression, String>;
@@ -19,6 +20,18 @@ pub(crate) trait Values {
         Err("None is unsupported in this explicit integer domain".into())
     }
     fn local(slot: usize) -> Self::Expression;
+    fn call(_index: usize, _arguments: Vec<Self::Expression>) -> Result<Self::Expression, String> {
+        Err("function calls are unsupported in this explicit integer domain".into())
+    }
+    fn function(_parameters: usize, _body: Vec<Self::Statement>) -> Result<Self::Function, String> {
+        Err("function definitions are unsupported in this explicit integer domain".into())
+    }
+    fn returned(_value: Self::Expression) -> Result<Self::Statement, String> {
+        Err("return is unsupported in this explicit integer domain".into())
+    }
+    fn evaluate(_value: Self::Expression) -> Result<Self::Statement, String> {
+        Err("call statements are unsupported in this explicit integer domain".into())
+    }
     fn positive(value: Self::Expression) -> Self::Expression {
         value
     }
@@ -84,6 +97,7 @@ macro_rules! domain {
             type Expression = $module::Expression;
             type Condition = $module::Condition;
             type Statement = $module::Statement;
+            type Function = ();
             const HOSTED: bool = $hosted;
             fn integer(text: String) -> Result<Self::Expression, String> {
                 $integer(text)
@@ -164,6 +178,7 @@ impl Values for Dynamic {
     type Expression = dynamic::Expression;
     type Condition = dynamic::Expression;
     type Statement = dynamic::Statement;
+    type Function = dynamic::Function;
     const HOSTED: bool = true;
     const DYNAMIC: bool = true;
     fn integer(text: String) -> Result<Self::Expression, String> {
@@ -183,6 +198,18 @@ impl Values for Dynamic {
     }
     fn local(slot: usize) -> Self::Expression {
         dynamic::Expression::Local(slot)
+    }
+    fn call(index: usize, arguments: Vec<Self::Expression>) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Call(index, arguments))
+    }
+    fn function(parameters: usize, body: Vec<Self::Statement>) -> Result<Self::Function, String> {
+        Ok(dynamic::Function { parameters, body })
+    }
+    fn returned(value: Self::Expression) -> Result<Self::Statement, String> {
+        Ok(dynamic::Statement::Return(value))
+    }
+    fn evaluate(value: Self::Expression) -> Result<Self::Statement, String> {
+        Ok(dynamic::Statement::Evaluate(value))
     }
     fn positive(value: Self::Expression) -> Self::Expression {
         dynamic::Expression::Positive(Box::new(value))
@@ -252,6 +279,7 @@ impl Values for Dynamic {
                     .map(|(_, value)| Self::height(value))
                     .fold(Self::height(first), usize::max)
             }
+            Call(_, arguments) => 1 + arguments.iter().map(Self::height).max().unwrap_or(0),
         }
     }
     fn condition(

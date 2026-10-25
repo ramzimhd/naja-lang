@@ -60,6 +60,7 @@ pub enum Expression {
 #[derive(Clone, Debug)]
 pub enum Statement {
     Assign(usize, Expression),
+    Evaluate(Expression),
     Print(Expression),
     Assert(Expression),
     If(Expression, Vec<Self>, Vec<Self>),
@@ -180,7 +181,7 @@ impl Validator<'_> {
                     self.expression(value, initialized, 0)?;
                     initialized[*slot] = true;
                 }
-                Statement::Print(value) | Statement::Assert(value) => {
+                Statement::Print(value) | Statement::Assert(value) | Statement::Evaluate(value) => {
                     self.expression(value, initialized, 0)?
                 }
                 Statement::Return(value) => {
@@ -464,6 +465,7 @@ impl Emitter {
                     self.expression(value)?;
                     self.code.store(Bp, -8 * (*slot as i32 + 1), Ax);
                 }
+                Statement::Evaluate(value) => self.expression(value)?,
                 Statement::Print(value) => {
                     self.expression(value)?;
                     self.code.call(self.runtime.print);

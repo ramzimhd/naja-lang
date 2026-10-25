@@ -55,6 +55,24 @@ Single-limb division is linear and arena-bounded. These failures are process
 diagnostics, not catchable language exceptions. `/` and fixed-i64 division remain
 explicitly unsupported; no truncation or float substitution is performed.
 
+Top-level ordinary-value functions accept plain positional parameters and exact
+arity calls to themselves or earlier definitions. Return exits through native
+frame cleanup; bare return and fallthrough produce None. Calls can be standalone
+statements, and `pass` performs no work. Parameters and locals occupy independent
+128-slot frames. Branch initialization follows paths that can reach a read;
+returning branches do not require a later local to be initialized. The same
+function parser handles `.py` indentation and `.naja` braces/depth/named groups.
+
+This first-order slice resolves functions statically and rejects nested/later
+definitions, global variable reads, function rebinding/values, defaults, keywords,
+variadics and parameter/return annotations. Builtins used inside functions cannot
+later be rebound by a module/local assignment or another definition. Unsupported
+binding forms are rejected before source executes. Full Python binding and
+function semantics remain required. Native execution has explicit 256-active-call
+and 2 MiB source-stack limits, with a 4 KiB helper reserve, in addition to the
+64 MiB shared arena. These are temporary seed/runtime bounds; see
+[native calls](../tests/functions/README.md) for the OS stack assumption.
+
 An initial `from naja.core import i64` instead imports the compiler-provided checked
 signed 64-bit primitive. This is not a general module resolver or delivered
 standard library. Top-level declarations require `name: i64 = expression`.

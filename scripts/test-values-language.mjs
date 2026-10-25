@@ -278,7 +278,7 @@ run('chain-middle-once-arena', fixture('chain-once-arena.naja'), '8388608\n16777
 const duplicate = fixture('chain-once-arena.naja').replace('assert s < s + s > s', 'middle_first = s + s\nmiddle_second = s + s\nassert middle_first == middle_second\nassert s < middle_first > s');
 run('duplicate-middle-resource-control', duplicate, '', { exit: 103, stderr: 'NJA203: native value arena exhausted\n' });
 for (const [name, body, code] of [
-  ['float', 'print(1.25)', /NJA1\d\d/], ['function', 'def f():\n    return 1', /NJA1\d\d/],
+  ['float', 'print(1.25)', /NJA1\d\d/], ['function-default', 'def f(x=1):\n    return x', /NJA1\d\d/],
   ['list', 'print([1, 2])', /NJA1\d\d/], ['dictionary', 'print({"a": 1})', /NJA1\d\d/],
   ['tuple', 'print((1, 2))', /NJA1\d\d/], ['set', 'print({1, 2})', /NJA1\d\d/],
   ['method', 'print("x".Repeat(2))', /NJA1\d\d/], ['formatted-string', 'print(f"{1}")', /F0011/],

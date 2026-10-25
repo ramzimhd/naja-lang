@@ -59,7 +59,7 @@ pub fn compile_with_aliases(
         let result = match check_with_aliases_inner(source, dialect, aliases)? {
             CheckedProgram::FixedI64(statements) => naja_native::emit_elf(&statements),
             CheckedProgram::HostedIntegers(statements) => hosted::emit_elf(&statements),
-            CheckedProgram::HostedValues(statements) => dynamic::emit_elf(&statements),
+            CheckedProgram::HostedValues(program) => dynamic::emit_program(&program),
         };
         result.map_err(|message| {
             vec![Diagnostic {
@@ -75,7 +75,7 @@ pub fn compile_with_aliases(
 pub enum CheckedProgram {
     FixedI64(Vec<Statement>),
     HostedIntegers(Vec<hosted::Statement>),
-    HostedValues(Vec<dynamic::Statement>),
+    HostedValues(dynamic::Program),
 }
 
 pub fn check(source: &str) -> Result<CheckedProgram, Vec<Diagnostic>> {
@@ -117,17 +117,22 @@ fn check_with_aliases_inner(
         .next()
         .is_some_and(|token| lexed.text(token) == "from")
     {
-        parse_lexed::<Fixed>(lexed, dialect, aliases).map(CheckedProgram::FixedI64)
+        parse_lexed::<Fixed>(lexed, dialect, aliases)
+            .map(|program| CheckedProgram::FixedI64(program.body))
     } else {
-        let statements = parse_lexed::<Dynamic>(lexed, dialect, aliases)?;
-        dynamic::validate(&statements).map_err(|message| {
+        let parsed = parse_lexed::<Dynamic>(lexed, dialect, aliases)?;
+        let program = dynamic::Program {
+            body: parsed.body,
+            functions: parsed.functions,
+        };
+        dynamic::validate_program(&program).map_err(|message| {
             vec![Diagnostic {
                 code: "NJA104",
                 message,
                 span: Span::new(0, 0),
             }]
         })?;
-        Ok(CheckedProgram::HostedValues(statements))
+        Ok(CheckedProgram::HostedValues(program))
     }
 }
 
@@ -157,7 +162,7 @@ fn parse_values<V: Values>(
     source: &str,
     dialect: Dialect,
 ) -> Result<Vec<V::Statement>, Vec<Diagnostic>> {
-    parse_lexed::<V>(checked_lex(source, dialect)?, dialect, None)
+    parse_lexed::<V>(checked_lex(source, dialect)?, dialect, None).map(|program| program.body)
 }
 
 fn checked_lex(source: &str, dialect: Dialect) -> Result<Lexed, Vec<Diagnostic>> {
@@ -179,7 +184,7 @@ fn parse_lexed<V: Values>(
     lexed: Lexed,
     dialect: Dialect,
     aliases: Option<&AliasTable>,
-) -> Result<Vec<V::Statement>, Vec<Diagnostic>> {
+) -> Result<ParsedProgram<V>, Vec<Diagnostic>> {
     let tokens = lexed.significant_tokens().cloned().collect();
     let mut parser = Parser::<V> {
         lexed,
@@ -193,9 +198,20 @@ fn parse_lexed<V: Values>(
         dialect,
         aliases: aliases.cloned(),
         structural_depth: 0,
+        functions: Vec::new(),
+        function_signatures: BTreeMap::new(),
+        in_function: false,
+        flow_live: true,
+        module_bindings: BTreeSet::new(),
+        function_builtin_uses: BTreeSet::new(),
         values: PhantomData,
     };
     parser.program().map_err(|diagnostic| vec![diagnostic])
+}
+
+struct ParsedProgram<V: Values> {
+    body: Vec<V::Statement>,
+    functions: Vec<V::Function>,
 }
 
 struct Parser<V: Values> {
@@ -210,6 +226,12 @@ struct Parser<V: Values> {
     dialect: Dialect,
     aliases: Option<AliasTable>,
     structural_depth: usize,
+    functions: Vec<V::Function>,
+    function_signatures: BTreeMap<String, (usize, usize)>,
+    in_function: bool,
+    flow_live: bool,
+    module_bindings: BTreeSet<String>,
+    function_builtin_uses: BTreeSet<String>,
     values: PhantomData<V>,
 }
 
@@ -298,7 +320,10 @@ impl<V: Values> Parser<V> {
         let Ok(name) = self.canonical_name() else {
             return false;
         };
-        if self.locals.contains_key(&name) {
+        if self.locals.contains_key(&name)
+            || self.function_signatures.contains_key(&name)
+            || (self.in_function && self.module_bindings.contains(&name))
+        {
             return false;
         }
         let conventional = match builtin {
@@ -312,6 +337,9 @@ impl<V: Values> Parser<V> {
                 .and_then(|table| table.lookup(AliasContext::UnboundBuiltin, &name))
                 .is_some_and(|entry| entry.target == AliasTarget::Builtin(builtin));
         if matches {
+            if self.in_function {
+                self.function_builtin_uses.insert(name);
+            }
             self.advance();
         }
         matches
@@ -358,14 +386,16 @@ impl<V: Values> Parser<V> {
             Err(self.error("expected end of logical line; extra syntax is unsupported"))
         }
     }
-    fn program(&mut self) -> Parsed<Vec<V::Statement>> {
+    fn program(&mut self) -> Parsed<ParsedProgram<V>> {
         let mut statements = Vec::new();
         while self.token().kind != TokenKind::EndOfFile {
             if self.token().kind == TokenKind::Newline {
                 self.advance();
                 continue;
             }
-            if self.text() == "from" {
+            if self.text() == "def" {
+                self.function_definition()?;
+            } else if self.text() == "from" {
                 if V::HOSTED {
                     return Err(self.error("general imports are not implemented in the hosted integer slice; explicit i64 programs use the checked-i64 path"));
                 }
@@ -389,12 +419,90 @@ impl<V: Values> Parser<V> {
                 statements.push(self.statement(0)?);
             }
         }
+        if statements.is_empty() && !self.functions.is_empty() {
+            // Definitions bind static names but do not execute their bodies.
+            // An empty transparent group gives the native module a zero-work
+            // main body without manufacturing a call or a printed result.
+            statements.push(V::group(Vec::new()));
+        }
         if statements.is_empty() {
             return Err(self.error(
                 "expected an executable statement; the native spike does not emit empty programs",
             ));
         }
-        Ok(statements)
+        Ok(ParsedProgram {
+            body: statements,
+            functions: std::mem::take(&mut self.functions),
+        })
+    }
+    fn function_definition(&mut self) -> Parsed<()> {
+        if !V::DYNAMIC || self.in_function {
+            return Err(
+                self.error("only top-level ordinary-value function definitions are implemented")
+            );
+        }
+        self.account_statement(0)?;
+        self.expect("def")?;
+        if self.token().kind != TokenKind::Identifier || self.reserved_name() {
+            return Err(self.error("expected an unreserved function name"));
+        }
+        let name = self.canonical_name()?;
+        if self.locals.contains_key(&name)
+            || self.function_signatures.contains_key(&name)
+            || self.function_builtin_uses.contains(&name)
+        {
+            return Err(
+                self.error("function rebinding or collision with a module variable is unsupported")
+            );
+        }
+        if self.functions.len() >= dynamic::MAX_FUNCTIONS {
+            return Err(self.error("experimental function limit of 128 exceeded"));
+        }
+        self.advance();
+        self.expect("(")?;
+        let mut parameters = BTreeMap::new();
+        if self.text() != ")" {
+            loop {
+                if self.token().kind != TokenKind::Identifier || self.reserved_name() {
+                    return Err(
+                        self.error("functions currently require plain positional parameter names")
+                    );
+                }
+                let parameter = self.canonical_name()?;
+                if parameters.contains_key(&parameter) {
+                    return Err(
+                        self.error("duplicate parameter under its canonical Unicode spelling")
+                    );
+                }
+                if parameters.len() >= MAX_LOCALS {
+                    return Err(self.error("experimental parameter limit of 128 exceeded"));
+                }
+                parameters.insert(parameter, parameters.len());
+                self.advance();
+                if !self.take(",") || self.text() == ")" {
+                    break;
+                }
+            }
+        }
+        self.expect(")")?;
+        let count = parameters.len();
+        self.function_signatures
+            .insert(name, (self.functions.len(), count));
+        self.module_bindings = self.locals.keys().cloned().collect();
+        let outer_locals = std::mem::replace(&mut self.locals, parameters);
+        let outer_initialized = std::mem::replace(&mut self.initialized, (0..count).collect());
+        let outer_annotations = std::mem::take(&mut self.integer_annotations);
+        let outer_flow = std::mem::replace(&mut self.flow_live, true);
+        self.in_function = true;
+        let body = self.suite(1)?;
+        self.in_function = false;
+        self.locals = outer_locals;
+        self.initialized = outer_initialized;
+        self.integer_annotations = outer_annotations;
+        self.flow_live = outer_flow;
+        let function = V::function(count, body).map_err(|message| self.error(message))?;
+        self.functions.push(function);
+        Ok(())
     }
     fn statement(&mut self, depth: usize) -> Parsed<V::Statement> {
         self.account_statement(depth)?;
@@ -416,10 +524,12 @@ impl<V: Values> Parser<V> {
         if self.take("while") {
             let condition = self.condition()?;
             let initialized = self.initialized.clone();
+            let flow_live = self.flow_live;
             let body = self.suite(depth + 1)?;
             // A loop may execute zero times. New symbols retain their slots,
             // while only values initialized on entry are definite afterward.
             self.initialized = initialized;
+            self.flow_live = flow_live;
             if self.text() == "else" {
                 return Err(self.error("while-else is not implemented in this native spike"));
             }
@@ -428,18 +538,27 @@ impl<V: Values> Parser<V> {
         if self.take("if") {
             let condition = self.condition()?;
             let initialized = self.initialized.clone();
+            let flow_live = self.flow_live;
             let yes = self.suite(depth + 1)?;
             let yes_initialized = self.initialized.clone();
+            let yes_live = self.flow_live;
             self.initialized = initialized;
+            self.flow_live = flow_live;
             let no = if self.take("else") {
                 self.suite(depth + 1)?
             } else {
                 Vec::new()
             };
-            self.initialized = yes_initialized
-                .intersection(&self.initialized)
-                .copied()
-                .collect();
+            let no_live = self.flow_live;
+            self.initialized = match (yes_live, no_live) {
+                (true, false) => yes_initialized,
+                (false, true) => self.initialized.clone(),
+                _ => yes_initialized
+                    .intersection(&self.initialized)
+                    .copied()
+                    .collect(),
+            };
+            self.flow_live = yes_live || no_live;
             if self.text() == "elif" {
                 return Err(self.error(
                     "elif is not implemented in this native spike; full grammar remains open",
@@ -557,6 +676,23 @@ impl<V: Values> Parser<V> {
         Ok(body)
     }
     fn simple(&mut self, depth: usize) -> Parsed<V::Statement> {
+        if V::DYNAMIC && self.take("pass") {
+            self.newline()?;
+            return Ok(V::group(Vec::new()));
+        }
+        if self.take("return") {
+            if !V::DYNAMIC || !self.in_function {
+                return Err(self.error("return requires an ordinary-value function body"));
+            }
+            let value = if self.token().kind == TokenKind::Newline {
+                V::none().map_err(|message| self.error(message))?
+            } else {
+                self.expression(0, 0)?
+            };
+            self.newline()?;
+            self.flow_live = false;
+            return V::returned(value).map_err(|message| self.error(message));
+        }
         if self.take("assert") {
             let condition = self.condition()?;
             self.newline()?;
@@ -569,11 +705,28 @@ impl<V: Values> Parser<V> {
             self.newline()?;
             return Ok(V::print(value));
         }
+        if V::DYNAMIC
+            && self.token().kind == TokenKind::Identifier
+            && self
+                .tokens
+                .get(self.cursor + 1)
+                .is_some_and(|t| self.lexed.text(t) == "(")
+        {
+            let value = self.expression(0, 0)?;
+            self.newline()?;
+            return V::evaluate(value).map_err(|message| self.error(message));
+        }
         if self.token().kind != TokenKind::Identifier || self.reserved_name() {
             return Err(self.error("unsupported statement in the experimental executable subset"));
         }
         let name_span = self.token().span;
         let name = self.canonical_name()?;
+        if self.function_signatures.contains_key(&name) {
+            return Err(self.error("rebinding a statically resolved function name is unsupported"));
+        }
+        if self.function_builtin_uses.contains(&name) {
+            return Err(self.error("rebinding a builtin used by a static function is unsupported"));
+        }
         self.advance();
         let declared = self.take(":");
         let creates = declared || (V::HOSTED && !self.locals.contains_key(&name));
@@ -584,11 +737,16 @@ impl<V: Values> Parser<V> {
             if declared {
                 if V::DYNAMIC
                     && self.dialect == Dialect::Naja2026
-                    && self.locals.contains_key("int")
+                    && (self.locals.contains_key("int")
+                        || self.function_signatures.contains_key("int")
+                        || (self.in_function && self.module_bindings.contains("int")))
                 {
                     return Err(self.error("an int annotation requires the compiler-provided type; a local binding shadows it in this executable slice"));
                 }
                 self.expect_binding(if V::HOSTED { "int" } else { "i64" })?;
+                if V::DYNAMIC && self.dialect == Dialect::Naja2026 && self.in_function {
+                    self.function_builtin_uses.insert("int".into());
+                }
             }
             if self.locals.contains_key(&name) {
                 return Err(Diagnostic {
@@ -722,16 +880,27 @@ impl<V: Values> Parser<V> {
             value
         } else if self.token().kind == TokenKind::Identifier && !self.reserved_name() {
             let name = self.canonical_name()?;
-            let slot = *self.locals.get(&name).ok_or_else(|| {
-                self.error("undefined or uninitialized name in the experimental executable subset")
-            })?;
-            if !self.initialized.contains(&slot) {
-                return Err(self.error(
-                    "name is not definitely initialized on every path in this executable slice",
-                ));
+            if V::DYNAMIC
+                && self
+                    .tokens
+                    .get(self.cursor + 1)
+                    .is_some_and(|token| self.lexed.text(token) == "(")
+            {
+                self.function_call(&name, depth)?
+            } else {
+                let slot = *self.locals.get(&name).ok_or_else(|| {
+                    self.error(
+                        "undefined or uninitialized name in the experimental executable subset",
+                    )
+                })?;
+                if !self.initialized.contains(&slot) {
+                    return Err(self.error(
+                        "name is not definitely initialized on every path in this executable slice",
+                    ));
+                }
+                self.advance();
+                V::local(slot)
             }
-            self.advance();
-            V::local(slot)
         } else {
             return Err(self.error(if V::HOSTED {
                 "unsupported expression in the hosted integer slice"
@@ -816,6 +985,34 @@ impl<V: Values> Parser<V> {
             return Err(self.error("experimental expression tree depth exceeds 128"));
         }
         Ok(left)
+    }
+    fn function_call(&mut self, name: &str, depth: usize) -> Parsed<V::Expression> {
+        if self.locals.contains_key(name) {
+            return Err(self.error("calling local values or parameters is unsupported; function values remain unimplemented"));
+        }
+        let (index, arity) = self.function_signatures.get(name).copied().ok_or_else(|| self.error("unknown function; this slice supports self-recursion and earlier top-level definitions only"))?;
+        self.advance();
+        self.expect("(")?;
+        let mut arguments = Vec::new();
+        if self.text() != ")" {
+            loop {
+                if arguments.len() >= MAX_LOCALS {
+                    return Err(self.error("experimental call argument limit of 128 exceeded"));
+                }
+                arguments.push(self.expression(0, depth + 1)?);
+                if !self.take(",") || self.text() == ")" {
+                    break;
+                }
+            }
+        }
+        self.expect(")")?;
+        if arguments.len() != arity {
+            return Err(self.error(format!(
+                "function requires {arity} positional arguments; received {}",
+                arguments.len()
+            )));
+        }
+        V::call(index, arguments).map_err(|message| self.error(message))
     }
 }
 
@@ -1162,6 +1359,50 @@ mod tests {
                 let source = format!("from naja.core import i64\nprint(i64(7) {op} i64(3))\n");
                 assert!(compile_with_dialect(&source, dialect).is_err());
             }
+        }
+    }
+    #[test]
+    fn native_functions_share_suites_and_flow_initialization() {
+        let indented = "def choose(flag):\n    if flag:\n        return 1\n    else:\n        value = 2\n    return value\nprint(choose(False))\n";
+        let braces = "def choose(flag): {\nif flag: {\nreturn 1\n} else: {\nvalue = 2\n}\nreturn value\n}\nprint(choose(False))\n";
+        let expected = compile(indented).unwrap();
+        assert_eq!(
+            expected,
+            compile_with_dialect(braces, Dialect::Naja2026).unwrap()
+        );
+        let CheckedProgram::HostedValues(program) = check(indented).unwrap() else {
+            panic!()
+        };
+        assert_eq!(program.functions.len(), 1);
+        assert_eq!(program.functions[0].parameters, 1);
+        for source in [
+            "def fact(n):\n    if n <= 1:\n        return 1\n    return n * fact(n - 1)\nprint(fact(20))\n",
+            "def empty():\n    pass\n",
+            "def empty():\n    return\nempty()\n",
+            "def identity(é,):\n    return é\nprint(identity(7,))\n",
+        ] {
+            assert!(compile(source).is_ok(), "{source}");
+        }
+    }
+    #[test]
+    fn unsupported_function_bindings_are_rejected_without_execution() {
+        for source in [
+            "return 1\n",
+            "def f(x=1):\n    return x\n",
+            "def f(x: int):\n    return x\n",
+            "def f():\n    def g():\n        return 1\n    return 0\n",
+            "def f():\n    return g()\ndef g():\n    return 1\nprint(f())\n",
+            "def f():\n    return 1\nf = 7\n",
+            "x = 7\ndef f():\n    return x\nprint(f())\n",
+            "def f(x):\n    return x\nprint(f())\n",
+            "def f():\n    print(len('x'))\n    len = 7\nprint(f())\n",
+            "def f():\n    return len('x')\nlen = 7\nprint(f())\n",
+            "def f():\n    return len('x')\ndef len(x):\n    return 7\nprint(f())\n",
+            "len = 7\ndef f():\n    return len('x')\nprint(f())\n",
+            "def f(é, ｅ́):\n    return 1\n",
+            "def f(flag):\n    if flag:\n        value = 1\n    return value\nprint(f(False))\n",
+        ] {
+            assert!(compile(source).is_err(), "{source}");
         }
     }
 }
