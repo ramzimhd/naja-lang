@@ -52,3 +52,8 @@ identifiers and string values are intentional user data.
 
 No native result is claimed merely by adding these fixtures. Retained execution
 results must name the exact integrated source commit and artifact directory.
+
+The first completed run is recorded in
+[RUN_2026-10-25.md](RUN_2026-10-25.md), with per-case retained outcomes in
+[RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). These results apply only to
+the exact source commit named there.
