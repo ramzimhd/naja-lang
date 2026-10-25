@@ -26,6 +26,11 @@ lists with shared references, exact indexing and value-first indexed assignment.
 See [native lists](../../tests/lists/README.md) for the frozen test contract and
 bounded alias/cycle behavior. Resizing and full list semantics remain open.
 
+`ReadFile`, exclusive `WriteFile`, `EncodeUtf8` and strict `DecodeUtf8` add
+bounded native byte-file operations and immutable conversion views. See
+[native files](../../tests/files/README.md) for the two write evaluation orders,
+Linux UAPI provenance, fixed retry policy and filesystem limitations.
+
 The original `naja_native::emit_elf` keeps the explicit checked-i64 IR and overflow
 policy. `naja_native::hosted::emit_elf` accepts a separate hosted-integer IR with
 `Integer(String)`, locals, negation, addition/subtraction/multiplication, signed
