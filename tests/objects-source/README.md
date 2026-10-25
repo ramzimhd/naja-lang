@@ -89,3 +89,9 @@ provenance, full Python compatibility, other emitted targets, clean installation
 self-hosting, FC1 or HATCH claim follows. Existing harnesses and historical
 results remain unchanged. Official prose is English; multilingual source data
 and identifiers remain intact.
+
+The first exact-source execution is retained in
+[RUN_2026-10-25.md](RUN_2026-10-25.md) and
+[RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). Its scoped observations apply
+only to the compiler and artifact identities recorded there; this preparation
+record remains unchanged.
