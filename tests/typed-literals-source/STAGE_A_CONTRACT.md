@@ -70,7 +70,7 @@ Exact native stderr includes one final LF:
 | --- | --- |
 | 103 | `NJA203: native value arena exhausted` |
 | 103 | `NJA203: native user-call depth limit exceeded` |
-| 104 | `NJA204: native assertion failed` |
+| 104 | `NJA204: assertion failed` |
 | 105 | `NJA205: native value type mismatch` |
 | 105 | `NJA205: native initializer must return None` |
 
