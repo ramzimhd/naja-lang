@@ -5,6 +5,8 @@ use crate::{Diagnostic, Span, Symbol, canonical_identifier};
 pub const ALIAS_CONFIG_MAX_BYTES: usize = 64 * 1024;
 pub const ALIAS_NAME_MAX_BYTES: usize = 256;
 pub const ALIAS_DIAGNOSTIC_LIMIT: usize = 32;
+const PROJECT_MANIFEST_MAX_BYTES: usize = 64 * 1024;
+const PROJECT_MANIFEST_DOMAIN: &[u8] = b"NAJA.alias.project-manifest\0";
 
 /// Explicit cache inputs supplied by the project owner. No filesystem or
 /// ambient project discovery occurs here. Edition is bounded to 128 bytes and
@@ -54,6 +56,7 @@ pub struct AliasTable {
     source: String,
     entries: Vec<AliasEntry>,
     cache_identity: Vec<u8>,
+    base_identity_len: usize,
 }
 
 impl AliasTable {
@@ -86,6 +89,28 @@ impl AliasTable {
     /// This includes whitespace/comments and whether schema=1 was explicit.
     pub fn cache_identity(&self) -> &[u8] {
         &self.cache_identity
+    }
+
+    /// Bind exactly one raw project-manifest context to this table's identity.
+    /// The context is opaque UTF-8, at most 65536 bytes; no IO, parsing,
+    /// normalization or policy interpretation occurs. Rebinding replaces the
+    /// previous context. Alias source, entries and lookup semantics are unchanged.
+    /// Oversize diagnostics use an empty config span for this external input.
+    pub fn with_project_manifest(mut self, manifest: &str) -> Result<Self, Vec<Diagnostic>> {
+        if manifest.len() > PROJECT_MANIFEST_MAX_BYTES {
+            return Err(vec![error(
+                "A0001",
+                "Project manifest identity context exceeds the limit of 65536 UTF-8 bytes; this is an external input, not alias configuration text.",
+                Span::new(0, 0),
+            )]);
+        }
+        self.cache_identity.truncate(self.base_identity_len);
+        self.cache_identity
+            .extend_from_slice(PROJECT_MANIFEST_DOMAIN);
+        self.cache_identity
+            .extend_from_slice(&(manifest.len() as u64).to_be_bytes());
+        self.cache_identity.extend_from_slice(manifest.as_bytes());
+        Ok(self)
     }
 }
 
@@ -197,6 +222,7 @@ impl<'a> Parser<'a> {
         Ok(AliasTable {
             source: self.source.to_owned(),
             entries: self.entries,
+            base_identity_len: identity.len(),
             cache_identity: identity,
         })
     }

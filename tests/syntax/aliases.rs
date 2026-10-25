@@ -493,6 +493,175 @@ fn cache_identity_is_exact_deterministic_and_length_delimited() {
 }
 
 #[test]
+fn unbound_identity_remains_the_original_format_with_no_context_suffix() {
+    let table = parse_aliases(
+        "",
+        AliasEnvironment {
+            edition: "A",
+            policy: "B",
+        },
+    )
+    .unwrap();
+    let expected = [
+        b"NAJA.alias\0".as_slice(),
+        &[0, 0, 0, 0, 0, 0, 0, 1], // format 1
+        &[0, 0, 0, 0, 0, 0, 0, 0], // empty config
+        &[0, 0, 0, 0, 0, 0, 0, 1],
+        b"A",
+        &[0, 0, 0, 0, 0, 0, 0, 1],
+        b"B",
+    ]
+    .concat();
+    assert_eq!(table.cache_identity(), expected);
+}
+
+#[test]
+fn manifest_attachment_preserves_alias_data_and_records_exact_raw_context() {
+    let original = parse(CONFIG);
+    let manifest = "[project]\r\nname = \"世界\" # original bytes\r\n\0";
+    let attached = original.clone().with_project_manifest(manifest).unwrap();
+    assert_eq!(attached.source(), original.source());
+    assert_eq!(attached.entries(), original.entries());
+    for context in [
+        AliasContext::ComparisonOperator,
+        AliasContext::UnboundBuiltin,
+    ] {
+        for name in ["equalTo", "display", "length", "unknown"] {
+            assert_eq!(
+                attached.lookup(context, name),
+                original.lookup(context, name)
+            );
+        }
+    }
+    assert!(
+        attached
+            .cache_identity()
+            .starts_with(original.cache_identity())
+    );
+    let suffix = &attached.cache_identity()[original.cache_identity().len()..];
+    let domain = b"NAJA.alias.project-manifest\0";
+    assert_eq!(&suffix[..domain.len()], domain);
+    assert_eq!(
+        &suffix[domain.len()..domain.len() + 8],
+        &(manifest.len() as u64).to_be_bytes()
+    );
+    assert_eq!(&suffix[domain.len() + 8..], manifest.as_bytes());
+}
+
+#[test]
+fn manifest_rebinding_replaces_one_context_deterministically_even_after_clone() {
+    let original = parse(CONFIG);
+    let first = original.clone().with_project_manifest("first").unwrap();
+    let repeated = first.clone().with_project_manifest("first").unwrap();
+    assert_eq!(repeated.cache_identity(), first.cache_identity());
+    let rebound = first.clone().with_project_manifest("second").unwrap();
+    let fresh = original.clone().with_project_manifest("second").unwrap();
+    assert_eq!(rebound.cache_identity(), fresh.cache_identity());
+    assert_ne!(rebound.cache_identity(), first.cache_identity());
+    let mut changing = original.clone();
+    for context in ["a", "", "世界", "a\0b", "# comment\n", "last"] {
+        changing = changing.with_project_manifest(context).unwrap();
+        let fresh = original.clone().with_project_manifest(context).unwrap();
+        assert_eq!(changing.cache_identity(), fresh.cache_identity());
+    }
+    assert_eq!(first.source(), original.source());
+    assert_eq!(first.entries(), original.entries());
+}
+
+#[test]
+fn manifest_identity_distinguishes_comments_newlines_nul_and_unicode_bytes() {
+    let original = parse(CONFIG);
+    let contexts = [
+        "",
+        "a",
+        "a\n",
+        "a\r\n",
+        "a # comment",
+        "a\0",
+        "a\0b",
+        "ab",
+        "é",
+        "e\u{301}",
+        "世界",
+    ];
+    let identities: Vec<_> = contexts
+        .iter()
+        .map(|context| {
+            original
+                .clone()
+                .with_project_manifest(context)
+                .unwrap()
+                .cache_identity()
+                .to_vec()
+        })
+        .collect();
+    for (index, identity) in identities.iter().enumerate() {
+        assert_ne!(identity, original.cache_identity());
+        for other in &identities[index + 1..] {
+            assert_ne!(identity, other);
+        }
+    }
+}
+
+#[test]
+fn manifest_context_is_bounded_by_utf8_bytes_with_external_input_diagnostics() {
+    let original = parse(CONFIG);
+    for manifest in ["x".repeat(65536), format!("{}a", "世".repeat(21845))] {
+        assert_eq!(manifest.len(), 65536);
+        assert!(original.clone().with_project_manifest(&manifest).is_ok());
+        let errors = original
+            .clone()
+            .with_project_manifest(&(manifest + "x"))
+            .unwrap_err();
+        assert_eq!(errors.len(), 1);
+        assert_eq!(errors[0].code, "A0001");
+        assert_eq!(errors[0].span, Span::new(0, 0));
+        assert!(errors[0].message.contains("external input"));
+    }
+    let large = original
+        .clone()
+        .with_project_manifest(&"x".repeat(65536))
+        .unwrap();
+    let rebound = large.with_project_manifest("").unwrap();
+    assert_eq!(
+        rebound.cache_identity(),
+        original.with_project_manifest("").unwrap().cache_identity()
+    );
+}
+
+#[test]
+fn manifest_context_does_not_expand_existing_policy_edition_or_config_limits() {
+    let config = format!("#{}", "x".repeat(ALIAS_CONFIG_MAX_BYTES - 1));
+    let edition = "e".repeat(128);
+    let policy = "p".repeat(4096);
+    let table = parse_aliases(
+        &config,
+        AliasEnvironment {
+            edition: &edition,
+            policy: &policy,
+        },
+    )
+    .unwrap();
+    assert!(table.with_project_manifest(&"m".repeat(65536)).is_ok());
+    for environment in [
+        AliasEnvironment {
+            edition: &edition,
+            policy: &format!("{policy}p"),
+        },
+        AliasEnvironment {
+            edition: &format!("{edition}e"),
+            policy: &policy,
+        },
+    ] {
+        let error = parse_aliases(&config, environment).unwrap_err();
+        assert_eq!(error[0].code, "A0001");
+        assert_eq!(error[0].span, Span::new(0, 0));
+    }
+    let error = parse_aliases(&(config + "x"), ENVIRONMENT).unwrap_err();
+    assert_eq!(error[0].code, "A0001");
+}
+
+#[test]
 fn lookup_does_not_mutate_tokens_members_bindings_comments_or_string_data() {
     let source =
         "equalTo = 7\nobj.equalTo(display=equalTo)\ntext = r'equalTo # %% {2}' # display\n";

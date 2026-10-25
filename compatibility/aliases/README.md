@@ -131,6 +131,24 @@ hashing is used. A future cache may hash these bytes through its audited digest
 service and must use the identity for invalidation; this library implements no
 cache or lockfile mutation.
 
+`AliasTable::with_project_manifest(self, manifest: &str)` optionally binds one
+raw manifest context to the identity and returns `Result<Self, Vec<Diagnostic>>`.
+It performs no IO, manifest parsing, normalization or policy interpretation.
+The UTF-8 context is independently bounded to 65,536 bytes; this does not expand
+the existing config, edition or 4096-byte policy limits. Oversize input returns
+`A0001` with empty span `0..0`, explicitly identifying an external context rather
+than a location in alias configuration. Empty context is permitted and differs
+from an unbound table. NUL, Unicode, comments and line endings remain exact bytes.
+
+Unbound identities retain the original format above. A bound identity appends
+`NAJA.alias.project-manifest\0`, followed by the unsigned 64-bit big-endian byte
+count and exact manifest bytes. The table privately retains the base identity
+length, so another call replaces the previous context instead of accumulating
+suffixes. Clones preserve this behavior. Same base/context bytes are deterministic;
+rebinding is equivalent to binding a fresh clone of the unbound base. Source,
+entries, config spans and contextual lookup results do not change. The caller
+still owns manifest validation and project/module authorization.
+
 ## Verification and limits
 
 `tests/syntax/aliases.rs` covers all eight canonical targets, explicit contexts,
