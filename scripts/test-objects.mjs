@@ -79,6 +79,11 @@ run('attribute-rhs-error-skips-object-effect',attr('b:ff decode_utf8','call:0:0'
 run('constructor-arguments-before-initializer-ltr-once',`set 0 call:0:0 call:1:0 new:0:2\nprint %0 ${get('sum')}\n`+fn(0,'print 1\nreturn 10\n')+fn(0,'print 2\nreturn 20\n')+fn(3,'print 3\n'+attr('%1 %2 +','%0','sum')+'return none\n')+cls([['__init__',2]]),'1\n2\n3\n30\n');
 run('initializer-fallthrough-is-none',`set 0 19 new:0:1\nprint %0 ${get('x')}\n`+fn(2,attr('%1','%0','x'))+cls([['__init__',0]]),'19\n');
 run('initializer-non-none-is-explicit-error','eval new:0:0\n'+fn(1,'return 1\n')+cls([['__init__',0]]),'',105,'NJA205: native initializer must return None\n');
+const maximumArguments=Array.from({length:127},(_,i)=>String(i+1)).join(' ');
+run('127-explicit-method-arguments-plus-receiver',`print new:0:0 ${maximumArguments} ${method('m',127)}\n`+fn(128,'return %1 %127 -\n')+cls([['m',0]]),'-126\n');
+run('127-constructor-arguments-copied-in-source-order',`set 0 ${maximumArguments} new:0:127\nprint %0 ${get('difference')}\n`+fn(128,attr('%1 %127 -','%0','difference')+'return none\n')+cls([['__init__',0]]),'-126\n');
+run('constructor-first-argument-error-skips-later-effect',`eval b:ff decode_utf8 call:0:0 new:0:2\n`+fn(0,'print 999\nreturn 1\n')+fn(3,'return none\n')+cls([['__init__',1]]),'',109,'NJA209: invalid UTF-8 conversion\n');
+run('method-early-return-from-loop',`print new:0:0 3 ${method('m',1)}\n`+fn(2,'set 2 0\nwhile true\nif %2 %1 ==\nreturn %2\nend\nset 2 %2 1 +\nend\n')+cls([['m',0]]),'3\n');
 run('mutation-through-parameter-and-return-alias','set 0 new:0:0\nprint %0 call:0:1 %0 ==\n'+`print %0 ${get('x')}\n`+fn(1,attr('88','%0','x')+'return %0\n')+emptyClass,'True\n88\n');
 const unicodeNames=['é','e\u0301','字段','é'.repeat(128)]; source='set 0 new:0:0\n'; expected='';
 unicodeNames.forEach((name,i)=>{source+=attr(String(i+10),'%0',name)+`print %0 ${get(name)}\n`;expected+=(i+10)+'\n';});
