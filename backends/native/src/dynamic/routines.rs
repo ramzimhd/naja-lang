@@ -8,8 +8,10 @@ use crate::hosted::{
     x64::{Code, R::*},
 };
 mod division;
+mod files;
 mod indexing;
 mod tuples;
+mod utf8;
 
 pub(super) struct Runtime {
     pub add: usize,
@@ -26,6 +28,10 @@ pub(super) struct Runtime {
     pub tuple: usize,
     pub list: usize,
     pub set_index: usize,
+    pub read_file: usize,
+    pub write_file: usize,
+    pub encode_utf8: usize,
+    pub decode_utf8: usize,
     tuple_check: usize,
     tuple_resource: usize,
     list_resource: usize,
@@ -68,6 +74,10 @@ impl Runtime {
             tuple: c.label(),
             list: c.label(),
             set_index: c.label(),
+            read_file: c.label(),
+            write_file: c.label(),
+            encode_utf8: c.label(),
+            decode_utf8: c.label(),
             tuple_check: c.label(),
             tuple_resource: c.label(),
             list_resource: c.label(),
@@ -101,6 +111,7 @@ impl Runtime {
         self.length(c, integers);
         self.tuples(c, integers);
         self.indexing(c, integers);
+        self.files(c, integers);
         self.concatenation(c, integers);
         self.comparison(c, integers);
         self.truthiness(c);

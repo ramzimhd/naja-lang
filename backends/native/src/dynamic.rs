@@ -18,6 +18,10 @@ pub const MAX_CALL_DEPTH: usize = 256;
 pub const MAX_SOURCE_STACK_BYTES: usize = 2 * 1024 * 1024;
 pub const MAX_TUPLE_ELEMENTS: usize = 128;
 pub const MAX_LIST_ELEMENTS: usize = 128;
+pub const MAX_FILE_BYTES: usize = 16 * 1024 * 1024;
+pub const MAX_PATH_BYTES: usize = 4095;
+pub const MAX_FILE_SYSCALLS: usize = 65_536;
+pub const MAX_FILE_EINTR_RETRIES: usize = 8;
 // The shared native array constructor has one defensive capacity check.
 const _: () = assert!(MAX_LIST_ELEMENTS == MAX_TUPLE_ELEMENTS);
 const HELPER_STACK_RESERVE: i32 = 4096;
@@ -62,6 +66,10 @@ pub enum Expression {
     Index(Box<Self>, Box<Self>),
     Tuple(Vec<Self>),
     List(Vec<Self>),
+    ReadFile(Box<Self>),
+    EncodeUtf8(Box<Self>),
+    DecodeUtf8(Box<Self>),
+    WriteFile { path: Box<Self>, data: Box<Self> },
 }
 
 #[derive(Clone, Debug)]
@@ -78,6 +86,10 @@ pub enum Statement {
         sequence: Expression,
         index: Expression,
         value: Expression,
+    },
+    WriteFile {
+        path: Expression,
+        data: Expression,
     },
 }
 
@@ -158,6 +170,17 @@ impl Validator<'_> {
                 self.expression(value, initialized, depth + 1)?;
                 0
             }
+            Expression::ReadFile(value)
+            | Expression::EncodeUtf8(value)
+            | Expression::DecodeUtf8(value) => {
+                self.expression(value, initialized, depth + 1)?;
+                0
+            }
+            Expression::WriteFile { path, data } => {
+                self.expression(path, initialized, depth + 1)?;
+                self.expression(data, initialized, depth + 1)?;
+                0
+            }
             Expression::CompareChain(first, rest) => {
                 if rest.is_empty() || rest.len() > MAX_CHAIN_COMPARISONS {
                     return Err("dynamic comparison chain requires 1..128 comparisons".into());
@@ -220,6 +243,10 @@ impl Validator<'_> {
                     self.expression(value, initialized, 0)?;
                     self.expression(sequence, initialized, 0)?;
                     self.expression(index, initialized, 0)?;
+                }
+                Statement::WriteFile { path, data } => {
+                    self.expression(data, initialized, 0)?;
+                    self.expression(path, initialized, 0)?;
                 }
                 Statement::Print(value) | Statement::Assert(value) | Statement::Evaluate(value) => {
                     self.expression(value, initialized, 0)?
@@ -411,6 +438,20 @@ impl Emitter {
                 self.operands(value, index)?;
                 self.code.call(self.runtime.index);
             }
+            Expression::ReadFile(value)
+            | Expression::EncodeUtf8(value)
+            | Expression::DecodeUtf8(value) => {
+                self.expression(value)?;
+                self.code.call(match expression {
+                    Expression::ReadFile(_) => self.runtime.read_file,
+                    Expression::EncodeUtf8(_) => self.runtime.encode_utf8,
+                    _ => self.runtime.decode_utf8,
+                });
+            }
+            Expression::WriteFile { path, data } => {
+                self.operands(path, data)?;
+                self.code.call(self.runtime.write_file);
+            }
             Expression::Compare(comparison, left, right) => {
                 self.operands(left, right)?;
                 let condition = self.comparison_flags(*comparison);
@@ -538,6 +579,14 @@ impl Emitter {
                     self.code.pop(Di);
                     self.code.pop(Dx);
                     self.code.call(self.runtime.set_index);
+                }
+                Statement::WriteFile { path, data } => {
+                    self.expression(data)?;
+                    self.push_value(Ax);
+                    self.expression(path)?;
+                    self.code.mov(Di, Ax);
+                    self.code.pop(Si);
+                    self.code.call(self.runtime.write_file);
                 }
                 Statement::Evaluate(value) => self.expression(value)?,
                 Statement::Print(value) => {
