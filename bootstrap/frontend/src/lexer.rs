@@ -780,6 +780,7 @@ impl Lexer<'_> {
     fn number(&mut self) {
         let start = self.offset;
         let mut kind = TokenKind::Integer;
+        let mut valid_integer = false;
         let bytes = self.source.as_bytes();
         let base = if bytes.get(start) == Some(&b'0') {
             match bytes.get(start + 1) {
@@ -804,7 +805,9 @@ impl Lexer<'_> {
             if !valid {
                 self.error(
                     "F0006",
-                    format!("Invalid base-{base} integer literal."),
+                    if self.dialect == Dialect::Naja2026 {
+                        format!("Invalid base-{base} integer literal; use an explicit constructor for typed values.")
+                    } else { format!("Invalid base-{base} integer literal.") },
                     start,
                     self.offset,
                 );
@@ -826,18 +829,29 @@ impl Lexer<'_> {
             }
             if matches!(self.byte(), Some(b'j' | b'J')) {
                 self.offset += 1;
-                self.error(
-                    "F0013",
-                    "Imaginary number literals are unsupported by this initial frontend.",
-                    start,
-                    self.offset,
-                );
+                if self.dialect != Dialect::Naja2026
+                    || !self.source[self.offset..]
+                        .chars()
+                        .next()
+                        .is_some_and(is_continue)
+                {
+                    self.error(
+                        "F0013",
+                        "Imaginary number literals are unsupported by this initial frontend.",
+                        start,
+                        self.offset,
+                    );
+                }
             } else {
                 let lexeme = &self.source[start..self.offset];
-                if !valid_decimal(lexeme, kind == TokenKind::Float) {
+                let valid = valid_decimal(lexeme, kind == TokenKind::Float);
+                valid_integer = valid && kind == TokenKind::Integer;
+                if !valid {
                     self.error(
                         "F0006",
-                        "Invalid decimal number literal.",
+                        if self.dialect == Dialect::Naja2026 && kind == TokenKind::Float {
+                            "Invalid decimal number literal; use an explicit constructor for ambiguous typed values."
+                        } else { "Invalid decimal number literal." },
                         start,
                         self.offset,
                     );
@@ -849,13 +863,24 @@ impl Lexer<'_> {
             .next()
             .is_some_and(is_continue)
         {
+            let suffix = self.offset;
             while let Some(ch) = self.source[self.offset..].chars().next() {
                 if !is_continue(ch) {
                     break;
                 }
                 self.offset += ch.len_utf8();
             }
-            self.error("F0006", "Invalid suffix on number literal; typed literal construction is not implemented here.", start, self.offset);
+            if self.dialect == Dialect::Naja2026
+                && base.is_none()
+                && valid_integer
+                && self.source[suffix..].chars().next().is_some_and(is_start)
+            {
+                kind = TokenKind::TypedInteger;
+            } else {
+                self.error("F0006", if self.dialect == Dialect::Naja2026 {
+                    "Typed literals currently require an unambiguous decimal integer; use an explicit constructor."
+                } else { "Invalid suffix on number literal; typed literal construction is not implemented here." }, start, self.offset);
+            }
         }
         self.push(kind, start, self.offset);
         self.logical_content = true;

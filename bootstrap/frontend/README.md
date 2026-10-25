@@ -178,3 +178,11 @@ an exhaustive fuzzing or robustness claim. Official checked-in Unicode fixtures
 compare XID rules for every Unicode scalar and NFKC against every Unicode 17.0.0
 normalization vector, plus the default scalar invariant. Fixture regeneration
 and reference acquisition are development operations outside normal tests.
+
+NAJA2026 additionally exposes TypedInteger tokens for unambiguous adjacent valid
+decimal integers and type identifiers. typed_integer_spans returns the two
+original source ranges; no numeric conversion or type lookup happens in lexing.
+Python-dialect rejection remains unchanged. Exponent/base/imaginary classification
+is retained, and ambiguous typed spellings request an explicit constructor.
+ADR006 defines the bounded capability slice; general numeric suffix construction
+and type eligibility are not inferred by the lexer.

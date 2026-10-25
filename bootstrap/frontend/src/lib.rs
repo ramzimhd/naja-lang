@@ -95,6 +95,8 @@ pub enum Symbol {
 pub enum TokenKind {
     Identifier,
     Integer,
+    /// Adjacent valid decimal integer and type identifier, NAJA 2026.1 only.
+    TypedInteger,
     Float,
     String,
     Symbol(Symbol),
@@ -118,6 +120,25 @@ pub enum TokenKind {
     Dedent,
     EndOfFile,
     Invalid,
+}
+
+/// Recover the two original ranges without interpreting the integer or suffix.
+pub fn typed_integer_spans(source: &str, token: &Token) -> Option<(Span, Span)> {
+    if token.kind != TokenKind::TypedInteger {
+        return None;
+    }
+    let text = source.get(token.span.start..token.span.end)?;
+    let width = text
+        .bytes()
+        .take_while(|byte| byte.is_ascii_digit() || *byte == b'_')
+        .count();
+    if width == 0 || !is_identifier(text.get(width..)?) {
+        return None;
+    }
+    Some((
+        Span::new(token.span.start, token.span.start + width),
+        Span::new(token.span.start + width, token.span.end),
+    ))
 }
 
 impl TokenKind {

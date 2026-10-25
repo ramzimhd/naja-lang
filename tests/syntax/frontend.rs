@@ -4,6 +4,7 @@ mod aliases;
 mod blocks;
 mod identifiers;
 mod literals;
+mod typed_literals;
 
 fn significant(source: &str) -> Vec<(TokenKind, String)> {
     let lexed = lex(source);
