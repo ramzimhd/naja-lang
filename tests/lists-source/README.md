@@ -64,3 +64,8 @@ checks do not establish list display/comparison/arithmetic, resizing, complete
 containers or Python semantics, memory reclamation or race safety, other
 emitted targets, clean installation, self-hosting, FC1 or HATCH. Official prose
 is English; multilingual identifiers and source values are user data.
+
+The first pinned native source run is retained in
+[RUN_2026-10-25.md](RUN_2026-10-25.md) and
+[RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). Its claims apply only to the
+exact compiler and artifact identities recorded there.
