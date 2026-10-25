@@ -449,7 +449,7 @@ fn run() -> Result<(), String> {
     let args: Vec<_> = env::args_os().skip(1).collect();
     if args.len() != 2 {
         return Err(
-            "Usage: mappings_ir INPUT.ir NEW_OUTPUT.elf (development fixture adapter only)".into(),
+            "Usage: rationals_ir INPUT.ir NEW_OUTPUT.elf (development fixture adapter only)".into(),
         );
     }
     let mut bytes = Vec::new();
