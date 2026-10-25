@@ -276,6 +276,10 @@ pub fn emit_elf(statements: &[Statement]) -> Result<Vec<u8>, String> {
     generator.runtime_error(b"NJA202: native stdout write failed\n", 102);
     generator.print_routine();
     let code = generator.asm.finish()?;
+    elf_image(code)
+}
+
+fn elf_image(code: Vec<u8>) -> Result<Vec<u8>, String> {
     let length = HEADER_SIZE
         .checked_add(code.len())
         .ok_or("ELF size overflow")?;

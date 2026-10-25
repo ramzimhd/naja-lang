@@ -1,6 +1,8 @@
 //! Experimental hosted-integer IR and direct Linux x86-64 backend.
 //! Immutable base-1e9 values use an explicitly bounded temporary arena.
 use super::{Binary, Comparison, MAX_LOCALS};
+mod runtime;
+mod x64;
 
 pub const ARENA_BYTES: usize = 64 * 1024 * 1024;
 const MAX_DIGITS: usize = 1_048_576;
@@ -163,6 +165,128 @@ pub fn validate(statements: &[Statement]) -> Result<(), String> {
         digits: 0,
     }
     .statements(statements, &mut [false; MAX_LOCALS], 0)
+}
+
+struct Emitter {
+    code: x64::Code,
+    runtime: runtime::Runtime,
+    literals: Vec<(usize, i64, Vec<u32>)>,
+}
+impl Emitter {
+    fn expression(&mut self, expression: &Expression) -> Result<(), String> {
+        use x64::R::*;
+        match expression {
+            Expression::Integer(value) => {
+                let (sign, limbs) = decimal(value)?;
+                let label = self.code.label();
+                self.literals.push((label, sign, limbs));
+                self.code.lea(Ax, label);
+            }
+            Expression::Local(slot) => self.code.load(Ax, Bp, -8 * (*slot as i32 + 1)),
+            Expression::Negate(value) => {
+                self.expression(value)?;
+                self.code.call(self.runtime.negate);
+            }
+            Expression::Binary(operator, left, right) => {
+                self.expression(left)?;
+                self.code.push(Ax);
+                self.expression(right)?;
+                self.code.mov(Si, Ax);
+                self.code.pop(Di);
+                self.code.call(match operator {
+                    Binary::Add => self.runtime.add,
+                    Binary::Subtract => self.runtime.subtract,
+                    Binary::Multiply => self.runtime.multiply,
+                });
+            }
+        }
+        Ok(())
+    }
+    fn condition_false(&mut self, condition: &Condition, target: usize) -> Result<(), String> {
+        use x64::R::*;
+        self.expression(&condition.left)?;
+        self.code.push(Ax);
+        self.expression(&condition.right)?;
+        self.code.mov(Si, Ax);
+        self.code.pop(Di);
+        self.code.call(self.runtime.compare);
+        self.code.immediate(7, Ax, 0);
+        self.code.j(
+            match condition.comparison {
+                Comparison::Equal => 0x85,
+                Comparison::NotEqual => 0x84,
+                Comparison::Less => 0x8d,
+                Comparison::LessEqual => 0x8f,
+                Comparison::Greater => 0x8e,
+                Comparison::GreaterEqual => 0x8c,
+            },
+            target,
+        );
+        Ok(())
+    }
+    fn statements(&mut self, statements: &[Statement]) -> Result<(), String> {
+        use x64::R::*;
+        for statement in statements {
+            match statement {
+                Statement::Assign(slot, value) => {
+                    self.expression(value)?;
+                    self.code.store(Bp, -8 * (*slot as i32 + 1), Ax);
+                }
+                Statement::Print(value) => {
+                    self.expression(value)?;
+                    self.code.call(self.runtime.print);
+                }
+                Statement::Group(body) => self.statements(body)?,
+                Statement::If(condition, yes, no) => {
+                    let otherwise = self.code.label();
+                    let end = self.code.label();
+                    self.condition_false(condition, otherwise)?;
+                    self.statements(yes)?;
+                    self.code.jump(end);
+                    self.code.bind(otherwise);
+                    self.statements(no)?;
+                    self.code.bind(end);
+                }
+                Statement::While(condition, body) => {
+                    let start = self.code.label();
+                    let end = self.code.label();
+                    self.code.bind(start);
+                    self.condition_false(condition, end)?;
+                    self.statements(body)?;
+                    self.code.jump(start);
+                    self.code.bind(end);
+                }
+            }
+        }
+        Ok(())
+    }
+}
+
+/// Emit bounded hosted-integer native code without invoking another compiler,
+/// assembler, linker or interpreter. The arena is not a general memory manager.
+pub fn emit_elf(statements: &[Statement]) -> Result<Vec<u8>, String> {
+    validate(statements)?;
+    let mut code = x64::Code::new();
+    let runtime = runtime::Runtime::new(&mut code);
+    let mut emitter = Emitter {
+        code,
+        runtime,
+        literals: Vec::new(),
+    };
+    emitter.runtime.start(&mut emitter.code);
+    emitter.statements(statements)?;
+    emitter.code.exit(0);
+    emitter.runtime.emit(&mut emitter.code);
+    for (label, sign, limbs) in emitter.literals {
+        emitter.code.align();
+        emitter.code.bind(label);
+        emitter.code.a.bytes(&sign.to_le_bytes());
+        emitter.code.a.bytes(&(limbs.len() as u64).to_le_bytes());
+        for limb in limbs {
+            emitter.code.a.bytes(&limb.to_le_bytes());
+        }
+    }
+    super::elf_image(emitter.code.a.finish()?)
 }
 
 #[cfg(test)]
