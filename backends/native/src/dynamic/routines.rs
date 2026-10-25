@@ -1,7 +1,7 @@
 //! Native tagged-value routines; numeric kernels are shared with hosted integers.
 //! Descriptor: tag:u64, data:pointer, byte_length:u64. Tags 0=int,1=text,2=bytes,
 //! 3=bool (pointer to integer zero/one),4=None,5=tuple,6=list (count at+16),7=instance,
-//! 8=ordered dictionary,9=set (fixed-capacity table and count at+16).
+//! 8=ordered dictionary,9=set,10=Rational (raw numerator/denominator pointers).
 //! No user pointer API exists here.
 use super::ARENA_BYTES;
 use crate::hosted::{
@@ -13,6 +13,7 @@ mod files;
 mod indexing;
 mod mappings;
 mod objects;
+mod rationals;
 mod tuples;
 mod utf8;
 
@@ -49,6 +50,18 @@ pub(super) struct Runtime {
     pub set_add: usize,
     pub contains: usize,
     pub dict_keys: usize,
+    pub rational: usize,
+    pub divide_exact: usize,
+    pub numerator: usize,
+    pub denominator: usize,
+    rational_check: usize,
+    rational_add: usize,
+    rational_subtract: usize,
+    rational_multiply: usize,
+    rational_negate: usize,
+    rational_positive: usize,
+    rational_compare: usize,
+    raw_divrem: usize,
     mapping_check: usize,
     object_check: usize,
     object_compare: usize,
@@ -112,6 +125,18 @@ impl Runtime {
             set_add: c.label(),
             contains: c.label(),
             dict_keys: c.label(),
+            rational: c.label(),
+            divide_exact: c.label(),
+            numerator: c.label(),
+            denominator: c.label(),
+            rational_check: c.label(),
+            rational_add: c.label(),
+            rational_subtract: c.label(),
+            rational_multiply: c.label(),
+            rational_negate: c.label(),
+            rational_positive: c.label(),
+            rational_compare: c.label(),
+            raw_divrem: c.label(),
             mapping_check: c.label(),
             object_check: c.label(),
             object_compare: c.label(),
@@ -145,6 +170,7 @@ impl Runtime {
         self.check(c, integers);
         self.numeric(c, integers);
         self.division(c, integers);
+        self.rationals(c, integers);
         self.length(c, integers);
         self.tuples(c, integers);
         self.indexing(c, integers);
@@ -182,6 +208,8 @@ impl Runtime {
         // checked arena allocation. Guard tags before interpreting payloads.
         c.bind(self.check);
         c.load(Dx, Ax, 0);
+        c.immediate(7, Dx, 10);
+        c.j(0x84, self.rational_check);
         c.immediate(7, Dx, 8);
         c.j(0x84, self.mapping_check);
         c.immediate(7, Dx, 9);
@@ -235,10 +263,16 @@ impl Runtime {
         c.store(Ax, 16, Cx);
         c.ret();
         c.bind(self.negate);
+        c.load(Dx, Ax, 0);
+        c.immediate(7, Dx, 10);
+        c.j(0x84, self.rational_negate);
         c.call(self.number);
         c.call(integers.negate);
         c.jump(self.wrap);
         c.bind(self.positive);
+        c.load(Dx, Ax, 0);
+        c.immediate(7, Dx, 10);
+        c.j(0x84, self.rational_positive);
         c.call(self.require_integer);
         c.load(Dx, Ax, 0);
         let positive_int = c.label();
@@ -249,6 +283,7 @@ impl Runtime {
         c.bind(positive_int);
         c.ret();
         c.bind(self.add);
+        Self::rational_pair_dispatch(c, self.rational_add);
         c.load(Dx, Di, 0);
         c.immediate(7, Dx, 5);
         c.j(0x83, self.type_error);
@@ -278,14 +313,18 @@ impl Runtime {
         c.bind(numeric);
         self.numeric_pair(c, integers.add);
         c.bind(self.subtract);
+        Self::rational_pair_dispatch(c, self.rational_subtract);
         self.numeric_pair(c, integers.subtract);
         c.bind(self.multiply);
+        Self::rational_pair_dispatch(c, self.rational_multiply);
         self.numeric_pair(c, integers.multiply);
     }
     fn length(&self, c: &mut Code, integers: &runtime::Runtime) {
         c.bind(self.len);
         c.call(self.check);
         c.load(Dx, Ax, 0);
+        c.immediate(7, Dx, 10);
+        c.j(0x84, self.type_error);
         c.immediate(7, Dx, 7);
         c.j(0x84, self.type_error);
         let mapping_length = c.label();
@@ -362,6 +401,13 @@ impl Runtime {
         c.call(operation);
         c.jump(self.wrap);
     }
+    fn rational_pair_dispatch(c: &mut Code, target: usize) {
+        for value in [Di, Si] {
+            c.load(Dx, value, 0);
+            c.immediate(7, Dx, 10);
+            c.j(0x84, target);
+        }
+    }
     fn concatenation(&self, c: &mut Code, integers: &runtime::Runtime) {
         c.bind(self.concat);
         c.mov(R12, Di);
@@ -412,6 +458,7 @@ impl Runtime {
         c.load(Dx, Si, 0);
         c.immediate(7, Dx, 7);
         c.j(0x84, self.object_compare);
+        Self::rational_pair_dispatch(c, self.rational_compare);
         c.load(Dx, Di, 0);
         c.immediate(7, Dx, 5);
         c.j(0x83, self.type_error);
@@ -500,6 +547,9 @@ impl Runtime {
         let length = c.label();
         let value = c.label();
         let true_ = c.label();
+        let rational = c.label();
+        c.immediate(7, Dx, 10);
+        c.j(0x84, rational);
         c.immediate(7, Dx, 8);
         c.j(0x84, length);
         c.immediate(7, Dx, 9);
@@ -514,6 +564,10 @@ impl Runtime {
         c.j(0x84, length);
         c.immediate(7, Dx, 5);
         c.j(0x83, length);
+        c.load(Ax, Ax, 8);
+        c.load(Ax, Ax, 0);
+        c.jump(value);
+        c.bind(rational);
         c.load(Ax, Ax, 8);
         c.load(Ax, Ax, 0);
         c.jump(value);

@@ -212,6 +212,12 @@ impl Runtime {
             let checked = c.label();
             c.jump(checked);
             c.bind(plain);
+            let other = c.label();
+            c.immediate(7, Dx, 10);
+            c.j(0x85, other);
+            c.call(self.rational_check);
+            c.jump(checked);
+            c.bind(other);
             c.immediate(7, Dx, 5);
             c.j(0x83, self.type_error);
             c.bind(checked);
