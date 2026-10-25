@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-25T22:06:39.391Z",
+  "source_commit": "b6786b7c3fb4c216dd889419467f97c2dacca8aa",
+  "run_id": 40238471265,
+  "url": "https://github.com/ramzimhd/naja-lang/actions/runs/40238471265",
+  "result": "failed",
+  "hosts": [
+    "ubuntu-24.04",
+    "macos-15",
+    "windows-2025"
+  ],
+  "failed_step": "Check bounded distribution packager controls",
+  "ubuntu_job": 121304984959,
+  "observations": [
+    "All three jobs failed the new package-control step; earlier compiler/object steps passed at this source.",
+    "Ubuntu job log reports checkout fetch-depth1 and git fetch --depth=1.",
+    "Synthetic staging control:7 passed/1 failed; exact diagnostic: Pinned source record is unavailable.",
+    "stagePackage deliberately reads license/provenance bytes from pinned a51c280 via git show. That historical object is absent from a shallow checkout."
+  ],
+  "correction": "Fetch repository history with actions/checkout fetch-depth0. Keep package/source identity, tests, resource limits and expectations unchanged.",
+  "limits": [
+    "The original run remains failed; only a subsequent exact-SHA run can verify the correction.",
+    "This is CI checkout preparation, not a compiler/runtime fix or acceptance promotion."
+  ]
+}
