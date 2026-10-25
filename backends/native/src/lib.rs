@@ -2,6 +2,7 @@
 //! This is a seed spike, not the complete NAJA backend or hosted integer runtime.
 
 pub const MAX_LOCALS: usize = 128;
+pub mod hosted;
 const BASE: u64 = 0x400000;
 const HEADER_SIZE: usize = 0x1000;
 
