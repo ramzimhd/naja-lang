@@ -1,7 +1,10 @@
-//! Bounded experimental seed frontend for explicitly imported checked i64.
+//! Shared bounded executable parser with distinct checked-i64 and hosted domains.
 use naja_frontend::{Diagnostic, Dialect, Lexed, Span, Token, TokenKind, lex_with_dialect};
-use naja_native::{Binary, Comparison, Condition, Expression, MAX_LOCALS, Statement};
+use naja_native::{Binary, Comparison, MAX_LOCALS, Statement, hosted};
 use std::collections::BTreeMap;
+use std::marker::PhantomData;
+mod values;
+use values::{Fixed, Hosted, Values};
 
 /// Reject unsupported syntax instead of executing a foreign runtime or narrowing int.
 pub fn compile(source: &str) -> Result<Vec<u8>, Vec<Diagnostic>> {
@@ -27,6 +30,29 @@ pub fn check_with_dialect(
     source: &str,
     dialect: Dialect,
 ) -> Result<Vec<Statement>, Vec<Diagnostic>> {
+    parse_values::<Fixed>(source, dialect)
+}
+
+/// Hosted integer syntax checking; native execution is integrated separately.
+pub fn check_hosted(
+    source: &str,
+    dialect: Dialect,
+) -> Result<Vec<hosted::Statement>, Vec<Diagnostic>> {
+    let statements = parse_values::<Hosted>(source, dialect)?;
+    hosted::validate(&statements).map_err(|message| {
+        vec![Diagnostic {
+            code: "NJA104",
+            message,
+            span: Span::new(0, 0),
+        }]
+    })?;
+    Ok(statements)
+}
+
+fn parse_values<V: Values>(
+    source: &str,
+    dialect: Dialect,
+) -> Result<Vec<V::Statement>, Vec<Diagnostic>> {
     if source.len() > 1_048_576 {
         return Err(vec![Diagnostic {
             code: "NJA100",
@@ -39,7 +65,7 @@ pub fn check_with_dialect(
         return Err(lexed.diagnostics);
     }
     let tokens = lexed.significant_tokens().cloned().collect();
-    let mut parser = Parser {
+    let mut parser = Parser::<V> {
         lexed,
         tokens,
         cursor: 0,
@@ -48,11 +74,12 @@ pub fn check_with_dialect(
         nodes: 0,
         dialect,
         structural_depth: 0,
+        values: PhantomData,
     };
     parser.program().map_err(|diagnostic| vec![diagnostic])
 }
 
-struct Parser {
+struct Parser<V: Values> {
     lexed: Lexed,
     tokens: Vec<Token>,
     cursor: usize,
@@ -61,11 +88,12 @@ struct Parser {
     nodes: usize,
     dialect: Dialect,
     structural_depth: usize,
+    values: PhantomData<V>,
 }
 
 type Parsed<T> = Result<T, Diagnostic>;
 
-impl Parser {
+impl<V: Values> Parser<V> {
     fn token(&self) -> &Token {
         &self.tokens[self.cursor.min(self.tokens.len() - 1)]
     }
@@ -96,7 +124,9 @@ impl Parser {
         if self.take(value) {
             Ok(())
         } else {
-            Err(self.error(format!("expected '{value}' in the experimental i64 subset")))
+            Err(self.error(format!(
+                "expected '{value}' in the experimental executable subset"
+            )))
         }
     }
     fn newline(&mut self) -> Parsed<()> {
@@ -107,7 +137,7 @@ impl Parser {
             Err(self.error("expected end of logical line; extra syntax is unsupported"))
         }
     }
-    fn program(&mut self) -> Parsed<Vec<Statement>> {
+    fn program(&mut self) -> Parsed<Vec<V::Statement>> {
         let mut statements = Vec::new();
         while self.token().kind != TokenKind::EndOfFile {
             if self.token().kind == TokenKind::Newline {
@@ -115,6 +145,9 @@ impl Parser {
                 continue;
             }
             if self.text() == "from" {
+                if V::HOSTED {
+                    return Err(self.error("general imports are not implemented in the hosted integer slice; explicit i64 programs use the checked-i64 path"));
+                }
                 if self.imported_i64 || !statements.is_empty() {
                     return Err(self.error(
                         "the experimental i64 import must appear once before executable statements",
@@ -126,7 +159,7 @@ impl Parser {
                 self.newline()?;
                 self.imported_i64 = true;
             } else {
-                if !self.imported_i64 {
+                if !V::HOSTED && !self.imported_i64 {
                     return Err(self.error("this native spike requires 'from naja.core import i64'; hosted arbitrary-precision int is not implemented"));
                 }
                 statements.push(self.statement(0)?);
@@ -139,7 +172,7 @@ impl Parser {
         }
         Ok(statements)
     }
-    fn statement(&mut self, depth: usize) -> Parsed<Statement> {
+    fn statement(&mut self, depth: usize) -> Parsed<V::Statement> {
         self.account_statement(depth)?;
         self.statement_after_accounting(depth)
     }
@@ -152,9 +185,9 @@ impl Parser {
         }
         Ok(())
     }
-    fn statement_after_accounting(&mut self, depth: usize) -> Parsed<Statement> {
+    fn statement_after_accounting(&mut self, depth: usize) -> Parsed<V::Statement> {
         if self.token().kind == TokenKind::SuiteOpen {
-            return self.brace_suite(depth, true).map(Statement::Group);
+            return self.brace_suite(depth, true).map(V::group);
         }
         if self.take("while") {
             let condition = self.condition()?;
@@ -162,7 +195,7 @@ impl Parser {
             if self.text() == "else" {
                 return Err(self.error("while-else is not implemented in this native spike"));
             }
-            return Ok(Statement::While(condition, body));
+            return Ok(V::while_loop(condition, body));
         }
         if self.take("if") {
             let condition = self.condition()?;
@@ -177,11 +210,11 @@ impl Parser {
                     "elif is not implemented in this native spike; full grammar remains open",
                 ));
             }
-            return Ok(Statement::If(condition, yes, no));
+            return Ok(V::conditional(condition, yes, no));
         }
         self.simple(depth)
     }
-    fn suite(&mut self, depth: usize) -> Parsed<Vec<Statement>> {
+    fn suite(&mut self, depth: usize) -> Parsed<Vec<V::Statement>> {
         self.expect(":")?;
         if self.token().kind == TokenKind::SuiteOpen {
             return self.brace_suite(depth, false);
@@ -198,7 +231,7 @@ impl Parser {
         self.structural_depth += 1;
         Ok(())
     }
-    fn brace_suite(&mut self, depth: usize, named: bool) -> Parsed<Vec<Statement>> {
+    fn brace_suite(&mut self, depth: usize, named: bool) -> Parsed<Vec<V::Statement>> {
         self.enter_suite()?;
         self.advance();
         let result = (|| {
@@ -239,7 +272,7 @@ impl Parser {
         self.structural_depth -= 1;
         result
     }
-    fn indented_or_simple_suite(&mut self, depth: usize) -> Parsed<Vec<Statement>> {
+    fn indented_or_simple_suite(&mut self, depth: usize) -> Parsed<Vec<V::Statement>> {
         // Recognize markers structurally, without changing ordinary expressions in .py.
         if self.dialect == Dialect::Naja2026 && self.text() == "(" {
             let marker = self.tokens.get(self.cursor..self.cursor + 5);
@@ -288,27 +321,30 @@ impl Parser {
         }
         Ok(body)
     }
-    fn simple(&mut self, depth: usize) -> Parsed<Statement> {
+    fn simple(&mut self, depth: usize) -> Parsed<V::Statement> {
         if self.take("print") {
             self.expect("(")?;
             let value = self.expression(0, 0)?;
             self.expect(")")?;
             self.newline()?;
-            return Ok(Statement::Print(value));
+            return Ok(V::print(value));
         }
         if self.token().kind != TokenKind::Identifier || reserved(self.text()) {
-            return Err(self.error("unsupported statement in the experimental i64 subset"));
+            return Err(self.error("unsupported statement in the experimental executable subset"));
         }
         let name = self.text().to_owned();
         self.advance();
         let declared = self.take(":");
-        let slot = if declared {
-            if depth != 0 {
+        let creates = declared || (V::HOSTED && !self.locals.contains_key(&name));
+        let slot = if creates {
+            if !V::HOSTED && depth != 0 {
                 return Err(self.error("this native spike requires local declarations at top level for definite initialization"));
             }
-            self.expect("i64")?;
+            if declared {
+                self.expect(if V::HOSTED { "int" } else { "i64" })?;
+            }
             if self.locals.contains_key(&name) {
-                return Err(self.error("duplicate i64 declaration"));
+                return Err(self.error("duplicate declaration in this value slice"));
             }
             if self.locals.len() >= MAX_LOCALS {
                 return Err(self.error("experimental local limit of 128 exceeded"));
@@ -320,12 +356,12 @@ impl Parser {
         self.expect("=")?;
         let value = self.expression(0, 0)?;
         self.newline()?;
-        if declared {
+        if creates {
             self.locals.insert(name, slot);
         }
-        Ok(Statement::Assign(slot, value))
+        Ok(V::assign(slot, value))
     }
-    fn condition(&mut self) -> Parsed<Condition> {
+    fn condition(&mut self) -> Parsed<V::Condition> {
         let left = self.expression(0, 0)?;
         let comparison = match self.text() {
             "==" => Comparison::Equal,
@@ -342,18 +378,14 @@ impl Parser {
         };
         self.advance();
         let right = self.expression(0, 0)?;
-        Ok(Condition {
-            left,
-            comparison,
-            right,
-        })
+        Ok(V::condition(left, comparison, right))
     }
-    fn expression(&mut self, minimum: u8, depth: usize) -> Parsed<Expression> {
+    fn expression(&mut self, minimum: u8, depth: usize) -> Parsed<V::Expression> {
         if depth > 128 {
             return Err(self.error("experimental expression nesting exceeds 128"));
         }
         let mut left = if self.take("-") {
-            Expression::Negate(Box::new(self.expression(3, depth + 1)?))
+            V::negate(self.expression(3, depth + 1)?)
         } else if self.take("+") {
             self.expression(3, depth + 1)?
         } else if self.take("(") {
@@ -361,6 +393,11 @@ impl Parser {
             self.expect(")")?;
             value
         } else if self.take("i64") {
+            if V::HOSTED {
+                return Err(self.error(
+                    "explicit i64 and hosted integers cannot yet be mixed in this executable slice",
+                ));
+            }
             self.expect("(")?;
             let negative = self.take("-");
             if self.token().kind != TokenKind::Integer {
@@ -379,22 +416,35 @@ impl Parser {
             } else {
                 text.to_owned()
             };
-            let value = signed.parse::<i64>().map_err(|_| self.error("literal is outside explicit i64 range; hosted arbitrary-precision int is not implemented"))?;
+            let value = V::integer(signed).map_err(|message| self.error(message))?;
             self.advance();
             self.expect(")")?;
-            Expression::Integer(value)
+            value
         } else if self.token().kind == TokenKind::Integer {
-            return Err(self.error("hosted integer expressions are not implemented; use an explicit i64(decimal_literal) constructor for this fixed-width spike"));
+            if !V::HOSTED {
+                return Err(self.error("hosted integer expressions require the hosted path; use explicit i64(decimal_literal) in this fixed-width slice"));
+            }
+            let text = self.text().replace('_', "");
+            if !text.bytes().all(|byte| byte.is_ascii_digit()) {
+                return Err(
+                    self.error("the hosted integer slice currently supports decimal literals only")
+                );
+            }
+            let value = V::integer(text).map_err(|message| self.error(message))?;
+            self.advance();
+            value
         } else if self.token().kind == TokenKind::Identifier && !reserved(self.text()) {
             let slot = *self.locals.get(self.text()).ok_or_else(|| {
                 self.error("undefined or uninitialized name in the experimental i64 subset")
             })?;
             self.advance();
-            Expression::Local(slot)
+            V::local(slot)
         } else {
-            return Err(self.error(
-                "unsupported expression; this native spike executes explicit i64 values only",
-            ));
+            return Err(self.error(if V::HOSTED {
+                "unsupported expression in the hosted integer slice"
+            } else {
+                "unsupported expression; this checked-i64 slice requires explicit i64 values"
+            }));
         };
         loop {
             let (precedence, operator) = match self.text() {
@@ -408,8 +458,8 @@ impl Parser {
             }
             self.advance();
             let right = self.expression(precedence + 1, depth + 1)?;
-            left = Expression::Binary(operator, Box::new(left), Box::new(right));
-            if expression_height(&left) > 128 {
+            left = V::binary(operator, left, right);
+            if V::height(&left) > 128 {
                 return Err(self.error("experimental expression tree depth exceeds 128"));
             }
             self.nodes += 1;
@@ -417,20 +467,10 @@ impl Parser {
                 return Err(self.error("experimental expression operation limit exceeded"));
             }
         }
-        if expression_height(&left) > 128 {
+        if V::height(&left) > 128 {
             return Err(self.error("experimental expression tree depth exceeds 128"));
         }
         Ok(left)
-    }
-}
-
-fn expression_height(value: &Expression) -> usize {
-    match value {
-        Expression::Integer(_) | Expression::Local(_) => 1,
-        Expression::Negate(inner) => 1 + expression_height(inner),
-        Expression::Binary(_, left, right) => {
-            1 + expression_height(left).max(expression_height(right))
-        }
     }
 }
 
@@ -635,6 +675,45 @@ mod tests {
         assert_eq!(
             compile_with_dialect(&mixed, Dialect::Naja2026).unwrap(),
             compile(&indented).unwrap()
+        );
+    }
+    #[test]
+    fn hosted_parser_retains_all_decimal_digits_and_uses_shared_suites() {
+        let digits = "12345678901234567890123456789012345678901234567890";
+        let source = format!(
+            "{{# State #\nx = {digits}\n}}\nwhile x < {digits} + 3:(0)\n    x = x + 1\nprint(x)\n"
+        );
+        let ir = check_hosted(&source, Dialect::Naja2026).unwrap();
+        let hosted::Statement::Group(body) = &ir[0] else {
+            panic!("expected transparent group")
+        };
+        let hosted::Statement::Assign(0, hosted::Expression::Integer(value)) = &body[0] else {
+            panic!("expected hosted declaration")
+        };
+        assert_eq!(value, digits);
+        assert!(check_hosted(&source, Dialect::Python).is_err());
+        assert!(check_hosted("x: int = 1_000_000\nprint(-x * (2 + 3))\n", Dialect::Python).is_ok());
+    }
+    #[test]
+    fn hosted_definite_initialization_requires_each_control_path() {
+        let both =
+            "if 1 == 1:\n    x = 123456789012345678901234567890\nelse:\n    x = 0\nprint(x)\n";
+        assert!(check_hosted(both, Dialect::Python).is_ok());
+        for source in [
+            "if 1 == 2:\n    x = 3\nprint(x)\n",
+            "while 1 == 2:\n    x = 3\nprint(x)\n",
+            "x = x + 1\n",
+            "x = 0xff\n",
+            "x = i64(1)\n",
+        ] {
+            assert!(check_hosted(source, Dialect::Python).is_err(), "{source}");
+        }
+        assert!(
+            check_hosted(
+                "x = 0\nwhile x < 3:\n    x = x + 1\nprint(x)\n",
+                Dialect::Python
+            )
+            .is_ok()
         );
     }
 }
