@@ -20,6 +20,17 @@ data and byte-offset calculation were strengthened before freeze. Earlier
 `not_run`; the final 150-case record also includes the clarified double-underscore
 malformed-number refusal. No execution failure or acceptance result is relabeled.
 
+The integrator's pre-execution review corrected three fixture mistakes after
+the initial freeze: assertion stderr is `NJA204: assertion failed\n` in the
+existing native runtime; the two positive import-boundary classes must use
+`Boundary` instead of ambiguous E-starting `Edge`; and the transparent named
+section uses the existing `{# Stage A # ... }` form. Commit
+`0af62e2208db22663b415d5aef5ff1e2bf0159c1` preserves the original all-`not_run`
+preparation. The narrow refreeze changes only the assertion stderr, those three
+source identities and resulting harness/contract identities. All other sources,
+150 outcomes, output expectations and resource budgets remain unchanged.
+No product code or compiler/native execution was involved in the corrections.
+
 The two changed-source output controls and removed-marker rejection must be
 executed later against the actual compiler, alongside the positive, negative,
 effects, precision, original-span and unchanged-resource cases. Full typed

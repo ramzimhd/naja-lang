@@ -85,7 +85,7 @@ runtime('unicode-type-and-data', eligible('量子', '        self.value = value\
 runtime('decorator-logical-adjacency', marker + '@integer_literal\n\n# @wrong 9Other :(999)\nclass Crate:\n    def __init__(self, value): self.value = value\nprint(4Crate.value)\n', '4\n');
 runtime('brace-suites', marker + '@integer_literal\nclass Box: {\ndef __init__(self, value): {\nself.value = value\n}\ndef read(self): {\nreturn self.value\n}\n}\nprint((19Box).read())\n', '19\n');
 runtime('depth-marked-suites', marker + '@integer_literal\nclass Gauge:(0)\n    def __init__(self, value):(1)\n        self.value = value\n    def read(self):(1)\n        return self.value\nprint(29Gauge.read())\n', '29\n');
-runtime('named-transparent-group', eligible() + 'section:(0)\n    value = 33Vessel\nprint(value.value)\n', '33\n');
+runtime('named-transparent-group', eligible() + '{# Stage A #\nvalue = 33Vessel\n}\nprint(value.value)\n', '33\n');
 runtime('postfix-parentheses-method-index', marker + ordinaryClass('Vector', '        self.value = value\n        self.parts = [value, value + 1]\n') + '    def read(self): return self.parts[1]\nprint((10Vector).value)\nprint(10Vector.read())\nprint(10Vector.parts[-1])\n', '10\n11\n11\n');
 runtime('original-identifiers-strings-comments-inert', eligible() + 'amountVessel = 23\nprint(amountVessel)\nprint("10Vessel @integer_literal")\n# 77Unknown 0xffVessel @wrong\nprint(3Vessel.value)\n', '23\n10Vessel @integer_literal\n3\n');
 runtime('crlf-metamorph', eligible('Frame').replaceAll('\n', '\r\n') + 'print(47Frame.value)\r\n', '47\n');
@@ -100,7 +100,7 @@ runtime('loop-construction-is-not-folded', effectClass + 'index = 0\nvalue = Non
 runtime('aliases-share-ordinary-instance', eligible() + 'a = 6Vessel\nb = a\nb.value = 19\nprint(a.value)\nprint(a == b)\n', '19\nTrue\n');
 runtime('function-parameter-retains-object', eligible() + 'def update(value):\n    value.value = value.value + 1\n    return value\na = 55Vessel\nb = update(a)\nprint(a.value)\nprint(a == b)\n', '56\nTrue\n');
 runtime('constructor-initializer-failure-keeps-effects', eligible('Fault', '        print(value)\n        return 1\n') + '5Fault\nprint("unreachable")\n', '5\n', { exit: 105, stderr: 'NJA205: native initializer must return None\n' });
-runtime('constructor-assertion-failure-keeps-effects', eligible('Fault', '        print(value)\n        assert value < 3\n        self.value = value\n') + '4Fault\nprint("unreachable")\n', '4\n', { exit: 104, stderr: 'NJA204: native assertion failed\n' });
+runtime('constructor-assertion-failure-keeps-effects', eligible('Fault', '        print(value)\n        assert value < 3\n        self.value = value\n') + '4Fault\nprint("unreachable")\n', '4\n', { exit: 104, stderr: 'NJA204: assertion failed\n' });
 for (const sign of ['-', '+']) runtime('unary-' + (sign === '-' ? 'minus' : 'plus') + '-after-construction', effectClass + `${sign}10Pulse\nprint("unreachable")\n`, '10\n', { exit: 105, stderr: typeError });
 runtime('ordinary-negative-argument-is-distinct', effectClass + 'print(Pulse(-10).value)\n', '-10\n-10\n');
 runtime('truthiness-remains-object-semantics', eligible() + 'print(not 0Vessel)\nprint(not 1Vessel)\n', 'False\nFalse\n');
@@ -158,9 +158,9 @@ for (const spelling of ['0xff', '0X_FF', '0b_101', '0o7', '1_000', '00', '0_0'])
 for (const spelling of ['1j', '1J', '1.5j']) reject('ordinary-imaginary-' + Buffer.from(spelling).toString('hex'), `print(${spelling})\n`, { code: 'F0013' });
 
 const imports = count => Array.from({ length: count }, (_, index) => `from naja.literal import integer_literal as literal${index}\n`).join('');
-runtime('marker-import-bindings-128', imports(128) + ordinaryClass('Edge', undefined, '@literal127\n') + 'print(3Edge.value)\n', '3\n');
+runtime('marker-import-bindings-128', imports(128) + ordinaryClass('Boundary', undefined, '@literal127\n') + 'print(3Boundary.value)\n', '3\n');
 reject('marker-import-bindings-129', imports(129) + 'print(1)\n', { messageIncludes: '128' });
-runtime('marker-shares-import-budget', 'from naja.text import encode_utf8\n' + imports(127) + ordinaryClass('Edge', undefined, '@literal126\n') + 'print(3Edge.value)\nprint(len(encode_utf8("é")))\n', '3\n2\n');
+runtime('marker-shares-import-budget', 'from naja.text import encode_utf8\n' + imports(127) + ordinaryClass('Boundary', undefined, '@literal126\n') + 'print(3Boundary.value)\nprint(len(encode_utf8("é")))\n', '3\n2\n');
 reject('marker-shared-import-budget-over', 'from naja.text import encode_utf8\n' + imports(128) + 'print(1)\n', { messageIncludes: '128' });
 const classes = count => marker + Array.from({ length: count }, (_, index) => ordinaryClass('Typed' + index)).join('') + `print(7Typed${count - 1}.value)\n`;
 runtime('eligible-classes-and-initializers-128', classes(128), '7\n');
