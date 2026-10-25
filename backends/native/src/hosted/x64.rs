@@ -3,7 +3,7 @@ use crate::Assembler;
 
 #[derive(Clone, Copy)]
 #[repr(u8)]
-pub(super) enum R {
+pub(crate) enum R {
     Ax,
     Cx,
     Dx,
@@ -21,7 +21,7 @@ pub(super) enum R {
     R14,
     R15,
 }
-pub(super) struct Code {
+pub(crate) struct Code {
     pub a: Assembler,
 }
 impl Code {
@@ -111,6 +111,18 @@ impl Code {
     pub fn byte(&mut self, base: R, source: R) {
         self.memory(0x88, false, source, base, 0);
     }
+    pub fn load_byte(&mut self, destination: R, base: R) {
+        self.rex(true, destination, 0, base);
+        self.a.bytes(&[
+            0x0f,
+            0xb6,
+            0x80 | (((destination as u8) & 7) << 3) | ((base as u8) & 7),
+        ]);
+        if (base as u8) & 7 == 4 {
+            self.a.bytes(&[0x24]);
+        }
+        self.a.bytes(&0_i32.to_le_bytes());
+    }
     fn limb(&mut self, opcode: u8, reg: R, base: R, index: R) {
         self.rex(false, reg, index as u8, base);
         self.a.bytes(&[
@@ -174,6 +186,10 @@ impl Code {
     pub fn shift_left(&mut self, register: R, count: u8) {
         self.rex(true, R::Ax, 0, register);
         self.a.bytes(&[0xc1, 0xe0 | ((register as u8) & 7), count]);
+    }
+    pub fn shift_right(&mut self, register: R, count: u8) {
+        self.rex(true, R::Ax, 0, register);
+        self.a.bytes(&[0xc1, 0xe8 | ((register as u8) & 7), count]);
     }
     pub fn exit(&mut self, status: i64) {
         self.imm(R::Ax, 60);

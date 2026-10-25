@@ -6,7 +6,7 @@ use super::{
     x64::{Code, R::*},
 };
 
-pub(super) struct Runtime {
+pub(crate) struct Runtime {
     pub allocate: usize,
     pub negate: usize,
     pub add: usize,
@@ -16,8 +16,8 @@ pub(super) struct Runtime {
     pub print: usize,
     pub zero: usize,
     pub assertion: usize,
-    resource: usize,
-    io: usize,
+    pub resource: usize,
+    pub io: usize,
     clone_sign: usize,
     mag_add: usize,
     mag_sub: usize,
@@ -80,6 +80,9 @@ impl Runtime {
         c.a.bytes(message);
     }
     pub fn emit(&self, c: &mut Code) {
+        self.emit_with_resource_message(c, b"NJA203: hosted integer arena exhausted\n");
+    }
+    pub fn emit_with_resource_message(&self, c: &mut Code, resource_message: &[u8]) {
         self.allocator(c);
         self.clone_value(c);
         self.signed_add(c);
@@ -90,12 +93,7 @@ impl Runtime {
         self.magnitude_comparison(c);
         self.normalization(c);
         self.output(c);
-        self.error(
-            c,
-            self.resource,
-            b"NJA203: hosted integer arena exhausted\n",
-            103,
-        );
+        self.error(c, self.resource, resource_message, 103);
         self.error(c, self.io, b"NJA202: native stdout write failed\n", 102);
         self.error(c, self.assertion, b"NJA204: assertion failed\n", 104);
         c.align();

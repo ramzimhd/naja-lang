@@ -1,8 +1,8 @@
 //! Experimental hosted-integer IR and direct Linux x86-64 backend.
 //! Immutable base-1e9 values use an explicitly bounded temporary arena.
 use super::{Binary, Comparison, MAX_LOCALS};
-mod runtime;
-mod x64;
+pub(crate) mod runtime;
+pub(crate) mod x64;
 
 pub const ARENA_BYTES: usize = 64 * 1024 * 1024;
 const MAX_DIGITS: usize = 1_048_576;
@@ -35,7 +35,7 @@ pub enum Statement {
 
 // Chunk at most nine decimal digits into each u32 limb. The complete integer
 // never passes through a fixed-width scalar or floating-point conversion.
-fn decimal(value: &str) -> Result<(i64, Vec<u32>), String> {
+pub(crate) fn decimal(value: &str) -> Result<(i64, Vec<u32>), String> {
     let (negative, digits) = value
         .strip_prefix('-')
         .map_or((false, value), |v| (true, v));
