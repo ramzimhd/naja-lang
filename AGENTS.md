@@ -8,7 +8,7 @@ Implement HATCH, not only a plan: environment, authorized public repository, ind
 
 - Python inspires syntax, never required execution/build/tooling: no CPython, PyO3, PyPy, MicroPython, Python scripts/oracle or Python-based editor services in the mandatory chain.
 - Rust may seed the project. LLVM is optional. The reference native backend, linking and required source closure must rebuild/evolve in NAJA by HATCH completion.
-- `.py` remains standard by default; `.naja` adds only the agreed depth markers and contextual aliases. No network braces or hidden domain grammar.
+- `.py` keeps its separately pinned compatibility semantics. `.naja` follows the founder-authorized 2026.1 edition: general brace/named suites, depth markers, aliases, typed literals and the additional contracts in `docs/continuation/02_LANGUAGE_CONTRACTS.md`. No networking-specific grammar or hidden text substitution.
 - Preserve promised semantics. No blind text substitution or silently replacing arbitrary integers with machine integers.
 - Never claim universal Python compatibility, Rust safety or C++ speed without scoped evidence.
 - English is mandatory for official docs, prompts, comments, public APIs/help/diagnostics, VS Code surfaces and evidence narratives. Preserve multilingual user data and legal/raw-evidence exceptions.
@@ -36,5 +36,9 @@ Use official required tools, preferably user-scoped. No security bypass, secret 
 One integrator; separate worktree/branch per agent; confirmed non-overlapping paths. Shared JSON is not a distributed lock. Never invent another agent's activity.
 
 ## Resume and migration
+
+The governing continuation is revision 1.3 (October 25, 2026), stored in `docs/continuation/`. Read its language/acceptance contracts once for migration, then load task-relevant sections. ADR-003 records superseded rules. Preserve all inherited requirement IDs and historical evidence; expanded contracts need revalidation.
+
+Continue toward FC1 and then full HATCH while authorized work and execution capacity remain. A testable checkpoint is a recovery boundary, not a voluntary finish line. Keep `planning/continuity.json` and `reports/progress.md` current, serialize integration with the local reservation mechanism, and distinguish context, provider quota, rate limits, deadlines and spending. Unknown telemetry stays unknown; no paid fallback or credential extraction is authorized.
 
 On real session limits, save a coherent checkpoint and update state, HANDOFF and RESUME with exact next commands. Do not promise background activity. Active repositories receive ID-aware additive merges; never overwrite real statuses/evidence with fresh-package defaults. Preserve old evidence and explicitly flag expanded requirements for revalidation.

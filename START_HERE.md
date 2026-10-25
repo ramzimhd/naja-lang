@@ -1,5 +1,10 @@
 # NAJA HATCH — English Launch Package 1.2
 
+Current continuation: founder revision 1.3, October 25, 2026. Existing development
+uses `docs/continuation/`, ADR-003, current planning/continuity and the handoff.
+The original launch description below is retained as historical package context;
+its two-extension-only rule is amended by the versioned language contracts.
+
 **October 22, 2026. Specifications and development instructions, not a delivered compiler or VSIX.**
 
 ## Start or update
