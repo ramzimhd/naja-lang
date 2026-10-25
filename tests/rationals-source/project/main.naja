@@ -1,0 +1,16 @@
+from naja.numeric import rational as 比, numerator as 分子, denominator as 分母
+
+class Holder: {
+def __init__(self, value): {
+self.値 = value
+}
+def equalTo(self): {
+return self.値
+}
+}
+
+value = Holder(比(2, 4))
+表示(分子(value.equalTo()))
+表示(分母(value.値))
+表示(value.値 equalTo 比(3, 6))
+表示(0 lessThan value.値 lessThan 1)
