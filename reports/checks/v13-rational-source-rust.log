@@ -1,0 +1,394 @@
+Recorded command: cargo test --workspace --locked --offline
+Recorded exit code: 0
+--- captured output ---
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.24s
+     Running unittests src\lib.rs (target\debug\deps\naja_frontend-c6bcf5e990a5193c.exe)
+
+running 4 tests
+test lexer::tests::header_cache_preserves_async_markers_and_companion_resets ... ok
+test lexer::tests::header_cache_observes_each_token_once_with_fixed_history_storage ... ok
+test identifier::tests::versioned_xid_properties_match_official_data_for_every_unicode_scalar ... ok
+test identifier::tests::nfkc_matches_all_official_normalization_vectors_and_default_scalars ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+
+     Running ..\..\tests\syntax\frontend.rs (target\debug\deps\syntax-35744b8deaacb397.exe)
+
+running 127 tests
+test aliases::comments_and_hashes_are_recognized_only_outside_basic_strings ... ok
+test aliases::all_eight_documented_targets_map_to_canonical_nodes ... ok
+test aliases::comparison_mapping_preserves_the_exact_canonical_operators ... ok
+test aliases::diagnostic_accumulation_is_capped_and_invalid_tables_do_not_leak_previous_context ... ok
+test aliases::duplicate_schema_tables_and_decoded_keys_are_rejected ... ok
+test aliases::error_spans_refer_to_original_config_not_source_or_decoded_alias_bytes ... ok
+test aliases::duplicate_names_are_detected_across_targets_tables_and_nfkc_spellings ... ok
+test aliases::empty_optional_configuration_and_default_schema_are_supported ... ok
+test aliases::every_disallowed_unescaped_ascii_control_is_rejected_in_strings_and_comments ... ok
+test aliases::original_configuration_and_quoted_spans_survive_escape_decoding ... ok
+test aliases::manifest_attachment_preserves_alias_data_and_records_exact_raw_context ... ok
+test aliases::lookup_does_not_mutate_tokens_members_bindings_comments_or_string_data ... ok
+test aliases::cache_identity_is_exact_deterministic_and_length_delimited ... ok
+test aliases::unbound_identity_remains_the_original_format_with_no_context_suffix ... ok
+test aliases::syntax_is_strict_and_unknown_toml_forms_do_not_fall_back ... ok
+test aliases::multilingual_and_non_bmp_aliases_use_the_shared_identifier_rules ... ok
+test aliases::nfkc_keyword_lookalikes_keep_the_existing_raw_keyword_contract ... ok
+test aliases::invalid_names_and_glyph_aliases_are_not_silently_reinterpreted ... ok
+test aliases::physical_lf_and_crlf_preserve_mapping_but_change_exact_cache_identity ... ok
+test aliases::unimplemented_tables_and_canonical_targets_are_explicitly_unsupported ... ok
+test aliases::manifest_identity_distinguishes_comments_newlines_nul_and_unicode_bytes ... ok
+test aliases::toml_quoted_escapes_decode_before_identifier_validation ... ok
+test aliases::manifest_rebinding_replaces_one_context_deterministically_even_after_clone ... ok
+test aliases::unknown_malformed_and_nonscalar_toml_escapes_are_errors ... ok
+test aliases::unicode_equivalent_names_resolve_without_case_folding ... ok
+test aliases_attributes_and_keywords_are_plain_identifiers_at_lexical_stage ... ok
+test aliases::raw_keywords_and_canonical_builtin_conflicts_are_rejected ... ok
+test aliases::manifest_context_is_bounded_by_utf8_bytes_with_external_input_diagnostics ... ok
+test arbitrary_integer_lexemes_are_never_narrowed ... ok
+test blank_and_comment_lines_do_not_change_indentation ... ok
+test aliases::config_alias_and_environment_resource_boundaries_are_explicit ... ok
+test blocks::brace_body_indentation_is_stylistic_only_at_its_own_level ... ok
+test blocks::brace_close_requires_physical_dedent_of_nested_indentation ... ok
+test blocks::brace_newlines_and_trivia_transformations_preserve_token_structure ... ok
+test blocks::closing_on_statement_line_inserts_empty_span_logical_newline ... ok
+test blocks::depth_markers_remain_tokens_and_can_decorate_brace_local_indentation ... ok
+test blocks::dictionary_set_strings_regex_text_and_comments_keep_their_roles ... ok
+test aliases::manifest_context_does_not_expand_existing_policy_edition_or_config_limits ... ok
+test blocks::explicit_python_dialect_preserves_both_legacy_entry_points ... ok
+test blocks::indentation_around_named_section_is_suspended_and_resumes ... ok
+test blocks::intermediate_dedent_is_rejected_inside_brace_local_indentation ... ok
+test blocks::malformed_labels_and_opening_line_code_have_explicit_diagnostics ... ok
+test blocks::missing_close_metadata_and_stray_closers_are_diagnosed ... ok
+test blocks::multiline_headers_use_first_physical_line_baseline ... ok
+test blocks::nested_braces_preserve_surrounding_indentation_frames ... ok
+test blocks::nested_brace_close_does_not_dedent_suspended_parent_suite ... ok
+test blocks::nested_indentation_uses_its_header_physical_baseline ... ok
+test blocks::optional_marker_candidate_preserves_active_parent_indentation ... ok
+test blocks::ordinary_after_open_comment_and_spaced_label_are_distinguished ... ok
+test blocks::same_and_following_line_companion_clauses_keep_structural_tokens ... ok
+test blocks::nested_suite_metadata_preserves_duplicate_unicode_labels_without_binding_them ... ok
+test blocks::same_line_parenthesized_suite_does_not_require_an_indented_body ... ok
+test blocks::suite_delimiters_and_labels_have_exact_original_spans ... ok
+test brackets_suppress_logical_newlines_and_indentation ... ok
+test blocks::unnamed_standalone_brace_stays_an_expression ... ok
+test bytes_reject_literal_non_ascii_data ... ok
+test cell_separator_remains_an_ordinary_comment ... ok
+test comments_and_strings_do_not_open_delimiters ... ok
+test delimiter_failures_are_precise ... ok
+test blocks::frontend_block_limits_fail_explicitly_and_preserve_every_byte ... ok
+test empty_and_trivia_only_sources_are_lossless ... ok
+test explicit_line_continuation_is_retained_and_does_not_indent ... ok
+test float_lexemes_include_exponent_signs ... ok
+test formatted_and_template_strings_are_explicitly_unsupported ... ok
+test formfeed_resets_indentation_columns ... ok
+test identifiers::canonical_names_apply_nfkc_without_case_folding_or_keyword_reservation ... ok
+test identifiers::compatibility_spelling_does_not_turn_into_a_keyword_string_prefix_or_label ... ok
+test identifiers::invalid_identifier_boundaries_return_precise_name_relative_byte_spans ... ok
+test identifiers::invalid_unicode_source_reports_the_offending_scalar_without_consuming_neighbors ... ok
+test identifiers::multilingual_identifiers_and_combining_continuations_are_original_tokens ... ok
+test imaginary_literals_have_explicit_unsupported_diagnostic ... ok
+test indentation_and_eof_dedent_are_structural_empty_spans ... ok
+test inserting_trivia_preserves_significant_token_spelling ... ok
+test identifiers::numeric_unicode_suffixes_are_rejected_without_reinterpreting_values ... ok
+test integer_radices_and_separators ... ok
+test invalid_numbers_are_diagnosed_without_losing_source ... ok
+test lf_crlf_and_cr_have_same_structural_tokens ... ok
+test literals::all_physical_newline_forms_normalize_inside_triples ... ok
+test literals::diagnostics_retain_original_absolute_utf8_and_crlf_byte_positions ... ok
+test literals::bytes_reject_nonascii_source_even_when_raw_or_backslash_prefixed ... ok
+test literals::every_case_variant_of_bytes_and_raw_prefixes ... ok
+test literals::every_truncated_or_nonhex_escape_is_rejected ... ok
+test literals::all_byte_values_have_equivalent_hex_and_octal_spellings ... ok
+test literals::fabricated_tokens_require_exact_prefix_and_delimiter_grammar ... ok
+test literals::escaped_physical_newlines_are_removed_only_without_raw_prefix ... ok
+test literals::formatted_and_template_prefixes_remain_explicitly_unsupported ... ok
+test literals::malformed_external_spans_never_panic_and_produce_safe_error_spans ... ok
+test literals::hexadecimal_escapes_consume_exact_width_and_keep_remaining_digits ... ok
+test literals::named_escapes_are_explicitly_unsupported_only_in_nonraw_text ... ok
+test literals::no_unescaped_physical_newline_is_allowed_in_short_strings ... ok
+test literals::octal_consumes_one_to_three_ascii_digits ... ok
+test literals::generated_scalar_spellings_decode_to_the_same_original_text ... ok
+test literals::ordinary_quotes_and_noop_unicode_prefixes ... ok
+test literals::overflowing_bytes_octal_is_explicitly_unsupported ... ok
+test literals::raw_escaped_quotes_keep_both_characters ... ok
+test blocks::generated_naja_delimiter_and_label_fragments_terminate_losslessly ... ok
+test literals::source_nul_is_rejected_but_escaped_nul_is_data ... ok
+test literals::standard_control_quote_and_backslash_escapes ... ok
+test literals::surrogate_escapes_are_unsupported_without_pair_reinterpretation ... ok
+test literals::unicode_escape_values_above_the_codespace_are_errors ... ok
+test literals::text_scalar_boundaries_include_noncharacters_and_decoded_nul ... ok
+test literals::triple_quotes_close_only_at_first_unescaped_matching_run ... ok
+test literals::unknown_escapes_keep_the_backslash_and_original_character ... ok
+test lossless_cst_has_contiguous_token_ranges_and_tracks_line_depth ... ok
+test marker_candidates_are_never_textually_rewritten ... ok
+test multiline_string_does_not_create_indentation_events ... ok
+test nul_is_rejected_even_in_strings_and_comments ... ok
+test non_ascii_whitespace_does_not_misclassify_previous_ascii_identifier ... ok
+test operators_use_longest_match ... ok
+test standard_same_line_suite_is_preserved ... ok
+test string_prefixes_quotes_raw_escapes_and_triples ... ok
+test tabs_and_spaces_are_checked_at_equal_and_deeper_columns ... ok
+test tokens_preserve_names_operators_and_trivia ... ok
+test typed_literals::suffix_support_preserves_numeric_classification_and_rejects_ambiguous_forms ... ok
+test typed_literals::typed_numbers_retain_exact_component_ranges_and_lossless_suites ... ok
+test literals::structural_looking_data_is_opaque_in_both_dialects_and_all_quotes ... ok
+test unfinished_explicit_continuation_is_rejected ... ok
+test unicode_identifiers_have_lossless_original_name_tokens ... ok
+test unicode_user_data_and_byte_spans_are_preserved ... ok
+test unmatched_dedent_has_exact_source_span ... ok
+test aliases::bounded_malformed_configuration_vectors_have_safe_diagnostic_spans ... ok
+test unterminated_strings_recover_without_losing_newline ... ok
+test bounded_character_combinations_are_always_lossless_and_terminate ... ok
+test identifiers::normalization_is_idempotent_and_long_names_preserve_utf8_source_bounds ... ok
+test blocks::long_expression_brace_vectors_keep_context_and_losslessness ... ok
+test literals::bounded_large_vectors_and_exact_limit_preserve_output_size ... ok
+test literals::bounded_fabricated_token_vectors_have_safe_results_and_diagnostics ... ok
+
+test result: ok. 127 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running unittests src\lib.rs (target\debug\deps\naja_native-daf01da31dc65e94.exe)
+
+running 11 tests
+test hosted::tests::decimal_preserves_values_beyond_machine_width_and_normalizes_zero ... ok
+test hosted::tests::local_use_must_be_initialized_on_every_executed_path ... ok
+test tests::reject_out_of_frame_access ... ok
+test tests::deterministic_elf_has_no_interpreter_and_no_writable_executable_segment ... ok
+test dynamic::tests::images_are_deterministic_static_and_keep_literal_data_exact ... ok
+test dynamic::tests::invalid_ir_limits_and_initialization_are_rejected ... ok
+test dynamic::tests::comparison_chains_validate_every_operand_and_enforce_all_limits ... ok
+test hosted::tests::emitter_validates_limits_and_has_no_interpreter_or_writable_code ... ok
+test dynamic::tests::new_unary_expressions_share_depth_node_and_initialization_accounting ... ok
+test dynamic::tests::division_expressions_preserve_both_operand_validation_and_budgets ... ok
+test hosted::tests::invalid_literals_are_rejected_without_conversion_or_truncation ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\files.rs (target\debug\deps\files-2885ca8d94597cea.exe)
+
+running 3 tests
+test write_expression_and_statement_validate_both_trees_in_all_branches ... ok
+test unary_file_operations_validate_all_operands_and_depth ... ok
+test file_operations_share_literal_node_and_height_limits ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\functions.rs (target\debug\deps\functions-0cba4906a9b80105.exe)
+
+running 6 tests
+test independent_parameter_locals_and_live_branch_initialization ... ok
+test every_function_and_skipped_argument_is_validated ... ok
+test legacy_slices_reject_calls_and_returns ... ok
+test call_arguments_share_expression_depth_and_suite_limits ... ok
+test direct_program_emission_is_deterministic_and_static ... ok
+test limits_apply_to_the_entire_program_including_unused_functions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\index.rs (target\debug\deps\index-5de9de74cb527042.exe)
+
+running 3 tests
+test both_index_operands_validate_even_in_skipped_branches ... ok
+test huge_exact_indices_are_preserved_in_ir_and_static_emission ... ok
+test index_shares_depth_nodes_and_literal_limits ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\lists.rs (target\debug\deps\lists-73d91da2636c6a4a.exe)
+
+running 3 tests
+test list_capacity_and_all_children_are_validated ... ok
+test set_index_validates_every_expression_including_unused_statements ... ok
+test list_and_store_share_global_limits ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\mappings.rs (target\debug\deps\mappings-d6c584d3b2e093b3.exe)
+
+running 4 tests
+test mapping_operands_validate_including_skipped_branches_and_values ... ok
+test literal_bounds_count_source_entries_including_duplicates ... ok
+test relation_chains_preserve_the_global_operation_and_depth_limits ... ok
+test mappings_share_literal_and_node_accounting_and_emit_deterministically ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\objects.rs (target\debug\deps\objects-25b7a4437a1eeab9.exe)
+
+running 4 tests
+test additive_program_preserves_legacy_validation_and_checks_class_metadata ... ok
+test every_object_tree_validates_even_when_unused_or_skipped ... ok
+test names_methods_and_initializers_are_bounded_and_exact ... ok
+test object_ir_shares_global_node_depth_name_and_literal_limits ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\rationals.rs (target\debug\deps\rationals-2809d1f47caa2c33.exe)
+
+running 3 tests
+test rational_children_and_unused_branches_are_validated ... ok
+test rational_emission_is_native_and_deterministic ... ok
+test rational_nodes_depth_and_literals_keep_existing_limits ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\tuples.rs (target\debug\deps\tuples-afd1cc2546f1b46c.exe)
+
+running 4 tests
+test empty_and_128_elements_validate_but_129_do_not ... ok
+test deterministic_tuple_emission_retains_static_image_guards ... ok
+test every_tuple_child_validates_including_skipped_and_unused_tuples ... ok
+test tuple_children_share_global_literal_node_and_depth_budgets ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\lib.rs (target\debug\deps\naja_seed-ad84d7241ed62422.exe)
+
+running 34 tests
+test tests::accept_minimum_integer_and_standard_same_line_suite ... ok
+test tests::compile_loops_branches_and_precedence ... ok
+test tests::adjacent_closers_leave_parent_indentation_dedent_owned_by_parent ... ok
+test tests::comments_crlf_and_parenthesized_multiline_have_same_binary ... ok
+test tests::hosted_parser_retains_all_decimal_digits_and_uses_shared_suites ... ok
+test tests::mapping_expressions_keep_suite_equivalence_and_original_name_spans ... ok
+test tests::exact_numeric_imports_preserve_canonical_bindings_and_argument_structure ... ok
+test tests::depth_markers_check_nesting_and_reject_combined_decorations ... ok
+test tests::block_styles_preserve_machine_code_and_transparent_names ... ok
+test tests::literal_marker_rejects_implicit_eligibility_bad_initializers_and_execution ... ok
+test tests::explicit_literal_eligibility_preserves_construction_and_suffix_spans ... ok
+test tests::hosted_definite_initialization_requires_each_control_path ... ok
+test tests::sections_preserve_control_scope_and_enforce_resource_limits ... ok
+test tests::class_bindings_shadow_builtins_without_rewriting_members_or_parameter_reads ... ok
+test tests::explicit_api_imports_preserve_aliases_domains_and_argument_trees ... ok
+test tests::contextual_aliases_preserve_bindings_data_and_canonical_operations ... ok
+test tests::constructor_checks_use_completed_metadata_and_original_call_spans ... ok
+test tests::native_functions_share_suites_and_flow_initialization ... ok
+test tests::exact_numeric_api_arity_scope_and_original_errors_remain_static ... ok
+test tests::empty_set_builtin_preserves_static_shadowing_and_import_arity ... ok
+test tests::ordinary_classes_share_suites_and_keep_method_names_out_of_module_scope ... ok
+test tests::ordinary_divrem_is_shared_and_fixed_domain_stays_explicit ... ok
+test tests::dynamic_source_bounds_and_unsupported_syntax_retain_original_spans ... ok
+test tests::reject_hosted_integer_narrowing_unsupported_features_and_bad_scopes ... ok
+test tests::unicode_symbols_use_nfkc_keys_and_preserve_raw_keyword_rules ... ok
+test tests::unsupported_function_bindings_are_rejected_without_execution ... ok
+test tests::postfix_indexing_is_shared_bounded_and_distinct_from_slices ... ok
+test tests::api_bindings_are_static_with_parameter_shadowing_and_builtin_precedence ... ok
+test tests::unsupported_class_private_spelling_rejects_before_binding_in_every_name_position ... ok
+test tests::api_import_grammar_and_binding_limits_are_explicit ... ok
+test tests::tuple_source_elements_and_tree_height_keep_existing_bounds ... ok
+test tests::tuples_preserve_grouping_and_argument_separator_ownership ... ok
+test tests::lists_and_single_subscript_targets_share_scopes_and_frontend ... ok
+test tests::same_line_suites_count_toward_depth_and_statement_limits ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running unittests src\main.rs (target\debug\deps\naja-d60f677fcd7518ef.exe)
+
+running 16 tests
+test execution::tests::arguments_remain_separate_and_literal ... ok
+test tests::diagnostic_output_is_bounded_and_retains_original_unicode_crlf_positions ... ok
+test execution::tests::discovery_rejects_nonunicode_os_names_before_selection ... ok
+test execution::tests::json_escapes_control_characters_without_losing_unicode ... ok
+test execution::tests::output_storage_is_bounded_and_overflow_is_observed ... ok
+test source_reports::tests::json_preserves_escaped_data_bounded_ranges_and_omission_count ... ok
+test source_reports::tests::original_utf8_ranges_map_to_utf16_with_all_line_endings ... ok
+test tests::execution_options_are_strict_and_preserve_child_arguments ... ok
+test tests::machine_report_retains_runtime_and_compile_failures ... ok
+test tests::project_options_are_explicit_unique_and_preserve_argument_boundaries ... ok
+test tests::source_input_requires_regular_files_and_rejects_device_spellings ... ok
+test execution::tests::only_valid_static_native_elf_images_reach_the_process_adapter ... ok
+test execution::tests::failed_creation_and_drop_leave_no_owned_artifact ... ok
+test execution::tests::artifact_cleanup_is_nonrecursive_and_never_overwrites ... ok
+test scaffold::write_phase_tests::exclusive_collision_retains_owned_partial_output_and_existing_content ... ok
+test execution::tests::discovery_is_sorted_filtered_and_bounded ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\manifest.rs (target\debug\deps\manifest-d9f80bbffa94c722.exe)
+
+running 17 tests
+test arrays_dependency_counts_labels_and_table_depth_are_bounded ... ok
+test dialect_editions_are_pinned_and_style_does_not_rewrite_python_semantics ... ok
+test diagnostic_cap_is_deterministic_and_invalid_input_never_returns_partial_success ... ok
+test deterministic_scalar_mutations_cannot_panic_or_escape_resource_and_span_bounds ... ok
+test duplicate_fields_tables_targets_and_singular_plural_conflicts_reject ... ok
+test each_declared_local_dependency_requires_its_own_explicit_path ... ok
+test entry_cannot_escape_while_dependencies_can_declare_bounded_sibling_roots ... ok
+test full_metadata_preserves_crlf_unicode_comments_and_original_value_spans ... ok
+test full_toml_forms_outside_the_subset_are_explicit_errors ... ok
+test limits_are_frozen_before_testing_and_enforce_exact_utf8_byte_boundaries ... ok
+test malformed_escapes_controls_and_truncated_tokens_report_original_utf8_boundaries ... ok
+test minimal_manifest_has_explicit_name_and_no_invented_default_spans_or_host_target ... ok
+test profiles_and_targets_are_typed_metadata_without_backend_or_io_claims ... ok
+test unicode_escapes_are_decoded_without_normalization_and_spans_stay_raw ... ok
+test unknown_fields_tables_shell_hooks_and_download_metadata_reject ... ok
+test total_config_and_physical_line_budgets_accept_boundaries_and_reject_above ... ok
+test wrong_types_reject_for_each_field_instead_of_coercion ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\project.rs (target\debug\deps\project-53cbc5a9a3adca9a.exe)
+
+running 23 tests
+test additional_extensions_and_parent_traversal_are_explicitly_unsupported ... ok
+test long_paths_fail_explicit_bounds_before_filesystem_traversal ... ok
+test absent_root_alias_is_optional_after_ownership_and_manifest_validation ... ok
+test missing_roots_modules_and_manifests_are_errors ... ok
+test ordinary_project_uses_shared_alias_service_and_preserves_raw_config ... ok
+test canonical_containment_uses_path_components_and_rejects_sibling_prefixes ... ok
+test python_explicit_activation_fails_before_any_filesystem_access ... ok
+test relative_modules_are_relative_to_the_explicit_root ... ok
+test marker_config_and_module_must_be_ordinary_files ... ok
+test root_parent_component_and_internal_symlinks_are_rejected ... ok
+test unicode_and_space_paths_and_alias_names_remain_supported ... ok
+test invalid_utf8_and_malformed_alias_configuration_are_not_ignored ... ok
+test supported_explicit_metadata_and_empty_dependencies_allow_loading_while_entry_stays_declarative ... ok
+test nested_project_markers_stop_parent_aliases_and_require_explicit_ownership ... ok
+test maximum_alias_and_manifest_bytes_are_both_retained_without_a_policy_limit_increase ... ok
+test no_parent_home_or_nested_alias_search_occurs ... ok
+test alias_file_limit_is_checked_before_and_during_bounded_read ... ok
+test file_symlinks_and_dangling_alias_symlinks_are_rejected ... ok
+test manifest_is_bounded_utf8_parsed_configuration_instead_of_arbitrary_marker_text ... ok
+test manifest_parser_errors_retain_exact_original_codes_and_utf8_byte_spans ... ok
+test windows_junctions_and_network_device_and_stream_namespaces_are_rejected ... ok
+test unavailable_manifest_capabilities_reject_before_alias_inspection_even_when_aliases_are_absent ... ok
+test table_identity_includes_exact_manifest_bytes_and_effective_loader_policy ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests\scaffold.rs (target\debug\deps\scaffold-48fc236d8c0e7466.exe)
+
+running 14 tests
+test unsafe_local_names_parent_traversal_streams_and_private_components_reject ... ok
+test windows_unpaired_utf16_names_reject_before_filesystem_access ... ok
+test linked_parent_and_ancestor_components_cannot_redirect_creation ... ok
+test quote_backslash_control_and_manifest_injection_names_reject_before_any_output ... ok
+test parent_must_exist_as_a_directory_and_missing_ancestors_are_not_created ... ok
+test existing_links_and_dangling_links_reject_without_following_or_replacing ... ok
+test scaffold::write_phase_tests::exclusive_collision_retains_owned_partial_output_and_existing_content ... ok
+test new_leaf_contains_exact_relative_summary_and_valid_supported_manifest ... ok
+test every_existing_target_kind_and_retry_preserve_all_existing_bytes ... ok
+test generated_programs_compile_to_real_distinct_native_elf_bytes_without_execution ... ok
+test utf8_name_and_path_budgets_are_frozen_and_checked_before_writes ... ok
+test windows_junction_parents_and_network_device_stream_namespaces_reject ... ok
+test unicode_names_spaces_combining_marks_and_inert_shell_punctuation_are_data ... ok
+test generated_file_components_fit_at_the_boundary_and_reject_above_before_leaf_creation ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+   Doc-tests naja_frontend
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests naja_native
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests naja_seed
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

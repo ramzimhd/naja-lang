@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "d4d354c066c96e7e8beb0bc7b2ab46659f0672cb",
+  "target": "Rational source integration original-source structured diagnostics",
+  "command": [
+    "node",
+    "scripts/test-check-json.mjs"
+  ],
+  "tool_versions": {
+    "node": "v24.11.0",
+    "git": "git version 2.51.0.windows.1",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "powershell": "7.6.4",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T22:42:45.8029190+00:00",
+  "log_path": "reports/checks/v13-rational-source-json.log",
+  "log_sha256": "aa60908b678d1a975cbfdfec18fd1d6a92a0a00deadf604f7a8ee6307530455c",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}
