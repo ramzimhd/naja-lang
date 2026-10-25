@@ -224,6 +224,7 @@ impl Parser {
                 self.advance();
             } else if self.token().kind != TokenKind::EndOfFile
                 && self.token().kind != TokenKind::SuiteClose
+                && self.token().kind != TokenKind::Dedent
                 && !matches!(self.text(), "else" | "elif")
             {
                 return Err(
@@ -622,5 +623,18 @@ mod tests {
                 "{body}"
             );
         }
+    }
+    #[test]
+    fn adjacent_closers_leave_parent_indentation_dedent_owned_by_parent() {
+        let mixed = format!(
+            "{IMPORT}if i64(1) == i64(1): {{\n    if i64(1) == i64(1):\n        if i64(1) == i64(1): {{\nprint(i64(7))\n}}}}\n"
+        );
+        let indented = format!(
+            "{IMPORT}if i64(1) == i64(1):\n    if i64(1) == i64(1):\n        if i64(1) == i64(1):\n            print(i64(7))\n"
+        );
+        assert_eq!(
+            compile_with_dialect(&mixed, Dialect::Naja2026).unwrap(),
+            compile(&indented).unwrap()
+        );
     }
 }

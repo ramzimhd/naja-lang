@@ -79,6 +79,7 @@ for (const [name,body] of [
   console.log('PASS '+name+' emits identical machine code to indentation baseline');
   passed++;
 }
+run('adjacent-mixed-closers','if i64(1) == i64(1): {\n    if i64(1) == i64(1):\n        if i64(1) == i64(1): {\nprint(i64(7))\n}}\n','7\n',0,'','naja');
 const compatibilityBlock = join(directory,'brace-isolation.py');
 writeFileSync(compatibilityBlock,prefix+'if i64(1) == i64(1): {\nprint(i64(1))\n}\n');
 const compatibilityCheck = command(executable,['check',compatibilityBlock]);
