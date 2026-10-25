@@ -16,6 +16,7 @@ pub const MAX_DIVISION_LIMB_PRODUCT: usize = 1_000_000;
 pub const MAX_FUNCTIONS: usize = 128;
 pub const MAX_CALL_DEPTH: usize = 256;
 pub const MAX_SOURCE_STACK_BYTES: usize = 2 * 1024 * 1024;
+pub const MAX_TUPLE_ELEMENTS: usize = 128;
 const HELPER_STACK_RESERVE: i32 = 4096;
 const FRAME_BYTES: i32 = 2048;
 const CONTEXT_SLOT: i32 = -2032;
@@ -56,6 +57,7 @@ pub enum Expression {
     Or(Box<Self>, Box<Self>),
     Call(usize, Vec<Self>),
     Index(Box<Self>, Box<Self>),
+    Tuple(Vec<Self>),
 }
 
 #[derive(Clone, Debug)]
@@ -118,6 +120,15 @@ impl Validator<'_> {
                 }
                 for argument in arguments {
                     self.expression(argument, initialized, depth + 1)?;
+                }
+                0
+            }
+            Expression::Tuple(elements) => {
+                if elements.len() > MAX_TUPLE_ELEMENTS {
+                    return Err("dynamic tuple exceeds 128 elements".into());
+                }
+                for element in elements {
+                    self.expression(element, initialized, depth + 1)?;
                 }
                 0
             }
@@ -316,6 +327,16 @@ impl Emitter {
                 self.push_value(Ax);
                 self.code.call(self.functions[*index]);
                 self.code.immediate(0, Sp, 8 * (arguments.len() as i32 + 1));
+            }
+            Expression::Tuple(elements) => {
+                for element in elements {
+                    self.expression(element)?;
+                    self.push_value(Ax);
+                }
+                self.code.mov(Di, Sp);
+                self.code.imm(Si, elements.len() as i64);
+                self.code.call(self.runtime.tuple);
+                self.code.immediate(0, Sp, 8 * elements.len() as i32);
             }
             Expression::Negate(value) => {
                 self.expression(value)?;
