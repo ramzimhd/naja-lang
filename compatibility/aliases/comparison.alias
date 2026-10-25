@@ -1,0 +1,14 @@
+# Format-1 project alias example. These are token/AST mappings, not replacement.
+schema = 1
+
+[operators]
+"==" = "equalTo"
+"!=" = "notEqualTo"
+"<" = "lessThan"
+"<=" = "lessThanOrEqualTo"
+">" = "greaterThan"
+">=" = "greaterThanOrEqualTo"
+
+[builtins]
+"print" = "display"
+"len" = "length"

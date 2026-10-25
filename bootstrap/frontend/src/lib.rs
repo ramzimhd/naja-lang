@@ -3,10 +3,15 @@
 //! This is an initial lexer foundation, not a complete Python/NAJA grammar.
 //! See the adjacent README for the exact supported and unsupported surface.
 
+mod alias;
 mod identifier;
 mod lexer;
 mod literal;
 
+pub use alias::{
+    ALIAS_CONFIG_MAX_BYTES, ALIAS_DIAGNOSTIC_LIMIT, ALIAS_NAME_MAX_BYTES, AliasContext, AliasEntry,
+    AliasEnvironment, AliasTable, AliasTarget, BuiltinAlias, parse_aliases,
+};
 pub use identifier::{
     IDENTIFIER_UNICODE_VERSION, IdentifierError, IdentifierErrorKind, canonical_identifier,
     is_identifier,

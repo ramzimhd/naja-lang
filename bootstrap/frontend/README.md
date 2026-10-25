@@ -68,6 +68,23 @@ analysis and execution remain future work. An unsupported
 formatted string is scanned as an opaque ordinary quote-delimited string for
 recovery; no grammar accuracy is claimed for its contents.
 
+`parse_aliases(config, AliasEnvironment { edition, policy })` parses a bounded
+format-1 `naja.alias` configuration without IO. It supports the six documented
+comparison operators and the `print`/`len` builtin table, retaining original
+configuration and assignment/key/value byte spans. Schema 1 is the default
+when omitted. Other tables/targets and unsupported TOML forms reject explicitly.
+The service uses a strict one-line TOML 1.0 basic-string subset and validates
+Unicode identifier aliases with the same NFKC service as source identifiers.
+
+`AliasTable::lookup(context, canonical_candidate)` requires a grammar context
+and an already validated canonical identifier key. Consumers check raw keywords,
+canonical spellings and explicit bindings before lookup; `UnboundBuiltin` is
+only a fallback. Lookup returns the canonical comparison `Symbol` or builtin
+target with its configuration entry. It does not mutate source, lexemes or
+token kinds. The exact serialized cache identity includes raw config, edition,
+policy and format version. See `compatibility/aliases/README.md` for the bounded
+grammar, conflict rules, source/config origin distinction and integration limits.
+
 The CST groups tokens into logical-line nodes and records indentation depth.
 It retains malformed source and diagnostics, and performs no statement/expression
 validation. Indentation tokens alone do not validate whether a header permits a

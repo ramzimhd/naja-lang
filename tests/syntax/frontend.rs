@@ -1,5 +1,6 @@
 use naja_frontend::{Span, Symbol, TokenKind, lex, parse_cst};
 
+mod aliases;
 mod blocks;
 mod identifiers;
 mod literals;
