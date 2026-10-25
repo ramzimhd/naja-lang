@@ -104,10 +104,10 @@ impl Runtime {
         c.store(Bp, BUFFER, Ax);
         c.imm(Dx, 2);
         c.store(Ax, 0, Dx);
-        c.mov(R8, Ax);
-        c.immediate(0, R8, 24);
-        c.store(Ax, 8, R8);
-        c.store(Bp, DATA, R8);
+        c.mov(R9, Ax);
+        c.immediate(0, R9, 24);
+        c.store(Ax, 8, R9);
+        c.store(Bp, DATA, R9);
         c.zero(Dx);
         c.store(Ax, 16, Dx);
         c.store(Bp, TOTAL, Dx);
