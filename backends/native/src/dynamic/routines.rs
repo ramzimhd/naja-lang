@@ -1,6 +1,6 @@
 //! Native tagged-value routines; numeric kernels are shared with hosted integers.
 //! Descriptor: tag:u64, data:pointer, byte_length:u64. Tags 0=int,1=text,2=bytes,
-//! 3=bool (pointer to integer zero/one),4=None,5=tuple (element count at+16).
+//! 3=bool (pointer to integer zero/one),4=None,5=tuple,6=list (count at+16).
 //! No user pointer API exists here.
 use super::ARENA_BYTES;
 use crate::hosted::{
@@ -24,8 +24,11 @@ pub(super) struct Runtime {
     pub index: usize,
     pub sequence_data_end: usize,
     pub tuple: usize,
+    pub list: usize,
+    pub set_index: usize,
     tuple_check: usize,
     tuple_resource: usize,
+    list_resource: usize,
     span_check: usize,
     pub compare: usize,
     pub truth: usize,
@@ -63,8 +66,11 @@ impl Runtime {
             index: c.label(),
             sequence_data_end: c.label(),
             tuple: c.label(),
+            list: c.label(),
+            set_index: c.label(),
             tuple_check: c.label(),
             tuple_resource: c.label(),
+            list_resource: c.label(),
             span_check: c.label(),
             compare: c.label(),
             truth: c.label(),
@@ -127,8 +133,10 @@ impl Runtime {
         // checked arena allocation. Guard tags before interpreting payloads.
         c.bind(self.check);
         c.load(Dx, Ax, 0);
-        c.immediate(7, Dx, 5);
+        c.immediate(7, Dx, 6);
         c.j(0x87, self.type_error);
+        c.j(0x84, self.tuple_check);
+        c.immediate(7, Dx, 5);
         c.j(0x84, self.tuple_check);
         let sequence = c.label();
         let done = c.label();
@@ -149,7 +157,7 @@ impl Runtime {
         c.bind(self.require_integer);
         c.load(Dx, Ax, 0);
         c.immediate(7, Dx, 5);
-        c.j(0x84, self.type_error);
+        c.j(0x83, self.type_error);
         c.call(self.check);
         c.load(Dx, Ax, 0);
         let number = c.label();
@@ -188,10 +196,10 @@ impl Runtime {
         c.bind(self.add);
         c.load(Dx, Di, 0);
         c.immediate(7, Dx, 5);
-        c.j(0x84, self.type_error);
+        c.j(0x83, self.type_error);
         c.load(Dx, Si, 0);
         c.immediate(7, Dx, 5);
-        c.j(0x84, self.type_error);
+        c.j(0x83, self.type_error);
         c.mov(Ax, Di);
         c.call(self.check);
         c.mov(Ax, Si);
@@ -230,7 +238,7 @@ impl Runtime {
         let length = c.label();
         c.j(0x84, length);
         c.immediate(7, Dx, 5);
-        c.j(0x85, self.type_error);
+        c.j(0x82, self.type_error);
         c.bind(length);
         c.load(Ax, Ax, 16);
         c.jump(self.small_integer);
@@ -337,10 +345,10 @@ impl Runtime {
         c.bind(self.compare);
         c.load(Dx, Di, 0);
         c.immediate(7, Dx, 5);
-        c.j(0x84, self.type_error);
+        c.j(0x83, self.type_error);
         c.load(Dx, Si, 0);
         c.immediate(7, Dx, 5);
-        c.j(0x84, self.type_error);
+        c.j(0x83, self.type_error);
         c.mov(Ax, Di);
         c.call(self.check);
         c.mov(Ax, Si);
@@ -429,7 +437,7 @@ impl Runtime {
         c.immediate(7, Dx, 2);
         c.j(0x84, length);
         c.immediate(7, Dx, 5);
-        c.j(0x84, length);
+        c.j(0x83, length);
         c.load(Ax, Ax, 8);
         c.load(Ax, Ax, 0);
         c.jump(value);
@@ -448,7 +456,7 @@ impl Runtime {
         c.bind(self.print);
         c.load(Dx, Ax, 0);
         c.immediate(7, Dx, 5);
-        c.j(0x84, self.type_error);
+        c.j(0x83, self.type_error);
         c.call(self.check);
         c.load(Dx, Ax, 0);
         let integer = c.label();

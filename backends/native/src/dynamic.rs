@@ -1,4 +1,4 @@
-//! Experimental immutable native values. This private layout is not a language ABI.
+//! Experimental native values. This private layout is not a language ABI.
 use super::{
     Binary, Comparison, MAX_LOCALS,
     hosted::{
@@ -17,6 +17,9 @@ pub const MAX_FUNCTIONS: usize = 128;
 pub const MAX_CALL_DEPTH: usize = 256;
 pub const MAX_SOURCE_STACK_BYTES: usize = 2 * 1024 * 1024;
 pub const MAX_TUPLE_ELEMENTS: usize = 128;
+pub const MAX_LIST_ELEMENTS: usize = 128;
+// The shared native array constructor has one defensive capacity check.
+const _: () = assert!(MAX_LIST_ELEMENTS == MAX_TUPLE_ELEMENTS);
 const HELPER_STACK_RESERVE: i32 = 4096;
 const FRAME_BYTES: i32 = 2048;
 const CONTEXT_SLOT: i32 = -2032;
@@ -58,6 +61,7 @@ pub enum Expression {
     Call(usize, Vec<Self>),
     Index(Box<Self>, Box<Self>),
     Tuple(Vec<Self>),
+    List(Vec<Self>),
 }
 
 #[derive(Clone, Debug)]
@@ -70,6 +74,11 @@ pub enum Statement {
     While(Expression, Vec<Self>),
     Group(Vec<Self>),
     Return(Expression),
+    SetIndex {
+        sequence: Expression,
+        index: Expression,
+        value: Expression,
+    },
 }
 
 struct Validator<'a> {
@@ -126,6 +135,15 @@ impl Validator<'_> {
             Expression::Tuple(elements) => {
                 if elements.len() > MAX_TUPLE_ELEMENTS {
                     return Err("dynamic tuple exceeds 128 elements".into());
+                }
+                for element in elements {
+                    self.expression(element, initialized, depth + 1)?;
+                }
+                0
+            }
+            Expression::List(elements) => {
+                if elements.len() > MAX_LIST_ELEMENTS {
+                    return Err("dynamic list exceeds 128 elements".into());
                 }
                 for element in elements {
                     self.expression(element, initialized, depth + 1)?;
@@ -193,6 +211,15 @@ impl Validator<'_> {
                     }
                     self.expression(value, initialized, 0)?;
                     initialized[*slot] = true;
+                }
+                Statement::SetIndex {
+                    sequence,
+                    index,
+                    value,
+                } => {
+                    self.expression(value, initialized, 0)?;
+                    self.expression(sequence, initialized, 0)?;
+                    self.expression(index, initialized, 0)?;
                 }
                 Statement::Print(value) | Statement::Assert(value) | Statement::Evaluate(value) => {
                     self.expression(value, initialized, 0)?
@@ -328,14 +355,19 @@ impl Emitter {
                 self.code.call(self.functions[*index]);
                 self.code.immediate(0, Sp, 8 * (arguments.len() as i32 + 1));
             }
-            Expression::Tuple(elements) => {
+            Expression::Tuple(elements) | Expression::List(elements) => {
                 for element in elements {
                     self.expression(element)?;
                     self.push_value(Ax);
                 }
                 self.code.mov(Di, Sp);
                 self.code.imm(Si, elements.len() as i64);
-                self.code.call(self.runtime.tuple);
+                self.code
+                    .call(if matches!(expression, Expression::List(_)) {
+                        self.runtime.list
+                    } else {
+                        self.runtime.tuple
+                    });
                 self.code.immediate(0, Sp, 8 * elements.len() as i32);
             }
             Expression::Negate(value) => {
@@ -491,6 +523,21 @@ impl Emitter {
                 Statement::Assign(slot, value) => {
                     self.expression(value)?;
                     self.code.store(Bp, -8 * (*slot as i32 + 1), Ax);
+                }
+                Statement::SetIndex {
+                    sequence,
+                    index,
+                    value,
+                } => {
+                    self.expression(value)?;
+                    self.push_value(Ax);
+                    self.expression(sequence)?;
+                    self.push_value(Ax);
+                    self.expression(index)?;
+                    self.code.mov(Si, Ax);
+                    self.code.pop(Di);
+                    self.code.pop(Dx);
+                    self.code.call(self.runtime.set_index);
                 }
                 Statement::Evaluate(value) => self.expression(value)?,
                 Statement::Print(value) => {
