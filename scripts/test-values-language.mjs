@@ -271,6 +271,7 @@ for (const [name, body] of [
   ['annotation-none-guard', 'x: int = None\nprint(999)'],
   ['tuple-display-guard', 'print((1, 2))'],
   ['list-display-guard', 'print([1, 2])'],
+  ['text-method-receiver-guard', 'print("x".Repeat(2))'],
 ]) run(name, body + '\n', '', typeFailure);
 for (const [index, value] of ['False', 'None', '0', '""', 'b""'].entries()) {
   run('false-truth-assertion-' + index, 'assert ' + value + '\nprint(999)\n', '', { exit: 104, stderr: 'NJA204: assertion failed\n' });
@@ -283,7 +284,7 @@ for (const [name, body, code] of [
   ['float', 'print(1.25)', /NJA1\d\d/], ['function-default', 'def f(x=1):\n    return x', /NJA1\d\d/],
   ['list-comprehension', 'print([value for value in [1, 2]])', /NJA1\d\d/], ['dictionary', 'print({"a": 1})', /NJA1\d\d/],
   ['tuple-unpacking', 'a, b = (1, 2)', /NJA1\d\d/], ['set', 'print({1, 2})', /NJA1\d\d/],
-  ['method', 'print("x".Repeat(2))', /NJA1\d\d/], ['formatted-string', 'print(f"{1}")', /F0011/],
+  ['formatted-string', 'print(f"{1}")', /F0011/],
   ['named-escape', String.raw`print("\N{SNAKE}")`, /F0034/], ['surrogate-escape', String.raw`print("\ud800")`, /F0035/],
   ['byte-octal', String.raw`print(b"\400")`, /F0037/], ['adjacent-literals', 'print("a" "b")', /NJA1\d\d/],
   ['other-annotation', 'x: str = "x"', /NJA1\d\d/], ['division', 'print(1 / 2)', /NJA1\d\d/],

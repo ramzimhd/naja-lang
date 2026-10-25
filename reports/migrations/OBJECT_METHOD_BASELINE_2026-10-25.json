@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "source_commit": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+  "target": "Linux x86-64 via explicit local WSL",
+  "source": "print(\"x\".Repeat(2))\n",
+  "source_sha256": "43c7ecb88bd0f949c8b419482cb72ded5cb3b49c50188a180d5a9f12ab7cb46d",
+  "elf_sha256": "017429a6f15218cc7a2527fda81857c6908789da10f252a6f5e1fb1a96f8d95e",
+  "commands": [
+    {
+      "command": [
+        "C:\\naja\\target\\debug\\naja.exe",
+        "check",
+        "C:\\naja\\target\\objects-values-migration-cE7Tr7\\original.naja"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "436865636b6564206578706572696d656e74616c206e6174697665207375627365743a20433a5c6e616a615c7461726765745c6f626a656374732d76616c7565732d6d6967726174696f6e2d6345375472375c6f726967696e616c2e6e616a610a",
+      "stderr_hex": ""
+    },
+    {
+      "command": [
+        "C:\\naja\\target\\debug\\naja.exe",
+        "build",
+        "C:\\naja\\target\\objects-values-migration-cE7Tr7\\original.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja\\target\\objects-values-migration-cE7Tr7\\original.elf"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "4275696c74204c696e7578207838362d363420454c463a20433a5c6e616a615c7461726765745c6f626a656374732d76616c7565732d6d6967726174696f6e2d6345375472375c6f726967696e616c2e656c6620283138313438206279746573290a",
+      "stderr_hex": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "/usr/bin/wslpath",
+        "-a",
+        "C:\\naja\\target\\objects-values-migration-cE7Tr7\\original.elf"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "2f6d6e742f632f6e616a612f7461726765742f6f626a656374732d76616c7565732d6d6967726174696f6e2d6345375472372f6f726967696e616c2e656c660a",
+      "stderr_hex": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "/usr/bin/chmod",
+        "u+x",
+        "/mnt/c/naja/target/objects-values-migration-cE7Tr7/original.elf"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "",
+      "stderr_hex": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "/usr/bin/timeout",
+        "--signal=TERM",
+        "--kill-after=1s",
+        "5",
+        "/mnt/c/naja/target/objects-values-migration-cE7Tr7/original.elf"
+      ],
+      "exit_code": 105,
+      "stdout_hex": "",
+      "stderr_hex": "4e4a413230353a206e61746976652076616c75652074797065206d69736d617463680a"
+    }
+  ],
+  "scope": "Original Text method source now lowers through generic receiver dispatch and fails runtime105; it does not implement Text.Repeat.",
+  "artifacts": "C:/naja/target/objects-values-migration-cE7Tr7"
+}
