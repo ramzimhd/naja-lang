@@ -52,6 +52,7 @@ jobs:
           node scripts/test-functions.mjs
           node scripts/test-index.mjs
           node scripts/test-tuples.mjs
+          node scripts/test-lists.mjs
           node scripts/test-values-language.mjs
           node scripts/test-functions-language.mjs
           node scripts/test-index-language.mjs
