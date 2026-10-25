@@ -9,10 +9,37 @@ closure.
 
 The harness was prepared on `5c555bc6e3ff51c9f2f945b069654aa287bc446b` while the
 integrator was implementing the source/dynamic-backend bridge and explicit
-project-root CLI option. Preparation and `node --check` are not native
-verification. A passing run requires that subsequent compiler integration;
-do not attribute a future run to the preparation base or claim the older source
-already accepts these programs.
+project-root CLI option. It was subsequently executed after merging committed
+compiler integration `bccb6092e901a86273da031713f1381b4e60a2f4` into the test
+branch. Preparation and `node --check` alone are not native verification; the
+older preparation base was never claimed to accept these programs.
+
+## Recorded execution
+
+At clean test HEAD `9ef3c38360a6e12db0879db07ddc958d4ae3cff8`,
+`node scripts/test-values-language.mjs` exited 0 with **84 checks passed and
+0 not run**: 51 actual native-outcome checks and 33 compile/project rejection
+checks. Expected native failures (type 105, assertion 104 and resource 103) are
+checked outcomes, not successful execution of those unsupported operations.
+All three symlink/reparse cases executed. No budget or expected result was
+changed after execution.
+
+The execution host was Windows x64 with Node `v24.11.0` and Rust
+`1.97.1 (8bab26f4f 2026-07-14)`; emitted Linux x86-64 programs executed through
+the declared local WSL target. Direct Linux-host execution is supported by the
+harness but was not run in this record. The merged test HEAD contains scoped
+harness preparation `5cfc9c3c5216abf3d03087eddaa7ea688ea4f7f3` and the committed
+compiler integration; it does not include later uncommitted integrator work.
+
+Retained evidence is `target/values-language-ik3Yp1/summary.json`, SHA-256
+`073476faba257996c48bc1612d9ee7d50736df1ff34aaa4d74a82ecb51861107`.
+Its compiler SHA-256 is
+`bb67065f80631a8955c5683d58b1e26f063ec014cbeb326ec3a09b67581bb6d6`;
+the executed harness SHA-256 is
+`f0e654a38eba6e105a82ab4b314d48721cde6a814d4c1eb4eaf745cd8b678cd3`.
+Source/ELF/output/table identities remain in that local summary. In particular,
+the chain-middle-once case exited 0 while the deliberate duplicate-middle case
+exited 103 under the same 64 MiB arena and five-second target limit.
 
 ## Contracts and coverage
 
