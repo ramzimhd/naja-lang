@@ -1,0 +1,2009 @@
+{
+  "schema_version": 1,
+  "contract_revision": "1.3",
+  "previous_contract_revision": "1.2",
+  "language_edition": "2026.1",
+  "source_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+  "source": "docs/continuation/01_CONTINUE_NAJA.md",
+  "adr": "docs/decisions/0003-language-edition-2026-1.md",
+  "status": "open",
+  "result": "not_run",
+  "inherited_counts": {
+    "requirements": 147,
+    "mandatory": 139,
+    "future": 8,
+    "tasks": 38,
+    "gates": 19
+  },
+  "evidence_policy": "Append by stable inherited ID; retain historical source/contract/results. Old evidence never automatically verifies a revision 1.3 feature.",
+  "inherited_snapshots": [
+    {
+      "path": "planning/requirements.json",
+      "source_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "sha256": "3ad62ce02f89bcc2d8076b8ac4b098987998d62b791d7e004a629629621d384e"
+    },
+    {
+      "path": "planning/tasks.json",
+      "source_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "sha256": "d0cd0db026fcc8a47e6e7902e8d55cb14a20d3c15ca914ead0334078db753ded"
+    },
+    {
+      "path": "planning/release-gates.json",
+      "source_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "sha256": "e782ceeace9d077211261052e03b430a3ecc83a62e230480e488508dfaeab82c"
+    }
+  ],
+  "inherited_requirements": [
+    {
+      "id": "GOV-01",
+      "gate": "R01",
+      "release_required": true,
+      "status_at_snapshot": "verified",
+      "contract_revision": "1.2",
+      "evidence": [
+        "reports/checks/public-repository.json"
+      ]
+    },
+    {
+      "id": "GOV-02",
+      "gate": "R01",
+      "release_required": true,
+      "status_at_snapshot": "implemented",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "GOV-03",
+      "gate": "R01",
+      "release_required": true,
+      "status_at_snapshot": "implemented",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "GOV-04",
+      "gate": "R01",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "GOV-05",
+      "gate": "R01",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "GOV-06",
+      "gate": "R01",
+      "release_required": true,
+      "status_at_snapshot": "implemented",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "ENV-01",
+      "gate": "R02",
+      "release_required": true,
+      "status_at_snapshot": "verified",
+      "contract_revision": "1.2",
+      "evidence": [
+        "reports/checks/h0-inventory.json"
+      ]
+    },
+    {
+      "id": "ENV-02",
+      "gate": "R02",
+      "release_required": true,
+      "status_at_snapshot": "implemented",
+      "contract_revision": "1.2",
+      "evidence": [
+        "reports/checks/seed-setup-windows.json",
+        "reports/checks/seed-setup-shell-fixtures.json"
+      ]
+    },
+    {
+      "id": "ENV-03",
+      "gate": "R02",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "ENV-04",
+      "gate": "R02",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "ENV-05",
+      "gate": "R02",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "ENV-06",
+      "gate": "R02",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IND-01",
+      "gate": "R03",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IND-02",
+      "gate": "R03",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IND-03",
+      "gate": "R03",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IND-04",
+      "gate": "R03",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IND-05",
+      "gate": "R03",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CMP-01",
+      "gate": "R04",
+      "release_required": true,
+      "status_at_snapshot": "implemented",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CMP-02",
+      "gate": "R04",
+      "release_required": true,
+      "status_at_snapshot": "in_progress",
+      "contract_revision": "1.2",
+      "evidence": [
+        "reports/checks/seed-rust-tests.json",
+        "reports/checks/seed-format-recorded.json",
+        "reports/checks/seed-clippy.json"
+      ]
+    },
+    {
+      "id": "CMP-03",
+      "gate": "R04",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CMP-04",
+      "gate": "R04",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CMP-05",
+      "gate": "R04",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-01",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-02",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-03",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-04",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-05",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-06",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-07",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-08",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYN-09",
+      "gate": "R05",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-01",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-02",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-03",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-04",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-05",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-06",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-07",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-08",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-09",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SEM-10",
+      "gate": "R06",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CLI-01",
+      "gate": "R07",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CLI-02",
+      "gate": "R07",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CLI-03",
+      "gate": "R07",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CLI-04",
+      "gate": "R07",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CLI-05",
+      "gate": "R07",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "CLI-06",
+      "gate": "R07",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BE-01",
+      "gate": "R08",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BE-02",
+      "gate": "R08",
+      "release_required": true,
+      "status_at_snapshot": "in_progress",
+      "contract_revision": "1.2",
+      "evidence": [
+        "reports/checks/seed-offline-build.json",
+        "reports/checks/seed-native-execution.json"
+      ]
+    },
+    {
+      "id": "BE-03",
+      "gate": "R08",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BE-04",
+      "gate": "R08",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BE-05",
+      "gate": "R08",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BOOT-01",
+      "gate": "R09",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BOOT-02",
+      "gate": "R09",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BOOT-03",
+      "gate": "R09",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BOOT-04",
+      "gate": "R09",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BOOT-05",
+      "gate": "R09",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BOOT-06",
+      "gate": "R09",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "BOOT-07",
+      "gate": "R09",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYS-01",
+      "gate": "R10",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYS-02",
+      "gate": "R10",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYS-03",
+      "gate": "R10",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYS-04",
+      "gate": "R10",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYS-05",
+      "gate": "R10",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "SYS-06",
+      "gate": "R10",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "NET-01",
+      "gate": "R11",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "NET-02",
+      "gate": "R11",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "NET-03",
+      "gate": "R11",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "NET-04",
+      "gate": "R11",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "NET-05",
+      "gate": "R11",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "NET-06",
+      "gate": "R11",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "NET-07",
+      "gate": "R11",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-01",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-02",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-03",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-04",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-05",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-06",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-07",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-08",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-09",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-10",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "IDE-11",
+      "gate": "R12",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EXT-01",
+      "gate": "R13",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EXT-02",
+      "gate": "R13",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EXT-03",
+      "gate": "R13",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EXT-04",
+      "gate": "R13",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "QA-01",
+      "gate": "R14",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "QA-02",
+      "gate": "R14",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "QA-03",
+      "gate": "R14",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "QA-04",
+      "gate": "R14",
+      "release_required": true,
+      "status_at_snapshot": "verified",
+      "contract_revision": "1.2",
+      "evidence": [
+        "reports/checks/ci-seed-three-os.json",
+        "reports/checks/integrated-planning-tests.json",
+        "reports/checks/checkout-evidence-integrity.json"
+      ]
+    },
+    {
+      "id": "QA-05",
+      "gate": "R14",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "REL-01",
+      "gate": "R15",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "REL-02",
+      "gate": "R15",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "REL-03",
+      "gate": "R15",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "REL-04",
+      "gate": "R15",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "REL-05",
+      "gate": "R15",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "FUT-01",
+      "gate": "FUTURE",
+      "release_required": false,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "FUT-02",
+      "gate": "FUTURE",
+      "release_required": false,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "FUT-03",
+      "gate": "FUTURE",
+      "release_required": false,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "FUT-04",
+      "gate": "FUTURE",
+      "release_required": false,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "FUT-05",
+      "gate": "FUTURE",
+      "release_required": false,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "FUT-06",
+      "gate": "FUTURE",
+      "release_required": false,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "FUT-07",
+      "gate": "FUTURE",
+      "release_required": false,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "FUT-08",
+      "gate": "FUTURE",
+      "release_required": false,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-01",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-02",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-03",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-04",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-05",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-06",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-07",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-08",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-09",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-10",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-11",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-12",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-13",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-14",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-15",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "INT-16",
+      "gate": "R16",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PERF-01",
+      "gate": "R17",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PERF-02",
+      "gate": "R17",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PERF-03",
+      "gate": "R17",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PERF-04",
+      "gate": "R17",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EN-01",
+      "gate": "R18",
+      "release_required": true,
+      "status_at_snapshot": "in_progress",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EN-02",
+      "gate": "R18",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EN-03",
+      "gate": "R18",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EN-04",
+      "gate": "R18",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EN-05",
+      "gate": "R18",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "EN-06",
+      "gate": "R18",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-01",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-02",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-03",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-04",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-05",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-06",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-07",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-08",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-09",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-10",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-11",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-12",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-13",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-14",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-15",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    },
+    {
+      "id": "PROD-16",
+      "gate": "R19",
+      "release_required": true,
+      "status_at_snapshot": "not_started",
+      "contract_revision": "1.2",
+      "evidence": []
+    }
+  ],
+  "inherited_task_ids": [
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07",
+    "T08",
+    "T09",
+    "T10",
+    "T11",
+    "T12",
+    "T13",
+    "T14",
+    "T15",
+    "T16",
+    "T17",
+    "T18",
+    "T19",
+    "T20",
+    "T21",
+    "T22",
+    "T23",
+    "T24",
+    "T25",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T35",
+    "T36",
+    "T37",
+    "T38"
+  ],
+  "inherited_gate_ids": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11",
+    "R12",
+    "R13",
+    "R14",
+    "R15",
+    "R16",
+    "R17",
+    "R18",
+    "R19"
+  ],
+  "compatibility_preservation": {
+    "path": "compatibility/productions.json",
+    "reference_commit": "d220409a13b77de7a6c30abe16ea90db01528edc",
+    "grammar_sha256": "36722c947a268326f585c12c1be2b7be62cb8034ad0ccebc85807b41795a30e6",
+    "production_ids": [
+      "file",
+      "interactive",
+      "eval",
+      "func_type",
+      "statements",
+      "statement",
+      "single_compound_stmt",
+      "statement_newline",
+      "simple_stmts",
+      "simple_stmt",
+      "compound_stmt",
+      "assignment",
+      "annotated_rhs",
+      "augassign",
+      "return_stmt",
+      "raise_stmt",
+      "pass_stmt",
+      "break_stmt",
+      "continue_stmt",
+      "global_stmt",
+      "nonlocal_stmt",
+      "del_stmt",
+      "yield_stmt",
+      "assert_stmt",
+      "import_stmt",
+      "import_name",
+      "import_from",
+      "import_from_targets",
+      "import_from_as_names",
+      "import_from_as_name",
+      "dotted_as_names",
+      "dotted_as_name",
+      "dotted_name",
+      "block",
+      "decorators",
+      "class_def",
+      "class_def_raw",
+      "function_def",
+      "function_def_raw",
+      "params",
+      "parameters",
+      "slash_no_default",
+      "slash_with_default",
+      "star_etc",
+      "kwds",
+      "param_no_default",
+      "param_no_default_star_annotation",
+      "param_with_default",
+      "param_maybe_default",
+      "param",
+      "param_star_annotation",
+      "annotation",
+      "star_annotation",
+      "default",
+      "if_stmt",
+      "elif_stmt",
+      "else_block",
+      "while_stmt",
+      "for_stmt",
+      "with_stmt",
+      "with_item",
+      "try_stmt",
+      "except_block",
+      "except_star_block",
+      "finally_block",
+      "match_stmt",
+      "subject_expr",
+      "case_block",
+      "guard",
+      "patterns",
+      "pattern",
+      "as_pattern",
+      "or_pattern",
+      "closed_pattern",
+      "literal_pattern",
+      "literal_expr",
+      "complex_number",
+      "signed_number",
+      "signed_real_number",
+      "real_number",
+      "imaginary_number",
+      "capture_pattern",
+      "pattern_capture_target",
+      "wildcard_pattern",
+      "value_pattern",
+      "attr",
+      "name_or_attr",
+      "group_pattern",
+      "sequence_pattern",
+      "open_sequence_pattern",
+      "maybe_sequence_pattern",
+      "maybe_star_pattern",
+      "star_pattern",
+      "mapping_pattern",
+      "items_pattern",
+      "key_value_pattern",
+      "double_star_pattern",
+      "class_pattern",
+      "positional_patterns",
+      "keyword_patterns",
+      "keyword_pattern",
+      "type_alias",
+      "type_params",
+      "type_param_seq",
+      "type_param",
+      "type_param_bound",
+      "type_param_default",
+      "type_param_starred_default",
+      "expressions",
+      "expression",
+      "if_expression",
+      "yield_expr",
+      "star_expressions",
+      "star_expression",
+      "star_named_expressions",
+      "star_named_expressions_sequence",
+      "star_named_expression",
+      "star_named_expression_sequence",
+      "assignment_expression",
+      "named_expression",
+      "disjunction",
+      "conjunction",
+      "inversion",
+      "comparison",
+      "compare_op_bitwise_or_pair",
+      "eq_bitwise_or",
+      "noteq_bitwise_or",
+      "lte_bitwise_or",
+      "lt_bitwise_or",
+      "gte_bitwise_or",
+      "gt_bitwise_or",
+      "notin_bitwise_or",
+      "in_bitwise_or",
+      "isnot_bitwise_or",
+      "is_bitwise_or",
+      "bitwise_or",
+      "bitwise_xor",
+      "bitwise_and",
+      "shift_expr",
+      "sum",
+      "term",
+      "factor",
+      "power",
+      "await_primary",
+      "primary",
+      "slices",
+      "slice",
+      "atom",
+      "group",
+      "lambdef",
+      "lambda_params",
+      "lambda_parameters",
+      "lambda_slash_no_default",
+      "lambda_slash_with_default",
+      "lambda_star_etc",
+      "lambda_kwds",
+      "lambda_param_no_default",
+      "lambda_param_with_default",
+      "lambda_param_maybe_default",
+      "lambda_param",
+      "fstring_middle",
+      "fstring_replacement_field",
+      "fstring_conversion",
+      "fstring_full_format_spec",
+      "fstring_format_spec",
+      "fstring",
+      "tstring_format_spec_replacement_field",
+      "tstring_format_spec",
+      "tstring_full_format_spec",
+      "tstring_replacement_field",
+      "tstring_middle",
+      "tstring",
+      "string",
+      "strings",
+      "list",
+      "tuple",
+      "set",
+      "dict",
+      "double_starred_kvpairs",
+      "double_starred_kvpair",
+      "kvpair",
+      "for_if_clauses",
+      "for_if_clause",
+      "listcomp",
+      "setcomp",
+      "genexp",
+      "dictcomp",
+      "arguments",
+      "args",
+      "kwargs",
+      "starred_expression",
+      "kwarg_or_starred",
+      "kwarg_or_double_starred",
+      "star_targets",
+      "star_targets_list_seq",
+      "star_targets_tuple_seq",
+      "star_target",
+      "target_with_star_atom",
+      "star_atom",
+      "single_target",
+      "single_subscript_attribute_target",
+      "t_primary",
+      "t_lookahead",
+      "del_targets",
+      "del_target",
+      "del_t_atom",
+      "type_expressions",
+      "func_type_comment",
+      "invalid_arguments",
+      "invalid_kwarg",
+      "expression_without_invalid",
+      "invalid_legacy_expression",
+      "invalid_type_param",
+      "invalid_expression",
+      "invalid_if_expression",
+      "invalid_named_expression",
+      "invalid_assignment",
+      "invalid_ann_assign_target",
+      "invalid_raise_stmt",
+      "invalid_del_stmt",
+      "invalid_assert_stmt",
+      "invalid_block",
+      "invalid_comprehension",
+      "invalid_parameters",
+      "invalid_default",
+      "invalid_star_etc",
+      "invalid_kwds",
+      "invalid_parameters_helper",
+      "invalid_lambda_parameters",
+      "invalid_lambda_parameters_helper",
+      "invalid_lambda_star_etc",
+      "invalid_lambda_kwds",
+      "invalid_double_type_comments",
+      "invalid_with_item",
+      "invalid_for_if_clause",
+      "invalid_for_target",
+      "invalid_group",
+      "invalid_import",
+      "invalid_dotted_as_name",
+      "invalid_import_from_as_name",
+      "invalid_import_from",
+      "invalid_import_from_targets",
+      "invalid_with_stmt",
+      "invalid_with_stmt_indent",
+      "invalid_try_stmt",
+      "invalid_except_stmt",
+      "invalid_except_star_stmt",
+      "invalid_finally_stmt",
+      "invalid_except_stmt_indent",
+      "invalid_except_star_stmt_indent",
+      "invalid_match_stmt",
+      "invalid_case_block",
+      "invalid_as_pattern",
+      "invalid_class_pattern",
+      "invalid_mapping_pattern",
+      "invalid_class_argument_pattern",
+      "invalid_if_stmt",
+      "invalid_elif_stmt",
+      "invalid_else_stmt",
+      "invalid_while_stmt",
+      "invalid_for_stmt",
+      "invalid_def_raw",
+      "invalid_class_def_raw",
+      "invalid_double_starred_kvpairs",
+      "invalid_kvpair_unpacking",
+      "invalid_kvpair",
+      "invalid_starred_expression_unpacking",
+      "invalid_starred_expression_unpacking_sequence",
+      "invalid_starred_expression",
+      "invalid_fstring_replacement_field",
+      "invalid_fstring_conversion_character",
+      "invalid_tstring_replacement_field",
+      "invalid_tstring_conversion_character",
+      "invalid_string_tstring_concat",
+      "invalid_arithmetic",
+      "invalid_factor",
+      "invalid_type_params",
+      "invalid_noteq"
+    ],
+    "policy": "Keep the separately pinned .py source/production surface and historical coverage/evidence. NAJA-only grammar and coercions do not erase or reinterpret supported .py."
+  },
+  "migrations": [
+    {
+      "id": "M01",
+      "feature_id": "L01",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "CMP-01",
+        "CMP-02",
+        "CMP-03",
+        "CMP-04",
+        "CMP-05",
+        "SYS-01",
+        "IND-01",
+        "IDE-03",
+        "INT-11"
+      ],
+      "revalidation_required": true,
+      "reason": "NAJA 2026.1 becomes independently versioned while the pinned .py grammar, source behavior and compatibility evidence remain distinct obligations.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M02",
+      "feature_id": "L02",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SYN-01",
+        "SYN-02",
+        "SYN-03",
+        "SYN-04",
+        "SYN-09",
+        "IDE-02",
+        "IDE-05",
+        "INT-01"
+      ],
+      "revalidation_required": true,
+      "reason": "General suite braces and transparent labels expand the former depth/alias-only contract; clause ownership, scope, mixed delimiter stacks and tool/cell spans require new tests.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M03",
+      "feature_id": "L03",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SYN-04",
+        "SYN-05",
+        "SYN-06",
+        "SYN-07",
+        "SYN-08",
+        "SYN-09",
+        "SEM-09"
+      ],
+      "revalidation_required": true,
+      "reason": "Expanded module/function/Unicode alias contracts need scope, conflict, precedence and cache revalidation without textual rewriting.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M04",
+      "feature_id": "L04",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-03",
+        "SEM-04",
+        "SEM-06",
+        "SEM-10"
+      ],
+      "revalidation_required": true,
+      "reason": "Value/reference representation, objects/protocols/inference and numeric policy require executable proof; the explicit-i64 seed cannot close hosted semantics.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M05",
+      "feature_id": "L05",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-04",
+        "SEM-09",
+        "IDE-03"
+      ],
+      "revalidation_required": true,
+      "reason": "Scoped extension/coherence rules add lookup and ownership obligations without replacing inherited object/module behavior.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M06",
+      "feature_id": "L06",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-04",
+        "SEM-09",
+        "CLI-06"
+      ],
+      "revalidation_required": true,
+      "reason": "Authorized partial directories add deterministic path/layout/member checks to inherited object/module/build contracts.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M07",
+      "feature_id": "L07",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-04",
+        "SYN-09"
+      ],
+      "revalidation_required": true,
+      "reason": "User-defined typed literals add lexical/resolution/exactness obligations; no implicit narrowing or official-name special cases.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M08",
+      "feature_id": "L08",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-04",
+        "SEM-10"
+      ],
+      "revalidation_required": true,
+      "reason": "General scale/affine derivation adds algebra/promotion/dimension/point/delta checks while preserving inherited numeric semantics.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M09",
+      "feature_id": "L09",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-04",
+        "SEM-06",
+        "SYS-06"
+      ],
+      "revalidation_required": true,
+      "reason": "Refinements and immutable typed captures expand validation into checked structural values with boundary/work/lifetime invariants.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M10",
+      "feature_id": "L10",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-04",
+        "CLI-04"
+      ],
+      "revalidation_required": true,
+      "reason": "Native built-in structured parsers add domain-specific validation/property/round-trip obligations without DNS or ad hoc splitting.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M11",
+      "feature_id": "L11",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-02",
+        "SEM-07",
+        "SEM-10"
+      ],
+      "revalidation_required": true,
+      "reason": "NAJA contextual constant conversion and reductions expand semantics; .py repetition/conversion behavior and previous evidence cannot be silently reinterpreted.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M12",
+      "feature_id": "L12",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-02",
+        "SEM-07",
+        "SEM-10",
+        "PROD-07",
+        "PROD-08",
+        "PROD-09",
+        "PROD-10",
+        "PROD-11",
+        "PROD-12"
+      ],
+      "revalidation_required": true,
+      "reason": "Bounded native numerical/data foundations add shapes/views/effects/precision while preserving CSV/JSONL, resources and productivity obligations.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M13",
+      "feature_id": "L13",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "SEM-08",
+        "QA-02",
+        "NET-03",
+        "NET-05",
+        "NET-06",
+        "INT-08"
+      ],
+      "revalidation_required": true,
+      "reason": "Native CPU parallelism, structured concurrency and real typed application-input events expand earlier async/network contracts.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M14",
+      "feature_id": "L14",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "NET-01",
+        "NET-02",
+        "NET-03",
+        "NET-04",
+        "NET-05",
+        "NET-06",
+        "NET-07",
+        "SYS-01",
+        "SYS-02",
+        "SYS-03",
+        "SYS-04",
+        "SYS-05",
+        "SYS-06",
+        "EXT-01",
+        "EXT-02",
+        "EXT-03",
+        "EXT-04"
+      ],
+      "revalidation_required": true,
+      "reason": "General braces do not introduce a networking DSL; framing, lifecycle, hardware permissions and numerical/local quantum demonstrations remain mandatory.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "M15",
+      "feature_id": "L15",
+      "from_contract_revision": "1.2",
+      "to_contract_revision": "1.3",
+      "inherited_requirement_ids": [
+        "CMP-04",
+        "SYN-09",
+        "SEM-10",
+        "IDE-03",
+        "IDE-08",
+        "INT-11",
+        "REL-01"
+      ],
+      "revalidation_required": true,
+      "reason": "Truthful inspect/explain, controlled derive and effect/shape/contract trust need new acceptance; no invented costs, purity or global optimality.",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    }
+  ],
+  "continuity_contracts": [
+    {
+      "id": "C01",
+      "title": "Distinguish the limits",
+      "contract": "Track actual exposed context, provider quota, rate, deadline and spend separately; unknown telemetry stays unknown, with supported responses only.",
+      "hatch_required": true,
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "REL-04",
+        "REL-05"
+      ],
+      "fc1_checks": [
+        "FC1-12"
+      ],
+      "test_groups": [
+        "TG-RECOVERY"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "C02",
+      "title": "Budget-aware work units",
+      "contract": "Bound work by assigned scope/checks/checkpoint plans and reserve available capacity for verification; warnings trigger durable recovery without waived tests.",
+      "hatch_required": true,
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "REL-04",
+        "REL-05"
+      ],
+      "fc1_checks": [
+        "FC1-12"
+      ],
+      "test_groups": [
+        "TG-RECOVERY"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "C03",
+      "title": "Durable state, separate from chat",
+      "contract": "Persist atomic factual checkpoint/source/dirty/test/artifact/owner/next-command state; retain last verified source and uncommitted or WIP work honestly.",
+      "hatch_required": true,
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "REL-04",
+        "REL-05"
+      ],
+      "fc1_checks": [
+        "FC1-12"
+      ],
+      "test_groups": [
+        "TG-RECOVERY"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "C04",
+      "title": "One integrator, real coordination",
+      "contract": "Enforce one actual integrator, atomic local reservations and verified ownership transfer; no timestamp-only reclaim or fictitious receiver.",
+      "hatch_required": true,
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "REL-04",
+        "REL-05"
+      ],
+      "fc1_checks": [
+        "FC1-12"
+      ],
+      "test_groups": [
+        "TG-RECOVERY"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "C05",
+      "title": "Automatic continuation, only when supported",
+      "contract": "Discover supported continuation/manual resume; any optional supervisor is bounded, permission-aware and tested, with no paid/credential/account/persistent-service bypass.",
+      "hatch_required": true,
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "REL-04",
+        "REL-05"
+      ],
+      "fc1_checks": [
+        "FC1-12"
+      ],
+      "test_groups": [
+        "TG-RECOVERY"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "C06",
+      "title": "Verification of recovery itself",
+      "contract": "Exercise fresh-agent recovery and explicit local crash/quota simulations, dirty/stale/conflicting state, unknown budgets and preserved failing work; label simulations.",
+      "hatch_required": true,
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "REL-04",
+        "REL-05"
+      ],
+      "fc1_checks": [
+        "FC1-12"
+      ],
+      "test_groups": [
+        "TG-RECOVERY"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "C07",
+      "title": "Progress and stop behavior",
+      "contract": "Publish factual progress and exact stop/resume causes, actual receiver state and next commands; continue independent ready work rather than false completion.",
+      "hatch_required": true,
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "REL-04",
+        "REL-05"
+      ],
+      "fc1_checks": [
+        "FC1-12"
+      ],
+      "test_groups": [
+        "TG-RECOVERY"
+      ],
+      "evidence": []
+    }
+  ]
+}

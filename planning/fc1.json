@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "contract_revision": "1.3",
+  "source": "docs/continuation/04_ACCEPTANCE.md",
+  "milestone": "FC1",
+  "publication_label": "experimental_preview",
+  "reference_target": "x86_64-unknown-linux-gnu",
+  "host_target_rule": "Compiler host builds do not establish execution of emitted code on that host.",
+  "hatch_completion": false,
+  "status": "open",
+  "result": "not_run",
+  "checks": [
+    {
+      "id": "FC1-01",
+      "contract": "Install a native compiler artifact into a clean test environment and compile/run independently supplied programs without Python, a hidden seed execution service, or cached answers. Record allowed OS/runtime dependencies.",
+      "feature_ids": [
+        "L01"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-INSTALL"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-02",
+      "contract": "Familiar variables, ordinary numeric/string/boolean values, functions, calls, scopes, conditions/loops, lists and user classes work natively with meaningful diagnostics. Do not require every hosted integer literal to be written as i64(...). Preserve inherited richer semantic obligations for HATCH.",
+      "feature_ids": [
+        "L04",
+        "L11"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-OBJECTS",
+        "TG-CONVERSIONS"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-03",
+      "contract": "Indented suites, depth markers, brace suites with no required indentation and standalone named sections execute; maps/sets/strings/regexes and mixed nesting are not corrupted.",
+      "feature_ids": [
+        "L02"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-BLOCKS"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-04",
+      "contract": "Token-aware project aliases, imports and source maps work; invalid/ambiguous source is rejected and reported at the original location.",
+      "feature_ids": [
+        "L01",
+        "L03",
+        "L15"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-ALIASES",
+        "TG-TOOLING"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-05",
+      "contract": "Typed literals and developer-defined scale/affine relations lower to general native operations; Gramme/Kilo and temperature point/delta tests pass with incompatible cases rejected.",
+      "feature_ids": [
+        "L07",
+        "L08"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-LITERALS-RELATIONS"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-06",
+      "contract": "Numeric constraints, checked runtime construction, custom regex captures/properties, and native Email/IP-style structured values have actual valid/invalid-input tests.",
+      "feature_ids": [
+        "L09",
+        "L10"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-SMART-VALUES"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-07",
+      "contract": "Partial-class directory/file enforcement and scoped extensions work without layout mutation, cross-package reopening or accidental name merging.",
+      "feature_ids": [
+        "L05",
+        "L06"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-ORGANIZATION"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-08",
+      "contract": "Collection/array reductions and basic shape-aware numeric operations execute; sum(1,2,4778,6), list .sum() and constrained constant conversion behave as documented.",
+      "feature_ids": [
+        "L11",
+        "L12"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-CONVERSIONS",
+        "TG-NUMERICAL-DATA"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-09",
+      "contract": "Native threads and async tasks execute with defined lifecycle/cleanup, and a custom typed event has real subscription/disposal behavior. Do not mistake async scheduling for multicore execution.",
+      "feature_ids": [
+        "L13"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-CONCURRENCY-EVENTS"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-10",
+      "contract": "CLI build/check/run/test/help, deterministic local module resolution and a basic installable VSIX with real shared-frontend diagnostics, build and run work on the reference target.",
+      "feature_ids": [
+        "L01",
+        "L15"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-TOOLING",
+        "TG-INSTALL"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-11",
+      "contract": "At least one native persistent-cell workflow works through the real compiler, and standalone release execution does not depend on session state. Remaining full interaction/debug/platform obligations stay open.",
+      "feature_ids": [
+        "L02"
+      ],
+      "continuity_ids": [],
+      "test_groups": [
+        "TG-CELLS-RELEASE"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "FC1-12",
+      "contract": "Reproducible artifact/checksums, limitations, tests, source hash, recovery checkpoint and a read-only progress summary exist. All inherited unfulfilled HATCH gates remain visibly open.",
+      "feature_ids": [
+        "L01",
+        "L15"
+      ],
+      "continuity_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "test_groups": [
+        "TG-INSTALL",
+        "TG-RECOVERY"
+      ],
+      "required_for_fc1": true,
+      "hatch_gate_waiver": false,
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    }
+  ]
+}

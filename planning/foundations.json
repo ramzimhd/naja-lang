@@ -1,0 +1,1383 @@
+{
+  "schema_version": 1,
+  "contract_revision": "1.3",
+  "language_edition": "2026.1",
+  "status": "open",
+  "result": "not_run",
+  "source": "docs/continuation/02_LANGUAGE_CONTRACTS.md",
+  "mapping_semantics": "Traceability is not equivalence: an FC1 subset check does not verify a whole HATCH feature; named expansions never downgrade required foundations.",
+  "features": [
+    {
+      "id": "L01",
+      "title": "Language identity, modes and policy",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "CMP-01",
+        "CMP-02",
+        "CMP-03",
+        "CMP-04",
+        "CMP-05",
+        "SYS-01",
+        "IND-01",
+        "IDE-03",
+        "INT-11"
+      ],
+      "test_groups": [
+        "TG-IDENTITY",
+        "TG-TOOLING"
+      ],
+      "fc1_checks": [
+        "FC1-01",
+        "FC1-04",
+        "FC1-10",
+        "FC1-12"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L01-R01",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "Versioned .naja edition, independent semantics and separately pinned/tested .py compatibility; no runtime or package equivalence claim."
+        },
+        {
+          "id": "L01-R02",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "One shared syntax/resolution model across compiler, formatter, LSP, debugger and cells; edition/import/alias/policy/interface cache identity."
+        },
+        {
+          "id": "L01-R03",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "Hosted/core/embedded capability checks preserve arithmetic, OS permission and explicit allocation/IO boundaries."
+        },
+        {
+          "id": "L01-X11",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X11",
+          "contract": "Versioned compatibility matrices distinguish grammar/semantics/library/ABI; no CPython fallback."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L02",
+      "title": "Explicit, indented and named blocks",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SYN-01",
+        "SYN-02",
+        "SYN-03",
+        "SYN-04",
+        "SYN-09",
+        "IDE-02",
+        "IDE-05",
+        "INT-01"
+      ],
+      "test_groups": [
+        "TG-BLOCKS",
+        "TG-CELLS-RELEASE"
+      ],
+      "fc1_checks": [
+        "FC1-03",
+        "FC1-11"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L02-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Indented suites and nesting-depth markers retain sibling and companion-clause meaning."
+        },
+        {
+          "id": "L02-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Colon-opened brace suites execute without indentation; labeled standalone sections preserve scope, order and cleanup boundaries."
+        },
+        {
+          "id": "L02-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Single-line label metadata, clause ownership and mixed delimiter stacks diagnose missing labels/braces and unsupported combined decorations."
+        },
+        {
+          "id": "L02-R04",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Maps/sets, strings/comments, regexes, interpolation and multiline expressions retain source identities; equivalent formatting preserves control flow/source maps."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L03",
+      "title": "Project aliases",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SYN-04",
+        "SYN-05",
+        "SYN-06",
+        "SYN-07",
+        "SYN-08",
+        "SYN-09",
+        "SEM-09"
+      ],
+      "test_groups": [
+        "TG-ALIASES",
+        "TG-TOOLING"
+      ],
+      "fc1_checks": [
+        "FC1-04"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L03-R01",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "Token/AST-aware comparison and builtin/function aliases preserve precedence, comparison chains, evaluation and original locations."
+        },
+        {
+          "id": "L03-R02",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "Project/module imports scope aliases; local binding/member names, dependency sources, strings/comments/patterns remain untouched."
+        },
+        {
+          "id": "L03-R03",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "Unicode aliases, reserved-name conflicts, shadowing and ambiguity have deterministic diagnostics and cache invalidation."
+        },
+        {
+          "id": "L03-X13",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X13",
+          "contract": "Glyph aliases map to existing canonical token operators with unchanged precedence/semantics."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L04",
+      "title": "Uniform object capabilities and representations",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-03",
+        "SEM-04",
+        "SEM-06",
+        "SEM-10"
+      ],
+      "test_groups": [
+        "TG-OBJECTS",
+        "TG-COMPILER-TRUST"
+      ],
+      "fc1_checks": [
+        "FC1-02"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L04-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Native ordinary values/classes expose methods/properties with explicit value/reference, identity/equality/hash, mutability/lifetime/layout contracts."
+        },
+        {
+          "id": "L04-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Inference, generics/protocols and flow-sensitive narrowing use resolved reusable algebra identities, not trusted method names."
+        },
+        {
+          "id": "L04-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Hosted arbitrary integers remain distinct from checked machine integers and named wrapping/saturating operations; inline representation is permitted without universal boxing."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L05",
+      "title": "Controlled class extensions",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-04",
+        "SEM-09",
+        "IDE-03"
+      ],
+      "test_groups": [
+        "TG-ORGANIZATION",
+        "TG-TOOLING"
+      ],
+      "fc1_checks": [
+        "FC1-07"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L05-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Explicit scoped imports add methods/computed properties without stored fields, layout mutation, private access or hidden initialization."
+        },
+        {
+          "id": "L05-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Real/inherited members win; ambiguity is diagnosed with qualified-call escape; operator/protocol/conversion coherence obeys ownership or explicit adapters."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L06",
+      "title": "Partial classes with authorized folders",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-04",
+        "SEM-09",
+        "CLI-06"
+      ],
+      "test_groups": [
+        "TG-ORGANIZATION"
+      ],
+      "fc1_checks": [
+        "FC1-07"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L06-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "One qualified primary class owns fields, bases, generic parameters, constructors and ABI; declared parts add only permitted behavior."
+        },
+        {
+          "id": "L06-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Enumerated same-package roots/directories/files are canonicalized; traversal, symlinks, case collisions, foreign fragments and duplicate signatures reject."
+        },
+        {
+          "id": "L06-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Generated parts are explicit/reproducible with provenance; no recursive ambient discovery or install-time code execution."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L07",
+      "title": "Typed numeric literals",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-04",
+        "SYN-09"
+      ],
+      "test_groups": [
+        "TG-LITERALS-RELATIONS"
+      ],
+      "fc1_checks": [
+        "FC1-05"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L07-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "In-scope user-defined literal-construction protocol determines eligible suffixes; arbitrary class names work without a built-in unit table."
+        },
+        {
+          "id": "L07-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Decimal/exponent/base/sign/underscore/complex-suffix collisions diagnose ambiguity; exact literal text avoids lossy binary-float round trips."
+        },
+        {
+          "id": "L07-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Unknown/ambiguous suffix types reject; ordinary identifiers and conventional/qualified constructors retain meaning and observable construction effects."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L08",
+      "title": "Relations and derived operations",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-04",
+        "SEM-10"
+      ],
+      "test_groups": [
+        "TG-LITERALS-RELATIONS",
+        "TG-CONVERSIONS"
+      ],
+      "fc1_checks": [
+        "FC1-05"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L08-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Reusable algebra, dimension/family relations and scalar promotion are distinct; exact scale composition derives only valid operators."
+        },
+        {
+          "id": "L08-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Quantity add/subtract retain the declared left representation without truncation; division/dimension rules and equal-value hashes remain coherent."
+        },
+        {
+          "id": "L08-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Contradictory relation cycles, ambiguous paths and incompatible dimensions reject; inheritance does not follow automatically from conversion."
+        },
+        {
+          "id": "L08-R04",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Declared invertible affine relations derive rational maps and inverse maps; points/deltas, bounds and nonlinear/refused operations remain distinct."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L09",
+      "title": "Constrained and pattern-derived values",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-04",
+        "SEM-06",
+        "SYS-06"
+      ],
+      "test_groups": [
+        "TG-SMART-VALUES"
+      ],
+      "fc1_checks": [
+        "FC1-06"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L09-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Inclusive numeric intervals define numeric policy, empty bounds, overflow/NaN/infinity and refinement loss after arithmetic."
+        },
+        {
+          "id": "L09-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Construction, assignment/mutation, external input, FFI and deserialization establish invariants; constant proof does not remove necessary runtime checks."
+        },
+        {
+          "id": "L09-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Full-match bounded patterns expose numbered/named typed captures with declared optional/repeated semantics, collision checks and checked numeric parsing."
+        },
+        {
+          "id": "L09-R04",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Local structural identities and named/versioned exported schemas use immutable backing storage or lifetime-safe views; text updates revalidate."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L10",
+      "title": "Native validated structured values",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-04",
+        "CLI-04"
+      ],
+      "test_groups": [
+        "TG-SMART-VALUES"
+      ],
+      "fc1_checks": [
+        "FC1-06"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L10-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Native Email and IPv4/IPv6/IPAddress values provide checked properties and round-trip serialization; extensible URL/UUID-style parser contracts remain native."
+        },
+        {
+          "id": "L10-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Email syntax is separate from existence and implicit DNS; domain/Unicode normalization preserves local-part meaning."
+        },
+        {
+          "id": "L10-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "IP structure handles declared prefixes/zones/canonical display and invalid input; parsing is not authorization, trust or reachability."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L11",
+      "title": "Conversions and concise collections",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-01",
+        "SEM-02",
+        "SEM-07",
+        "SEM-10"
+      ],
+      "test_groups": [
+        "TG-CONVERSIONS",
+        "TG-NUMERICAL-DATA"
+      ],
+      "fc1_checks": [
+        "FC1-02",
+        "FC1-08"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L11-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "ToString/ToInt/ToFloat/ToDecimal/To(Type) and failure-aware conversions use explicit invariant formats, named rounding and observable effects."
+        },
+        {
+          "id": "L11-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": ".naja resolves native operations first; narrowly defined lossless compile-time string constants may participate in numeric multiplication, while dynamic text requires explicit checked parsing."
+        },
+        {
+          "id": "L11-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "String concatenation and explicit Repeat remain distinct; overload lookup, equality/hash, decimal promotion and .py semantics are not silently changed."
+        },
+        {
+          "id": "L11-R04",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Variadic scalar sum and collection sum with named start, mean and reductions define empty/mixed input, precision and overflow behavior."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L12",
+      "title": "Numerical/data and functional foundations",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-02",
+        "SEM-07",
+        "SEM-10",
+        "PROD-07",
+        "PROD-08",
+        "PROD-09",
+        "PROD-10",
+        "PROD-11",
+        "PROD-12"
+      ],
+      "test_groups": [
+        "TG-NUMERICAL-DATA",
+        "TG-COMPILER-TRUST"
+      ],
+      "fc1_checks": [
+        "FC1-08"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L12-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Native Array/Vector/Matrix/Tensor/DataFrame contracts define dtype/rank/shape/layout/strides, views/copies/ownership, mutation, broadcasting and devices."
+        },
+        {
+          "id": "L12-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Elementwise and contraction operators, reductions/axes, norms/dot/matmul, bounded selected solves/decompositions, statistics and geometry execute with stated precision/degeneracy limits."
+        },
+        {
+          "id": "L12-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Schema-aware bounded CSV/JSONL transformations/grouping preserve missingness, deterministic output and resource/error/cancellation policies."
+        },
+        {
+          "id": "L12-R04",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Pipeline fusion/specialization/vectorization/parallelism require compatible effect/alias/shape and strict numerical contracts; approximate reassociation and device movement are explicit."
+        },
+        {
+          "id": "L12-X01",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X01",
+          "contract": "Sparse/advanced solver catalogs extend dtype/shape/precision and explicit failure interfaces."
+        },
+        {
+          "id": "L12-X02",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X02",
+          "contract": "Device/effect/shape transformations require explicit selection, resource/precision policies and backend evidence."
+        },
+        {
+          "id": "L12-X04",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X04",
+          "contract": "Versioned native model loading/inference/training interfaces declare dtype/shape, device, resources and effects."
+        },
+        {
+          "id": "L12-X10",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X10",
+          "contract": "Arrow/NPY/Parquet and other adapters declare schema, layout, ownership, lifetime and missingness."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L13",
+      "title": "Native execution and typed events",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "SEM-08",
+        "QA-02",
+        "NET-03",
+        "NET-05",
+        "NET-06",
+        "INT-08"
+      ],
+      "test_groups": [
+        "TG-CONCURRENCY-EVENTS"
+      ],
+      "fc1_checks": [
+        "FC1-09"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L13-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Sync/async, independent native CPU threads, bounded pools/task groups, parallel map/reduce, channels/locks/atomics and cancellation have real execution evidence."
+        },
+        {
+          "id": "L13-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Parent/join/exception/deadlock/queue/backpressure/lifecycle and detached ownership rules avoid an ordinary CPU-work global interpreter lock."
+        },
+        {
+          "id": "L13-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Typed custom/file/network/system and one real focused-application input path share observable bounded subscription/disposal and per-instance state."
+        },
+        {
+          "id": "L13-R04",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "UI affinity and async-handler ordering are explicit; global hooks/privileged devices require consent, and interrupt-safe deferred work differs from heap-allocating GUI handlers."
+        },
+        {
+          "id": "L13-X03",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X03",
+          "contract": "Platform adapters share subscription/affinity/capability interfaces."
+        },
+        {
+          "id": "L13-X05",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X05",
+          "contract": "Tool/model/event contracts expose permissions, budgets, cancellation and external service boundaries."
+        },
+        {
+          "id": "L13-X09",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X09",
+          "contract": "Structured lifetime/message/error/supervision interfaces remain usable without a distributed runtime dependency."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L14",
+      "title": "Concise applications, hardware and domains",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "NET-01",
+        "NET-02",
+        "NET-03",
+        "NET-04",
+        "NET-05",
+        "NET-06",
+        "NET-07",
+        "SYS-01",
+        "SYS-02",
+        "SYS-03",
+        "SYS-04",
+        "SYS-05",
+        "SYS-06",
+        "EXT-01",
+        "EXT-02",
+        "EXT-03",
+        "EXT-04"
+      ],
+      "test_groups": [
+        "TG-DOMAINS",
+        "TG-CONCURRENCY-EVENTS"
+      ],
+      "fc1_checks": [],
+      "fc1_scope": "HATCH foundation; FC1 does not require this complete domain workflow.",
+      "reflections": [
+        {
+          "id": "L14-R01",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "Real two-line TCP/HTTP facades retain framing/partial writes, local defaults, bounded buffers, cancellation and cleanup without networking-specific grammar."
+        },
+        {
+          "id": "L14-R02",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "Hardware observation/control/instruction construction obey target/ABI/permissions; FFI and hosted/core/embedded separation retain real freestanding proof."
+        },
+        {
+          "id": "L14-R03",
+          "classification": "inherited_foundation",
+          "hatch_required": true,
+          "contract": "Bounded native numerical/AI extension pilots and a local quantum simulator remain inherited HATCH demonstrations, with model/tool/permission/budget/event interfaces and no canned outputs."
+        },
+        {
+          "id": "L14-X03",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X03",
+          "contract": "Platform adapters share subscription/affinity/capability interfaces."
+        },
+        {
+          "id": "L14-X04",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X04",
+          "contract": "Versioned native model loading/inference/training interfaces declare dtype/shape, device, resources and effects."
+        },
+        {
+          "id": "L14-X05",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X05",
+          "contract": "Tool/model/event contracts expose permissions, budgets, cancellation and external service boundaries."
+        },
+        {
+          "id": "L14-X06",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X06",
+          "contract": "Backend-specific resource/measurement contracts require separate explicit authorization and real evidence."
+        },
+        {
+          "id": "L14-X12",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X12",
+          "contract": "Capability-specific native adapters expose permissions, resources, timing and declared supported targets."
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "id": "L15",
+      "title": "Compiler insight, contracts and metaprogramming",
+      "implementation_stage": "not_implemented",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "inherited_requirement_ids": [
+        "CMP-04",
+        "SYN-09",
+        "SEM-10",
+        "IDE-03",
+        "IDE-08",
+        "INT-11",
+        "REL-01"
+      ],
+      "test_groups": [
+        "TG-COMPILER-TRUST",
+        "TG-TOOLING"
+      ],
+      "fc1_checks": [
+        "FC1-04",
+        "FC1-10",
+        "FC1-12"
+      ],
+      "fc1_scope": "Only the FC1-relevant subset is mapped; all remaining required reflections stay open.",
+      "reflections": [
+        {
+          "id": "L15-R01",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Minimal Lens/inspect explains actual resolved types/conversions/assembly, known allocation/transform/refusal facts; unknown measurements remain unknown."
+        },
+        {
+          "id": "L15-R02",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Intent chooses legal strategies under effect/shape/precision constraints; proof, runtime validation and assertions are distinct and unverified algebra/purity annotations never justify unsafe optimization."
+        },
+        {
+          "id": "L15-R03",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Bounded deterministic compile-time/derive generation has hygienic visible typed expansion/source maps, declared inputs/capabilities and no silent network/filesystem/secret access."
+        },
+        {
+          "id": "L15-R04",
+          "classification": "required_foundation",
+          "hatch_required": true,
+          "contract": "Scientific transformation and actor/supervision interfaces preserve supported subsets, structured lifetime, messaging/error contracts and explicit refusal without imposing a distributed runtime."
+        },
+        {
+          "id": "L15-X02",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X02",
+          "contract": "Device/effect/shape transformations require explicit selection, resource/precision policies and backend evidence."
+        },
+        {
+          "id": "L15-X07",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X07",
+          "contract": "Cost models expose measured versus unknown facts and select only semantically legal strategies."
+        },
+        {
+          "id": "L15-X08",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X08",
+          "contract": "Versioned typed effect/shape transformations expose generated code and explicit unsupported diagnostics."
+        },
+        {
+          "id": "L15-X09",
+          "classification": "named_expansion",
+          "hatch_required": false,
+          "expansion_id": "X09",
+          "contract": "Structured lifetime/message/error/supervision interfaces remain usable without a distributed runtime dependency."
+        }
+      ],
+      "evidence": []
+    }
+  ],
+  "test_groups": [
+    {
+      "id": "TG-IDENTITY",
+      "title": "Edition, compatibility and capabilities",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Separate .py/.naja edition behavior and shared resolver/cache identity",
+        "Declared hosted/core/embedded operations preserve numeric meaning"
+      ],
+      "negative_boundaries": [
+        "NAJA coercions must not leak into .py or dependency sources",
+        "Unavailable capability and stale edition/alias cache entries reject"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-BLOCKS",
+      "title": "Block parsing",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Nested/mixed suites, indentation-free braces, metadata labels, transparent scope and equivalent control flow",
+        "Dictionaries/sets, multiline expressions, interpolation and clause ownership"
+      ],
+      "negative_boundaries": [
+        "Missing braces/labels, misplaced clauses and ambiguous mixtures",
+        "Depth/brace combined decorations reject until supported; strings/comments remain untouched"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-ALIASES",
+      "title": "Contextual aliases and imports",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Canonical/alias operators preserve comparison-chain evaluation and source spans",
+        "Module/project Unicode aliases and binding shadowing"
+      ],
+      "negative_boundaries": [
+        "Reserved/conflicting/ambiguous aliases and dependency leakage",
+        "Strings, regexes, comments, members and unrelated identifiers must not be rewritten"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-OBJECTS",
+      "title": "Ordinary values and object/protocol semantics",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Functions, closures, scopes, classes, fields/methods and generic/protocol dispatch",
+        "Hosted integers, explicit checked machine values and equality/hash/lifetime semantics"
+      ],
+      "negative_boundaries": [
+        "Bare arbitrary integers must not silently narrow; overflow and invalid scope/type operations reject",
+        "Unverified algebra/purity names do not grant compiler authority"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-LITERALS-RELATIONS",
+      "title": "Literals and relations",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Decimal/exponent/base lexical precedence and arbitrary user-defined eligible class names",
+        "Exact promotion, left representation, scale division and affine points/deltas"
+      ],
+      "negative_boundaries": [
+        "Unknown/ambiguous suffixes, dimension errors, relation cycles and contradictory paths",
+        "Point+point, invalid affine assumptions and equality/hash mismatch"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-SMART-VALUES",
+      "title": "Smart values",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Inclusive bounds and runtime construction/assignment/external input validation",
+        "Named/numbered/optional/repeated checked captures and immutable backing storage",
+        "Native Email/IP/URL/UUID profiles and serialization round trips"
+      ],
+      "negative_boundaries": [
+        "Empty bounds, overflow/NaN, invalid/malicious patterns, property collisions and work-budget exhaustion",
+        "Mutable/shared backing storage and unchecked FFI/deserialization must not bypass invariants"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-ORGANIZATION",
+      "title": "Partials and extensions",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Same-package enumerated primary/part assembly and scoped extension lookup",
+        "Actual/inherited member precedence and qualified-call escape"
+      ],
+      "negative_boundaries": [
+        "Traversal/symlink/case collisions, disallowed paths, external fragments, duplicate members/constructors",
+        "Extension ambiguity, field/layout/private-access changes and foreign coherence violations"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-CONVERSIONS",
+      "title": "Conversions",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Valid constant numeric context and explicit checked dynamic conversion",
+        "Locale-independent formats, declared rounding/promotion and display after numeric evaluation"
+      ],
+      "negative_boundaries": [
+        "Invalid constants, dynamic string fallback and accidental string repetition",
+        "Overflow, undeclared locale/truncation and observable conversion-effect loss"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-NUMERICAL-DATA",
+      "title": "Numerical and data foundations",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Shape-aware arrays/vectors/matrices/tensors, exact/strict reductions and bounded math/statistics/geometry",
+        "Schema-aware CSV/JSONL, deterministic grouping/output and cancellation/cleanup"
+      ],
+      "negative_boundaries": [
+        "Shape/type/broadcast failures, view aliasing, missingness, precision/overflow and singular/degenerate inputs",
+        "Unbounded groups/memory and silent approximate reassociation or device movement"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-CONCURRENCY-EVENTS",
+      "title": "Concurrency and events",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Independent CPU tasks, async waits, shared-memory synchronization and structured lifecycle",
+        "Custom/file/network/real application-input events with bounded per-instance subscribers"
+      ],
+      "negative_boundaries": [
+        "Cancellation/exceptions/queue limits, leaks, reentrancy and lost handler errors",
+        "Incorrect UI affinity, unconsented global hooks and unavailable OS capabilities"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-CELLS-RELEASE",
+      "title": "Cells and AOT isolation",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Native definitions, version retention, correct selection context and interrupt/reset",
+        "Standalone release inputs and measured unused-controller independence"
+      ],
+      "negative_boundaries": [
+        "Automatic replay, discarded enclosing conditions, unsafe live-code unload",
+        "Session-state dependencies and unreported cold/warm/AOT overhead"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-COMPILER-TRUST",
+      "title": "Compiler trust and transformations",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Visible resolved generated code/source maps and refusal reasons",
+        "Bounded deterministic compile-time/derive with declared capabilities"
+      ],
+      "negative_boundaries": [
+        "Unverified purity/algebra claims, hidden IO/secret access and resource-limit bypass",
+        "Fabricated measurements and unsupported effect/shape transformations"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-RECOVERY",
+      "title": "Recovery and ownership",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Fresh-agent takeover from durable state, actual lock/owner checks and tested resume",
+        "Separate unknown quota/context/rate/deadline/spend telemetry and bounded retries"
+      ],
+      "negative_boundaries": [
+        "Unexpected exit, dirty/malformed/stale checkpoint and newer conflicting state",
+        "False clean/tested/handoff claims, fake running receiver and paid/permission bypass"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-TOOLING",
+      "title": "Native CLI and editor",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "CLI build/check/run/test/help and deterministic modules with shared diagnostics",
+        "Installable VSIX build/run, original source maps and minimal actual inspect/explain"
+      ],
+      "negative_boundaries": [
+        "Invalid/unsupported source, workspace trust and stale resolver/source locations",
+        "Fake debugger/completion, undisclosed target mismatch or successful no-op tooling"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-INSTALL",
+      "title": "Preview installation and artifacts",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Clean reference-target native install and independently supplied programs",
+        "Reproducible source/artifact identities, checksums and truthful preview/recovery summary"
+      ],
+      "negative_boundaries": [
+        "Hidden Python/seed execution service, cached answers or unavailable undeclared runtime",
+        "Missing artifacts, source mismatch or FC1 falsely closing inherited release gates"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    },
+    {
+      "id": "TG-DOMAINS",
+      "title": "Applications, hardware and bounded pilots",
+      "hatch_required": true,
+      "status": "open",
+      "result": "not_run",
+      "positive_boundaries": [
+        "Real TCP/HTTP clients, framing/lifecycle and explicit hardware/FFI permissions",
+        "Freestanding execution and native numerical/local quantum extension pilots"
+      ],
+      "negative_boundaries": [
+        "Partial writes, malformed requests, resource exhaustion and unsafe FFI boundaries",
+        "Unapproved cloud/QPU/privileged input, hard-coded domain outputs or hidden foreign execution"
+      ],
+      "defect_injection_required": true,
+      "test_command": null,
+      "evidence": []
+    }
+  ],
+  "expansions": [
+    {
+      "id": "X01",
+      "title": "Advanced scientific catalogs",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L12"
+      ],
+      "test_groups": [
+        "TG-NUMERICAL-DATA"
+      ],
+      "interface_contract": "Sparse/advanced solver catalogs extend dtype/shape/precision and explicit failure interfaces.",
+      "reason": "Bounded math/statistics/geometry and inherited numerical pilots remain mandatory.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X02",
+      "title": "GPU and general automatic differentiation",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L12",
+        "L15"
+      ],
+      "test_groups": [
+        "TG-NUMERICAL-DATA",
+        "TG-COMPILER-TRUST"
+      ],
+      "interface_contract": "Device/effect/shape transformations require explicit selection, resource/precision policies and backend evidence.",
+      "reason": "Native numeric foundations and supported transformation refusal are required; broad GPU/autodiff catalogs are expansion.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X03",
+      "title": "Full cross-platform GUI and OS event catalogs",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L13",
+        "L14"
+      ],
+      "test_groups": [
+        "TG-CONCURRENCY-EVENTS"
+      ],
+      "interface_contract": "Platform adapters share subscription/affinity/capability interfaces.",
+      "reason": "One actual declared application-input path is a mandatory foundation; all widgets/OS events are not inferred from callbacks.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X04",
+      "title": "Complete ML and local LLM framework",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L12",
+        "L14"
+      ],
+      "test_groups": [
+        "TG-DOMAINS"
+      ],
+      "interface_contract": "Versioned native model loading/inference/training interfaces declare dtype/shape, device, resources and effects.",
+      "reason": "Required bounded numerical/extension pilots remain mandatory; model responses cannot be canned or delegated secretly.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X05",
+      "title": "Full native agent ecosystem",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L13",
+        "L14"
+      ],
+      "test_groups": [
+        "TG-DOMAINS",
+        "TG-CONCURRENCY-EVENTS"
+      ],
+      "interface_contract": "Tool/model/event contracts expose permissions, budgets, cancellation and external service boundaries.",
+      "reason": "Required permission/budget/event interfaces remain foundational; an entire agent catalog is expansion.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X06",
+      "title": "External QPU execution",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L14"
+      ],
+      "test_groups": [
+        "TG-DOMAINS"
+      ],
+      "interface_contract": "Backend-specific resource/measurement contracts require separate explicit authorization and real evidence.",
+      "reason": "The inherited local simulator/quantum extension demonstration remains mandatory; remote execution is optional.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X07",
+      "title": "Advanced cost/energy and intent optimization",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L15"
+      ],
+      "test_groups": [
+        "TG-COMPILER-TRUST"
+      ],
+      "interface_contract": "Cost models expose measured versus unknown facts and select only semantically legal strategies.",
+      "reason": "Minimal truthful inspect/explain and legal strategy contracts are required; global optimality is not promised.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X08",
+      "title": "General transformation and incremental engines",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L15"
+      ],
+      "test_groups": [
+        "TG-COMPILER-TRUST"
+      ],
+      "interface_contract": "Versioned typed effect/shape transformations expose generated code and explicit unsupported diagnostics.",
+      "reason": "Bounded compile-time/derive, trustworthy source maps and permitted basic transforms remain foundations.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X09",
+      "title": "Distributed actors and supervision runtime",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L13",
+        "L15"
+      ],
+      "test_groups": [
+        "TG-CONCURRENCY-EVENTS"
+      ],
+      "interface_contract": "Structured lifetime/message/error/supervision interfaces remain usable without a distributed runtime dependency.",
+      "reason": "Local tasks/events and actor extension contracts are required; full distributed runtime/catalog is expansion.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X10",
+      "title": "Additional native interchange adapters",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L12"
+      ],
+      "test_groups": [
+        "TG-NUMERICAL-DATA"
+      ],
+      "interface_contract": "Arrow/NPY/Parquet and other adapters declare schema, layout, ownership, lifetime and missingness.",
+      "reason": "Required bounded CSV/JSONL and dataframe foundations remain mandatory; arbitrary pandas compatibility is not claimed.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X11",
+      "title": "Full Python packages and ABI ecosystem",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L01"
+      ],
+      "test_groups": [
+        "TG-IDENTITY"
+      ],
+      "interface_contract": "Versioned compatibility matrices distinguish grammar/semantics/library/ABI; no CPython fallback.",
+      "reason": "Retains inherited future objectives without weakening the pinned .py parsing/support obligations.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X12",
+      "title": "Broad robotics/device/application catalogs",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L14"
+      ],
+      "test_groups": [
+        "TG-DOMAINS"
+      ],
+      "interface_contract": "Capability-specific native adapters expose permissions, resources, timing and declared supported targets.",
+      "reason": "Portable/hardware primitives, application-input and freestanding HATCH foundations remain mandatory.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    },
+    {
+      "id": "X13",
+      "title": "Optional glyph alias catalog",
+      "classification": "named_expansion",
+      "hatch_required": false,
+      "foundation_feature_ids": [
+        "L03"
+      ],
+      "test_groups": [
+        "TG-ALIASES"
+      ],
+      "interface_contract": "Glyph aliases map to existing canonical token operators with unchanged precedence/semantics.",
+      "reason": "Contextual six-comparison/builtin aliases and Unicode identifier policy remain required.",
+      "implementation_stage": "not_implemented",
+      "status": "open",
+      "result": "not_run",
+      "evidence": []
+    }
+  ]
+}
