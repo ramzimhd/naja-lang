@@ -270,6 +270,7 @@ impl Values for Dynamic {
             Binary(_, left, right)
             | FloorDivide(left, right)
             | Modulo(left, right)
+            | Index(left, right)
             | Compare(_, left, right)
             | And(left, right)
             | Or(left, right) => 1 + Self::height(left).max(Self::height(right)),
