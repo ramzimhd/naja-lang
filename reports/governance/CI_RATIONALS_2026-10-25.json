@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-25T23:04:25Z",
+  "source_commit": "487901d1256813d47ac70011776ac1dc169fcfd5",
+  "run_id": 40242650531,
+  "url": "https://github.com/ramzimhd/naja-lang/actions/runs/40242650531",
+  "result": "passed",
+  "observation_method": "Public GitHub Actions REST jobs endpoint; exact run and job conclusions",
+  "jobs": [
+    { "id": 121317581691, "name": "seed (macos-15)", "status": "completed", "conclusion": "success", "failed_steps": [] },
+    { "id": 121317581720, "name": "seed (windows-2025)", "status": "completed", "conclusion": "success", "failed_steps": [] },
+    { "id": 121317581799, "name": "seed (ubuntu-24.04)", "status": "completed", "conclusion": "success", "failed_steps": [] }
+  ],
+  "limits": [
+    "Only this exact source/run is observed; later commits require their own CI result.",
+    "The workflow includes bounded Rational IR/source proofs but does not establish full numeric protocols, self-hosting, FC1 or HATCH acceptance."
+  ]
+}
