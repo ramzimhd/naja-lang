@@ -7,6 +7,7 @@ use super::{
     },
 };
 mod routines;
+use std::collections::{BTreeMap, BTreeSet};
 
 pub const ARENA_BYTES: usize = hosted::ARENA_BYTES;
 const MAX_LITERAL_BYTES: usize = 1_048_576;
@@ -22,6 +23,11 @@ pub const MAX_FILE_BYTES: usize = 16 * 1024 * 1024;
 pub const MAX_PATH_BYTES: usize = 4095;
 pub const MAX_FILE_SYSCALLS: usize = 65_536;
 pub const MAX_FILE_EINTR_RETRIES: usize = 8;
+pub const MAX_CLASSES: usize = 128;
+pub const MAX_CLASS_METHODS: usize = 128;
+pub const MAX_OBJECT_FIELDS: usize = 128;
+pub const MAX_ATTRIBUTE_NAMES: usize = 1024;
+pub const MAX_ATTRIBUTE_NAME_BYTES: usize = 256;
 // The shared native array constructor has one defensive capacity check.
 const _: () = assert!(MAX_LIST_ELEMENTS == MAX_TUPLE_ELEMENTS);
 const HELPER_STACK_RESERVE: i32 = 4096;
@@ -40,6 +46,24 @@ pub struct Program {
 pub struct Function {
     pub parameters: usize,
     pub body: Vec<Statement>,
+}
+
+#[derive(Clone, Debug)]
+pub struct ObjectProgram {
+    pub body: Vec<Statement>,
+    pub functions: Vec<Function>,
+    pub classes: Vec<Class>,
+}
+
+#[derive(Clone, Debug)]
+pub struct Class {
+    pub methods: Vec<Method>,
+}
+
+#[derive(Clone, Debug)]
+pub struct Method {
+    pub name: String,
+    pub function: usize,
 }
 
 #[derive(Clone, Debug)]
@@ -70,6 +94,9 @@ pub enum Expression {
     EncodeUtf8(Box<Self>),
     DecodeUtf8(Box<Self>),
     WriteFile { path: Box<Self>, data: Box<Self> },
+    Construct(usize, Vec<Self>),
+    GetAttribute(Box<Self>, String),
+    MethodCall(Box<Self>, String, Vec<Self>),
 }
 
 #[derive(Clone, Debug)]
@@ -91,15 +118,41 @@ pub enum Statement {
         path: Expression,
         data: Expression,
     },
+    SetAttribute {
+        object: Expression,
+        name: String,
+        value: Expression,
+    },
 }
 
 struct Validator<'a> {
     nodes: usize,
     literals: usize,
     functions: &'a [Function],
+    classes: &'a [Class],
+    names: BTreeSet<String>,
     in_function: bool,
 }
 impl Validator<'_> {
+    fn name(&mut self, name: &str) -> Result<(), String> {
+        if name.is_empty() || name.len() > MAX_ATTRIBUTE_NAME_BYTES || name.contains('\0') {
+            return Err(
+                "dynamic attribute name must contain 1..256 UTF-8 bytes without NUL".into(),
+            );
+        }
+        if name.starts_with("__") && name.ends_with("__") && name != "__init__" {
+            return Err("native special members other than __init__ are unsupported".into());
+        }
+        self.names.insert(name.into());
+        if self.names.len() > MAX_ATTRIBUTE_NAMES {
+            return Err("dynamic object program exceeds 1024 static attribute names".into());
+        }
+        self.literals += name.len();
+        if self.literals > MAX_LITERAL_BYTES {
+            return Err("dynamic IR exceeds the 1 MiB aggregate literal budget".into());
+        }
+        Ok(())
+    }
     fn account(&mut self) -> Result<(), String> {
         self.nodes += 1;
         if self.nodes > MAX_NODES {
@@ -125,6 +178,41 @@ impl Validator<'_> {
             Expression::Text(value) => value.len(),
             Expression::Bytes(value) => value.len(),
             Expression::Boolean(_) | Expression::None => 0,
+            Expression::Construct(index, arguments) => {
+                let class = self
+                    .classes
+                    .get(*index)
+                    .ok_or("dynamic construction names an unknown class")?;
+                let arity = class
+                    .methods
+                    .iter()
+                    .find(|method| method.name == "__init__")
+                    .map(|method| self.functions[method.function].parameters - 1)
+                    .unwrap_or(0);
+                if arguments.len() != arity {
+                    return Err("dynamic constructor requires exact positional arity".into());
+                }
+                for argument in arguments {
+                    self.expression(argument, initialized, depth + 1)?;
+                }
+                0
+            }
+            Expression::GetAttribute(object, name) => {
+                self.name(name)?;
+                self.expression(object, initialized, depth + 1)?;
+                0
+            }
+            Expression::MethodCall(object, name, arguments) => {
+                self.name(name)?;
+                if arguments.len() >= MAX_LOCALS {
+                    return Err("dynamic method call exceeds 127 explicit arguments".into());
+                }
+                self.expression(object, initialized, depth + 1)?;
+                for argument in arguments {
+                    self.expression(argument, initialized, depth + 1)?;
+                }
+                0
+            }
             Expression::Local(slot) => {
                 if *slot >= MAX_LOCALS || !initialized[*slot] {
                     return Err("dynamic IR reads an uninitialized or out-of-frame local".into());
@@ -248,6 +336,15 @@ impl Validator<'_> {
                     self.expression(data, initialized, 0)?;
                     self.expression(path, initialized, 0)?;
                 }
+                Statement::SetAttribute {
+                    object,
+                    name,
+                    value,
+                } => {
+                    self.name(name)?;
+                    self.expression(value, initialized, 0)?;
+                    self.expression(object, initialized, 0)?;
+                }
                 Statement::Print(value) | Statement::Assert(value) | Statement::Evaluate(value) => {
                     self.expression(value, initialized, 0)?
                 }
@@ -288,19 +385,30 @@ impl Validator<'_> {
 }
 
 pub fn validate(statements: &[Statement]) -> Result<(), String> {
-    validate_parts(statements, &[])
+    validate_parts(statements, &[], &[]).map(|_| ())
 }
 
 pub fn validate_program(program: &Program) -> Result<(), String> {
-    validate_parts(&program.body, &program.functions)
+    validate_parts(&program.body, &program.functions, &[]).map(|_| ())
 }
 
-fn validate_parts(statements: &[Statement], functions: &[Function]) -> Result<(), String> {
+pub fn validate_object_program(program: &ObjectProgram) -> Result<(), String> {
+    validate_parts(&program.body, &program.functions, &program.classes).map(|_| ())
+}
+
+fn validate_parts(
+    statements: &[Statement],
+    functions: &[Function],
+    classes: &[Class],
+) -> Result<BTreeMap<String, usize>, String> {
     if statements.is_empty() {
         return Err("dynamic IR has no executable statements".into());
     }
     if functions.len() > MAX_FUNCTIONS {
         return Err("dynamic program exceeds 128 functions".into());
+    }
+    if classes.len() > MAX_CLASSES {
+        return Err("dynamic program exceeds 128 classes".into());
     }
     for function in functions {
         if function.parameters > MAX_LOCALS {
@@ -311,8 +419,30 @@ fn validate_parts(statements: &[Statement], functions: &[Function]) -> Result<()
         nodes: 0,
         literals: 0,
         functions,
+        classes,
+        names: BTreeSet::new(),
         in_function: false,
     };
+    for class in classes {
+        validator.account()?;
+        if class.methods.len() > MAX_CLASS_METHODS {
+            return Err("dynamic class exceeds 128 methods".into());
+        }
+        let mut members = BTreeSet::new();
+        for method in &class.methods {
+            validator.account()?;
+            validator.name(&method.name)?;
+            if !members.insert(&method.name) {
+                return Err("dynamic class contains duplicate methods".into());
+            }
+            let function = functions
+                .get(method.function)
+                .ok_or("dynamic method names an unknown function")?;
+            if function.parameters == 0 {
+                return Err("dynamic method requires a receiver parameter".into());
+            }
+        }
+    }
     validator.statements(statements, &mut [false; MAX_LOCALS], 0)?;
     validator.in_function = true;
     for function in functions {
@@ -321,7 +451,12 @@ fn validate_parts(statements: &[Statement], functions: &[Function]) -> Result<()
         initialized[..function.parameters].fill(true);
         validator.statements(&function.body, &mut initialized, 0)?;
     }
-    Ok(())
+    Ok(validator
+        .names
+        .into_iter()
+        .enumerate()
+        .map(|(index, name)| (name, index))
+        .collect())
 }
 
 enum Literal {
@@ -337,6 +472,8 @@ struct Emitter {
     return_label: Option<usize>,
     depth_error: usize,
     stack_error: usize,
+    classes: Vec<Class>,
+    names: BTreeMap<String, usize>,
 }
 impl Emitter {
     fn push_value(&mut self, register: super::hosted::x64::R) {
@@ -370,6 +507,62 @@ impl Emitter {
             ),
             Expression::None => self.code.lea(Ax, self.runtime.none_value),
             Expression::Local(slot) => self.code.load(Ax, Bp, -8 * (*slot as i32 + 1)),
+            Expression::Construct(index, arguments) => {
+                for argument in arguments {
+                    self.expression(argument)?;
+                    self.push_value(Ax);
+                }
+                self.code.imm(Di, *index as i64);
+                self.code.call(self.runtime.new_object);
+                if let Some(function) = self.classes[*index]
+                    .methods
+                    .iter()
+                    .find(|method| method.name == "__init__")
+                    .map(|method| method.function)
+                {
+                    self.push_value(Ax); // Original result, independent of initializer return.
+                    self.push_value(Ax); // Receiver argument.
+                    for _ in arguments {
+                        self.code.load(Ax, Sp, 8 * (arguments.len() as i32 + 1));
+                        self.push_value(Ax);
+                    }
+                    self.code.load(Ax, Bp, CONTEXT_SLOT);
+                    self.push_value(Ax);
+                    self.code.call(self.functions[function]);
+                    self.code.immediate(0, Sp, 8 * (arguments.len() as i32 + 2));
+                    self.code.call(self.runtime.initializer_result);
+                    self.code.pop(Ax);
+                    self.code.immediate(0, Sp, 8 * arguments.len() as i32);
+                }
+            }
+            Expression::GetAttribute(object, name) => {
+                self.expression(object)?;
+                self.code.imm(Si, self.names[name] as i64);
+                self.code.call(self.runtime.get_attribute);
+            }
+            Expression::MethodCall(object, name, arguments) => {
+                self.expression(object)?;
+                self.push_value(Ax);
+                self.code.imm(Si, self.names[name] as i64);
+                self.code.call(self.runtime.resolve_method);
+                self.code.mov(Si, Dx);
+                self.push_value(Si); // Expected arity (push_value clobbers rdx).
+                self.push_value(Ax); // Resolved native entry, before argument effects.
+                self.code.load(Ax, Sp, 16);
+                self.push_value(Ax); // Receiver is the first function argument.
+                for argument in arguments {
+                    self.expression(argument)?;
+                    self.push_value(Ax);
+                }
+                self.code.load(Dx, Sp, 8 * (arguments.len() as i32 + 2));
+                self.code.immediate(7, Dx, arguments.len() as i32 + 1);
+                self.code.j(0x85, self.runtime.method_arity);
+                self.code.load(R11, Sp, 8 * (arguments.len() as i32 + 1));
+                self.code.load(Ax, Bp, CONTEXT_SLOT);
+                self.push_value(Ax);
+                self.code.call_register(R11);
+                self.code.immediate(0, Sp, 8 * (arguments.len() as i32 + 5));
+            }
             Expression::Call(index, arguments) => {
                 // Pending arguments stay on the caller's stack across other
                 // calls; runtime helpers may clobber every scratch register.
@@ -565,6 +758,18 @@ impl Emitter {
                     self.expression(value)?;
                     self.code.store(Bp, -8 * (*slot as i32 + 1), Ax);
                 }
+                Statement::SetAttribute {
+                    object,
+                    name,
+                    value,
+                } => {
+                    self.expression(value)?;
+                    self.push_value(Ax);
+                    self.expression(object)?;
+                    self.code.imm(Si, self.names[name] as i64);
+                    self.code.pop(Di);
+                    self.code.call(self.runtime.set_attribute);
+                }
                 Statement::SetIndex {
                     sequence,
                     index,
@@ -689,15 +894,23 @@ fn descriptor(
 }
 
 pub fn emit_elf(statements: &[Statement]) -> Result<Vec<u8>, String> {
-    emit_parts(statements, &[])
+    emit_parts(statements, &[], &[])
 }
 
 pub fn emit_program(program: &Program) -> Result<Vec<u8>, String> {
-    emit_parts(&program.body, &program.functions)
+    emit_parts(&program.body, &program.functions, &[])
 }
 
-fn emit_parts(statements: &[Statement], functions: &[Function]) -> Result<Vec<u8>, String> {
-    validate_parts(statements, functions)?;
+pub fn emit_object_program(program: &ObjectProgram) -> Result<Vec<u8>, String> {
+    emit_parts(&program.body, &program.functions, &program.classes)
+}
+
+fn emit_parts(
+    statements: &[Statement],
+    functions: &[Function],
+    classes: &[Class],
+) -> Result<Vec<u8>, String> {
+    let names = validate_parts(statements, functions, classes)?;
     let mut code = Code::new();
     let integers = runtime::Runtime::new(&mut code);
     let runtime = routines::Runtime::new(&mut code);
@@ -713,6 +926,8 @@ fn emit_parts(statements: &[Statement], functions: &[Function]) -> Result<Vec<u8
         return_label: None,
         depth_error,
         stack_error,
+        classes: classes.to_vec(),
+        names,
     };
     emitter.integers.start(&mut emitter.code);
     emitter.code.zero(Ax);
@@ -728,6 +943,14 @@ fn emit_parts(statements: &[Statement], functions: &[Function]) -> Result<Vec<u8
     for (index, function) in functions.iter().enumerate() {
         emitter.function(index, function)?;
     }
+    emitter.runtime.objects(
+        &mut emitter.code,
+        &emitter.integers,
+        classes,
+        functions,
+        &emitter.functions,
+        &emitter.names,
+    );
     for (label, bytes) in [
         (
             depth_error,

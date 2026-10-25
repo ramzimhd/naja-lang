@@ -1,6 +1,6 @@
 //! Native tagged-value routines; numeric kernels are shared with hosted integers.
 //! Descriptor: tag:u64, data:pointer, byte_length:u64. Tags 0=int,1=text,2=bytes,
-//! 3=bool (pointer to integer zero/one),4=None,5=tuple,6=list (count at+16).
+//! 3=bool (pointer to integer zero/one),4=None,5=tuple,6=list (count at+16),7=instance.
 //! No user pointer API exists here.
 use super::ARENA_BYTES;
 use crate::hosted::{
@@ -10,6 +10,7 @@ use crate::hosted::{
 mod division;
 mod files;
 mod indexing;
+mod objects;
 mod tuples;
 mod utf8;
 
@@ -32,6 +33,15 @@ pub(super) struct Runtime {
     pub write_file: usize,
     pub encode_utf8: usize,
     pub decode_utf8: usize,
+    pub new_object: usize,
+    pub get_attribute: usize,
+    pub set_attribute: usize,
+    pub resolve_method: usize,
+    pub method_arity: usize,
+    pub init_error: usize,
+    pub initializer_result: usize,
+    object_check: usize,
+    object_compare: usize,
     tuple_check: usize,
     tuple_resource: usize,
     list_resource: usize,
@@ -78,6 +88,15 @@ impl Runtime {
             write_file: c.label(),
             encode_utf8: c.label(),
             decode_utf8: c.label(),
+            new_object: c.label(),
+            get_attribute: c.label(),
+            set_attribute: c.label(),
+            resolve_method: c.label(),
+            method_arity: c.label(),
+            init_error: c.label(),
+            initializer_result: c.label(),
+            object_check: c.label(),
+            object_compare: c.label(),
             tuple_check: c.label(),
             tuple_resource: c.label(),
             list_resource: c.label(),
@@ -144,6 +163,8 @@ impl Runtime {
         // checked arena allocation. Guard tags before interpreting payloads.
         c.bind(self.check);
         c.load(Dx, Ax, 0);
+        c.immediate(7, Dx, 7);
+        c.j(0x84, self.object_check);
         c.immediate(7, Dx, 6);
         c.j(0x87, self.type_error);
         c.j(0x84, self.tuple_check);
@@ -242,6 +263,8 @@ impl Runtime {
         c.bind(self.len);
         c.call(self.check);
         c.load(Dx, Ax, 0);
+        c.immediate(7, Dx, 7);
+        c.j(0x84, self.type_error);
         let text = c.label();
         c.immediate(7, Dx, 1);
         c.j(0x84, text);
@@ -355,6 +378,12 @@ impl Runtime {
     fn comparison(&self, c: &mut Code, integers: &runtime::Runtime) {
         c.bind(self.compare);
         c.load(Dx, Di, 0);
+        c.immediate(7, Dx, 7);
+        c.j(0x84, self.object_compare);
+        c.load(Dx, Si, 0);
+        c.immediate(7, Dx, 7);
+        c.j(0x84, self.object_compare);
+        c.load(Dx, Di, 0);
         c.immediate(7, Dx, 5);
         c.j(0x83, self.type_error);
         c.load(Dx, Si, 0);
@@ -441,6 +470,9 @@ impl Runtime {
         let false_ = c.label();
         let length = c.label();
         let value = c.label();
+        let true_ = c.label();
+        c.immediate(7, Dx, 7);
+        c.j(0x84, true_);
         c.immediate(7, Dx, 4);
         c.j(0x84, false_);
         c.immediate(7, Dx, 1);
@@ -457,6 +489,7 @@ impl Runtime {
         c.bind(value);
         c.immediate(7, Ax, 0);
         c.j(0x84, false_);
+        c.bind(true_);
         c.imm(Ax, 1);
         c.ret();
         c.bind(false_);

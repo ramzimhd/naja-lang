@@ -42,6 +42,13 @@ impl Code {
     pub fn call(&mut self, label: usize) {
         self.a.branch(&[0xe8], label);
     }
+    pub fn call_register(&mut self, register: R) {
+        self.a.bytes(&[
+            0x40 | ((register as u8) >> 3),
+            0xff,
+            0xd0 | ((register as u8) & 7),
+        ]);
+    }
     pub fn j(&mut self, condition: u8, label: usize) {
         self.a.branch(&[0x0f, condition], label);
     }
