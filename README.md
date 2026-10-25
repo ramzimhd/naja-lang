@@ -11,14 +11,18 @@ Development has started from the English HATCH specifications, expanded by the
 experimental Rust seed, **not a HATCH release**. The implementation currently has
 a lossless lexer/logical-line CST and a small native Linux x86-64 code-generation
 backend. It does not yet parse the complete grammar, implement the full hosted
-value model, self-host, provide native sessions, or supply an installable VS Code
-extension. FC1 and HATCH remain incomplete.
+value model, self-host or provide native sessions. An unsigned, installable
+[VS Code CLI preview](editor/vscode/README.md) supports manual check/build/run;
+full language/debug tooling remains incomplete. FC1 and HATCH remain incomplete.
 
 Ordinary decimal integers, including values beyond machine width, compile through
 a native multi-limb runtime. Text, bytes, booleans and `None` also execute natively.
 The current slice supports arithmetic, comparisons and chains, truthiness,
 short-circuit expressions, assignment, `if`/`else`, `while`, assertions, printing
-and text/bytes length/indexing. First-order functions use native calls and
+and text/bytes length/indexing. Fixed-length lists support shared indexed mutation;
+tuples support immutable indexed access. Explicit `naja.io` and `naja.text`
+imports expose bounded byte-file operations and strict UTF-8 conversion.
+First-order functions use native calls and
 isolated local frames, with explicit binding and resource limits. A 64 MiB
 temporary arena reports exhaustion without
 narrowing or wrapping.

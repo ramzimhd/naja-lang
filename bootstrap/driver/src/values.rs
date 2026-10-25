@@ -25,6 +25,21 @@ pub(crate) trait Values {
     fn list(_elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Err("lists are unsupported in this explicit integer domain".into())
     }
+    fn read_file(_path: Self::Expression) -> Result<Self::Expression, String> {
+        Err("file APIs are unsupported in this explicit integer domain".into())
+    }
+    fn write_file(
+        _path: Self::Expression,
+        _data: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Err("file APIs are unsupported in this explicit integer domain".into())
+    }
+    fn encode_utf8(_value: Self::Expression) -> Result<Self::Expression, String> {
+        Err("UTF-8 APIs are unsupported in this explicit integer domain".into())
+    }
+    fn decode_utf8(_value: Self::Expression) -> Result<Self::Expression, String> {
+        Err("UTF-8 APIs are unsupported in this explicit integer domain".into())
+    }
     fn set_index(
         _target: Self::Expression,
         _value: Self::Expression,
@@ -219,6 +234,24 @@ impl Values for Dynamic {
     }
     fn list(elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::List(elements))
+    }
+    fn read_file(path: Self::Expression) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::ReadFile(Box::new(path)))
+    }
+    fn write_file(
+        path: Self::Expression,
+        data: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::WriteFile {
+            path: Box::new(path),
+            data: Box::new(data),
+        })
+    }
+    fn encode_utf8(value: Self::Expression) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::EncodeUtf8(Box::new(value)))
+    }
+    fn decode_utf8(value: Self::Expression) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::DecodeUtf8(Box::new(value)))
     }
     fn set_index(
         target: Self::Expression,

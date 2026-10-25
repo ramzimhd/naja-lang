@@ -117,6 +117,31 @@ augmented subscript assignment, unpacking, comprehensions and iteration remain
 required work. These partial operations do not establish full container
 semantics, a memory manager, FC1 or HATCH acceptance.
 
+Explicit module-header imports expose four initial native APIs:
+`from naja.io import read_bytes, write_bytes` and
+`from naja.text import encode_utf8, decode_utf8`. Both source dialects share
+these bindings. Imports precede definitions and executable statements; `as`
+aliases, Unicode names and parenthesized lists with trailing commas work.
+There are at most 128 canonical import bindings. Distinct aliases for the same
+API are allowed; duplicate bindings, rebinding, late/nested imports and unknown
+modules/APIs are diagnosed. Function parameters may shadow imported names, but
+calling a local value remains unsupported. Imports bind static APIs and perform
+no IO during check/build. There is no ambient filesystem module search.
+
+`read_bytes(path)` returns Bytes. `write_bytes(path, data)` exclusively creates
+a new file and returns None; PATH then DATA evaluate once in ordinary call order.
+`encode_utf8(text)` and strict `decode_utf8(data)` return immutable descriptor
+views, preserving Unicode and NUL without normalization. Files are bounded to
+16 MiB and paths to 4095 UTF-8 bytes with no embedded NUL. Conversions use the
+unchanged arena limit rather than the file-size cap. Known type/path/size
+failures precede creation; later OS failures may retain a partial owned file.
+Native IO errors exit108 (`NJA208`), invalid conversion exits109 (`NJA209`),
+resource errors exit103 and wrong kinds exit105. These are process diagnostics,
+not catchable exceptions. Ordinary OS permissions and parent links apply.
+See [the frozen native contract](../tests/files/CONTRACT.md) and
+[source checks](../tests/files-source/README.md) for syscall, growth, cleanup
+and evidence limits. General modules and complete IO remain required work.
+
 An initial `from naja.core import i64` instead imports the compiler-provided checked
 signed 64-bit primitive. This is not a general module resolver or delivered
 standard library. Top-level declarations require `name: i64 = expression`.
