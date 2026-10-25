@@ -1,0 +1,6 @@
+[operators]
+"==" = "equalTo"
+"<" = "小于"
+[builtins]
+"print" = "表示"
+"len" = "長さ"

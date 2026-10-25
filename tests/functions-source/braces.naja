@@ -1,0 +1,25 @@
+def choose(flag): {# Function label #
+{# Same display label #
+if flag: {# Same display label #
+return "yes"
+} else: {
+return "no"
+}
+}
+}
+
+def mixed(n): {
+while n > 0:
+    {# Step #
+if n == 2: {
+return n
+}
+n = n - 1
+    }
+return 0
+}
+
+print(choose(True))
+print(choose(False))
+print(mixed(4))
+print(mixed(0))

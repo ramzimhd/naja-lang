@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "braces.naja",
+      "sha256": "b2fc9dc718cf099f7d89bc7fd6fc3e234750f0bfb965b266ae0ce3829fdad2a6"
+    },
+    {
+      "path": "definitions-only.py",
+      "sha256": "84cba7d7c0c290445577c625e5f20293af8dab1811dd0bc2a07a6f88ea44c714"
+    },
+    {
+      "path": "flow.py",
+      "sha256": "15ff754602c9ff3bd5d74718d4cd4d5d41f729e8902141084c71ecfe6de5ad29"
+    },
+    {
+      "path": "locals.py",
+      "sha256": "9520a1c6134a1cb06b4f059de547bd87ae403280ac211da5157891aa13ba89f9"
+    },
+    {
+      "path": "markers.naja",
+      "sha256": "aab44d60268a6f213af36b4fc1fc55b5330afed4b121673cffb5957fe651bc3e"
+    },
+    {
+      "path": "order.py",
+      "sha256": "db94eb2ed03778829255f555ffea98ca32e8d8310125bdaa8b2cf390127092ff"
+    },
+    {
+      "path": "ordinary.py",
+      "sha256": "5784db486cbe93f72c4db68fff2741c583cdabe68a6605747bc09a9f097b26d6"
+    },
+    {
+      "path": "project/main.naja",
+      "sha256": "6bddef1322358bd2919a30c21a9508bd29a3b7463d61c57f68deef60d8b668a2"
+    },
+    {
+      "path": "project/naja.alias",
+      "sha256": "d2b4caa364eed93714ca4bd1bbf3824af0fc643755358eafad4a94996b98c005"
+    },
+    {
+      "path": "project/naja.toml",
+      "sha256": "672d9e629ffa44157d3b27a1011dba575ced7b4316ca837fe5d0c68238665900"
+    },
+    {
+      "path": "unicode.py",
+      "sha256": "4c09e9b16ec6cf2c1d31c4fd0d3028b04dbb1e8456e4d764dfe53479abdb57bf"
+    }
+  ],
+  "native": [
+    {
+      "name": "ordinary",
+      "path": "ordinary.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "12345678901234567890123456789012345678901234567890\né𝄞\nb'A\\x00\\xff'\nTrue\nFalse\nNone\nNone\nNone\ndiscarded call\ndiscarded call\nNone\n"
+    },
+    {
+      "name": "order",
+      "path": "order.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "first\nsecond\nthird\n123\nouter first\ninner first\ninner second\ninner third\nouter last\n456\n"
+    },
+    {
+      "name": "flow",
+      "path": "flow.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "7\n9\n2\n-1\nyes\nno\n"
+    },
+    {
+      "name": "locals",
+      "path": "locals.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "210\n506\n999\nmodule local\n"
+    },
+    {
+      "name": "braces",
+      "path": "braces.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "yes\nno\n2\n0\n"
+    },
+    {
+      "name": "markers",
+      "path": "markers.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "11\n22\n3\n0\n"
+    },
+    {
+      "name": "unicode",
+      "path": "unicode.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "42\n6\nκόσμος\n"
+    },
+    {
+      "name": "definitions-only",
+      "path": "definitions-only.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": ""
+    }
+  ]
+}

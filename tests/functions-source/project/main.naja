@@ -1,0 +1,15 @@
+def 大きさ(text): {# Original function label #
+表示("function called")
+if 長さ(text) equalTo 2: {
+return 長さ(text)
+}
+return 0
+}
+
+def alias_name_is_binding(表示): {
+return 表示
+}
+
+表示(大きさ("é𝄞"))
+表示(alias_name_is_binding("literal 表示 equalTo 小于"))
+表示(1 小于 2)
