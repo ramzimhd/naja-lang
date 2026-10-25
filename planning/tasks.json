@@ -284,7 +284,13 @@
         "reports/checks/v13-rational-integrated-fmt.json",
         "reports/checks/v13-rational-integrated-clippy.json",
         "reports/checks/v13-rational-integrated-json.json",
-        "reports/checks/v13-rational-integrated-editor.json"
+        "reports/checks/v13-rational-integrated-editor.json",
+        "reports/checks/v13-exact-literal-rust.json",
+        "reports/checks/v13-exact-literal-fmt.json",
+        "reports/checks/v13-exact-literal-clippy.json",
+        "reports/checks/v13-exact-literal-json.json",
+        "reports/checks/v13-exact-literal-editor.json",
+        "reports/checks/v13-exact-stage-a-compat.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },
@@ -391,7 +397,13 @@
         "reports/checks/v13-rational-integrated-fmt.json",
         "reports/checks/v13-rational-integrated-clippy.json",
         "reports/checks/v13-rational-integrated-json.json",
-        "reports/checks/v13-rational-integrated-editor.json"
+        "reports/checks/v13-rational-integrated-editor.json",
+        "reports/checks/v13-exact-literal-rust.json",
+        "reports/checks/v13-exact-literal-fmt.json",
+        "reports/checks/v13-exact-literal-clippy.json",
+        "reports/checks/v13-exact-literal-json.json",
+        "reports/checks/v13-exact-literal-editor.json",
+        "reports/checks/v13-exact-stage-a-compat.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },
@@ -515,7 +527,13 @@
         "reports/checks/v13-rational-integrated-fmt.json",
         "reports/checks/v13-rational-integrated-clippy.json",
         "reports/checks/v13-rational-integrated-json.json",
-        "reports/checks/v13-rational-integrated-editor.json"
+        "reports/checks/v13-rational-integrated-editor.json",
+        "reports/checks/v13-exact-literal-rust.json",
+        "reports/checks/v13-exact-literal-fmt.json",
+        "reports/checks/v13-exact-literal-clippy.json",
+        "reports/checks/v13-exact-literal-json.json",
+        "reports/checks/v13-exact-literal-editor.json",
+        "reports/checks/v13-exact-stage-a-compat.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },
@@ -624,7 +642,13 @@
         "reports/checks/v13-rational-integrated-fmt.json",
         "reports/checks/v13-rational-integrated-clippy.json",
         "reports/checks/v13-rational-integrated-json.json",
-        "reports/checks/v13-rational-integrated-editor.json"
+        "reports/checks/v13-rational-integrated-editor.json",
+        "reports/checks/v13-exact-literal-rust.json",
+        "reports/checks/v13-exact-literal-fmt.json",
+        "reports/checks/v13-exact-literal-clippy.json",
+        "reports/checks/v13-exact-literal-json.json",
+        "reports/checks/v13-exact-literal-editor.json",
+        "reports/checks/v13-exact-stage-a-compat.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },

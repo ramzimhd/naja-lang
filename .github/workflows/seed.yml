@@ -71,6 +71,7 @@ jobs:
           node scripts/test-mappings-language.mjs --expect-source ${{ github.sha }}
           node scripts/test-typed-literals-language.mjs --expect-source ${{ github.sha }}
           node scripts/test-rationals-language.mjs --expect-source ${{ github.sha }}
+          node scripts/test-exact-literals-language.mjs --expect-source ${{ github.sha }}
           node scripts/test-cli.mjs
       - name: Check bounded distribution packager controls
         run: node --test tests/distribution/package.test.mjs

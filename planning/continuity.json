@@ -5,12 +5,12 @@
   "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
   "owner": "/root",
   "status": "running",
-  "checkpoint_generation": 22,
-  "head": "469dda5cd855d48f3ae5637132cdf11ea0010031",
+  "checkpoint_generation": 24,
+  "head": "3e76cd3b712ef378b4b9082b953b4eb91c98a8db",
   "branch": "agent/integrator-H0",
-  "last_verified_source": "29be1ef7b6f7508843f3a7cde29810331881474c",
+  "last_verified_source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
   "dirty_paths": [],
-  "task": "T08/T11/T12: bounded exact Rational foundation verified within its scope; exact decimal literal contract review next",
+  "task": "Exact decimal construction integrated; complete publication and continue FC1/HATCH",
   "completed": [
     "Revision1.3 contracts, additive foundation/FC1 tracking and scoped assignments integrated.",
     "Edition-aware brace suites, named sections and depth markers execute in the bounded integer subset.",
@@ -60,7 +60,11 @@
     "First frozen IR101 passed at0138734; Rust276 and ten unchanged native regressions passed separately at4e52156. All19 encoded logs were decoded and length/hash/pattern reviewed.",
     "Source220 passed at exact3bb1c1f with193ELFs/833commands. Original33passed/1fixturefailure/186not_run at5ee remains failed; correction changes exactly one source function/call identity.",
     "Independent61 passed at5ee, including exact-full-arena noallocation generic paths and exact/one-under work counters.",
-    "Five formal records passed at29be1ef; private integrity audit/checkpoint21 advanced retained source. Ordinary checkpoint22 assessed clean469dda5 ready before metadata. All proof sources are retained in integration ancestry."
+    "Five formal records passed at29be1ef; private integrity audit/checkpoint21 advanced retained source. Ordinary checkpoint22 assessed clean469dda5 ready before metadata. All proof sources are retained in integration ancestry.",
+    "Exact202 first unchanged run passed6d8fb04 with74ELFs; independent49 passing outcomes preserve original17/1/31 reviewer-assumption failure and continuation32.",
+    "Rust291/fmt/Clippy/JSON21/editor passed6d; StageA150 and unchanged Rational220 passedf0f8994. Five diagnostic migrations followed44paired unchanged-source commands; all150 source hashes stayed unchanged.",
+    "All1058 exact-suite streams and4 frontend logs were decoded/hash/length/pattern checked. Original frontend failures and transcript-only baseline are retained accurately.",
+    "PublicRational487901d passed allthreehosts at exactCI40242650531. Private integrity audit/checkpoint24 advanced retained6d on clean3e76cd3 before metadata."
   ],
   "checks": [
     {
@@ -1370,6 +1374,116 @@
       "source": "29be1ef7b6f7508843f3a7cde29810331881474c",
       "log_path": "reports/checks/v13-rational-integrated-editor.log",
       "log_sha256": "ecb44d9146477ec5ddd39350cb4d8fe7631139ce4092d7876f59783bd061a1bb",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
+      "log_path": "reports/checks/v13-exact-literal-rust.log",
+      "log_sha256": "c78cb530c58c9c94a168a3c440d082e3c78ec6cc12b3783f1dbde5444e639253",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
+      "log_path": "reports/checks/v13-exact-literal-fmt.log",
+      "log_sha256": "560220d83fe85dfecebddea62ac1b3b53ecdbdf4f33bd0e48afdd53f379dda9f",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
+      "log_path": "reports/checks/v13-exact-literal-clippy.log",
+      "log_sha256": "449a1ac385b93d542cfd56be03392f700e764084e13ba5cf9fa5480b1630e8c4",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-check-json.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
+      "log_path": "reports/checks/v13-exact-literal-json.log",
+      "log_sha256": "6591ad4c8490edf10031a681abe6085b793ab4107a6a62cf693560d90b3fbd32",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-vscode.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
+      "log_path": "reports/checks/v13-exact-literal-editor.log",
+      "log_sha256": "57f7fd05deec40375bcb852720e68e569ae50cea766331dc487aef4fa4485a3a",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-typed-literals-language.mjs",
+        "--expect-source",
+        "f0f89944b13077bb8afe84466a34e8f73f2654da"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "f0f89944b13077bb8afe84466a34e8f73f2654da",
+      "log_path": "reports/checks/v13-exact-stage-a-compat.log",
+      "log_sha256": "3ec54c0d4cb90d3cbe8e4bf658a8e464e53e7f15f5062ee0cb9c9b4f8ff8e700",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -2722,15 +2836,145 @@
       "path": "reports/checks/v13-rational-integrated-editor.log",
       "bytes": 571,
       "sha256": "ecb44d9146477ec5ddd39350cb4d8fe7631139ce4092d7876f59783bd061a1bb"
+    },
+    {
+      "path": "docs/decisions/0008-exact-decimal-literal-capability.md",
+      "bytes": 6873,
+      "sha256": "123a327cc6058bde1c85f4719159c9349f18cc223182400a94decea8cda98f36"
+    },
+    {
+      "path": "reports/governance/CI_RATIONALS_2026-10-25.json",
+      "bytes": 1001,
+      "sha256": "999e4b1b46ea9d3cb2f8821b562a46aac42216e5963d07bb3302edb93bb13242"
+    },
+    {
+      "path": "reports/migrations/EXACT_DECIMAL_STAGE_A_2026-10-25.json",
+      "bytes": 29586,
+      "sha256": "a3b08d51bcc315420fafc23b7b7d5941aca6289dce8522b908b8782d5105196f"
+    },
+    {
+      "path": "reports/reviews/EXACT_LITERALS_V13.md",
+      "bytes": 7258,
+      "sha256": "1f5fd28125c77629d5af950e86e3ae278183b92b4f0f690498ad22941190ec03"
+    },
+    {
+      "path": "tests/exact-literals-source/CONTRACT.md",
+      "bytes": 7778,
+      "sha256": "792c5a72d8e2d3c93a33386667469f6777cae4b52e05f9dab3568cd04fb031f5"
+    },
+    {
+      "path": "tests/exact-literals-source/EXECUTION_6d8fb04.json",
+      "bytes": 588144,
+      "sha256": "68d7987a13ab379e210115e9c916297a885ddc85dd36c07461ec7f2ff126ebc1"
+    },
+    {
+      "path": "tests/exact-literals-source/EXECUTION_6d8fb04.md",
+      "bytes": 5703,
+      "sha256": "02d993b5d930f2bb5e949940b7ee6f6662c85a733bff1781645eb3fabf73a9ac"
+    },
+    {
+      "path": "tests/exact-literals-source/PREPARATION.json",
+      "bytes": 212449,
+      "sha256": "8f4f47addfc099f74f14139b16c28594915532b571f00d406792cd1d79cc87b1"
+    },
+    {
+      "path": "tests/exact-literals-source/README.md",
+      "bytes": 2125,
+      "sha256": "f946f694eb3225dc9c0266df5fb205e333bd3c4fbac109cb5210c40bab9d437f"
+    },
+    {
+      "path": "tests/exact-literals-source/STREAMS_6d8fb04.json",
+      "bytes": 314532,
+      "sha256": "104d011a277963770456e63c0fa4fd05305548043156332d9c97daf9c347c9a9"
+    },
+    {
+      "path": "tests/rationals-source/EXACT_LITERAL_COMPAT_f0f8994.json",
+      "bytes": 715323,
+      "sha256": "ab4264948242ae7af5758f94714433afc70dd6a79a0d8c879856b9b9f0f158b1"
+    },
+    {
+      "path": "tests/rationals-source/EXACT_LITERAL_COMPAT_f0f8994.md",
+      "bytes": 4027,
+      "sha256": "ba2ab1fd1909cc42ae22b9fe59673181918addf2f410e3e7d377d27c4bb56777"
+    },
+    {
+      "path": "tests/syntax/EXACT_DECIMAL_FRONTEND_EVIDENCE.json",
+      "bytes": 42283,
+      "sha256": "e4863fe4cb5fc4e5a2ff88c669241b6a51341828490e177f1c154eeee890ebde"
+    },
+    {
+      "path": "tests/syntax/EXACT_DECIMAL_FRONTEND_EVIDENCE.md",
+      "bytes": 3732,
+      "sha256": "166b5dc795dd8e5bf5b6af4ff18b788f3c79e75046424d87551d1518f61ac7cd"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-rust.json",
+      "bytes": 1188,
+      "sha256": "7ed16b10a08a132202d8513c0d8dc12d0411ecf7ae3140bf538f7bf2ed8a40c9"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-fmt.json",
+      "bytes": 1139,
+      "sha256": "45445b12184f4a307b6294063598ea7cedde6d6a9b1864ba80f29876ab7eb594"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-clippy.json",
+      "bytes": 1250,
+      "sha256": "33d6583ec17e82ab00a3a7d5c6756dbeeaa3817a1a4a35a49fb0ff28cb131e75"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-json.json",
+      "bytes": 1163,
+      "sha256": "d9368ca8b928e5c75fde6589ae4e8631a080452ef63c826f50fd8a930e1fc1fc"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-editor.json",
+      "bytes": 1138,
+      "sha256": "661674a217355965b61843f45c9435c5d78945afc14b50f9dd43568cec5c61f4"
+    },
+    {
+      "path": "reports/checks/v13-exact-stage-a-compat.json",
+      "bytes": 1271,
+      "sha256": "f785e96ffd6f24507941854ff9863ac08cbc40b47ab45939d401aaeaa3743a77"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-rust.log",
+      "bytes": 27220,
+      "sha256": "c78cb530c58c9c94a168a3c440d082e3c78ec6cc12b3783f1dbde5444e639253"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-fmt.log",
+      "bytes": 88,
+      "sha256": "560220d83fe85dfecebddea62ac1b3b53ecdbdf4f33bd0e48afdd53f379dda9f"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-clippy.log",
+      "bytes": 210,
+      "sha256": "449a1ac385b93d542cfd56be03392f700e764084e13ba5cf9fa5480b1630e8c4"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-json.log",
+      "bytes": 807,
+      "sha256": "6591ad4c8490edf10031a681abe6085b793ab4107a6a62cf693560d90b3fbd32"
+    },
+    {
+      "path": "reports/checks/v13-exact-literal-editor.log",
+      "bytes": 571,
+      "sha256": "57f7fd05deec40375bcb852720e68e569ae50cea766331dc487aef4fa4485a3a"
+    },
+    {
+      "path": "reports/checks/v13-exact-stage-a-compat.log",
+      "bytes": 5178,
+      "sha256": "3ec54c0d4cb90d3cbe8e4bf658a8e464e53e7f15f5062ee0cb9c9b4f8ff8e700"
     }
   ],
   "blockers": [],
   "unsafe_intermediate_states": [
-    "All Rational contributor paths are released; preserved worktrees and original first failure must not be overwritten.",
-    "Exact decimal literal follow-up remains read-only contract/model review, without implementation or native results.",
-    "Publication review/push and exact new CI observation remain pending; public continuity is historical, not an ownership lock."
+    "All exact contributor paths released; preserve branches/worktrees and raw captures.",
+    "Publication review/push and exact new CI observation remain pending.",
+    "All full founder acceptance gates remain open; approaching provider quota is distinct from context and spending."
   ],
-  "next_action": "Review and publish bounded Rational integration, observe exact CI, then freeze and implement the exact decimal literal follow-up; continue FC1 and HATCH.",
+  "next_action": "Review/publish exact-literal integration, observe exact CI and continue FC1/HATCH while capacity remains; on actual quota exhaustion retain checkpoint and manually resume after observed reset.",
   "next_commands": [
     [
       "git",
@@ -2757,7 +3001,7 @@
     "reservation": "<git-common-dir>/naja-integration.lock",
     "fencing_generation": 2,
     "status": "held",
-    "observed_at": "2026-10-25T22:52:58.367Z",
+    "observed_at": "2026-10-25T23:11:47.925Z",
     "reclaim": "explicit verified release only"
   },
   "budget": {
@@ -2770,11 +3014,11 @@
     "provider_quota": {
       "status": "observed",
       "account_shared": true,
-      "used_percent": 90,
-      "remaining_percent": 10,
+      "used_percent": 99,
+      "remaining_percent": 1,
       "window_minutes": 10080,
       "resets_at": "2026-11-01T08:14:13.000Z",
-      "observed_at": "2026-10-25T22:49:12.819Z",
+      "observed_at": "2026-10-25T23:14:02.732Z",
       "source": "Codex app get_usage_limits; primary subscription window shared across the account."
     },
     "rate_limit": {
@@ -2810,5 +3054,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-25T22:52:58.367Z"
+  "updated_at": "2026-10-25T23:14:59.657Z"
 }

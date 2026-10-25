@@ -41,7 +41,7 @@
         "bootstrap/frontend/",
         "tests/syntax/"
       ],
-      "status": "active",
+      "status": "completed",
       "history": [
         {
           "branch": "agent/frontend-T05",
@@ -128,7 +128,7 @@
         "bootstrap/driver/",
         "planning/"
       ],
-      "handoff": "Only frontend and syntax paths; root owns source lowering and old source-harness migrations.",
+      "handoff": "Exact-stage scoped paths released; preserve original branches/worktrees, first failures and evidence. No further task active.",
       "integrated_commit": "4d0e07f",
       "contract_commit": "3fa7e09ceb82365948dd2f9793cdbf44dc5dc12f"
     },
@@ -313,7 +313,12 @@
         "tests/rationals/",
         "scripts/test-rationals-language.mjs",
         "tests/rationals-source/",
-        "docs/decisions/0008-exact-decimal-literal-capability.md"
+        "docs/decisions/0008-exact-decimal-literal-capability.md",
+        "bootstrap/frontend/",
+        "tests/syntax/",
+        "bootstrap/driver/src/literal_construction.rs",
+        "scripts/test-exact-literals-language.mjs",
+        "tests/exact-literals-source/"
       ],
       "status": "active",
       "history": [
@@ -346,7 +351,7 @@
       ],
       "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
       "acceptance": "Integrate reviewed scoped commits; execute native block equivalence; retain evidence against committed source and contract 1.3.",
-      "recovery": "Sole integrator fence2. Exact literal driver/ledger work is isolated in ../naja-worktrees/exact-literal-integration branch agent/exact-literal-integration-v13. Frontend and new source harness remain contributor-owned in separate worktrees; no overlap. Retained verified source29be1ef, published487901d."
+      "recovery": "Actual fence2; exact stage integrated and all contributor paths released. Private checkpoint24 retains6d8fb04; reconcile later ordinary checkpoints. Quota98%used observed23:10:44Z; no unattended provider runner."
     },
     {
       "task_id": "T35",
@@ -560,7 +565,7 @@
         "scripts/test-exact-literals-language.mjs",
         "tests/exact-literals-source/"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Independent exact-decimal BigInt/ledger/source proof preparation, all outcomes not_run until root supplies exact integrated source.",
       "acceptance_commands": [
         [
@@ -582,7 +587,7 @@
         "planning/",
         "Cargo.lock"
       ],
-      "handoff": "Preparation only; no compiler/native execution before assigned source pin.",
+      "handoff": "Exact-stage scoped paths released; preserve original branches/worktrees, first failures and evidence. No further task active.",
       "history": [
         {
           "branch": "agent/dynamic-values-v13",
@@ -1238,7 +1243,7 @@
       "paths": [
         "reports/reviews/EXACT_LITERALS_V13.md"
       ],
-      "status": "active",
+      "status": "completed",
       "integrated_commit": "ae4cf0cd653934fccbd25666ff4bb5bdf5607e1e",
       "deliverable": "Independent expansion/accounting/semantic review and frozen probes; no native execution before root source pin.",
       "history": [
@@ -1298,7 +1303,7 @@
         }
       ],
       "execution_source": "5ee64ec1fb02968964a81b0f07c086ae0578c684",
-      "handoff": "Only scoped review report may be tracked; no compiler/source-harness edits.",
+      "handoff": "Exact-stage scoped paths released; preserve original branches/worktrees, first failures and evidence. No further task active.",
       "base_commit": "546f8e366bba182263afd5be1cb4068c15356ea7",
       "contract_commit": "3fa7e09ceb82365948dd2f9793cdbf44dc5dc12f"
     }

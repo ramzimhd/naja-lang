@@ -5,7 +5,7 @@
   "development_started": true,
   "current_gate": "H0",
   "repository_url": "https://github.com/ramzimhd/naja-lang",
-  "last_verified_commit": "29be1ef7b6f7508843f3a7cde29810331881474c",
+  "last_verified_commit": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
   "active_tasks": [
     "T02",
     "T04",
@@ -20,8 +20,8 @@
     "T35"
   ],
   "blockers": [],
-  "last_checkpoint": "2026-10-25T22:52:58.367Z",
-  "note": "All 19 inherited gates and all L/C/FC1 contracts remain open. Retained source29be1ef passed Rust276/fmt/Clippy/JSON21/editor12+9. Rational IR101 passed first unchanged at0138734, ten unchanged native regressions at4e52156; source220 passed corrected preparation at3bb1c1f (193ELFs), independent61 at5ee64ec. First source33/1/186 fixture failure remains failed; only one fixture function/call was renamed. Mapping/typed and older evidence retains original pins. Exact decimal suffix follow-up is read-only contract review; no new acceptance promotion. Exact-decimal follow-up implementation/preparation is now authorized in disjoint worktrees under ADR008 amended3fa7e09; no new native proof.",
+  "last_checkpoint": "2026-10-25T23:11:47.925Z",
+  "note": "Exact decimal capability is integrated: first source202 passed6d8fb04, independent49 passing outcomes preserve one reviewer-assumption failure, Rust291/fmt/Clippy/JSON21/editor passed6d, StageA150 and unchanged Rational220 compatibility passedf0f8994. All inherited gates and L/C/FC1 contracts remain open; counts remain3verified requirements/2tasks/0gates. Private checkpoint24 advanced retained6d. Quota98%used/2%remaining observed23:10:44Z; preserve coherent recovery and continue while capacity remains.",
   "official_language": "en",
   "package_revision": "1.2",
   "continuation_revision": "1.3",

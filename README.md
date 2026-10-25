@@ -50,6 +50,12 @@ first slice; quantity algebra, scale/affine relations and general protocols rema
 open. The [150-case source proof](tests/typed-literals-source/EXECUTION_936865c.md)
 retains its exact compiler source and limits.
 
+The explicit `naja.literal.exact_literal` marker also accepts exact decimal
+suffixes such as `1.25Portion`, passing native Rational values to ordinary class
+constructors. [ADR-008](docs/decisions/0008-exact-decimal-literal-capability.md)
+defines the lexical and expansion limits; the [202-case proof](tests/exact-literals-source/EXECUTION_6d8fb04.md)
+retains its source and resource checks. General quantity algebra remains open.
+
 Explicit `naja.numeric` imports provide bounded exact `rational`, `divide_exact`,
 `numerator` and `denominator` operations. Fractions use native arbitrary integers,
 positive denominators and reduced results. Mixed Int/Bool arithmetic and exact
