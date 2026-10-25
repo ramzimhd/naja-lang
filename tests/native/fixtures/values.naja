@@ -1,0 +1,10 @@
+{# Native greeting #
+message = "Hello 🌍"
+print(message + "!")
+print(len(message))
+print(b"\x00\xff")
+}
+count: int = True
+assert count and 1 < 2 <= 3
+print(+count)
+print(None or "fallback")

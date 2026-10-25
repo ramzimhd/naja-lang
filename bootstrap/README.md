@@ -20,15 +20,24 @@ compatibility dialect. Both use the same frontend implementation.
 ## Executable subset
 
 Without an initial core import, ordinary decimal integer literals and inferred
-assignments use native immutable multi-limb values. `name: int = expression` is
-also supported. Unary `+`/`-`, binary `+`/`-`/`*`, explicit comparisons, `if`/`else`,
-`while` and `print` execute in the generated program. `assert` accepts one explicit
-comparison, always executes when reached and reports `NJA204`/exit 104 on failure.
+assignments use native immutable multi-limb values. Text, bytes, booleans and None
+also execute through the shared parser and native tagged-value emitter. Unary
+`+`/`-`, binary `+`/`-`/`*`, comparisons/chains, not/and/or, truthy `if`/`else`,
+`while`, `print` and text/bytes `len` are supported. `assert` accepts a truthy
+expression, always executes when reached and reports `NJA204`/exit 104 on failure.
 It is not an assumed optimizer contract or recoverable exception implementation.
 Integer spelling never
 passes through a fixed-width or floating-point representation. Definite
 initialization intersects conditional paths and assumes a loop may execute zero
 times. Unicode names use canonical NFKC symbol keys; keywords retain raw spelling.
+
+In `.py`, the supported `name: int = expression` annotation is informational.
+In `.naja`, it checks Int/Bool at every assignment without conversion or narrowing;
+other implemented kinds report type exit105. Other annotation kinds and general
+type resolution remain unsupported. Text/bytes addition concatenates, Bool
+arithmetic produces Int, and/or return operands and comparison chains evaluate
+middle operands once. See [ADR-005](../docs/decisions/0005-native-values-and-project-alias-activation.md)
+for exact semantics and explicit project alias activation.
 
 The hosted runtime initially uses a 64 MiB arena for values and output buffers,
 with no reclamation. Exhaustion/mapping failure reports `NJA203` and exits 103.
@@ -62,13 +71,15 @@ writes are best effort. Writes retry EINTR and handle partial transfers; broken
 pipes may terminate under Linux's default SIGPIPE policy.
 
 This subset does not implement nondecimal hosted literals, division, floats,
-booleans, string execution, functions, objects, containers, exceptions, general
-imports or aliases. Syntax outside the subset produces an English
+repetition/conversion protocols, functions/classes, containers, recoverable
+exceptions or general imports. Syntax outside the subset produces an English
 diagnostic; rejection of a valid standard-language form is an implementation
 limit and does not redefine the promised language. Unicode string/comment data
-is retained by the lexer. Unicode 17 identifiers and canonical name resolution
-are supported; this does not establish a Unicode string runtime. NAJA-only suite forms are explicitly rejected in `.py`;
-there is no alias reinterpretation or text substitution.
+is retained. Unicode 17 identifiers, original spans, scalar text operations and
+canonical names are supported within this slice. NAJA-only suite forms and
+explicit alias activation are rejected in `.py`. `.naja` aliases require an
+explicit validated owning project root; strings/comments/variables are not
+textually replaced. Full manifests, dependency ownership and caches remain open.
 
 Limits: UTF-8 source at most 1 MiB, 128 initialized locals, 128 expression tree
 levels, 64 suite levels and 10000 statements/operations. There is no runtime loop

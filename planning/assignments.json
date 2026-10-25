@@ -232,7 +232,9 @@
         "bootstrap/driver/src/main.rs",
         "bootstrap/driver/src/execution.rs",
         "tests/cli/",
-        "scripts/test-cli.mjs"
+        "scripts/test-cli.mjs",
+        "bootstrap/driver/src/project.rs",
+        "docs/decisions/0005-native-values-and-project-alias-activation.md"
       ],
       "status": "active",
       "history": [
@@ -429,8 +431,8 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/dynamic-expressions-v13",
-      "base_commit": "4f93a39b678ca25a4372af6571b5a60617f33c80",
+      "branch": "agent/native-divrem-v13",
+      "base_commit": "8833b47c59e0a7128e07e6da67a6ce5a52986250",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
         "backends/native/",
@@ -438,7 +440,7 @@
         "tests/dynamic/"
       ],
       "status": "active",
-      "deliverable": "Native unary positive, Unicode/bytes length, once-evaluated short-circuit comparison chains and noncoercing explicit integer type boundary.",
+      "deliverable": "Shared native exact signed floor division/modulo with immutable operands, bounded scratch and preregistered general-division work cap; no source parser edits.",
       "acceptance_commands": [
         [
           "cargo",
@@ -470,27 +472,50 @@
             "tests/dynamic/"
           ],
           "status": "completed"
+        },
+        {
+          "branch": "agent/dynamic-expressions-v13",
+          "base_commit": "4f93a39b678ca25a4372af6571b5a60617f33c80",
+          "worktree": "../naja-worktrees/seed-setup",
+          "paths": [
+            "backends/native/",
+            "scripts/test-dynamic.mjs",
+            "tests/dynamic/"
+          ],
+          "status": "completed"
         }
       ]
     },
     {
       "task_id": "T12",
       "owner": "/root/recovery_review",
-      "branch": "agent/cli-review-v13",
-      "base_commit": "18ca70486db86aaff16c69a55642ddbe1a2c0c17",
+      "branch": "agent/dynamic-source-tests-v13",
+      "base_commit": "5c555bc6e3ff51c9f2f945b069654aa287bc446b",
       "worktree": "../naja-worktrees/recovery-review",
       "paths": [
-        "reports/reviews/CLI_EXECUTION_V13.md"
+        "scripts/test-values-language.mjs",
+        "tests/values/"
       ],
-      "status": "completed",
-      "deliverable": "Independent read-only bounded native CLI review and disposable execution probes; report only.",
+      "status": "active",
+      "deliverable": "Independent ordinary-source native value/alias/annotation/chained-comparison execution harness.",
       "acceptance_commands": [
         [
           "node",
           "scripts/test-cli.mjs"
         ]
       ],
-      "handoff": "Independent report ac0b270 integrated as9f406fb; reproduced filter defect fixed separately asc72060b and retained43-check CLI run passed."
+      "handoff": "Preparation5cfc9c3; actual source run84cases passed at merge9ef3c38; finalscoped report pending.",
+      "history": [
+        {
+          "branch": "agent/cli-review-v13",
+          "base_commit": "18ca70486db86aaff16c69a55642ddbe1a2c0c17",
+          "worktree": "../naja-worktrees/recovery-review",
+          "paths": [
+            "reports/reviews/CLI_EXECUTION_V13.md"
+          ],
+          "status": "completed"
+        }
+      ]
     },
     {
       "task_id": "T07",
@@ -503,7 +528,7 @@
         "bootstrap/driver/tests/project.rs",
         "tests/project/README.md"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Bounded explicit project-root alias loading and ownership-path validation; no ambient parent/home search or source rewrite.",
       "acceptance_commands": [
         [
@@ -531,7 +556,31 @@
           "status": "completed",
           "integrated_commit": "af774725201f770eb678b5c6ade3d1d9fea96364"
         }
-      ]
+      ],
+      "integrated_commit": "593c84e"
+    },
+    {
+      "task_id": "T11",
+      "owner": "/root/frontend",
+      "branch": "agent/dynamic-source-review-v13",
+      "base_commit": "bccb6092e901a86273da031713f1381b4e60a2f4",
+      "worktree": "../naja-worktrees/frontend",
+      "paths": [
+        "reports/reviews/DYNAMIC_SOURCE_V13.md"
+      ],
+      "status": "active",
+      "deliverable": "Independent read-only shared source/native value/alias review with bounded specification-based probes.",
+      "acceptance_commands": [
+        [
+          "cargo",
+          "test",
+          "-p",
+          "naja-seed",
+          "--locked",
+          "--offline"
+        ]
+      ],
+      "handoff": "Report only; root integrates findings."
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

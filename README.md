@@ -15,9 +15,11 @@ value model, self-host, provide native sessions, or supply an installable VS Cod
 extension. FC1 and HATCH remain incomplete.
 
 Ordinary decimal integers, including values beyond machine width, compile through
-a native multi-limb runtime. The current operations are addition, subtraction,
-multiplication, negation, comparisons, assignment, `if`/`else`, `while` and integer
-output. A 64 MiB temporary arena reports exhaustion without narrowing or wrapping.
+a native multi-limb runtime. Text, bytes, booleans and `None` also execute natively.
+The current slice supports arithmetic, comparisons and chains, truthiness,
+short-circuit expressions, assignment, `if`/`else`, `while`, assertions, printing
+and text/bytes length. A 64 MiB temporary arena reports exhaustion without
+narrowing or wrapping.
 Explicit `from naja.core import i64` selects a separate checked-i64 slice;
 mixing these value domains is still unsupported. `.naja` edition
 2026.1 adds brace suites, transparent named sections and indentation depth markers
@@ -46,6 +48,8 @@ execution tests on Windows with Ubuntu WSL or Linux x86-64:
 node scripts/test-native.mjs
 node scripts/test-hosted.mjs
 node scripts/test-hosted-language.mjs
+node scripts/test-dynamic.mjs
+node scripts/test-values-language.mjs
 node scripts/test-cli.mjs
 ```
 
@@ -55,6 +59,13 @@ runs deterministic program-file discovery, supports native comparison assertions
 and provides bounded, lossless machine reports. See
 [execution limits and options](tests/cli/README.md). This does not yet provide
 the complete HATCH test framework or native Windows/macOS application execution.
+
+`--project-root PATH` explicitly activates the owning `.naja` project's optional
+comparison/print/len aliases on check/build/run/test. Conventional spellings still
+work. No ambient alias search occurs; `.py` explicit activation is rejected.
+The current bounded `naja.toml` ownership marker is not a complete manifest or
+dependency implementation. See [the source foundation](docs/decisions/0005-native-values-and-project-alias-activation.md)
+for annotation behavior, semantics and remaining limits.
 
 The commands above were executed on Windows x64, with ELF execution in Ubuntu
 WSL. This is not a clean-host installation or macOS support claim. Node is used

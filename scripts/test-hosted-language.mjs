@@ -61,7 +61,7 @@ for(const [name,source] of [
   assert.deepEqual(readFileSync(variant.output),readFileSync(reference.output),name+': equivalent native lowering');
   console.log('PASS '+name+' emits identical unsigned ELF bytes to the hosted baseline');passed++;
 }
-run('ordinary-resource-bound','x = 0\nwhile 0 == 0:\n    x = x + 1\n','',{status:103,stderr:'NJA203: hosted integer arena exhausted\n'});
+run('ordinary-resource-bound','x = 0\nwhile 0 == 0:\n    x = x + 1\n','',{status:103,stderr:'NJA203: native value arena exhausted\n'});
 for(const [name,source,extension,code] of [
   ['conditional-uninitialized','if 1 == 2:\n    x = 1\nprint(x)\n','py','NJA101'],
   ['loop-uninitialized','while 1 == 2:\n    x = 1\nprint(x)\n','naja','NJA101'],

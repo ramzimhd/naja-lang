@@ -539,6 +539,12 @@ impl<V: Values> Parser<V> {
                 return Err(self.error("this native spike requires local declarations at top level for definite initialization"));
             }
             if declared {
+                if V::DYNAMIC
+                    && self.dialect == Dialect::Naja2026
+                    && self.locals.contains_key("int")
+                {
+                    return Err(self.error("an int annotation requires the compiler-provided type; a local binding shadows it in this executable slice"));
+                }
                 self.expect_binding(if V::HOSTED { "int" } else { "i64" })?;
             }
             if self.locals.contains_key(&name) {
@@ -1082,5 +1088,11 @@ mod tests {
         );
         assert!(compile_with_aliases("print(1)\n", Dialect::Python, Some(&table)).is_err());
         assert!(compile_with_dialect(aliased, Dialect::Naja2026).is_err());
+        assert!(
+            compile_with_dialect("int = 7\nx: int = 1\n", Dialect::Naja2026).unwrap_err()[0]
+                .message
+                .contains("shadows")
+        );
+        assert!(compile("int = 7\nx: int = 'informational'\nprint(x)\n").is_ok());
     }
 }
