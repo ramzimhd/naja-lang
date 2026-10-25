@@ -1,3 +1,75 @@
+# Current native mappings and integer literal construction — October 25, 2026
+
+Retained integrated compiler source is 781f33513f679cb4e06e807da6804b83af9830cc.
+Its 271 Rust tests, formatting, strict Clippy and 21 structured-diagnostic checks
+passed. All 19 inherited gates and every L/C/FC1 contract remain open. The
+147 inherited requirements and 38 task identifiers/status history are preserved.
+
+Native ordered Dict/Set, scalar keys, membership, mixed comparison chains,
+shared Dict updates and immutable Tuple key snapshots now lower through the
+shared source parser. The revised frozen 202-case source suite passed at exact
+50970ba8a46f000cb6a57e5cb454228f952aeef1: 160 semantic cases, 40 compile refusals,
+two real source/private-input mutants and 162 actual ELF executions. Exact and
+one-over/cumulative key-work guards passed without changing the 1,000,000-unit
+limit. Native IR87/Rust267 and independent mapping41 retain their earlier b2
+pins; source value108/function76/index83/tuple137/list167/class170/file121 and
+adapter checks retain their actual separate source pins. Containers still lack
+full hashing/protocols/iteration/deletion/display/structural equality and GC.
+
+Both mapping preparation failures remain failed: first 11 passed/one failed/190
+not_run because two alias keys were unquoted; next 146 passed/one failed/55
+not_run because key-data setup used unsupported sequence repetition. The first
+repair quoted only the keys. The second refroze only 19 payload sources using
+native concatenation, preserving key bytes, timing, alias identity, every oracle
+and every budget; all other 183 sources stayed identical. Both original plans,
+reports and captures remain retained. Native Text/Bytes repetition is still
+required work. A separate obsolete Dict/Set compile-rejection record also remains
+failed: unchanged original display sources now check/build zero and native105.
+Focused proof preceded their runtime-guard migration; values suite stays108.
+
+ADR006 implements explicitly eligible integer suffix construction: a scoped
+naja.literal.integer_literal marker decorates a same-module class with a one-value
+initializer; .naja unambiguous decimal suffixes lower to ordinary native calls.
+TypedInteger tokens preserve numeric/suffix spans; eligibility and value shadowing
+use canonical bindings. Exact integers never pass through machine/float coercion.
+The static marker/ordinary constructor work in both dialects, while .py suffix
+rejection remains unchanged. Ambiguous numeric spellings suggest constructors;
+unary signs apply after construction. No unit-name registry or marker execution
+is hidden in this mechanism. Full protocols, Rational/Decimal promotion,
+scale/affine relations and quantity operator behavior remain required work.
+
+All 150 frozen typed source outcomes passed at exact
+936865c7ef4dd566b4e4523089b1e6bad09534fe: 64 actual ELFs, 73 compile refusals,
+13 lexer cases and zero pending outcomes. Independent47 passed at that source.
+Before first execution, review corrected three fixture sources and one existing
+assertion diagnostic; the original all-not_run preparation remains unchanged in
+history. Native execution required no further repair. Five separately retained
+command records passed at936865c. Its compiler inputs exactly match integrated
+781f335 (empty Git diff for Cargo/toolchain/bootstrap/backends); native/source
+results retain936865c rather than being relabeled as the integrated HEAD.
+Two losslessly encoded stream captures were decoded, length/hash-checked and
+reviewed for secret/profile patterns before publication; their raw bytes remain
+unchanged. Current code still emits direct independent Linux x86-64 ELF.
+
+Private integrity audit/checkpoint18 advanced retained source to781f335 using
+four exact-source passing records. Clean HEAD1bb01a2 assessed ready at
+2026-10-25T22:30:16.598Z before metadata edits. This audits report integrity,
+not complete coverage/log honesty or acceptance. CI b6786b7 failed package controls
+because depth1 checkout lacked pinned historical source; original run40238471265
+stays failed. Corrected6e4148b passed Linux/Windows/macOS at exact40238645724.
+New publication needs its own exact-SHA CI observation. Last observed shared quota
+was78% used/22% remaining at22:18:22.477Z, reset2026-11-01T08:14:13Z;
+other budget categories remain unknown.
+
+Next: exact normalized native Rational foundation and explicit numeric APIs.
+Seed owns native-rationals branch/backend/new IR harness; frontend owns only new
+rationals-source harness. Native contract23a6a590 is frozen before execution with
+cumulative work accounting and constant/noallocation generic guards. No Rational
+native result or source implementation is claimed yet. Root owns source lowering.
+Continue FC1 and HATCH through compaction; a checkpoint is not a stopping point.
+
+Historical class/distribution/file evidence follows with original pins preserved.
+
 # Current class integration — October 25, 2026
 
 FC1 and HATCH remain incomplete; all 19 inherited gates and every L/C/FC1

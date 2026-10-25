@@ -22,6 +22,8 @@ short-circuit expressions, assignment, `if`/`else`, `while`, assertions, printin
 and text/bytes length/indexing. Fixed-length lists support shared indexed mutation;
 tuples support immutable indexed access. Explicit `naja.io` and `naja.text`
 imports expose bounded byte-file operations and strict UTF-8 conversion.
+Ordered dictionaries and sets support bounded exact scalar keys, membership,
+shared dictionary updates and immutable key snapshots through `naja.collections`.
 Ordinary classes support native construction, shared fields and compiled methods;
 full name mangling, inheritance, descriptors, extensions and partial classes remain
 open. See the [class source evidence](tests/objects-source/PRIVATE_FIX_RUN_2026-10-25.md).
@@ -40,6 +42,13 @@ resolution preserve original source spans. The compiler rejects
 unimplemented features rather than executing Python or silently narrowing `int`.
 See [the seed limits](bootstrap/README.md) and
 [frontend limits](bootstrap/frontend/README.md).
+
+An explicitly imported integer-literal capability lets eligible user classes
+construct exact integers from `.naja` suffix forms such as `10Parcel`.
+[ADR-006](docs/decisions/0006-explicit-integer-literal-capability.md) defines this
+first slice; quantity algebra, scale/affine relations and general protocols remain
+open. The [150-case source proof](tests/typed-literals-source/EXECUTION_936865c.md)
+retains its exact compiler source and limits.
 
 With the pinned Rust seed, a working platform linker/SDK and the locked packages
 available locally (one-time development preparation: `cargo fetch --locked`):

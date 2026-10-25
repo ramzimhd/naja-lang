@@ -5,7 +5,7 @@
   "development_started": true,
   "current_gate": "H0",
   "repository_url": "https://github.com/ramzimhd/naja-lang",
-  "last_verified_commit": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+  "last_verified_commit": "781f33513f679cb4e06e807da6804b83af9830cc",
   "active_tasks": [
     "T02",
     "T04",
@@ -20,8 +20,8 @@
     "T35"
   ],
   "blockers": [],
-  "last_checkpoint": "2026-10-25T22:01:36.090Z",
-  "note": "All 19 inherited gates and all L/C/FC1 contracts remain open. Class source170 and Rust261 passed at b0e54cb; 27 class-work records retain25 passes and2 obsolete syntax-oracle failures with focused migrations. Final list167/CLI43/project23/boundary25/JSON21/editor12+9/package8 checks passed separately at e475855, whose compiler inputs equal b0. Native object review found and verified a conservative private-name guard; full mangling remains open. A locally retained unsigned Linux seed archive pins earlier a51c280 and passed scoped copied-userland installation. Native mapping backend/source preparation continues separately.",
+  "last_checkpoint": "2026-10-25T22:30:16.598Z",
+  "note": "All 19 inherited gates and all L/C/FC1 contracts remain open. Combined compiler Rust271/fmt/Clippy/JSON21 passed at781f335. Mapping source202 passed at50970ba; native87/Rust267 and compatibility source records retain separate pins. Typed integer source150 (64ELFs) plus independent47 passed at936865c, whose compiler inputs exactly equal781f335. Mapping review41 passed; original fixture failures, preparation corrections and obsolete display rejection remain retained. Private audit/checkpoint18 advanced retained source. Exact Rational foundation is in progress; no Rational/self-hosting/cells/fullprotocol/human timing acceptance.",
   "official_language": "en",
   "package_revision": "1.2",
   "continuation_revision": "1.3",

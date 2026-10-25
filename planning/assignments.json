@@ -266,7 +266,16 @@
         "scripts/test-objects-language.mjs",
         "tests/objects-source/",
         "tools/distribution/",
-        "tests/distribution/"
+        "tests/distribution/",
+        "bootstrap/frontend/",
+        "tests/syntax/",
+        "docs/decisions/0006-explicit-integer-literal-capability.md",
+        "scripts/test-mappings.mjs",
+        "tests/mappings/",
+        "scripts/test-mappings-language.mjs",
+        "tests/mappings-source/",
+        "scripts/test-typed-literals-language.mjs",
+        "tests/typed-literals-source/"
       ],
       "status": "active",
       "history": [
@@ -299,7 +308,7 @@
       ],
       "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
       "acceptance": "Integrate reviewed scoped commits; execute native block equivalence; retain evidence against committed source and contract 1.3.",
-      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp."
+      "recovery": "Sole integrator holds actual fence2. Completed secondary typed integration is retained at ../naja-worktrees/typed-literal-integration branch agent/typed-literal-integration-v13, with identical compiler inputs to current integrated source. Native Rational paths remain assigned to seed; root owns source lowering."
     },
     {
       "task_id": "T35",
@@ -506,16 +515,16 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/native-mappings-v13",
-      "base_commit": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
-      "worktree": "../naja-worktrees/seed-setup",
+      "branch": "agent/native-rationals-v13",
+      "base_commit": "936865c7ef4dd566b4e4523089b1e6bad09534fe",
+      "worktree": "../naja-worktrees/native-rationals",
       "paths": [
         "backends/native/",
-        "scripts/test-mappings.mjs",
-        "tests/mappings/"
+        "scripts/test-rationals.mjs",
+        "tests/rationals/"
       ],
       "status": "active",
-      "deliverable": "Bounded native ordered Dict/Set, exact scalar membership/key snapshots and mixed relation chains; frozen proof and old regressions before release.",
+      "deliverable": "Exact normalized native Rational foundation; precise finite work/noallocation generic guards are being frozen before proof. No Rational result yet.",
       "acceptance_commands": [
         [
           "cargo",
@@ -667,6 +676,36 @@
           ],
           "status": "completed",
           "integrated_commit": "564461b8066e7b6cd328ff2b362bdabfc33bda0f"
+        },
+        {
+          "branch": "agent/native-mappings-v13",
+          "worktree": "../naja-worktrees/seed-setup",
+          "paths": [
+            "backends/native/",
+            "scripts/test-mappings.mjs",
+            "tests/mappings/"
+          ],
+          "status": "completed",
+          "integrated_commit": "4eabeff"
+        },
+        {
+          "branch": "agent/typed-literals-source-v13",
+          "worktree": "../naja-worktrees/typed-literals-source",
+          "paths": [
+            "scripts/test-typed-literals-language.mjs",
+            "tests/typed-literals-source/"
+          ],
+          "status": "completed",
+          "integrated_commit": "6f8cd29/da19741"
+        },
+        {
+          "branch": "agent/typed-literals-execution-v13",
+          "worktree": "../naja-worktrees/typed-literals-execution",
+          "paths": [
+            "tests/typed-literals-source/"
+          ],
+          "status": "completed",
+          "integrated_commit": "9666ecf"
         }
       ]
     },
@@ -777,15 +816,15 @@
     {
       "task_id": "T11",
       "owner": "/root/frontend",
-      "branch": "agent/mappings-source-harness-v13",
-      "base_commit": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "branch": "agent/rationals-source-harness-v13",
+      "base_commit": "936865c7ef4dd566b4e4523089b1e6bad09534fe",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
-        "scripts/test-mappings-language.mjs",
-        "tests/mappings-source/"
+        "scripts/test-rationals-language.mjs",
+        "tests/rationals-source/"
       ],
       "status": "active",
-      "deliverable": "Frozen 202-case mapping source preparation93d2be2; native outcomes not_run until exact integrated source is supplied.",
+      "deliverable": "Independent exact Rational source preparation/model; work-boundary contract awaits native freeze, all outcomes not_run.",
       "acceptance_commands": [
         [
           "cargo",
@@ -892,6 +931,17 @@
           ],
           "status": "completed",
           "integrated_commit": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560"
+        },
+        {
+          "branch": "agent/mappings-source-concat-execution-v13",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "scripts/test-mappings-language.mjs",
+            "tests/mappings-source/"
+          ],
+          "status": "completed",
+          "integrated_commit": "35fb04b",
+          "execution_source": "50970ba8a46f000cb6a57e5cb454228f952aeef1"
         }
       ]
     },
@@ -1083,15 +1133,44 @@
     {
       "task_id": "T11",
       "owner": "/root/class_evidence",
-      "branch": "agent/class-fix-evidence-v13",
-      "worktree": "../naja-worktrees/class-evidence",
+      "branch": "agent/typed-stage-a-review-v13",
+      "worktree": "../naja-worktrees/typed-stage-a-review",
       "paths": [
-        "tests/objects-source/PRIVATE_FIX_RUN_2026-10-25.md",
-        "tests/objects-source/PRIVATE_FIX_RESULTS_2026-10-25.json"
+        "reports/reviews/TYPED_LITERALS_STAGE_A.md"
       ],
       "status": "completed",
-      "integrated_commit": "b43ff55",
-      "deliverable": "Read-only hash audit of root170-case rerun; no suite replay or gate promotion."
+      "integrated_commit": "5518320",
+      "deliverable": "Independent47 typed integer literal outcomes passed; no fullprotocol/quantity/gate promotion.",
+      "history": [
+        {
+          "branch": "agent/class-fix-evidence-v13",
+          "worktree": "../naja-worktrees/class-evidence",
+          "paths": [
+            "tests/objects-source/PRIVATE_FIX_RUN_2026-10-25.md",
+            "tests/objects-source/PRIVATE_FIX_RESULTS_2026-10-25.json"
+          ],
+          "status": "completed",
+          "integrated_commit": "b43ff55"
+        },
+        {
+          "branch": "agent/typed-literals-draft-v13",
+          "worktree": "../naja-worktrees/class-evidence",
+          "paths": [
+            "tests/typed-literals-source/CONTRACT_DRAFT.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "0eefd2f"
+        },
+        {
+          "branch": "agent/mappings-source-review-v13",
+          "worktree": "../naja-worktrees/mappings-review",
+          "paths": [
+            "reports/reviews/MAPPINGS_SOURCE_V13.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "e1bed88"
+        }
+      ]
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

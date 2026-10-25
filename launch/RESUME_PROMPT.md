@@ -1,29 +1,26 @@
 Resume NAJA HATCH in C:/naja; continue FC1 then full HATCH.
+Read AGENTS.md, launch/HANDOFF.md, reports/progress.md, actualGit/worktrees and
+planning/state/assignments/continuity/private reservation beforewrites.
+Preserve IDs, originalsourcepins, failures/not_run and collaborators. No reset,
+force-push, credential extraction, timestamp/PID reclaim, security bypass or paidfallback.
 
-Read AGENTS.md, launch/HANDOFF.md, reports/progress.md, actual Git/worktrees,
-planning assignments/state/continuity and private reservation before writes.
-Preserve every identifier/source pin/failure/not_run result. No destructive reset,
-force-push, credential extraction, age/PID reclaim, security bypass or paid fallback.
+Retainedcompiler781f33513f679cb4e06e807da6804b83af9830cc passed Rust271/fmt/Clippy/JSON21.
+Mapping202 passed50970ba (162ELFs), typedinteger150 passed936865c (64ELFs), with
+independent41/47 reviews and separately pinned compatibilitychecks. Compilerinputs
+936865c equal781f335; keep exactnativepins. Fixture/oracle failures and narrow
+refreezes/migrations remainretained. All19 gates and all L/C/FC1 contracts remainopen.
+No self-hosting/cells/fullprotocols/quantityalgebra/human timing acceptance.
 
-Retained compiler b0e54cb2db1a2aea20b6056c05f92ea5e6b62560 passed frozen class170,
-Rust261 and ten audited exact-source records. Final seven records at e475855 passed
-list/CLI/project/JSON/editor/package regressions with identical compiler inputs.
-Two obsolete syntax-oracle failures remain failed alongside focused migrations;
-private-name defect was conservatively refused, not fully implemented. All19
-inherited gates and all L/C/FC1 contracts remain open.
+Privatecheckpoint18 advancedretainedsource underfence2 beforemetadata edits;
+reconcile laterordinarycheckpoints/remote state. OriginalCI b6786b7 failed shallow
+history packagecontrol; correction6e4148b passed allthreehosts at run40238645724.
+Publishreviewed combinedintegration, observeexactnewCI, thencontinueRational work.
+Historicalunsigned compilerarchive/VSIX have separatepins and scoped evidence.
 
-Historical unsigned Linux archive pins a51c280 and has scoped copied-userland
-installation evidence, not current compiler/platform acceptance. Local unsigned
-VSIX retains separate pins; actual IDE UI/LSP/DAP/cells and self-hosting remain open.
-Private checkpoint16 used fence2; reconcile later ordinary checkpoints and actual
-remote state. Public c10836a CI passed three hosts at run40236076573; later pushes
-need exact-SHA observations. Full instructions/identities are in HANDOFF/progress.
-
-Finish reviewed class/distribution publication then immediately continue mappings.
-Seed agent/native-mappings-v13 retains backend ownership through proof/release.
-Frontend frozen202 source preparation93d2be2 is ready; native outcomes not_run.
-Root owns grammar/lowering for Dict/Set, unbound set(), in/not in mixed chains and
-static naja.collections.keys_snapshot Tuple snapshots. Supply exact integrated
-source SHA before source native execution. Preserve caps, semantics and failures.
-Continue through supported compaction; a passing checkpoint is not a finish line.
-After actual client exit manual relaunch is required, with no background promise.
+Seed native-rationals branch owns backend/newIRharness/tests; frozen contract
+23a6a590 definesexactRatio API/work/noallocation genericguards beforeexecution.
+Frontend owns newrationals-source harness. Root owns sourceAPI/height lowering.
+No Rational result yet; readfullHANDOFF andcontract beforechanges. Completed
+secondarytyped worktree1061c58 is integrated/preserved. Continue throughcompaction;
+a passingcheckpoint is not a stoppingcondition. Afteractualexit, manualrelaunch
+is required; no backgroundproviderpromise.

@@ -1,75 +1,94 @@
 # Running handoff — October 25, 2026, revision 1.3
 
-Continue FC1 then HATCH while authorized work and capacity remain. A checkpoint
-is a recovery boundary. Public repository https://github.com/ramzimhd/naja-lang
-uses owner-selected Apache-2.0; /root is sole integrator in C:/naja on
-agent/integrator-H0. Read actual Git, assignments, state, continuity and private
-reservation before writes. Never reset, force-push, overwrite collaborators,
-extract credentials, reclaim by age/PID, bypass security or use a paid fallback.
+Continue FC1 then HATCH while authorized capacity remains; checkpoints are
+recovery boundaries. /root is sole integrator in C:/naja, agent/integrator-H0.
+Public https://github.com/ramzimhd/naja-lang uses owner-selected Apache-2.0.
+Inspect actual Git/worktrees/assignments/state/continuity/private reservation
+before writes. Preserve every identifier, source pin, failed/not_run record and
+collaborator change. No reset, force-push, credential extraction, age/PID reclaim,
+security bypass or paid fallback. Use configured Git credentials. gh is signed
+out in this process; public CI REST and GitHub connector reads worked, so no login
+is needed for observing this public repository. Never use launch/local secret helpers.
 
-Retained compiler source b0e54cb2db1a2aea20b6056c05f92ea5e6b62560 passed the
-frozen 170-case class suite (120 ELFs), 261 Rust tests and ten exact-source
-post-guard records. Final seven records at e475855 passed list167, CLI43,
-project23, boundaries25, JSON21, editor12/nine groups and package8 controls.
-Compiler inputs equal b0; do not relabel source pins. All 27 class-work records
-remain:25 passed and two obsolete compile-rejection failures. Original Text.Repeat
-and list.append sources independently check/build0, native105; focused evidence
-precedes fixture migrations, with suite counts unchanged. Those APIs remain open.
-Read reports/progress.md, reports/reviews/OBJECTS_V13.md and class source reports.
+## Current evidence
 
-A private-name defect at564461b remains failed evidence. Subsequent fcbe457
-conservatively diagnoses class-context private names until full mangling exists;
-43 targeted outcomes passed. Classes use native entries, shared fields, receiver
-before argument selection and explicit initializer/type/arity/resource guards.
-Full object capabilities, inheritance, descriptors, extensions, partial classes,
-first-class functions/classes/bound methods and GC remain required work.
+Retained compiler781f33513f679cb4e06e807da6804b83af9830cc passed Rust271,
+format/Clippy and structured JSON21. Native mappings202 passed at exact50970ba
+(162ELFs); nativeIR87/Rust267 and independent41 review retain earlier b2 pins.
+Compatibility value108/function76/index83/tuple137/list167/class170/file121 and
+adapter checks passed at their recorded pins. Mapping fixture failures11/1/190
+and146/1/55 remainfailed; narrowly refrozen two-key quotes and19 concat payload
+sources preserved intended key bytes/oracles/work budgets. Old mapping display
+compile-oracle failure and focused original-source native105 migration remain.
+Read reports/progress.md, mapping contracts/source reports and independent review.
 
-The unsigned Linux archive pins earlier a51c280, not the current compiler. Root
-copy: tools/distribution/artifacts/retained-a51c280/naja-linux-x86_64-unsigned.tar.gz,
-589051 bytes, SHA25660dba88639a972bef3cfa8bed9109a4b0e37943f758980d59c881b812025562c.
-Installation/independent changed-source execution passed in an inventoried60-file
-copied userland on the existing WSL kernel. Declared libc/libgcc_s/GNU loader,
-GLIBC2.39; no clean VM, security sandbox or platform acceptance claim. Root checked
-18 package files/50 public log hashes. Original loader-parser failure and optional
-later preparation-directory ENOENT inspection remain. Read distribution execution
-and exact historical reproduction instructions before rerunning anything.
-Unsigned local CLI-preview VSIX remains at editor/vscode/artifacts/ with its
-separate source/hash/install pins; actual IDE UI/LSP/DAP/cells remain incomplete.
-All19 gates and all L/C/FC1 contracts remain open; no self-hosting or human timing.
+Explicit integer literal source150 passed at exact936865c7ef4dd566b4e4523089b1e6bad09534fe
+(64ELFs/73compile refusals/13lex), with independent47 review. Its compiler inputs
+exactly equal integrated781f335 (Cargo/toolchain/bootstrap/backends diff empty).
+Do not relabel these native pins. ADR006 uses explicit naja.literal marker,
+one-value initializer, same-module eligibility and ordinary construction; exact
+integer suffix spans/values/constructor effects are preserved. Marker declarations
+and ordinary constructors work in bothdialects, suffixes only.naja. StageA does
+not implement general protocols, Rational/Decimal, quantity scale/affine algebra,
+full imported types, arbitrary decorators or FC1-05. Source ambiguity rules and
+pre-execution preparation corrections are explicit in the frozen contract.
 
-Private audit/checkpoint16 advanced retained source b0 under actual fence2;
-clean HEAD5398dbd assessed ready at2026-10-25T22:01:36.090Z. Later metadata needs
-an ordinary checkpoint. Public observation is historical, not ownership authority.
-Only actual private Git storage holds the token; never print it. Quota72%used/
-28%remaining observed22:00:47.416Z, reset2026-11-01T08:14:13Z; other telemetry
-unknown. No unattended provider runner or automatic handoff exists.
-Public c10836a passed Linux/Windows/macOS at exact CI run40236076573. Review staged
-blobs, retain known synthetic scanner failure/disposition, push normally and check
-new exact-SHA CI. No artifact release or Marketplace publication is implied.
+All19 inherited gates and every L/C/FC1 contract remainopen. No self-hosting,
+native cells, full IDE/LSP/DAP/tooling, complete libraries or human timing proof.
+Unsigned Linux compiler archive still pins earliera51c280, with scoped60-file
+copied-userland installation evidence, not cleanVM/current compiler/platform
+acceptance. Root archive tools/distribution/artifacts/retained-a51c280/
+naja-linux-x86_64-unsigned.tar.gz is589051bytes/SHA256
+60dba88639a972bef3cfa8bed9109a4b0e37943f758980d59c881b812025562c.
+Unsigned VSIX retains its separately documented local packaging/install pins.
 
-## Continue engineering
+## Recovery/publication
 
-Seed agent/native-mappings-v13 owns backends/native/, scripts/test-mappings.mjs
-and tests/mappings/ until final native proof/regressions and explicit release.
-Root owns driver integration. Frozen native contract af9a12a/09c9ed9 defines
-Dict/Set tags8/9, max128 entries, scalar exact keys (Bool==Int0/1), key/value
-ordering, shared Dict indexing/store, len/truth, Contains and immutable Tuple key
-snapshot. Query/candidate validation and comparison debit cumulative1,000,000
-work units per operation; limits/diagnostics and unreachable source states are
-explicit. Existing caps remain unchanged. Keep old strict corruption selectors;
-change new mapping scratch registers if their instruction patterns collide.
+Private audit/checkpoint18 advanced retainedsource781f335 under actualfence2;
+cleanHEAD1bb01a2 assessedready at2026-10-25T22:30:16.598Z beforemetadata.
+Publiccontinuity is historical, not ownership authority. Only privateGitstorage
+holds the token; never print it. Last quota observation78%used/22%remaining at
+22:18:22.477Z, reset2026-11-01T08:14:13Z; other categoriesunknown. No unattended
+provider runner or automatic handoff exists. Write/assess ordinarycheckpoint after
+publication. Continue normally through compaction; after actualexit manuallyresume.
 
-Frontend preparation93d2be2 has frozen202 source cases,11 static identities and
-no native execution. Own paths scripts/test-mappings-language.mjs and
- tests/mappings-source/ are released for integration. After backend release,
-root implements shared {} Dict/{element} Set literals, unbound zero-argument
-set(), mixed in/not in comparison chains, and explicit static
-from naja.collections import keys_snapshot. Snapshot is a Tuple, not dict.keys()
-view semantics. General tuple/object hashing, iteration/deletion/full containers
-remain required. Respect shadowing, original spans, NFKC binding-only behavior,
-operand effects, parse budgets and both dialects. Give frontend the exact clean
-integrated source SHA for frozen native execution; retain failures before repair.
+Original b6786b7 CI run40238471265 failed newpackagecontrols because shallow
+checkout lacked pinned a51 history. Correction6e4148b passed allthreehosts at
+exactrun40238645724; originalfailure retained. Review stagedblobs, preserveknown
+synthetic scannerfinding/manualdisposition, pushnormally and verifynewexactCI.
+No artifactrelease/Marketplace publication is implied.
 
-Continue after publication into mapping integration and subsequent required
-language/library/tool work. After actual client/machine exit manually reopen with
-RESUME_PROMPT; through compaction continue normally without voluntary stopping.
+## Active exact Rational work
+
+Seed C:/naja-worktrees/native-rationals, agent/native-rationals-v13, owns ONLY
+backends/native/, scripts/test-rationals.mjs, tests/rationals/. Base936865c.
+Frozen contract23a6a59042c29502e180940bb38eab3c061a7925 precedes nativeexecution.
+Root owns driver/values source lowering. Frontend agent/rationals-source-harness-v13
+in its retained worktree owns ONLY scripts/test-rationals-language.mjs and
+ tests/rationals-source/. No Rational native result/source implementation yet.
+Read frozen contract before editing or freezing resource expectations.
+
+Agreed API: naja.numeric rational(n,d) accepts Int/Bool only, evaluatesNUM thenDEN
+once beforetype/zero/normalization guards; divide_exact acceptsRatio/Int/Bool and
+returnsRatio; numerator/denominator acceptRatioONLY and returnInt. Ratio tag10 is
+immutable reduced n/d, denpositive, zero0/1, no machine/float narrowing. Numeric
++,-,* and unarysigns/exactcomparison supportRatio mixedInt/Bool. Ordinary source
+'/' remainsunsupported; do not reinterpret PythonIntdivision. Floor/%/len/display
+Ratio initially105; full hashing/display/protocol/algebra remainsrequired.
+Unrelatedscalar/object Eq/Ne false/true, ordering105; partialcontainers compare105.
+Afterargumentevaluation BOTH kinds validate beforezero/work. Zero106 uses existing
+integerdivision diagnostic; invalidRatio span103 and work103 are explicit.
+
+W=1,000,000 per explicitRational operation, cumulative across fullcanonical scans,
+gcd/coprime validation and finalexactdivisions. Costs/debitsequence are frozen in
+contract, not inferredfromoutput. Generic check/truth/container/object-field guards
+muststay constant header/span checks with NO gcd/limbscan/scratchallocation, preserving
+existing noallocation stores/selectedreads; this is not arbitrarymodified-ELF
+provenance/coprimality proof. All existing caps/strict mutation selectors remain.
+
+Completed secondary typed integration remains at
+C:/naja-worktrees/typed-literal-integration, agent/typed-literal-integration-v13,
+HEAD1061c58; source/evidence integrated toprimary. Earlier workerbranches/artifacts
+remainretained. Create a separate source-integration branch/worktree if needed;
+never overwrite activebackend/harness paths. Integrate releasedRational work,
+supply exact clean sourceSHA to frozen sourceharness, retain failures and continue.
