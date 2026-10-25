@@ -120,3 +120,9 @@ not establish pointer provenance, memory safety, clean installation,
 self-hosting, FC1 or HATCH, and promote no gate. Existing harnesses and historical
 results remain untouched. Official prose is English; multilingual user data is
 preserved.
+
+The first unchanged source run failed on the frozen alias fixture's invalid
+unquoted keys. Its original observation and 190 pending cases are retained in
+[FAILED_RUN_2026-10-25.md](FAILED_RUN_2026-10-25.md) and
+[FAILED_RESULTS_2026-10-25.json](FAILED_RESULTS_2026-10-25.json). The preparation
+and failure remain unchanged; this is not a source-suite pass.
