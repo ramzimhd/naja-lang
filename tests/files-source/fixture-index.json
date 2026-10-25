@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "blocks.naja",
+      "sha256": "b275525280d34e1681d1fe1d16987b4170f2b8be0029228c174624d0beabd55d"
+    },
+    {
+      "path": "conversions.py",
+      "sha256": "955ee58252f4182b1c77442531c006db6c9bf39a4bc1f56511f0b66197a7fdd4"
+    },
+    {
+      "path": "functions.py",
+      "sha256": "74736311d5f9b216e1c2af36824540e49be8526d245cf6785bd00aadf722d1bd"
+    },
+    {
+      "path": "imports.py",
+      "sha256": "ae4bc9a496d6d7fd8eacd09ff7720a5ed9a34b5754788e1ac2321c6d87e93d1d"
+    },
+    {
+      "path": "order.py",
+      "sha256": "0b7754ccae4abd3bab0f57f64607df029e3c610ca213f9d924de9cb61dd4b16d"
+    },
+    {
+      "path": "project/main.naja",
+      "sha256": "4553292a65ff05adb80137304147d12e124caab69876beded4bb84a8f53d27b0"
+    },
+    {
+      "path": "project/naja.alias",
+      "sha256": "83a34d67f874f8e9e91506f57a34ecb41264e35ea13185dec2ff2cf5db7101f8"
+    },
+    {
+      "path": "project/naja.toml",
+      "sha256": "92731ed3cd47f011ba1ddbc2465e2f382a2cdf575e93e17158e0aa9534b6914c"
+    },
+    {
+      "path": "roundtrip.py",
+      "sha256": "cf5e0256db132b28a87d2fcccff8e267945fd1b386cb272ecabb62ad4440c4c8"
+    }
+  ],
+  "native": [
+    {
+      "name": "roundtrip",
+      "path": "roundtrip.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "input": "all-bytes",
+      "output": "all-bytes",
+      "stdout": "256\nNone\n256\n"
+    },
+    {
+      "name": "conversions",
+      "path": "conversions.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "10\né𝄞é\u0000\nA\u0000\n3\n2\n"
+    },
+    {
+      "name": "functions",
+      "path": "functions.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "input": "é𝄞\u0000",
+      "output": "é𝄞\u0000",
+      "stdout": "é𝄞\u0000\nTrue\n"
+    },
+    {
+      "name": "imports",
+      "path": "imports.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "input": "all-bytes",
+      "stdout": "256\nTrue\nκόσμος\n"
+    },
+    {
+      "name": "order",
+      "path": "order.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "output": "abc",
+      "stdout": "path\ndata\nNone\nread path\ndecode\nabc\nencode\n6\n"
+    },
+    {
+      "name": "blocks",
+      "path": "blocks.naja",
+      "extensions": [
+        "naja"
+      ],
+      "input": "café\n",
+      "output": "café\n",
+      "stdout": "café\n\n6\n"
+    }
+  ]
+}

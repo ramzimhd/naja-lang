@@ -1,0 +1,18 @@
+from naja.io import read_bytes, write_bytes
+from naja.text import encode_utf8, decode_utf8
+
+def copy(path, output): {# File conversion #
+{# No implicit replay #
+value = decode_utf8(read_bytes(path))
+write_bytes(output, encode_utf8(value))
+return value
+}
+}
+
+def length(path):(0)
+    if path:(1)
+        return len(read_bytes(path))
+    return 0
+
+print(copy("input.bin", "output.bin"))
+print(length("output.bin"))

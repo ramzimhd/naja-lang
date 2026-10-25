@@ -1,0 +1,10 @@
+from naja.io import read_bytes as 読む, write_bytes as 書く
+from naja.text import encode_utf8 as 符号化, decode_utf8 as 復号
+
+def Key(path): {
+return 復号(読む(path))
+}
+
+表示(Key("input.bin"))
+表示(書く("output.bin", 符号化("表示 equalTo 長さ")))
+表示(長さ(読む("output.bin")) equalTo 21)
