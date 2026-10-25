@@ -14,10 +14,10 @@ publication inputs.
 
 ## Actual implementation and evidence
 
-The temporary Rust1.97.1 seed directly emits Linux x86-64 ELF machine code. The
+The temporary Rust 1.97.1 seed directly emits Linux x86-64 ELF machine code. The
 implemented compilation/execution chain invokes no Python, assembler, linker,
 other compiler or interpreter. The shared frontend has lossless lexing,
-edition-aware brace/named/depth suites, Unicode17 XID/NFKC names, original spans,
+edition-aware brace/named/depth suites, Unicode 17 XID/NFKC names, original spans,
 bounded text/bytes literal decoding and a contextual alias configuration service.
 The shared source parser supports ordinary decimal arbitrary-precision integers,
 checked explicit i64, assignment, integer comparisons, branches/loops, transparent
@@ -28,19 +28,20 @@ The CLI has lex/check/build and bounded run/program-file test commands. Linux x6
 executes directly; Windows explicitly uses `--runner wsl`. Exact process/output,
 Unicode discovery, artifact ownership and timeout limits are documented in
 `tests/cli/README.md`. There is no sandbox or native Windows/macOS execution
-claim. The temporary arithmetic arena is64MiB. Runtime exhaustion exits103,
-I/O failure102 and assertion failure104.
+claim. The temporary arithmetic arena is 64 MiB. Runtime exhaustion exits 103,
+I/O failure 102 and assertion failure 104.
 
-Source through `18ca70486db86aaff16c69a55642ddbe1a2c0c17` has scoped work-unit
-output; a fresh combined-source retained run is pending. The latest original
-retained source is `6e702caec0dae3ec90a92d57490387f97d7e09a8`. A separately rerun
-baseline `05df50551d9591036e4403e26d626ee19d1c2a15` passed43Rust,25native/CLI
-and37planning tests locally; matching hosted CI passed Windows/Linux/macOS at
-https://github.com/ramzimhd/naja-lang/actions/runs/40098333023. New proof must
-identify its own committed source. Independent hosted review is pinned to
-`551214d` in `reports/reviews/HOSTED_NATIVE_V13.md`; later features are outside it.
+Exact source `4f93a39b678ca25a4372af6571b5a60617f33c80` passed 14 retained
+checks: 153 Rust tests, 126 Node tests and native harness counts 36/14/23/34/43
+(i64/hosted/source/dynamic/CLI). Formatting, Clippy, build, validators and scoped
+authored whitespace passed. Logs, commands and hashes are retained in
+`reports/checks/v13-source-*`. An explicit integrity audit advanced private
+checkpoint 2 to this source; acknowledged evidence-only dirty state assessed
+ready before later metadata edits. See `reports/progress.md` for exact scope.
+The prior baseline CI remains historical; new publication needs its own CI run.
+Independent runtime and CLI reviews retain their original source identities.
 
-All19 inherited release gates and all new L/C/FC1 contracts remain open. Full
+All 19 inherited release gates and all new L/C/FC1 contracts remain open. Full
 functions/classes/containers, grammar/runtime semantics, productive libraries,
 reference backend/linker closure in NAJA, B1–B3, cells, LSP/DAP/VSIX and human
 productivity proof remain incomplete. Temporary seed dependencies/licenses are
@@ -48,13 +49,14 @@ disclosed; the old independence inventory needs expanded-closure revalidation.
 
 ## Ownership and recovery
 
-The real integration reservation was explicitly migrated from manual fence1 to
-helper fence2, retaining its outgoing record. Only the current owner holds its
+The real integration reservation was explicitly migrated from manual fence 1 to
+helper fence 2, retaining its outgoing record. Only the current owner holds its
 private token. Never steal/recreate ownership based on age or a dead launcher
 PID. Public continuity is a sanitized observation, not mutation authority.
-Private checkpoint1 uses the older index digest and is historical; create a new
-checkpoint after inspecting current source and ownership. The conflict-stage
-index fix and explicit evidence audit need a fresh retained combined run.
+Private checkpoint 1 and its older index digest are historical. Checkpoint 2
+retains the new digest and audited source 4f93a39. Public metadata changes after
+that observation need a fresh ordinary checkpoint; never infer current readiness
+from an earlier assessment.
 
 `tools/continuity/` supplies local atomic ownership/checkpoints and explicit
 retained-verification audits. No provider supervisor, scheduled service or
@@ -67,13 +69,15 @@ did not transfer the production reservation or prove provider-outage recovery.
 Confirmed separate contributor worktrees are under `C:/naja-worktrees/`; inspect
 `planning/assignments.json` and real branches. Current scoped work:
 
-- `agent/dynamic-values-v13`: native tagged values and independent execution
-  harness; backend paths belong to the contributor until explicit release.
-- `agent/verification-audit-v13`: helper commit6bd5987 integrated as96ed44a;
+- `agent/dynamic-expressions-v13`: native positive/length/comparison-chain and
+  noncoercing integer type-boundary operations; backend paths belong to the
+  contributor until explicit release.
+- `agent/verification-audit-v13`: helper commit6bd5987 integrated as 96ed44a;
   root alone audits actual evidence and updates live checkpoints.
-- `agent/frontend-aliases-v13`: service31fe380 integrated asaf77472;
+- `agent/frontend-aliases-v13`: service31fe380 integrated as af77472;
   CLI/project/contextual resolution remains root integration work.
-- `agent/cli-review-v13`: independent read-only CLI review, report only.
+- `agent/cli-review-v13`: completed report integrated as 9f406fb. Its filter defect
+  was fixed separately and verified in the retained 43-check CLI harness.
 
 ## Next commands and work
 
@@ -90,14 +94,11 @@ node scripts/validation/check-foundations.mjs
 node scripts/validation/check-continuity.mjs
 ```
 
-Finish recorder mutation tests, then commit a coherent source. Retain exact-source
-locked/offline formatting, Clippy, workspace tests/build, native/source/CLI
-harnesses, planning/foundation/continuity and recorder tests with
-`scripts/record-check.ps1`. Do not mutate source while recording. Audit those
-records under the held fence, write a new private checkpoint and update public
-state with actual results. Review staged publication with
+The combined retained checks, recorder guards and explicit audit passed at 4f93a39.
+Review staged source/evidence publication with
 `scripts/publication-audit.mjs` before a normal authorized push; check the new CI
-at its own source. Continue dynamic source integration, contextual aliases and
+at its own source, then refresh the private checkpoint. Continue dynamic source
+integration, contextual aliases and
 remaining FC1 foundations after this recovery boundary.
 
 Read task-relevant continuation contracts and technical specs before each task.

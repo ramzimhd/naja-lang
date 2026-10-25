@@ -412,7 +412,7 @@
         "scripts/test-dynamic.mjs",
         "tests/dynamic/"
       ],
-      "status": "active",
+      "status": "released",
       "deliverable": "Integrate released native domains and preserve their real source/IR execution evidence; next source integration is owned by root.",
       "acceptance_commands": [
         [
@@ -429,16 +429,16 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/dynamic-values-v13",
-      "base_commit": "1bd8c745837f2e8813bfb38c3b4330a9f4ac5a53",
+      "branch": "agent/dynamic-expressions-v13",
+      "base_commit": "4f93a39b678ca25a4372af6571b5a60617f33c80",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
         "backends/native/",
         "scripts/test-dynamic.mjs",
         "tests/dynamic/"
       ],
-      "status": "completed",
-      "deliverable": "Direct native tagged Int/Text/Bytes/Bool/None operations, truthiness and short circuiting with bounded runtime and independent oracle; no source parser duplication.",
+      "status": "active",
+      "deliverable": "Native unary positive, Unicode/bytes length, once-evaluated short-circuit comparison chains and noncoercing explicit integer type boundary.",
       "acceptance_commands": [
         [
           "cargo",
@@ -458,7 +458,20 @@
         "planning/",
         "Cargo.lock"
       ],
-      "handoff": "Backend explicitly released after committed d2cd830 exact-head34-check/3886-output WSL run; integrator rerun/evidence pending."
+      "handoff": "Root explicitly released backend paths; shared parser source integration remains root-owned.",
+      "history": [
+        {
+          "branch": "agent/dynamic-values-v13",
+          "base_commit": "1bd8c745837f2e8813bfb38c3b4330a9f4ac5a53",
+          "worktree": "../naja-worktrees/seed-setup",
+          "paths": [
+            "backends/native/",
+            "scripts/test-dynamic.mjs",
+            "tests/dynamic/"
+          ],
+          "status": "completed"
+        }
+      ]
     },
     {
       "task_id": "T12",
@@ -469,7 +482,7 @@
       "paths": [
         "reports/reviews/CLI_EXECUTION_V13.md"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Independent read-only bounded native CLI review and disposable execution probes; report only.",
       "acceptance_commands": [
         [
@@ -477,7 +490,7 @@
           "scripts/test-cli.mjs"
         ]
       ],
-      "handoff": "Pinned source report only; actionable findings sent before completion."
+      "handoff": "Independent report ac0b270 integrated as9f406fb; reproduced filter defect fixed separately asc72060b and retained43-check CLI run passed."
     },
     {
       "task_id": "T07",

@@ -1,0 +1,28 @@
+Recorded command: node scripts/test-hosted-language.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS documented-hosted-fixture exit=0 sha256=17cc680dc418322c9ff79e0d94613510e20478230902c434552dc93ff45e9778
+PASS ordinary-arithmetic exit=0 sha256=183201b77c41fcced2f09d0bc00926e6f7da7a85d7de8ae692f61df1d3892ceb
+PASS both-branch-initialization exit=0 sha256=bc3ef404c4ea8e047e55b2b7546642058f0044653457886f63e281aa9a462cf2
+PASS immutable-source-alias exit=0 sha256=92323cb7acbf4804a9962e062f74f8044a1879e981c297d61a12f9d7c1977d33
+PASS unicode-canonical-bindings exit=0 sha256=f4235a6800aa7c875494a0b813563a8da778263d61cf4e9c76f2356df1d8a27c
+PASS ordinary-runtime-assertion exit=0 sha256=83e127672146003462e3414aeca417dd6b208d8ef64fb7c9a1f8e22b35627bd8
+PASS ordinary-failed-assertion exit=104 sha256=8be0faf93404d72ed64ed4e1de8aa1f71aa69306958590633a7bec47535d3e67
+PASS fixed-failed-assertion exit=104 sha256=9fbf1718733a1cf2198202c22cf4403dc5c512a3d03db2976daadd8dc2fbdb16
+PASS ordinary-indentation exit=0 sha256=7cb862971995e5a73980e29ea3b6d8f3e306992f5f704bac9870aba128238a23
+PASS ordinary-braces exit=0 sha256=7cb862971995e5a73980e29ea3b6d8f3e306992f5f704bac9870aba128238a23
+PASS ordinary-braces emits identical unsigned ELF bytes to the hosted baseline
+PASS ordinary-markers exit=0 sha256=7cb862971995e5a73980e29ea3b6d8f3e306992f5f704bac9870aba128238a23
+PASS ordinary-markers emits identical unsigned ELF bytes to the hosted baseline
+PASS ordinary-mixed exit=0 sha256=7cb862971995e5a73980e29ea3b6d8f3e306992f5f704bac9870aba128238a23
+PASS ordinary-mixed emits identical unsigned ELF bytes to the hosted baseline
+PASS ordinary-resource-bound exit=103 sha256=4f626d23e12a03cf9adbbd7de3214d36f66340f150758f119bf09a746e18c91f
+PASS rejected conditional-uninitialized before output creation
+PASS rejected loop-uninitialized before output creation
+PASS rejected self-uninitialized before output creation
+PASS rejected mixed-domains before output creation
+PASS rejected unsupported-float before output creation
+PASS rejected unsupported-base before output creation
+PASS rejected ordinary-python-isolation before output creation
+23 hosted source/CLI/native checks passed; Linux x86-64 (WSL).
+Limits: decimal integer slice, 64 MiB temporary arena, incomplete values/objects/modules/diagnostics, no FC1/HATCH/performance/self-hosting claim.

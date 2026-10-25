@@ -1,0 +1,31 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "4f93a39b678ca25a4372af6571b5a60617f33c80",
+  "target": "Windows x64 Node; synthetic disposable repositories and contract mutations",
+  "command": [
+    "node",
+    "--test",
+    "tests/planning/*.test.mjs",
+    "tests/foundations/*.test.mjs",
+    "tests/continuity/*.test.mjs",
+    "tests/evidence/*.test.mjs"
+  ],
+  "tool_versions": {
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "powershell": "7.6.4",
+    "git": "git version 2.51.0.windows.1"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T19:21:49.2719903+00:00",
+  "log_path": "reports/checks/v13-source-node.log",
+  "log_sha256": "350d32d38c63b253240f9309f292e1c716cfef594fbb116ae8246191331a5461",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

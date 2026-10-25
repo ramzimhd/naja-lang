@@ -2,55 +2,72 @@
 
 Contract revision: 1.3. Language edition: 2026.1. Integration owner: `/root`.
 FC1 and HATCH remain incomplete; all 19 inherited release gates remain open.
+The 147 inherited requirements, 38 tasks and historical evidence are preserved.
+All new L/C/FC1 contract statuses remain open. Partial implementations and passing
+commands do not establish complete requirement acceptance.
 
-The founder's continuation and L01–L15/C01–C07/FC1 contracts are preserved in
-`docs/continuation/` at source `a75364aa3b7989117c1c1c631ba507ca9bfdafbb`.
-Existing requirements, evidence and assignment history are retained. New
-acceptance work is additive, with explicit revalidation rather than resetting
-old results or presenting an expanded obligation as already verified.
+At exact source `4f93a39b678ca25a4372af6571b5a60617f33c80`, 14 retained checks
+passed with a stable source at command boundaries:
 
-Fresh local baseline at `05df50551d9591036e4403e26d626ee19d1c2a15`: 43 Rust
-tests, 25 native/CLI checks in Linux x86-64 WSL, and 37 planning tests passed.
-The matching hosted [CI run](https://github.com/ramzimhd/naja-lang/actions/runs/40098333023)
-also completed successfully on Windows, Linux and macOS. Emitted programs ran
-on Linux; Windows/macOS jobs checked the seed and emitted artifacts only.
-The fresh local output is in the active tool transcript; new retained exact-source
-logs will be recorded after integration. Existing retained records remain valid
-only for their stated source and acceptance scope.
+| Executed scope | Actual result |
+| --- | --- |
+| Locked/offline Rust workspace | 153 passed, no failures |
+| Node planning/foundation/continuity/recorder suites | 126 passed, no failures or skips |
+| Checked-i64 native harness | 36 checks passed |
+| Hosted integer IR harness | 14 checks; 394 arithmetic/metamorphic and 150 comparison outputs matched |
+| Ordinary integer source harness | 23 checks passed |
+| Tagged native value IR harness | 34 checks; 3,886 independent outputs matched |
+| Native run/test CLI harness | 43 checks passed, including the reviewed filter defect regression |
+| Formatting, Clippy, build, three validators and scoped authored whitespace | Passed |
 
-Implemented slices now include edition-aware brace/named blocks, checked depth
-markers, ordinary native multi-limb decimal integers, definite initialization,
-Unicode 17 XID/NFKC names with original spans, and native comparison assertions.
-The latest work-unit run passed 90 Rust tests and 23 ordinary-source/native checks
-in WSL, including assertion failure exit 104. Native integer allocation is bounded
-by a temporary 64 MiB arena; exhaustion reports exit 103 without truncation.
-These work-unit outputs still need a new committed-source retained record.
+Exact commands, versions, exit codes, source identities, raw sanitized logs and
+SHA-256 hashes are in `reports/checks/v13-source-*.json` and paired logs. The host
+was Windows x64; emitted programs actually ran on Linux x86-64 through explicit
+Ubuntu WSL. These results do not verify direct Linux process-adapter behavior,
+native Windows/macOS output, a clean host, self-hosting or human productivity.
+The 126 Node cases use disposable repositories and synthetic mutation fixtures;
+their synthetic success records are not product acceptance evidence.
 
-An independent review at source `551214d` reran 14 native IR checks (394 arithmetic
-and 150 comparison outputs), 18 source checks and ten further probes, including
-812 native outputs. Its exact limits and hashes are in
-`reports/reviews/HOSTED_NATIVE_V13.md`; later Unicode/assertion/CLI changes are
-outside that review. The recovery suite now has 15 passing tests after fixing
-conflict-stage index fingerprints. Its older retained 14-test run and the separate
-synthetic coding-agent handoff remain historical evidence rather than a promise
-of provider-outage recovery. All new L/C/FC1 contracts remain open.
+The retained set was explicitly audited under the actual integration fence 2,
+then private checkpoint 2 advanced retained source to `4f93a39`. Its evidence-only
+dirty snapshot assessed ready with explicit acknowledgement before later public
+metadata edits. The audit verifies record/source/log integrity, not log honesty,
+complete coverage or milestone acceptance. Earlier checkpoint fingerprints and
+all old evidence remain historical. A subsequent metadata HEAD is not silently
+substituted for this tested source.
 
-Contributors use confirmed separate branches/worktrees and paths in
-`planning/assignments.json`. The live reservation was explicitly migrated from
-manual generation 1 to helper generation 2, retaining the outgoing record.
-Old checkpoint fingerprints are preserved and require reconciliation. Current
-work adds native run/test CLI commands, shared text/bytes literal decoding and an
-explicit evidence audit for advancing retained verified source.
+Implemented source slices include edition-aware brace/named/depth suites,
+ordinary decimal multi-limb integers, checked explicit i64, definite initialization,
+Unicode 17 XID/NFKC names, original spans and native comparison assertions.
+Bounded native run/test preserves observed status and raw output bytes. Independent
+CLI review at `18ca704` reproduced a filter-text defect; root fixed it in `c72060b`
+and the retained harness verifies that later fix. See
+`reports/reviews/CLI_EXECUTION_V13.md` for exact review limits. Earlier hosted
+review remains pinned to `551214d` in `reports/reviews/HOSTED_NATIVE_V13.md`.
 
-Next: integrate those scoped changes, record the complete source-specific checks,
-review staged publication, then continue functions and the hosted value/runtime
-foundations. Strings/booleans/floats, functions/classes/containers, full grammar,
-productive libraries, cells, VSIX, self-hosting and measured productivity remain
-incomplete. Parser support does not establish execution support, and agent timing
-is not human productivity evidence.
+Shared text/bytes literal decoding and contextual alias configuration services
+are integrated. A direct native tagged Int/Text/Bytes/Bool/None backend supports
+exact arithmetic, sequence concatenation, comparisons, truthiness and short
+circuiting, using shared integer kernels and a temporary 64 MiB arena. Those
+values are still development IR support at this tested source; ordinary source
+integration continues. Exhaustion exits 103, I/O failure 102, assertions 104 and
+unsupported dynamic operand types 105. There is no reclamation, catchable exception
+system, loop quota or sandbox claim. General floats, repetition, collections,
+functions/classes, full grammar and module semantics remain incomplete.
 
-Client discovery found supported Codex CLI resume/noninteractive interfaces.
-No provider-launch supervisor, persistent service or automatic transfer is
-running. Budget fields unavailable from the client remain unknown. Current chat
-continuation/compaction is active; after a client or machine exit, manual relaunch
-is required until an authorized runner has actually been implemented and tested.
+Confirmed contributors use separate branches/worktrees and scoped paths in
+`planning/assignments.json`. Work now adds explicit project-root alias loading,
+then native positive/length/comparison-chain/type-boundary operations while root
+integrates the shared source parser. Productive libraries, B1–B3, the reference
+backend/linker source closure in NAJA, cells, LSP/DAP/VSIX and measured human
+productivity remain required. The original seed independence inventory remains
+historical; expanded dependencies require renewed closure evidence.
+
+The previous baseline `05df505` passed hosted Windows/Linux/macOS CI at
+https://github.com/ramzimhd/naja-lang/actions/runs/40098333023. Current publication
+must be checked at its own new CI source. The separate fresh-agent drill was
+local and synthetic; it neither transferred production ownership nor simulated a
+provider outage. No unattended provider runner, scheduled service or automatic
+transfer is running. Unknown budget categories stay unknown; manual relaunch is
+required after client/machine exit. Continue engineering after this recovery
+boundary while authorized work and execution capacity remain.

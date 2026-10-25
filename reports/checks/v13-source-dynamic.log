@@ -1,0 +1,39 @@
+Recorded command: node scripts/test-dynamic.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS display-truth-and-all-byte-repr exit=0 sha256=007f882898367bdc03a1148b35c0683d6fb4d565cdefccc9a4c2029187c1b8b8
+PASS operand-returning-and-or exit=0 sha256=e209c9f05ec55093adb0cd8bf951b71f17acb3f2ba27438e607ef32e28f3a316
+PASS numeric-text-bytes-and-unrelated-comparisons exit=0 sha256=b99a32b39a55fee9c6d430eb2bdfd80021261f6fafb21f87cd23e5f4b1aae02d
+PASS bool-integer-arithmetic-and-metamorphic exit=0 sha256=3e83eb619941fa3c101acd0049ae26451fcb23c0507a17c4d3b0d9d61f85da52
+PASS immutable-text-and-bytes-concatenation exit=0 sha256=3201a5db8b3d87c35fc38067ff26a60041c5825e51789963c97830c402396624
+PASS control-reassignment-and-aliases exit=0 sha256=cd7e36a00bd36138cce8544d9e2b48407818537d6046648768576eba5dd62d74
+PASS short-circuit-skips-runtime-type-errors exit=0 sha256=6f4aa89d9f1e120509ae018194b22c2f9c096363fafb38bda9fe313b945ad07f
+PASS type-error-int-text-add exit=105 sha256=d178ca46b39f5fd72695297e89676a53b33d08cdaa7adf961e38f5e2cd7d39e3
+PASS type-error-bool-bytes-multiply exit=105 sha256=2c77198f36659723207d355e0c12a6e7272afd84d6d9590101e5845c15ae6d04
+PASS type-error-text-bytes-add exit=105 sha256=abc23f38db680973ed97dc348a0dc2e294b347434666591bd76190c93e694ddb
+PASS type-error-none-negation exit=105 sha256=a377045c909c5eee3fe28262b701490ef5a407565c922b19ca082eb5a701e6f6
+PASS type-error-text-text-multiply exit=105 sha256=6a92229e588e7ce59ddce75fcb7b58c02dfeb3cdbf22e2c125d5b13693085792
+PASS type-error-text-ordered-int exit=105 sha256=62a5d96fa2dab9017d246f4c4d4ed18712eb99b1a257846a7735e73daa479861
+PASS type-error-none-ordered-none exit=105 sha256=efff5c7435b2f733c4d2d88e00807877b7435cfe0cc9467d9c17bd6cf8c3601b
+PASS type-error-bool-ordered-text exit=105 sha256=ba5c3bce81ce43c0710199a83d2a2cdab64b8a64c223983b227b95c22fd67653
+PASS type-error-bytes-subtract exit=105 sha256=fdeea5842f05b5b51258e016f6ceaadd1d690470de4867739c21778e5c5daa2d
+PASS assertion-failure exit=104 sha256=167ecadba12081492350e9b75019570336a9836e16d5ea481c69bbeb19b0e796
+PASS arena-resource-text-concat exit=103 sha256=ec8be8d62d0ac2b9297e10f592e104cdfc4ebbe4307ecb18b26b1ece2cfcc433
+PASS arena-resource-integer-descriptors exit=103 sha256=75ce33d96e209ca059cdbfd8b28c56d2799189ad2cb6242a4256884f950e42aa
+PASS arena-resource-bytes-format-buffer exit=103 sha256=1e4f76bb578a3e4201624044f10a718266dcd07534e4fa78cdb26efd7cc700dd
+PASS text stdout write failure exit102
+PASS bytes stdout write failure exit102
+PASS bool stdout write failure exit102
+PASS int stdout write failure exit102
+PASS invalid IR rejected before output: uninitialized
+PASS invalid IR rejected before output: out-of-frame
+PASS invalid IR rejected before output: bad-literal
+PASS invalid IR rejected before output: invalid-text-utf8
+PASS invalid IR rejected before output: deep-expression
+PASS invalid IR rejected before output: loop-scope
+PASS repeated emission has identical unsigned ELF bytes
+PASS malformed tag descriptor is guarded before payload access
+PASS malformed length descriptor is guarded before payload access
+PASS native output depends on runtime literal data rather than a canned result
+34 dynamic native/IR checks passed; 3886 independent arithmetic, comparison, truth, bytes-repr and metamorphic outputs matched.
+Limits: B0 development IR; Linuxx64/explicit local WSL; bounded 64MiB temporary arena; no float/container/functions/exception-unwinding, complete runtime, FC1, self-hosting or release claim.

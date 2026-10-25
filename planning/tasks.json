@@ -76,7 +76,9 @@
       "branch": "agent/integrator-H0",
       "evidence": [
         "reports/checks/ci-seed-three-os.json",
-        "reports/checks/integrated-planning-tests.json"
+        "reports/checks/integrated-planning-tests.json",
+        "reports/checks/v13-source-rust.json",
+        "reports/checks/v13-source-node.json"
       ]
     },
     {
@@ -95,7 +97,8 @@
       "owner": "/root",
       "branch": "agent/integrator-H0",
       "evidence": [
-        "reports/checks/seed-rust-tests.json"
+        "reports/checks/seed-rust-tests.json",
+        "reports/checks/v13-source-rust.json"
       ]
     },
     {
@@ -113,7 +116,9 @@
       "status": "in_progress",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": [],
+      "evidence": [
+        "reports/checks/v13-source-rust.json"
+      ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
     {
@@ -128,10 +133,12 @@
         "tests/aliases/"
       ],
       "primary_requirement": "SYN-05",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
-      "evidence": []
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "evidence": [
+        "reports/checks/v13-source-rust.json"
+      ]
     },
     {
       "id": "T08",
@@ -166,7 +173,9 @@
       "status": "in_progress",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": [],
+      "evidence": [
+        "reports/checks/v13-source-rust.json"
+      ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
     {
@@ -201,7 +210,9 @@
       "status": "in_progress",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": [],
+      "evidence": [
+        "reports/checks/v13-source-rust.json"
+      ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
     {
@@ -220,7 +231,10 @@
       "status": "in_progress",
       "owner": "/root",
       "branch": "agent/integrator-H0",
-      "evidence": [],
+      "evidence": [
+        "reports/checks/v13-source-rust.json",
+        "reports/checks/v13-source-cli.json"
+      ],
       "note": "Basic native run/test CLI slice is in progress; libraries/module/full CLI obligations remain open."
     },
     {
