@@ -280,10 +280,14 @@ for (const [index, value] of ['False', 'None', '0', '""', 'b""'].entries()) {
 run('chain-middle-once-arena', fixture('chain-once-arena.naja'), '8388608\n16777216\n');
 const duplicate = fixture('chain-once-arena.naja').replace('assert s < s + s > s', 'middle_first = s + s\nmiddle_second = s + s\nassert middle_first == middle_second\nassert s < middle_first > s');
 run('duplicate-middle-resource-control', duplicate, '', { exit: 103, stderr: 'NJA203: native value arena exhausted\n' });
+// Mapping syntax is implemented; full container display remains a native guard.
+// Both original sources were independently executed before this migration.
+run('dictionary-display-guard', 'print({"a": 1})\n', '', { exit: 105, stderr: 'NJA205: native value type mismatch\n' });
+run('set-display-guard', 'print({1, 2})\n', '', { exit: 105, stderr: 'NJA205: native value type mismatch\n' });
 for (const [name, body, code] of [
   ['float', 'print(1.25)', /NJA1\d\d/], ['function-default', 'def f(x=1):\n    return x', /NJA1\d\d/],
-  ['list-comprehension', 'print([value for value in [1, 2]])', /NJA1\d\d/], ['dictionary', 'print({"a": 1})', /NJA1\d\d/],
-  ['tuple-unpacking', 'a, b = (1, 2)', /NJA1\d\d/], ['set', 'print({1, 2})', /NJA1\d\d/],
+  ['list-comprehension', 'print([value for value in [1, 2]])', /NJA1\d\d/],
+  ['tuple-unpacking', 'a, b = (1, 2)', /NJA1\d\d/],
   ['formatted-string', 'print(f"{1}")', /F0011/],
   ['named-escape', String.raw`print("\N{SNAKE}")`, /F0034/], ['surrogate-escape', String.raw`print("\ud800")`, /F0035/],
   ['byte-octal', String.raw`print(b"\400")`, /F0037/], ['adjacent-literals', 'print("a" "b")', /NJA1\d\d/],

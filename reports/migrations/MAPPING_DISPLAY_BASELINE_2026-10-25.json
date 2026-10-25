@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "source_commit": "d0dd2804eec72291017799ad6e2289fef90a7daa",
+  "target": "Linux x86-64 via explicit local WSL",
+  "scope": "Original Dict/Set display sources now parse/build but explicitly fail native display105. Complete container display remains required.",
+  "artifacts": "C:/naja/target/mappings-display-migration-7Kc5gl",
+  "cases": [
+    {
+      "name": "dictionary",
+      "source": "print({\"a\": 1})\n",
+      "source_sha256": "df0200a6be8fc9fd6ae99c81c248f4e66cf70d65d570f3b5b60aceeea7edadf7",
+      "elf_sha256": "3e412e75a45191a8a695a70a9d1fd383879fe0ecd001ede671c6cc2416f09bd7",
+      "commands": [
+        {
+          "command": [
+            "C:\\naja\\target\\debug\\naja.exe",
+            "check",
+            "C:\\naja\\target\\mappings-display-migration-7Kc5gl\\dictionary.naja"
+          ],
+          "exit_code": 0,
+          "stdout_hex": "436865636b6564206578706572696d656e74616c206e6174697665207375627365743a20433a5c6e616a615c7461726765745c6d617070696e67732d646973706c61792d6d6967726174696f6e2d374b6335676c5c64696374696f6e6172792e6e616a610a",
+          "stderr_hex": ""
+        },
+        {
+          "command": [
+            "C:\\naja\\target\\debug\\naja.exe",
+            "build",
+            "C:\\naja\\target\\mappings-display-migration-7Kc5gl\\dictionary.naja",
+            "--target",
+            "x86_64-unknown-linux-gnu",
+            "--output",
+            "C:\\naja\\target\\mappings-display-migration-7Kc5gl\\dictionary.elf"
+          ],
+          "exit_code": 0,
+          "stdout_hex": "4275696c74204c696e7578207838362d363420454c463a20433a5c6e616a615c7461726765745c6d617070696e67732d646973706c61792d6d6967726174696f6e2d374b6335676c5c64696374696f6e6172792e656c6620283231323932206279746573290a",
+          "stderr_hex": ""
+        },
+        {
+          "command": [
+            "wsl.exe",
+            "--exec",
+            "/usr/bin/wslpath",
+            "-a",
+            "C:\\naja\\target\\mappings-display-migration-7Kc5gl\\dictionary.elf"
+          ],
+          "exit_code": 0,
+          "stdout_hex": "2f6d6e742f632f6e616a612f7461726765742f6d617070696e67732d646973706c61792d6d6967726174696f6e2d374b6335676c2f64696374696f6e6172792e656c660a",
+          "stderr_hex": ""
+        },
+        {
+          "command": [
+            "wsl.exe",
+            "--exec",
+            "/usr/bin/chmod",
+            "u+x",
+            "/mnt/c/naja/target/mappings-display-migration-7Kc5gl/dictionary.elf"
+          ],
+          "exit_code": 0,
+          "stdout_hex": "",
+          "stderr_hex": ""
+        },
+        {
+          "command": [
+            "wsl.exe",
+            "--exec",
+            "/usr/bin/timeout",
+            "--signal=TERM",
+            "--kill-after=1s",
+            "5",
+            "/mnt/c/naja/target/mappings-display-migration-7Kc5gl/dictionary.elf"
+          ],
+          "exit_code": 105,
+          "stdout_hex": "",
+          "stderr_hex": "4e4a413230353a206e61746976652076616c75652074797065206d69736d617463680a"
+        }
+      ]
+    },
+    {
+      "name": "set",
+      "source": "print({1, 2})\n",
+      "source_sha256": "fdfc7e68c98ed87fc3ea4df7cc0aa07f285bd98fc422af1ed86de6fdac00cc5e",
+      "elf_sha256": "f0fa4e333cff22ddc783c7e30e2f0abc69034cd815bd324e17afa162ad0752be",
+      "commands": [
+        {
+          "command": [
+            "C:\\naja\\target\\debug\\naja.exe",
+            "check",
+            "C:\\naja\\target\\mappings-display-migration-7Kc5gl\\set.naja"
+          ],
+          "exit_code": 0,
+          "stdout_hex": "436865636b6564206578706572696d656e74616c206e6174697665207375627365743a20433a5c6e616a615c7461726765745c6d617070696e67732d646973706c61792d6d6967726174696f6e2d374b6335676c5c7365742e6e616a610a",
+          "stderr_hex": ""
+        },
+        {
+          "command": [
+            "C:\\naja\\target\\debug\\naja.exe",
+            "build",
+            "C:\\naja\\target\\mappings-display-migration-7Kc5gl\\set.naja",
+            "--target",
+            "x86_64-unknown-linux-gnu",
+            "--output",
+            "C:\\naja\\target\\mappings-display-migration-7Kc5gl\\set.elf"
+          ],
+          "exit_code": 0,
+          "stdout_hex": "4275696c74204c696e7578207838362d363420454c463a20433a5c6e616a615c7461726765745c6d617070696e67732d646973706c61792d6d6967726174696f6e2d374b6335676c5c7365742e656c6620283231323834206279746573290a",
+          "stderr_hex": ""
+        },
+        {
+          "command": [
+            "wsl.exe",
+            "--exec",
+            "/usr/bin/wslpath",
+            "-a",
+            "C:\\naja\\target\\mappings-display-migration-7Kc5gl\\set.elf"
+          ],
+          "exit_code": 0,
+          "stdout_hex": "2f6d6e742f632f6e616a612f7461726765742f6d617070696e67732d646973706c61792d6d6967726174696f6e2d374b6335676c2f7365742e656c660a",
+          "stderr_hex": ""
+        },
+        {
+          "command": [
+            "wsl.exe",
+            "--exec",
+            "/usr/bin/chmod",
+            "u+x",
+            "/mnt/c/naja/target/mappings-display-migration-7Kc5gl/set.elf"
+          ],
+          "exit_code": 0,
+          "stdout_hex": "",
+          "stderr_hex": ""
+        },
+        {
+          "command": [
+            "wsl.exe",
+            "--exec",
+            "/usr/bin/timeout",
+            "--signal=TERM",
+            "--kill-after=1s",
+            "5",
+            "/mnt/c/naja/target/mappings-display-migration-7Kc5gl/set.elf"
+          ],
+          "exit_code": 105,
+          "stdout_hex": "",
+          "stderr_hex": "4e4a413230353a206e61746976652076616c75652074797065206d69736d617463680a"
+        }
+      ]
+    }
+  ]
+}
