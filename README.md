@@ -6,7 +6,8 @@ as its goals. The founder has long wanted these capabilities together. Developme
 is AI-assisted under human direction; this does not establish independent audit,
 universal compatibility, memory safety or performance superiority.
 
-Development has started from the English HATCH 1.2 specifications. This is an early
+Development has started from the English HATCH specifications, expanded by the
+[founder's revision 1.3](docs/continuation/README.md). This is an early
 experimental Rust seed, **not a HATCH release**. The implementation currently has
 a lossless lexer/logical-line CST and a small native Linux x86-64 code-generation
 spike. It does not yet parse the complete grammar, implement hosted integers,
@@ -14,7 +15,9 @@ self-host, provide native sessions, or supply an installable VS Code extension.
 
 The native spike requires `from naja.core import i64`, explicit `i64(...)`
 literal constructors and `: i64` declarations. It supports checked addition, subtraction, multiplication, signed
-comparisons, assignment, `if`/`else`, `while` and integer output. It rejects
+comparisons, assignment, `if`/`else`, `while` and integer output. `.naja` edition
+2026.1 adds brace suites, transparent named sections and indentation depth markers
+through the shared frontend. It rejects
 unimplemented features rather than executing Python or silently narrowing `int`.
 See [the seed limits](bootstrap/README.md) and
 [frontend limits](bootstrap/frontend/README.md).
@@ -44,7 +47,8 @@ invoke Node, Python, Rust, an external linker or LLVM.
 NAJA targets at least 75% less task-specific code through its standard library;
 the comparison suite is under implementation. No code-size advantage or reduction
 in development time has been measured. The complete scope remains 139 mandatory
-requirements, 8 future objectives, 38 tasks and 19 release gates. See
+inherited requirements, 8 future objectives, 38 tasks and 19 release gates, plus
+the additive revision 1.3 foundations and FC1 acceptance checks. See
 [START_HERE](START_HERE.md), [state](planning/state.json), and
 [the handoff](launch/HANDOFF.md) for current evidence and remaining work.
 

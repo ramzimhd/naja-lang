@@ -34,8 +34,8 @@ The `invalid_` category remains visible in the total inventory. These rules
 describe specialized upstream errors; matching their names does not prove NAJA
 rejects the corresponding inputs correctly. NAJA independently implements its
 frontend, diagnostics and runtime. The upstream implementation actions and
-return types are reference annotations. The only planned `.naja` extensions
-remain the depth markers and contextual aliases in document 04; `.py` retains
+return types are reference annotations. Planned `.naja` extensions
+include the edition 2026.1 additions in L01–L15 and ADR-003; `.py` retains
 standard source forms by default. Their complete acceptance tests remain open.
 
 The Python Software Foundation and contributors provide the upstream reference

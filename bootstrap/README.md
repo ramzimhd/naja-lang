@@ -9,7 +9,9 @@ linker; generated Linux ELF files use the independent emitter instead.
 `naja lex` produces original-source byte spans and lossless tokens. `naja check`
 checks the experimental executable subset. `naja build` emits a fresh Linux x86-64
 ELF file and never executes source. Commands not shown by `naja --help` are not
-implemented. The frontend's logical-line CST is not a complete grammar parser.
+implemented. The frontend's logical-line CST and suite metadata are not a complete
+grammar parser. `.naja` selects edition 2026.1; `.py` retains the separate
+compatibility dialect. Both use the same frontend implementation.
 
 ## Executable subset
 
@@ -27,19 +29,25 @@ Expressions support these checked constructors, local variables, parentheses,
 unary `+`/`-` and binary `+`, `-`, `*` with their usual precedence and left
 associativity. Conditions require one signed comparison (`==`, `!=`, `<`, `<=`,
 `>` or `>=`). `if`/`else` and `while` support indented suites or one supported
-simple statement on the header line. Arithmetic overflow emits `NJA201` to
+simple statement on the header line. `.naja` also supports brace suites, optional
+single-line block labels, transparent named sections and checked `:(depth)`
+markers on indentation suites. Named sections preserve enclosing variable scope;
+they add no native instructions. Nested delimiter systems follow
+[ADR-003](../docs/decisions/0003-language-edition-2026-1.md), including each nested
+indentation header's physical baseline. Empty suites and `elif` remain unsupported
+by this executable subset. Arithmetic overflow emits `NJA201` to
 stderr and exits 101; stdout failure emits `NJA202` and exits 102. Error-message
 writes are best effort. Writes retry EINTR and handle partial transfers; broken
 pipes may terminate under Linux's default SIGPIPE policy.
 
 This subset does not implement hosted arbitrary-precision `int`, floats,
 booleans, string execution, functions, objects, containers, exceptions, general
-imports, aliases or depth markers. Syntax outside the subset produces an English
+imports or aliases. Syntax outside the subset produces an English
 diagnostic; rejection of a valid standard-language form is an implementation
 limit and does not redefine the promised language. Unicode string/comment data
 is retained by the lexer. Unicode identifiers remain a clearly diagnosed missing
-frontend capability. `.py` and `.naja` have the same limited executable subset
-at this checkpoint, without alias reinterpretation or text substitution.
+frontend capability. NAJA-only suite forms are explicitly rejected in `.py`;
+there is no alias reinterpretation or text substitution.
 
 Limits: UTF-8 source at most 1 MiB, 128 initialized locals, 128 expression tree
 levels, 64 suite levels and 10000 statements/operations. There is no runtime loop
@@ -63,7 +71,8 @@ NAJA source porting and B1/B2/B3 are unimplemented.
 Ubuntu WSL from Windows. The harness preserves artifact hashes, tests runtime
 control flow, boundaries, overflow, output failure, Unicode paths, rejection
 before output creation, overwrite refusal and deterministic output. Fixtures are
-not DX01–DX06 productivity comparisons. No performance or timing claim follows.
+not DX01–DX06 productivity comparisons. Equivalent block styles additionally
+compare unsigned ELF bytes. No performance or timing claim follows.
 
 Reference sources consulted on October 24, 2026:
 
