@@ -36,6 +36,10 @@ attribute storage, initializer calls and dynamic native method dispatch. See
 [native objects](../../tests/objects/README.md) for its frozen IR contract,
 identity/evaluation rules, resource bounds and unsupported class semantics.
 
+Bounded ordered dictionaries and sets add scalar-key lookup/mutation, membership
+relations and immutable key snapshots. See [native mappings](../../tests/mappings/README.md)
+for exact key equality, mixed-chain evaluation, work budgets and partial scope.
+
 The original `naja_native::emit_elf` keeps the explicit checked-i64 IR and overflow
 policy. `naja_native::hosted::emit_elf` accepts a separate hosted-integer IR with
 `Integer(String)`, locals, negation, addition/subtraction/multiplication, signed
