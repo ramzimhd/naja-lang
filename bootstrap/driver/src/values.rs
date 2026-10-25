@@ -1,14 +1,53 @@
-//! Two explicit value domains share one parser and suite model.
-use naja_native::{self as fixed, Binary, Comparison, hosted};
+//! Native value domains share one parser and suite model.
+use naja_frontend::LiteralValue;
+use naja_native::{self as fixed, Binary, Comparison, dynamic, hosted};
 
 pub(crate) trait Values {
     type Expression;
     type Condition;
     type Statement;
     const HOSTED: bool;
+    const DYNAMIC: bool = false;
     fn integer(text: String) -> Result<Self::Expression, String>;
+    fn literal(_value: LiteralValue) -> Result<Self::Expression, String> {
+        Err("text and bytes are unsupported in this explicit integer domain".into())
+    }
+    fn boolean(_value: bool) -> Result<Self::Expression, String> {
+        Err("booleans are unsupported in this explicit integer domain".into())
+    }
+    fn none() -> Result<Self::Expression, String> {
+        Err("None is unsupported in this explicit integer domain".into())
+    }
     fn local(slot: usize) -> Self::Expression;
+    fn positive(value: Self::Expression) -> Self::Expression {
+        value
+    }
+    fn require_integer(value: Self::Expression) -> Self::Expression {
+        value
+    }
+    fn length(_value: Self::Expression) -> Result<Self::Expression, String> {
+        Err("len is unsupported in this explicit integer domain".into())
+    }
     fn negate(value: Self::Expression) -> Self::Expression;
+    fn boolean_not(_value: Self::Expression) -> Result<Self::Expression, String> {
+        Err("not is unsupported in this explicit integer domain".into())
+    }
+    fn logical(
+        _and: bool,
+        _left: Self::Expression,
+        _right: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Err("short-circuit expressions are unsupported in this explicit integer domain".into())
+    }
+    fn comparison_chain(
+        _first: Self::Expression,
+        _rest: Vec<(Comparison, Self::Expression)>,
+    ) -> Result<Self::Expression, String> {
+        Err("comparison values are unsupported in this explicit integer domain".into())
+    }
+    fn truth(_value: Self::Expression) -> Result<Self::Condition, String> {
+        Err("this explicit integer domain requires a comparison condition".into())
+    }
     fn binary(op: Binary, left: Self::Expression, right: Self::Expression) -> Self::Expression;
     fn height(value: &Self::Expression) -> usize;
     fn condition(
@@ -30,6 +69,7 @@ pub(crate) trait Values {
 
 pub(crate) struct Fixed;
 pub(crate) struct Hosted;
+pub(crate) struct Dynamic;
 
 macro_rules! domain {
     ($name:ident, $module:ident, $hosted:literal, $integer:expr) => {
@@ -112,3 +152,115 @@ domain!(Fixed, fixed, false, |text: String| text
 domain!(Hosted, hosted, true, |text: String| Ok(
     hosted::Expression::Integer(text)
 ));
+
+impl Values for Dynamic {
+    type Expression = dynamic::Expression;
+    type Condition = dynamic::Expression;
+    type Statement = dynamic::Statement;
+    const HOSTED: bool = true;
+    const DYNAMIC: bool = true;
+    fn integer(text: String) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Integer(text))
+    }
+    fn literal(value: LiteralValue) -> Result<Self::Expression, String> {
+        Ok(match value {
+            LiteralValue::Text(value) => dynamic::Expression::Text(value),
+            LiteralValue::Bytes(value) => dynamic::Expression::Bytes(value),
+        })
+    }
+    fn boolean(value: bool) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Boolean(value))
+    }
+    fn none() -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::None)
+    }
+    fn local(slot: usize) -> Self::Expression {
+        dynamic::Expression::Local(slot)
+    }
+    fn positive(value: Self::Expression) -> Self::Expression {
+        dynamic::Expression::Positive(Box::new(value))
+    }
+    fn require_integer(value: Self::Expression) -> Self::Expression {
+        dynamic::Expression::RequireInteger(Box::new(value))
+    }
+    fn length(value: Self::Expression) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Len(Box::new(value)))
+    }
+    fn negate(value: Self::Expression) -> Self::Expression {
+        dynamic::Expression::Negate(Box::new(value))
+    }
+    fn boolean_not(value: Self::Expression) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Not(Box::new(value)))
+    }
+    fn logical(
+        and: bool,
+        left: Self::Expression,
+        right: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Ok(if and {
+            dynamic::Expression::And(Box::new(left), Box::new(right))
+        } else {
+            dynamic::Expression::Or(Box::new(left), Box::new(right))
+        })
+    }
+    fn comparison_chain(
+        first: Self::Expression,
+        rest: Vec<(Comparison, Self::Expression)>,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::CompareChain(Box::new(first), rest))
+    }
+    fn truth(value: Self::Expression) -> Result<Self::Condition, String> {
+        Ok(value)
+    }
+    fn binary(op: Binary, left: Self::Expression, right: Self::Expression) -> Self::Expression {
+        dynamic::Expression::Binary(op, Box::new(left), Box::new(right))
+    }
+    fn height(value: &Self::Expression) -> usize {
+        use dynamic::Expression::*;
+        match value {
+            Integer(_) | Text(_) | Bytes(_) | Boolean(_) | None | Local(_) => 1,
+            Negate(value) | Positive(value) | RequireInteger(value) | Len(value) | Not(value) => {
+                1 + Self::height(value)
+            }
+            Binary(_, left, right)
+            | Compare(_, left, right)
+            | And(left, right)
+            | Or(left, right) => 1 + Self::height(left).max(Self::height(right)),
+            CompareChain(first, rest) => {
+                1 + rest
+                    .iter()
+                    .map(|(_, value)| Self::height(value))
+                    .fold(Self::height(first), usize::max)
+            }
+        }
+    }
+    fn condition(
+        left: Self::Expression,
+        comparison: Comparison,
+        right: Self::Expression,
+    ) -> Self::Condition {
+        dynamic::Expression::Compare(comparison, Box::new(left), Box::new(right))
+    }
+    fn assign(slot: usize, value: Self::Expression) -> Self::Statement {
+        dynamic::Statement::Assign(slot, value)
+    }
+    fn print(value: Self::Expression) -> Self::Statement {
+        dynamic::Statement::Print(value)
+    }
+    fn group(body: Vec<Self::Statement>) -> Self::Statement {
+        dynamic::Statement::Group(body)
+    }
+    fn assertion(condition: Self::Condition) -> Self::Statement {
+        dynamic::Statement::Assert(condition)
+    }
+    fn conditional(
+        condition: Self::Condition,
+        yes: Vec<Self::Statement>,
+        no: Vec<Self::Statement>,
+    ) -> Self::Statement {
+        dynamic::Statement::If(condition, yes, no)
+    }
+    fn while_loop(condition: Self::Condition, body: Vec<Self::Statement>) -> Self::Statement {
+        dynamic::Statement::While(condition, body)
+    }
+}

@@ -1,12 +1,13 @@
 //! Shared bounded executable parser with distinct checked-i64 and hosted domains.
 use naja_frontend::{
-    Diagnostic, Dialect, Lexed, Span, Token, TokenKind, canonical_identifier, lex_with_dialect,
+    AliasContext, AliasTable, AliasTarget, BuiltinAlias, Diagnostic, Dialect, Lexed, Span, Symbol,
+    Token, TokenKind, canonical_identifier, decode_string, lex_with_dialect,
 };
-use naja_native::{Binary, Comparison, MAX_LOCALS, Statement, hosted};
+use naja_native::{Binary, Comparison, MAX_LOCALS, Statement, dynamic, hosted};
 use std::collections::{BTreeMap, BTreeSet};
 use std::marker::PhantomData;
 mod values;
-use values::{Fixed, Hosted, Values};
+use values::{Dynamic, Fixed, Hosted, Values};
 
 /// Reject unsupported syntax instead of executing a foreign runtime or narrowing int.
 pub fn compile(source: &str) -> Result<Vec<u8>, Vec<Diagnostic>> {
@@ -14,9 +15,19 @@ pub fn compile(source: &str) -> Result<Vec<u8>, Vec<Diagnostic>> {
 }
 
 pub fn compile_with_dialect(source: &str, dialect: Dialect) -> Result<Vec<u8>, Vec<Diagnostic>> {
-    let result = match check_with_dialect(source, dialect)? {
+    compile_with_aliases(source, dialect, None)
+}
+
+/// The caller supplies the owning module's table; no ambient alias discovery occurs.
+pub fn compile_with_aliases(
+    source: &str,
+    dialect: Dialect,
+    aliases: Option<&AliasTable>,
+) -> Result<Vec<u8>, Vec<Diagnostic>> {
+    let result = match check_with_aliases(source, dialect, aliases)? {
         CheckedProgram::FixedI64(statements) => naja_native::emit_elf(&statements),
         CheckedProgram::HostedIntegers(statements) => hosted::emit_elf(&statements),
+        CheckedProgram::HostedValues(statements) => dynamic::emit_elf(&statements),
     };
     result.map_err(|message| {
         vec![Diagnostic {
@@ -31,6 +42,7 @@ pub fn compile_with_dialect(source: &str, dialect: Dialect) -> Result<Vec<u8>, V
 pub enum CheckedProgram {
     FixedI64(Vec<Statement>),
     HostedIntegers(Vec<hosted::Statement>),
+    HostedValues(Vec<dynamic::Statement>),
 }
 
 pub fn check(source: &str) -> Result<CheckedProgram, Vec<Diagnostic>> {
@@ -41,6 +53,21 @@ pub fn check_with_dialect(
     source: &str,
     dialect: Dialect,
 ) -> Result<CheckedProgram, Vec<Diagnostic>> {
+    check_with_aliases(source, dialect, None)
+}
+
+pub fn check_with_aliases(
+    source: &str,
+    dialect: Dialect,
+    aliases: Option<&AliasTable>,
+) -> Result<CheckedProgram, Vec<Diagnostic>> {
+    if dialect == Dialect::Python && aliases.is_some() {
+        return Err(vec![Diagnostic {
+            code: "NJA106",
+            message: "project aliases cannot activate in the Python compatibility dialect".into(),
+            span: Span::new(0, 0),
+        }]);
+    }
     let lexed = checked_lex(source, dialect)?;
     // The temporary checked-i64 slice retains its explicit initial import.
     // No import or annotation narrows an ordinary hosted literal to i64.
@@ -49,11 +76,17 @@ pub fn check_with_dialect(
         .next()
         .is_some_and(|token| lexed.text(token) == "from")
     {
-        parse_lexed::<Fixed>(lexed, dialect).map(CheckedProgram::FixedI64)
+        parse_lexed::<Fixed>(lexed, dialect, aliases).map(CheckedProgram::FixedI64)
     } else {
-        let statements = parse_lexed::<Hosted>(lexed, dialect)?;
-        validate_hosted(&statements)?;
-        Ok(CheckedProgram::HostedIntegers(statements))
+        let statements = parse_lexed::<Dynamic>(lexed, dialect, aliases)?;
+        dynamic::validate(&statements).map_err(|message| {
+            vec![Diagnostic {
+                code: "NJA104",
+                message,
+                span: Span::new(0, 0),
+            }]
+        })?;
+        Ok(CheckedProgram::HostedValues(statements))
     }
 }
 
@@ -81,7 +114,7 @@ fn parse_values<V: Values>(
     source: &str,
     dialect: Dialect,
 ) -> Result<Vec<V::Statement>, Vec<Diagnostic>> {
-    parse_lexed::<V>(checked_lex(source, dialect)?, dialect)
+    parse_lexed::<V>(checked_lex(source, dialect)?, dialect, None)
 }
 
 fn checked_lex(source: &str, dialect: Dialect) -> Result<Lexed, Vec<Diagnostic>> {
@@ -102,6 +135,7 @@ fn checked_lex(source: &str, dialect: Dialect) -> Result<Lexed, Vec<Diagnostic>>
 fn parse_lexed<V: Values>(
     lexed: Lexed,
     dialect: Dialect,
+    aliases: Option<&AliasTable>,
 ) -> Result<Vec<V::Statement>, Vec<Diagnostic>> {
     let tokens = lexed.significant_tokens().cloned().collect();
     let mut parser = Parser::<V> {
@@ -110,9 +144,11 @@ fn parse_lexed<V: Values>(
         cursor: 0,
         locals: BTreeMap::new(),
         initialized: BTreeSet::new(),
+        integer_annotations: BTreeSet::new(),
         imported_i64: false,
         nodes: 0,
         dialect,
+        aliases: aliases.cloned(),
         structural_depth: 0,
         values: PhantomData,
     };
@@ -125,9 +161,11 @@ struct Parser<V: Values> {
     cursor: usize,
     locals: BTreeMap<String, usize>,
     initialized: BTreeSet<usize>,
+    integer_annotations: BTreeSet<usize>,
     imported_i64: bool,
     nodes: usize,
     dialect: Dialect,
+    aliases: Option<AliasTable>,
     structural_depth: usize,
     values: PhantomData<V>,
 }
@@ -197,6 +235,69 @@ impl<V: Values> Parser<V> {
             Err(self.error(format!(
                 "expected binding '{value}' in this executable slice"
             )))
+        }
+    }
+    fn take_builtin(&mut self, builtin: BuiltinAlias) -> bool {
+        // Only a call position can select this slice's builtin call syntax.
+        // In particular, an alias on the left of '=' first creates a binding.
+        if !self
+            .tokens
+            .get(self.cursor + 1)
+            .is_some_and(|token| self.lexed.text(token) == "(")
+        {
+            return false;
+        }
+        if self.token().kind != TokenKind::Identifier
+            || reserved(self.text()) && !matches!(self.text(), "print")
+        {
+            return false;
+        }
+        let Ok(name) = self.canonical_name() else {
+            return false;
+        };
+        if self.locals.contains_key(&name) {
+            return false;
+        }
+        let conventional = match builtin {
+            BuiltinAlias::Print => "print",
+            BuiltinAlias::Len => "len",
+        };
+        let matches = name == conventional
+            || self
+                .aliases
+                .as_ref()
+                .and_then(|table| table.lookup(AliasContext::UnboundBuiltin, &name))
+                .is_some_and(|entry| entry.target == AliasTarget::Builtin(builtin));
+        if matches {
+            self.advance();
+        }
+        matches
+    }
+    fn comparison(&self) -> Option<Comparison> {
+        let symbol = match self.token().kind {
+            TokenKind::Symbol(symbol) => Some(symbol),
+            TokenKind::Identifier if !reserved(self.text()) => self
+                .canonical_name()
+                .ok()
+                .and_then(|name| {
+                    self.aliases
+                        .as_ref()?
+                        .lookup(AliasContext::ComparisonOperator, &name)
+                })
+                .and_then(|entry| match entry.target {
+                    AliasTarget::Comparison(symbol) => Some(symbol),
+                    _ => None,
+                }),
+            _ => None,
+        }?;
+        match symbol {
+            Symbol::EqualEqual => Some(Comparison::Equal),
+            Symbol::NotEqual => Some(Comparison::NotEqual),
+            Symbol::Less => Some(Comparison::Less),
+            Symbol::LessEqual => Some(Comparison::LessEqual),
+            Symbol::Greater => Some(Comparison::Greater),
+            Symbol::GreaterEqual => Some(Comparison::GreaterEqual),
+            _ => None,
         }
     }
     fn reserved_name(&self) -> bool {
@@ -418,7 +519,7 @@ impl<V: Values> Parser<V> {
             self.newline()?;
             return Ok(V::assertion(condition));
         }
-        if self.take_binding("print") {
+        if self.take_builtin(BuiltinAlias::Print) {
             self.expect("(")?;
             let value = self.expression(0, 0)?;
             self.expect(")")?;
@@ -455,8 +556,17 @@ impl<V: Values> Parser<V> {
             *self.locals.get(&name).ok_or_else(|| self.error("declare the variable with ': i64' before assignment; hosted int inference is not implemented"))?
         };
         self.expect("=")?;
-        let value = self.expression(0, 0)?;
+        let mut value = self.expression(0, 0)?;
         self.newline()?;
+        if V::DYNAMIC && self.dialect == Dialect::Naja2026 {
+            if declared {
+                self.integer_annotations.insert(slot);
+            }
+            if self.integer_annotations.contains(&slot) {
+                self.account_expression()?;
+                value = V::require_integer(value);
+            }
+        }
         if creates {
             self.locals.insert(name, slot);
         }
@@ -464,32 +574,42 @@ impl<V: Values> Parser<V> {
         Ok(V::assign(slot, value))
     }
     fn condition(&mut self) -> Parsed<V::Condition> {
+        if V::DYNAMIC {
+            let value = self.expression(0, 0)?;
+            return V::truth(value).map_err(|message| self.error(message));
+        }
         let left = self.expression(0, 0)?;
-        let comparison = match self.text() {
-            "==" => Comparison::Equal,
-            "!=" => Comparison::NotEqual,
-            "<" => Comparison::Less,
-            "<=" => Comparison::LessEqual,
-            ">" => Comparison::Greater,
-            ">=" => Comparison::GreaterEqual,
-            _ => {
-                return Err(self.error(
-                    "this native spike requires one explicit comparison in each condition",
-                ));
-            }
-        };
+        let comparison = self.comparison().ok_or_else(|| {
+            self.error("this explicit integer domain requires one comparison in each condition")
+        })?;
         self.advance();
         let right = self.expression(0, 0)?;
         Ok(V::condition(left, comparison, right))
+    }
+    fn account_expression(&mut self) -> Parsed<()> {
+        self.nodes += 1;
+        if self.nodes > 10_000 {
+            return Err(self.error("experimental parse operation limit of 10000 exceeded"));
+        }
+        Ok(())
     }
     fn expression(&mut self, minimum: u8, depth: usize) -> Parsed<V::Expression> {
         if depth > 128 {
             return Err(self.error("experimental expression nesting exceeds 128"));
         }
-        let mut left = if self.take("-") {
-            V::negate(self.expression(3, depth + 1)?)
+        let mut left = if V::DYNAMIC && self.text() == "not" {
+            if minimum > 3 {
+                return Err(
+                    self.error("not requires parentheses in an arithmetic or comparison operand")
+                );
+            }
+            self.advance();
+            let value = self.expression(3, depth + 1)?;
+            V::boolean_not(value).map_err(|message| self.error(message))?
+        } else if self.take("-") {
+            V::negate(self.expression(7, depth + 1)?)
         } else if self.take("+") {
-            self.expression(3, depth + 1)?
+            V::positive(self.expression(7, depth + 1)?)
         } else if self.take("(") {
             let value = self.expression(0, depth + 1)?;
             self.expect(")")?;
@@ -522,6 +642,22 @@ impl<V: Values> Parser<V> {
             self.advance();
             self.expect(")")?;
             value
+        } else if V::DYNAMIC && self.token().kind == TokenKind::String {
+            let decoded = decode_string(&self.lexed.source, self.token())?;
+            let value = V::literal(decoded).map_err(|message| self.error(message))?;
+            self.advance();
+            value
+        } else if V::DYNAMIC && matches!(self.text(), "True" | "False") {
+            let value = V::boolean(self.text() == "True").map_err(|message| self.error(message))?;
+            self.advance();
+            value
+        } else if V::DYNAMIC && self.take("None") {
+            V::none().map_err(|message| self.error(message))?
+        } else if V::DYNAMIC && self.take_builtin(BuiltinAlias::Len) {
+            self.expect("(")?;
+            let value = self.expression(0, depth + 1)?;
+            self.expect(")")?;
+            V::length(value).map_err(|message| self.error(message))?
         } else if self.token().kind == TokenKind::Integer {
             if !V::HOSTED {
                 return Err(self.error("hosted integer expressions require the hosted path; use explicit i64(decimal_literal) in this fixed-width slice"));
@@ -554,11 +690,52 @@ impl<V: Values> Parser<V> {
                 "unsupported expression; this checked-i64 slice requires explicit i64 values"
             }));
         };
+        self.account_expression()?;
         loop {
+            if V::DYNAMIC {
+                let logical = match self.text() {
+                    "or" => Some((1, false)),
+                    "and" => Some((2, true)),
+                    _ => None,
+                };
+                if let Some((precedence, and)) = logical {
+                    if precedence < minimum {
+                        break;
+                    }
+                    self.advance();
+                    let right = self.expression(precedence + 1, depth + 1)?;
+                    left = V::logical(and, left, right).map_err(|message| self.error(message))?;
+                    self.account_expression()?;
+                    if V::height(&left) > 128 {
+                        return Err(self.error("experimental expression tree depth exceeds 128"));
+                    }
+                    continue;
+                }
+                if self.comparison().is_some() {
+                    if 4 < minimum {
+                        break;
+                    }
+                    let mut rest = Vec::new();
+                    while let Some(comparison) = self.comparison() {
+                        if rest.len() >= dynamic::MAX_CHAIN_COMPARISONS {
+                            return Err(self.error("comparison chain exceeds 128 comparisons"));
+                        }
+                        self.advance();
+                        self.account_expression()?;
+                        rest.push((comparison, self.expression(5, depth + 1)?));
+                    }
+                    left =
+                        V::comparison_chain(left, rest).map_err(|message| self.error(message))?;
+                    if V::height(&left) > 128 {
+                        return Err(self.error("experimental expression tree depth exceeds 128"));
+                    }
+                    continue;
+                }
+            }
             let (precedence, operator) = match self.text() {
-                "+" => (1, Binary::Add),
-                "-" => (1, Binary::Subtract),
-                "*" => (2, Binary::Multiply),
+                "+" => (5, Binary::Add),
+                "-" => (5, Binary::Subtract),
+                "*" => (6, Binary::Multiply),
                 _ => break,
             };
             if precedence < minimum {
@@ -570,10 +747,7 @@ impl<V: Values> Parser<V> {
             if V::height(&left) > 128 {
                 return Err(self.error("experimental expression tree depth exceeds 128"));
             }
-            self.nodes += 1;
-            if self.nodes > 10_000 {
-                return Err(self.error("experimental expression operation limit exceeded"));
-            }
+            self.account_expression()?;
         }
         if V::height(&left) > 128 {
             return Err(self.error("experimental expression tree depth exceeds 128"));
@@ -660,7 +834,8 @@ mod tests {
         ] {
             assert!(compile(&format!("{IMPORT}{body}")).is_err(), "{body}");
         }
-        assert!(compile("print(True)\n").is_err());
+        assert!(compile("print(True)\n").is_ok());
+        assert!(compile("print(1.5)\n").is_err());
     }
     #[test]
     fn accept_minimum_integer_and_standard_same_line_suite() {
@@ -853,5 +1028,59 @@ mod tests {
         let error = &check(collision).unwrap_err()[0];
         assert!(error.message.contains("canonical Unicode"));
         assert_eq!(&collision[error.span.start..error.span.end], "K");
+    }
+    #[test]
+    fn dynamic_source_bounds_and_unsupported_syntax_retain_original_spans() {
+        for source in [
+            "print(True)\nprint(None)\nprint(+(True and 7))\n",
+            "value = b'bytes'\nprint(len(value))\n",
+            "if not 1 > 2 and 'yes': assert 1 < 2 <= 3\n",
+            "x: int = 'informational'\nprint(x)\n",
+        ] {
+            assert!(compile(source).is_ok(), "{source}");
+        }
+        for source in [
+            "print(1 < not True)\n",
+            "print(-not True)\n",
+            "print('a' 'b')\n",
+            "print(len())\n",
+            "print(len('a', 'b'))\n",
+            "x: str = 'unsupported annotation'\n",
+        ] {
+            assert!(compile(source).is_err(), "{source}");
+        }
+        let chain = format!("print({})\n", vec!["1"; 130].join(" < "));
+        assert!(
+            check(&chain).unwrap_err()[0]
+                .message
+                .contains("128 comparisons")
+        );
+        let source = "变量 = 'text'\nprint(变量 + missing_name)\n";
+        let error = &check(source).unwrap_err()[0];
+        assert_eq!(&source[error.span.start..error.span.end], "missing_name");
+    }
+    #[test]
+    fn contextual_aliases_preserve_bindings_data_and_canonical_operations() {
+        let table = naja_frontend::parse_aliases("[operators]\n\"<\" = \"lessThan\"\n[builtins]\n\"print\" = \"display\"\n\"len\" = \"length\"\n", naja_frontend::AliasEnvironment { edition: "2026.1", policy: "synthetic compiler test" }).unwrap();
+        let aliased = "lessThan = 7\ndisplay(length('é🌍'))\ndisplay(1 lessThan 2 < 3)\ndisplay(lessThan)\nprint('display lessThan')\n";
+        let conventional = "lessThan = 7\nprint(len('é🌍'))\nprint(1 < 2 < 3)\nprint(lessThan)\nprint('display lessThan')\n";
+        assert_eq!(
+            compile_with_aliases(aliased, Dialect::Naja2026, Some(&table)).unwrap(),
+            compile_with_dialect(conventional, Dialect::Naja2026).unwrap()
+        );
+        assert!(
+            compile_with_aliases(
+                "display = 7\nprint(display)\n",
+                Dialect::Naja2026,
+                Some(&table)
+            )
+            .is_ok()
+        );
+        assert!(
+            compile_with_aliases("display = 7\ndisplay(9)\n", Dialect::Naja2026, Some(&table))
+                .is_err()
+        );
+        assert!(compile_with_aliases("print(1)\n", Dialect::Python, Some(&table)).is_err());
+        assert!(compile_with_dialect(aliased, Dialect::Naja2026).is_err());
     }
 }
