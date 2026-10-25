@@ -39,6 +39,8 @@ impl Runtime {
         c.mov(Ax, Di);
         c.call(self.check);
         c.load(Dx, Di, 0);
+        c.immediate(7, Dx, 7);
+        c.j(0x84, self.type_error);
         c.store(Bp, TAG, Dx);
         let sequence = c.label();
         c.immediate(7, Dx, 1);
