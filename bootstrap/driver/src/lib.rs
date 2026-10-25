@@ -59,7 +59,7 @@ pub fn compile_with_aliases(
         let result = match check_with_aliases_inner(source, dialect, aliases)? {
             CheckedProgram::FixedI64(statements) => naja_native::emit_elf(&statements),
             CheckedProgram::HostedIntegers(statements) => hosted::emit_elf(&statements),
-            CheckedProgram::HostedValues(program) => dynamic::emit_program(&program),
+            CheckedProgram::HostedValues(program) => dynamic::emit_object_program(&program),
         };
         result.map_err(|message| {
             vec![Diagnostic {
@@ -75,7 +75,7 @@ pub fn compile_with_aliases(
 pub enum CheckedProgram {
     FixedI64(Vec<Statement>),
     HostedIntegers(Vec<hosted::Statement>),
-    HostedValues(dynamic::Program),
+    HostedValues(dynamic::ObjectProgram),
 }
 
 pub fn check(source: &str) -> Result<CheckedProgram, Vec<Diagnostic>> {
@@ -132,11 +132,12 @@ fn check_with_aliases_inner(
             .map(|program| CheckedProgram::FixedI64(program.body))
     } else {
         let parsed = parse_lexed::<Dynamic>(lexed, dialect, aliases)?;
-        let program = dynamic::Program {
+        let program = dynamic::ObjectProgram {
             body: parsed.body,
             functions: parsed.functions,
+            classes: parsed.classes,
         };
-        dynamic::validate_program(&program).map_err(|message| {
+        dynamic::validate_object_program(&program).map_err(|message| {
             vec![Diagnostic {
                 code: "NJA104",
                 message,
@@ -212,6 +213,11 @@ fn parse_lexed<V: Values>(
         structural_depth: 0,
         functions: Vec::new(),
         function_signatures: BTreeMap::new(),
+        parameter_counts: Vec::new(),
+        classes: Vec::new(),
+        class_names: BTreeMap::new(),
+        class_body: None,
+        constructor_calls: Vec::new(),
         in_function: false,
         flow_live: true,
         module_bindings: BTreeSet::new(),
@@ -224,6 +230,7 @@ fn parse_lexed<V: Values>(
 struct ParsedProgram<V: Values> {
     body: Vec<V::Statement>,
     functions: Vec<V::Function>,
+    classes: Vec<dynamic::Class>,
 }
 
 struct Parser<V: Values> {
@@ -241,6 +248,11 @@ struct Parser<V: Values> {
     structural_depth: usize,
     functions: Vec<V::Function>,
     function_signatures: BTreeMap<String, (usize, usize)>,
+    parameter_counts: Vec<usize>,
+    classes: Vec<dynamic::Class>,
+    class_names: BTreeMap<String, usize>,
+    class_body: Option<usize>,
+    constructor_calls: Vec<(usize, usize, Span)>,
     in_function: bool,
     flow_live: bool,
     module_bindings: BTreeSet<String>,
@@ -354,6 +366,7 @@ impl<V: Values> Parser<V> {
         if self.locals.contains_key(&name)
             || self.function_signatures.contains_key(&name)
             || self.imports.contains_key(&name)
+            || self.class_names.contains_key(&name)
             || (self.in_function && self.module_bindings.contains(&name))
         {
             return false;
@@ -428,7 +441,10 @@ impl<V: Values> Parser<V> {
             }
             if self.text() == "def" {
                 header = false;
-                self.function_definition()?;
+                self.function_definition(0)?;
+            } else if self.text() == "class" {
+                header = false;
+                self.class_definition()?;
             } else if self.text() == "from" {
                 if V::DYNAMIC {
                     if !header {
@@ -463,7 +479,26 @@ impl<V: Values> Parser<V> {
                 statements.push(self.statement(0)?);
             }
         }
-        if statements.is_empty() && (!self.functions.is_empty() || !self.imports.is_empty()) {
+        for &(index, received, span) in &self.constructor_calls {
+            let required = self.classes[index]
+                .methods
+                .iter()
+                .find(|method| method.name == "__init__")
+                .map(|method| self.parameter_counts[method.function] - 1)
+                .unwrap_or(0);
+            if received != required {
+                return Err(Diagnostic {
+                    code: "NJA101",
+                    message: format!(
+                        "constructor requires {required} positional arguments; received {received}"
+                    ),
+                    span,
+                });
+            }
+        }
+        if statements.is_empty()
+            && (!self.functions.is_empty() || !self.imports.is_empty() || !self.classes.is_empty())
+        {
             // Definitions bind static names but do not execute their bodies.
             // An empty transparent group gives the native module a zero-work
             // main body without manufacturing a call or a printed result.
@@ -477,6 +512,7 @@ impl<V: Values> Parser<V> {
         Ok(ParsedProgram {
             body: statements,
             functions: std::mem::take(&mut self.functions),
+            classes: std::mem::take(&mut self.classes),
         })
     }
     fn api_import(&mut self) -> Parsed<()> {
@@ -538,22 +574,78 @@ impl<V: Values> Parser<V> {
         }
         self.newline()
     }
-    fn function_definition(&mut self) -> Parsed<()> {
+    fn member_name(&self) -> Parsed<String> {
+        if self.token().kind != TokenKind::Identifier
+            || reserved(self.text()) && !matches!(self.text(), "print" | "i64")
+        {
+            return Err(self.error("expected an ordinary attribute or method name"));
+        }
+        let name = self.canonical_name()?;
+        if name.len() > dynamic::MAX_ATTRIBUTE_NAME_BYTES {
+            return Err(self.error("experimental member name exceeds 256 UTF-8 bytes"));
+        }
+        if name.starts_with("__") && name.ends_with("__") && name != "__init__" {
+            return Err(self.error("special members other than __init__ are unsupported"));
+        }
+        Ok(name)
+    }
+    fn class_definition(&mut self) -> Parsed<()> {
+        if !V::DYNAMIC || self.in_function || self.class_body.is_some() {
+            return Err(self.error("only top-level ordinary class definitions are implemented"));
+        }
+        self.account_statement(0)?;
+        self.expect("class")?;
+        if self.token().kind != TokenKind::Identifier || self.reserved_name() {
+            return Err(self.error("expected an unreserved class name"));
+        }
+        let name = self.canonical_name()?;
+        if self.class_names.contains_key(&name)
+            || self.function_signatures.contains_key(&name)
+            || self.imports.contains_key(&name)
+            || self.locals.contains_key(&name)
+            || self.function_builtin_uses.contains(&name)
+        {
+            return Err(self
+                .error("class rebinding or collision with another module binding is unsupported"));
+        }
+        if self.classes.len() >= dynamic::MAX_CLASSES {
+            return Err(self.error("experimental class limit of 128 exceeded"));
+        }
+        self.advance();
+        let index = self.classes.len();
+        self.class_names.insert(name, index);
+        self.classes.push(dynamic::Class {
+            methods: Vec::new(),
+        });
+        self.class_body = Some(index);
+        let result = self.suite(1);
+        self.class_body = None;
+        result?;
+        Ok(())
+    }
+    fn function_definition(&mut self, depth: usize) -> Parsed<()> {
         if !V::DYNAMIC || self.in_function {
             return Err(
                 self.error("only top-level ordinary-value function definitions are implemented")
             );
         }
-        self.account_statement(0)?;
+        self.account_statement(depth)?;
         self.expect("def")?;
-        if self.token().kind != TokenKind::Identifier || self.reserved_name() {
+        let method = self.class_body;
+        if self.token().kind != TokenKind::Identifier || method.is_none() && self.reserved_name() {
             return Err(self.error("expected an unreserved function name"));
         }
-        let name = self.canonical_name()?;
-        if self.locals.contains_key(&name)
-            || self.function_signatures.contains_key(&name)
-            || self.imports.contains_key(&name)
-            || self.function_builtin_uses.contains(&name)
+        let name = if method.is_some() {
+            self.member_name()?
+        } else {
+            self.canonical_name()?
+        };
+        if method.is_none()
+            && (self.locals.contains_key(&name)
+                || self.function_signatures.contains_key(&name)
+                || self.imports.contains_key(&name)
+                || self.class_names.contains_key(&name)
+                || self.function_builtin_uses.contains(&name))
         {
             return Err(
                 self.error("function rebinding or collision with a module variable is unsupported")
@@ -561,6 +653,18 @@ impl<V: Values> Parser<V> {
         }
         if self.functions.len() >= dynamic::MAX_FUNCTIONS {
             return Err(self.error("experimental function limit of 128 exceeded"));
+        }
+        if let Some(index) = method {
+            if self.classes[index]
+                .methods
+                .iter()
+                .any(|entry| entry.name == name)
+            {
+                return Err(self.error("duplicate method under its canonical Unicode spelling"));
+            }
+            if self.classes[index].methods.len() >= dynamic::MAX_CLASS_METHODS {
+                return Err(self.error("experimental method limit of 128 exceeded"));
+            }
         }
         self.advance();
         self.expect("(")?;
@@ -590,15 +694,26 @@ impl<V: Values> Parser<V> {
         }
         self.expect(")")?;
         let count = parameters.len();
-        self.function_signatures
-            .insert(name, (self.functions.len(), count));
+        if let Some(index) = method {
+            if count == 0 {
+                return Err(self.error("ordinary methods require a receiver parameter"));
+            }
+            self.classes[index].methods.push(dynamic::Method {
+                name,
+                function: self.functions.len(),
+            });
+        } else {
+            self.function_signatures
+                .insert(name, (self.functions.len(), count));
+        }
+        self.parameter_counts.push(count);
         self.module_bindings = self.locals.keys().cloned().collect();
         let outer_locals = std::mem::replace(&mut self.locals, parameters);
         let outer_initialized = std::mem::replace(&mut self.initialized, (0..count).collect());
         let outer_annotations = std::mem::take(&mut self.integer_annotations);
         let outer_flow = std::mem::replace(&mut self.flow_live, true);
         self.in_function = true;
-        let body = self.suite(1)?;
+        let body = self.suite(depth + 1)?;
         self.in_function = false;
         self.locals = outer_locals;
         self.initialized = outer_initialized;
@@ -622,6 +737,13 @@ impl<V: Values> Parser<V> {
         Ok(())
     }
     fn statement_after_accounting(&mut self, depth: usize) -> Parsed<V::Statement> {
+        if self.class_body.is_some() && !self.in_function {
+            if self.text() == "def" {
+                self.function_definition(depth)?;
+                return Ok(V::group(Vec::new()));
+            }
+            return self.simple(depth);
+        }
         if self.token().kind == TokenKind::SuiteOpen {
             return self.brace_suite(depth, true).map(V::group);
         }
@@ -780,6 +902,9 @@ impl<V: Values> Parser<V> {
         Ok(body)
     }
     fn simple(&mut self, depth: usize) -> Parsed<V::Statement> {
+        if self.class_body.is_some() && !self.in_function && self.text() != "pass" {
+            return Err(self.error("class bodies currently support ordinary methods and pass only"));
+        }
         if V::DYNAMIC && self.take("pass") {
             self.newline()?;
             return Ok(V::group(Vec::new()));
@@ -837,6 +962,11 @@ impl<V: Values> Parser<V> {
         {
             return Err(self.error("rebinding a statically imported API name is unsupported"));
         }
+        if self.class_names.contains_key(&name)
+            && (!self.in_function || !self.locals.contains_key(&name))
+        {
+            return Err(self.error("rebinding a statically resolved class name is unsupported"));
+        }
         if self.function_signatures.contains_key(&name) {
             return Err(self.error("rebinding a statically resolved function name is unsupported"));
         }
@@ -856,6 +986,7 @@ impl<V: Values> Parser<V> {
                     && (self.locals.contains_key("int")
                         || self.function_signatures.contains_key("int")
                         || self.imports.contains_key("int")
+                        || self.class_names.contains_key("int")
                         || (self.in_function && self.module_bindings.contains("int")))
                 {
                     return Err(self.error("an int annotation requires the compiler-provided type; a local binding shadows it in this executable slice"));
@@ -1061,6 +1192,26 @@ impl<V: Values> Parser<V> {
         };
         self.account_expression()?;
         loop {
+            if V::DYNAMIC && self.text() == "." {
+                if 8 < minimum {
+                    break;
+                }
+                self.advance();
+                let name = self.member_name()?;
+                self.advance();
+                left = if self.text() == "(" {
+                    let arguments = self.call_arguments(depth, MAX_LOCALS - 1)?;
+                    V::method_call(left, name, arguments)
+                } else {
+                    V::get_attribute(left, name)
+                }
+                .map_err(|message| self.error(message))?;
+                self.account_expression()?;
+                if V::height(&left) > 128 {
+                    return Err(self.error("experimental expression tree depth exceeds 128"));
+                }
+                continue;
+            }
             if V::DYNAMIC && self.text() == "[" {
                 // Indexing binds more tightly than unary signs, multiplication,
                 // comparisons and short circuiting, and chains left to right.
@@ -1162,6 +1313,13 @@ impl<V: Values> Parser<V> {
         if self.locals.contains_key(name) {
             return Err(self.error("calling local values or parameters is unsupported; function values remain unimplemented"));
         }
+        if let Some(index) = self.class_names.get(name).copied() {
+            let span = self.token().span;
+            self.advance();
+            let arguments = self.call_arguments(depth, MAX_LOCALS - 1)?;
+            self.constructor_calls.push((index, arguments.len(), span));
+            return V::construct(index, arguments).map_err(|message| self.error(message));
+        }
         let api = self.imports.get(name).copied();
         let (index, arity) = if let Some(api) = api {
             (0, api.arity())
@@ -1169,20 +1327,7 @@ impl<V: Values> Parser<V> {
             self.function_signatures.get(name).copied().ok_or_else(|| self.error("unknown function; this slice supports explicit API imports, self-recursion and earlier top-level definitions only"))?
         };
         self.advance();
-        self.expect("(")?;
-        let mut arguments = Vec::new();
-        if self.text() != ")" {
-            loop {
-                if arguments.len() >= MAX_LOCALS {
-                    return Err(self.error("experimental call argument limit of 128 exceeded"));
-                }
-                arguments.push(self.expression(0, depth + 1)?);
-                if !self.take(",") || self.text() == ")" {
-                    break;
-                }
-            }
-        }
-        self.expect(")")?;
+        let arguments = self.call_arguments(depth, MAX_LOCALS)?;
         if arguments.len() != arity {
             return Err(self.error(format!(
                 "function requires {arity} positional arguments; received {}",
@@ -1206,6 +1351,25 @@ impl<V: Values> Parser<V> {
             V::call(index, arguments)
         };
         value.map_err(|message| self.error(message))
+    }
+    fn call_arguments(&mut self, depth: usize, limit: usize) -> Parsed<Vec<V::Expression>> {
+        self.expect("(")?;
+        let mut arguments = Vec::new();
+        if self.text() != ")" {
+            loop {
+                if arguments.len() >= limit {
+                    return Err(self.error(format!(
+                        "experimental explicit call argument limit of {limit} exceeded"
+                    )));
+                }
+                arguments.push(self.expression(0, depth + 1)?);
+                if !self.take(",") || self.text() == ")" {
+                    break;
+                }
+            }
+        }
+        self.expect(")")?;
+        Ok(arguments)
     }
 }
 
@@ -1814,5 +1978,68 @@ mod tests {
         let source = "# café\nfrom naja.text import decode_utf8\ndecode_utf8(未定義)\n";
         let error = check(source).unwrap_err().remove(0);
         assert_eq!(&source[error.span.start..error.span.end], "未定義");
+    }
+    #[test]
+    fn ordinary_classes_share_suites_and_keep_method_names_out_of_module_scope() {
+        let source = "def helper(value): return value + 10\nclass C:\n    def __init__(receiver, value):\n        receiver.Key = value\n    def helper(receiver, value):\n        return helper(value) + receiver.Key\n    def clone(receiver):\n        return C(receiver.Key)\nvalue = C(7)\nprint(value.helper(3))\nprint(value.clone().Key)\n";
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            let CheckedProgram::HostedValues(program) =
+                check_with_dialect(source, dialect).unwrap()
+            else {
+                panic!("ordinary objects required");
+            };
+            assert_eq!(program.classes.len(), 1);
+            assert_eq!(program.functions.len(), 4);
+            assert_eq!(program.classes[0].methods[0].name, "__init__");
+            assert_eq!(program.classes[0].methods[1].function, 2);
+            assert!(compile_with_dialect(source, dialect).is_ok());
+        }
+        let indented = "class C:\n    def get(self):\n        if True:\n            return 7\nprint(C().get())\n";
+        let marked = "class C:(0)\n    def get(self):(1)\n        if True:(2)\n            return 7\nprint(C().get())\n";
+        let braced =
+            "class C: {\ndef get(self): {\nif True: {\nreturn 7\n}\n}\n}\nprint(C().get())\n";
+        assert_eq!(
+            compile_with_dialect(indented, Dialect::Naja2026).unwrap(),
+            compile_with_dialect(marked, Dialect::Naja2026).unwrap()
+        );
+        assert_eq!(
+            compile_with_dialect(indented, Dialect::Naja2026).unwrap(),
+            compile_with_dialect(braced, Dialect::Naja2026).unwrap()
+        );
+    }
+    #[test]
+    fn constructor_checks_use_completed_metadata_and_original_call_spans() {
+        let source = "class C:\n    def copy(self):\n        return C(7)\n    def __init__(self, value):\n        self.value = value\nprint(C(1).copy().value)\n";
+        assert!(compile(source).is_ok());
+        let bad = source.replace("return C(7)", "return C()");
+        let error = check(&bad).unwrap_err().remove(0);
+        assert_eq!(&bad[error.span.start..error.span.end], "C");
+        assert!(error.message.contains("constructor requires 1"));
+        for source in [
+            "class C:\n    def m(): pass\n",
+            "class C:\n    def m(self): return m(self)\n",
+            "class C:\n    def m(self): return Later()\nclass Later: pass\n",
+            "class C:\n    value = 7\n",
+            "class C:\n    def __str__(self): return 'value'\n",
+            "class C: pass\nclass C: pass\n",
+            "class C: pass\nC = 7\n",
+        ] {
+            assert!(compile(source).is_err(), "{source}");
+        }
+    }
+    #[test]
+    fn class_bindings_shadow_builtins_without_rewriting_members_or_parameter_reads() {
+        for source in [
+            "class len: pass\nprint(not len())\n",
+            "class C:\n    def print(self): return 7\n    def i64(self): return 8\nvalue = C()\nprint(value.print() + value.i64())\n",
+            "class C: pass\ndef value(C): return C\nprint(value(True))\n",
+        ] {
+            assert!(compile(source).is_ok(), "{source}");
+        }
+        assert!(compile("class C: pass\ndef value(C): return C()\nprint(value(1))\n").is_err());
+        assert!(
+            compile_with_dialect("class int: pass\nvalue: int = 7\n", Dialect::Naja2026).is_err()
+        );
+        assert!(compile("class int: pass\nvalue: int = 7\n").is_ok());
     }
 }

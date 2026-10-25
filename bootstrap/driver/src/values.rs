@@ -50,6 +50,22 @@ pub(crate) trait Values {
     fn call(_index: usize, _arguments: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Err("function calls are unsupported in this explicit integer domain".into())
     }
+    fn construct(
+        _index: usize,
+        _arguments: Vec<Self::Expression>,
+    ) -> Result<Self::Expression, String> {
+        Err("classes are unsupported in this explicit integer domain".into())
+    }
+    fn get_attribute(_object: Self::Expression, _name: String) -> Result<Self::Expression, String> {
+        Err("attributes are unsupported in this explicit integer domain".into())
+    }
+    fn method_call(
+        _object: Self::Expression,
+        _name: String,
+        _arguments: Vec<Self::Expression>,
+    ) -> Result<Self::Expression, String> {
+        Err("methods are unsupported in this explicit integer domain".into())
+    }
     fn function(_parameters: usize, _body: Vec<Self::Statement>) -> Result<Self::Function, String> {
         Err("function definitions are unsupported in this explicit integer domain".into())
     }
@@ -257,20 +273,41 @@ impl Values for Dynamic {
         target: Self::Expression,
         value: Self::Expression,
     ) -> Result<Self::Statement, String> {
-        let dynamic::Expression::Index(sequence, index) = target else {
-            return Err("this assignment requires a single subscript target; unpacking and other targets are not implemented".into());
-        };
-        Ok(dynamic::Statement::SetIndex {
-            sequence: *sequence,
-            index: *index,
-            value,
-        })
+        match target {
+            dynamic::Expression::Index(sequence, index) => Ok(dynamic::Statement::SetIndex {
+                sequence: *sequence, index: *index, value,
+            }),
+            dynamic::Expression::GetAttribute(object, name) => Ok(dynamic::Statement::SetAttribute {
+                object: *object, name, value,
+            }),
+            _ => Err("this assignment requires a single subscript or attribute target; unpacking and other targets are not implemented".into()),
+        }
     }
     fn local(slot: usize) -> Self::Expression {
         dynamic::Expression::Local(slot)
     }
     fn call(index: usize, arguments: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::Call(index, arguments))
+    }
+    fn construct(
+        index: usize,
+        arguments: Vec<Self::Expression>,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Construct(index, arguments))
+    }
+    fn get_attribute(object: Self::Expression, name: String) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::GetAttribute(Box::new(object), name))
+    }
+    fn method_call(
+        object: Self::Expression,
+        name: String,
+        arguments: Vec<Self::Expression>,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::MethodCall(
+            Box::new(object),
+            name,
+            arguments,
+        ))
     }
     fn function(parameters: usize, body: Vec<Self::Statement>) -> Result<Self::Function, String> {
         Ok(dynamic::Function { parameters, body })

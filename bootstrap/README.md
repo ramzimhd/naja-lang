@@ -80,6 +80,33 @@ and 2 MiB source-stack limits, with a 4 KiB helper reserve, in addition to the
 64 MiB shared arena. These are temporary seed/runtime bounds; see
 [native calls](../tests/functions/README.md) for the OS stack assumption.
 
+Top-level ordinary classes support method-only bodies (or `pass`), an optional
+`__init__`, positional construction, per-instance attributes and native method
+dispatch. Methods declare a receiver as their first ordinary parameter. Class
+and method suites share the same frontend; `.naja` class/method/control depth
+markers count each enclosing header. Constructors use completed class metadata
+for exact arity, including calls from an earlier method to a later initializer.
+Class names are static bindings; class/function values, rebinding and forward
+class references remain unsupported. Method names occupy their class rather
+than the module namespace. Local parameters can shadow class names as values.
+
+Member names use canonical Unicode keys, so equivalent spellings address the
+same field. Fields retain descriptors and reference identity across aliases,
+parameters, returned objects and cycles. Assignment evaluates VALUE then OBJECT;
+method receiver/member resolution occurs before arguments, which then evaluate
+once left to right. A selected method remains selected across argument effects;
+dynamic arity errors follow those effects. Initializers must return None.
+Missing attributes and unsupported bound-method extraction use `NJA210`/exit110;
+noncallable fields, wrong kinds and unsupported object operations use type105.
+Plain objects are truthy and equality uses identity. Display, ordering, numeric
+and sequence operations remain unsupported. Classes/methods/fields each cap128,
+static member names cap1024 and effective member keys cap256 UTF-8 bytes; existing
+global arena, stack, node, depth, literal and function limits remain unchanged.
+Inheritance, class attributes, other special methods, descriptors, decorators,
+partial classes and extensions remain required work. See
+[the frozen object contract](../tests/objects/CONTRACT.md) and
+[prepared source suite](../tests/objects-source/README.md) for evidence boundaries.
+
 Text/Bytes postfix indexing evaluates the sequence and exact Int/Bool index once
 in order. Negative indices count from the end; Text returns one Unicode scalar
 as Text, while Bytes returns an unsigned Int in 0..255. Oversized indices remain
