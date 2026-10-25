@@ -139,7 +139,13 @@ export function snapshot(repo) {
   }
   const remote = git(repo, ['rev-parse', '--verify', '@{upstream}'], true);
   const upstream = remote.status === 0 ? remote.stdout.toString('utf8').trim() : null;
-  const index_sha256 = sha(git(repo, ['diff', '--cached', '--binary', 'HEAD']).stdout);
+  // A cached diff omits conflict-stage blob identities. Preserve their identity
+  // and index visibility flags as well as the binary staged patch.
+  const index_sha256 = sha(Buffer.concat([
+    Buffer.from('index-entries-v1\0'),
+    git(repo, ['ls-files', '--stage', '-v', '-z']).stdout,
+    git(repo, ['diff', '--cached', '--binary', 'HEAD']).stdout,
+  ]));
   const body = { head, branch, worktree: c.worktree, dirty, index_sha256, upstream, remote_freshness: 'cached-ref-only; no fetch performed' };
   return { ...body, fingerprint: sha(JSON.stringify(body)) };
 }
@@ -206,6 +212,7 @@ export function assessResume(repo, { token, acknowledge_dirty = false, expected_
     if (actual.fingerprint !== record.snapshot.fingerprint) reasons.push('source_or_metadata_changed');
     if (actual.dirty.length && !acknowledge_dirty) reasons.push('dirty_worktree_requires_acknowledgment');
     if (actual.dirty.some(entry => entry.kind === 'directory')) reasons.push('directory_or_submodule_requires_manual_review');
+    if (actual.dirty.some(entry => entry.status.includes('U') || ['AA', 'DD'].includes(entry.status))) reasons.push('unmerged_index_requires_manual_review');
     if (actual.upstream) {
       if (actual.upstream !== record.snapshot.upstream) reasons.push('upstream_ref_changed');
       if (Number(gitText(repo, ['rev-list', '--count', 'HEAD..@{upstream}'])) > 0) reasons.push('newer_upstream_commit');

@@ -101,6 +101,12 @@ Directory fsync is attempted where supported. Windows/filesystem power-loss
 durability is not guaranteed. Private history is retained for review; prune it
 only through separately coordinated maintenance, not an unbounded runner.
 
+The index digest includes staged entry modes, visibility flags and every conflict
+stage's blob identity, together with the staged binary diff. Unmerged index states
+always require manual review even when dirty source is acknowledged. Older
+checkpoint fingerprints use the prior digest definition and must be reconciled;
+they are retained rather than automatically upgraded or reported ready.
+
 `assessResume` compares the actual source/index/branch to the checkpoint, verifies
 retained recovery hashes, and checks ownership and cached upstream refs. Dirty
 work needs explicit `acknowledge_dirty: true`; the result still records the dirty

@@ -215,3 +215,32 @@ test('fresh process reads checkpoint without private chat history or provider ca
   assert.equal(outcome.status, 0, outcome.stderr);
   assert.equal(JSON.parse(outcome.stdout).checkpoint.task, 'synthetic recovery fixture');
 });
+
+test('conflict stages are fingerprinted and unmerged recovery always needs manual review', t => {
+  const f = fixture(t), token = reserve(f.repo);
+  const blob = text => {
+    const result = spawnSync('git', ['-C', f.repo, 'hash-object', '-w', '--stdin'], { input: text, encoding: 'utf8' });
+    assert.equal(result.status, 0, result.stderr);
+    return result.stdout.trim();
+  };
+  const base = blob('base\n'), ours = blob('ours\n'), theirs = blob('theirs\n'), newer = blob('changed conflict stage\n');
+  function conflict(stage3) {
+    const input = `0 ${'0'.repeat(40)}\tsource.txt\n100644 ${base} 1\tsource.txt\n100644 ${ours} 2\tsource.txt\n100644 ${stage3} 3\tsource.txt\n`;
+    const result = spawnSync('git', ['-C', f.repo, 'update-index', '--index-info'], { input, encoding: 'utf8' });
+    assert.equal(result.status, 0, result.stderr);
+  }
+  conflict(theirs);
+  const record = checkpoint(f, token), before = snapshot(f.repo);
+  const unchanged = assessResume(f.repo, { token, acknowledge_dirty: true, expected_checkpoint: record.id });
+  assert.equal(unchanged.ready, false);
+  assert.ok(unchanged.reasons.includes('unmerged_index_requires_manual_review'));
+  conflict(newer);
+  const after = snapshot(f.repo);
+  assert.notEqual(after.index_sha256, before.index_sha256);
+  assert.notEqual(after.fingerprint, before.fingerprint);
+  const changed = assessResume(f.repo, { token, acknowledge_dirty: true, expected_checkpoint: record.id });
+  assert.equal(changed.ready, false);
+  assert.ok(changed.reasons.includes('source_or_metadata_changed'));
+  assert.equal(git(f.repo, 'rev-parse', 'HEAD'), f.head);
+  assert.equal(readFileSync(path.join(f.repo, 'source.txt'), 'utf8'), 'original source\n');
+});
