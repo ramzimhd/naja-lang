@@ -47,6 +47,19 @@ no Python execution/oracle. Existing Program/ObjectProgram entrypoints remain.
   Literal construction performs at most128 separately bounded insertions.
   Snapshot validates all retained keys within one cumulative budget. This is a
   temporary resource limit, not a hash optimization or overall CPU/IO deadline.
+  Exact sequence: preflight the query once even when the container is empty;
+  preflight each visited stored candidate once; stop at the first match. A
+  Text/Bytes preflight debits its declared byte length (Text then scans UTF8),
+  numeric preflight debits canonical limb_count, and None costs zero. Equality
+  of compatible numeric kinds with matching sign/count debits2*limb_count before
+  comparator execution; otherwise mismatched sign/count avoids that scan. Same
+  Text/Bytes kind with equal length debits2*length before comparison; different
+  kind/length avoids that scan. None equality has no comparison charge. Identical
+  descriptor pointers get NO shortcut and incur the same validation/comparison
+  charges. DictKeys preflights every retained key once with no equality passes.
+  Thus one Bytes key/query alias of250000 bytes consumes exactly1000000 units;
+  250001 bytes requires1000004 and fails before the equality scan. This sequence
+  is frozen before native boundary execution, not inferred from observed output.
 - Existing64MiB arena,2MiB source stack plus4096 helper reserve, call-depth256,
   literal1MiB/nodes10000, depth128/suites64/locals128/functions128 and all prior
   arithmetic/file/class limits are unchanged. All branches/unused IR validate.
