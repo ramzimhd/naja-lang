@@ -7,24 +7,47 @@ This is an experimental B0 construction slice, not FC1 or HATCH completion.
 The shared frontend and parser are separate integration work.
 
 The IR supports immutable `Integer(String)`, `Text(String)`, `Bytes(Vec<u8>)`,
-`Boolean(bool)`, `None`, local references, unary negation, `Binary` addition,
-subtraction and multiplication, `Compare`, `Not`, `And`, and `Or`. Statements
+`Boolean(bool)`, `None`, local references, unary negation/positive, `Len`,
+`RequireInteger`, `Binary` addition, subtraction and multiplication, `Compare`,
+`CompareChain`, `Not`, `And`, and `Or`. Statements
 assign a local, print, assert a truthy expression, branch, loop, or group a suite.
 `validate` rejects invalid decimal spelling, uninitialized/out-of-frame reads,
 more than 128 locals, 128 expression levels, 64 suite levels, 10000 combined IR
 nodes or 1 MiB of aggregate integer/text/bytes literal data. Loop-body assignment
 does not initialize a local after a possibly unexecuted loop; branches intersect
-their initialized locals. No source rewriting or silent integer narrowing occurs.
+their initialized locals. A comparison chain requires 1..128 comparator entries;
+every comparison operation and operand consumes the global node budget, even in
+a branch that will be skipped at runtime. All unary operands consume the same
+depth/node/literal budgets. No source rewriting or integer narrowing occurs.
 
 Integer payloads use the existing hosted immutable sign/magnitude base-1e9
 objects and exactly the same native arithmetic kernels. Boolean numeric operands
 act as integer zero or one; arithmetic, including negation, returns an integer.
+Unary positive preserves exact integer values and converts Bool to Int without
+changing its zero/one value. `RequireInteger` returns an original Int or Bool
+descriptor unchanged; it rejects other kinds with type failure 105. This is a
+temporary internal boundary check for the parser, not a general type system or
+implicit conversion mechanism.
 Text+Text and Bytes+Bytes concatenate into fresh immutable storage. Other
 arithmetic combinations fail explicitly. Numeric int/bool comparisons operate on
 their exact values. Text orders lexicographically by Unicode scalar value
 (implemented by valid UTF-8 byte ordering); bytes order by unsigned byte.
 Different nonnumeric kinds compare unequal. None equals None, but neither None
 nor unrelated kinds support ordering. No normalization changes text data.
+`CompareChain(Box<Expression>, Vec<(Comparison, Expression)>)` evaluates its first
+operand once, then each comparator operand once in source order, retaining each
+right operand as the next left operand. It returns Boolean false immediately
+when a comparison fails and does not evaluate later operands; otherwise it
+returns Boolean true. A reached invalid ordering still fails with type 105.
+
+`Len` accepts text and bytes only. Text length counts Unicode scalar values,
+including embedded NUL and combining characters separately; bytes length counts
+every byte. It returns an exact hosted integer. Valid UTF-8 construction permits
+a native leading-byte count without text normalization or an external Unicode
+runtime. The 64 MiB sequence bound keeps counts below base 1e9; an explicit
+conversion guard prevents truncation if that resource policy changes. Nonzero
+length results allocate one checked integer object and descriptor, and zero
+length results share the immutable integer zero through a new descriptor.
 
 Truthiness is false for zero integers, False, empty text/bytes and None. `not`
 returns a Boolean. `and`/`or` return an original operand descriptor and evaluate
@@ -66,10 +89,17 @@ then executes emitted artifacts on Linux x86-64 or an explicitly declared local
 WSL Linux x86-64 target on Windows. The adapter's line/RPN format is not NAJA
 syntax: `t:HEX_UTF8`, `b:HEX`, decimal integers, true/false/none, `%SLOT` and
 postfix operators; statements are print/assert/set/if/while/group with else/end.
+Unary postfix operators include `pos`, `len` and `require_int`. A postfix
+`chain:<,<=,==` consumes four existing expression operands in order and creates
+one three-comparison chain. The fixture format does not change source grammar.
 It is bounded and refuses existing output files. Node BigInt, Unicode codepoint
 and byte oracles check arithmetic, comparisons, truthiness and repr, together
 with metamorphic properties, native resource/type/assert/output failures,
 short-circuiting, immutable aliases, malformed IR and descriptor/data mutants.
+Chain tests also reserve about 32 MiB, then evaluate an allocating 16 MiB middle
+operand once: the proper chain passes while an explicit repeated-middle control
+exhausts the same 64 MiB arena. Separate probes skip resource/type failures,
+preserve the first failure's evaluation order and exercise maximum chain width.
 Fixtures and unsigned ELF hashes are retained under ignored `target/`.
 
 Floats, repetition, list/dict/set/tuple, functions, classes, user methods,

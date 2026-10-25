@@ -92,7 +92,13 @@ impl Validator {
                     return Err("dynamic comparison chain requires 1..128 comparisons".into());
                 }
                 self.expression(first, initialized, depth + 1)?;
-                for (_, value) in rest {
+                for (index, (_, value)) in rest.iter().enumerate() {
+                    // The chain node accounts for its first comparison. Each
+                    // additional native comparison also consumes the global
+                    // operation budget, as a standalone Compare would.
+                    if index != 0 {
+                        self.account()?;
+                    }
                     self.expression(value, initialized, depth + 1)?;
                 }
                 0
@@ -563,6 +569,11 @@ mod tests {
             .is_err()
         );
         assert!(validate(&vec![Statement::Print(chain); 80]).is_err());
+        let two = Expression::CompareChain(
+            Box::new(value.clone()),
+            vec![(Comparison::Equal, value.clone()); 2],
+        );
+        assert!(validate(&vec![Statement::Print(two); 1667]).is_err());
         let skipped = Expression::CompareChain(
             Box::new(value.clone()),
             vec![
