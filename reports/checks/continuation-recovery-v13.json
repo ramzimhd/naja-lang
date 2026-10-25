@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "bbb35e0555e28573c5bcca5f772b58db25797a09",
+  "target": "windows-x64-disposable-git",
+  "command": [
+    "node",
+    "--test",
+    "tests/continuity/local.test.mjs"
+  ],
+  "tool_versions": {
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0",
+    "powershell": "7.6.4",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "git": "git version 2.51.0.windows.1"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T18:39:21.9580233+00:00",
+  "log_path": "reports/checks/continuation-recovery-v13.log",
+  "log_sha256": "df2921ce2ea30312c35dc871a2fd9b04543c2189e90c7df8e0b51acd6a009c07",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows."
+  ]
+}

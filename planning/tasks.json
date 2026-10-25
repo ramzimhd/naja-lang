@@ -110,10 +110,11 @@
         "tests/blocks/"
       ],
       "primary_requirement": "SYN-01",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
-      "evidence": []
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "evidence": [],
+      "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
     {
       "id": "T07",
@@ -162,10 +163,11 @@
         "linker/"
       ],
       "primary_requirement": "BE-02",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
-      "evidence": []
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "evidence": [],
+      "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
     {
       "id": "T10",
@@ -196,10 +198,11 @@
         "tests/semantic/"
       ],
       "primary_requirement": "SEM-10",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
-      "evidence": []
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "evidence": [],
+      "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
     {
       "id": "T12",
@@ -214,10 +217,11 @@
         "tools/"
       ],
       "primary_requirement": "CLI-01",
-      "status": "not_started",
-      "owner": null,
-      "branch": null,
-      "evidence": []
+      "status": "in_progress",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "evidence": [],
+      "note": "Basic native run/test CLI slice is in progress; libraries/module/full CLI obligations remain open."
     },
     {
       "id": "T13",

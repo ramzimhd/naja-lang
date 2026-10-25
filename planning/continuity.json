@@ -5,44 +5,193 @@
   "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
   "owner": "/root",
   "status": "running",
-  "checkpoint_generation": 2,
-  "head": "c10e7ec4e0828b6b857f2eebb008688efaddc2b1",
+  "checkpoint_generation": 3,
+  "head": "4c7b0073aaf2128aaf3274482ec1d126c671b8ba",
   "branch": "agent/integrator-H0",
   "last_verified_source": "05df50551d9591036e4403e26d626ee19d1c2a15",
-  "task": "T05",
-  "next_action": "Complete independent block review, integrate recovery/contract tooling, retain exact-source evidence, then implement hosted integer foundations.",
+  "dirty_paths": [
+    ".gitattributes",
+    ".github/workflows/seed.yml",
+    "NOTICE",
+    "README.md",
+    "bootstrap/README.md",
+    "bootstrap/driver/src/lib.rs",
+    "planning/assignments.json",
+    "planning/continuity.json",
+    "planning/tasks.json",
+    "reports/checks/continuation-recovery-v13.json",
+    "reports/checks/continuation-recovery-v13.log",
+    "scripts/test-hosted-language.mjs",
+    "tests/native/fixtures/integers.naja",
+    "third_party/rust-seed/licenses.json",
+    "third_party/rust-seed/tinyvec-1.12.0/LICENSE-APACHE.md",
+    "third_party/rust-seed/tinyvec_macros-0.1.1/LICENSE-APACHE.md",
+    "third_party/rust-seed/unicode-ident-1.0.24/LICENSE-APACHE",
+    "third_party/rust-seed/unicode-ident-1.0.24/LICENSE-UNICODE",
+    "third_party/rust-seed/unicode-normalization-0.1.25/LICENSE-APACHE"
+  ],
+  "task": "T05/T06/T09/T11/T12",
+  "completed": [
+    "Revision1.3 contracts, additive foundation/FC1 tracking and scoped assignments integrated.",
+    "Edition-aware brace suites, named sections and depth markers execute in the bounded integer subset.",
+    "Native hosted decimal integers use immutable multi-limb arithmetic without implicit i64 narrowing.",
+    "Shared Unicode17 XID/NFKC services and original-span resolver integration implemented.",
+    "Independent synthetic coding-agent handoff completed; production integration ownership did not transfer.",
+    "Conflict-stage checkpoint fingerprint defect fixed; all15 disposable recovery tests passed in the work unit."
+  ],
+  "checks": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/continuity/local.test.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "bbb35e0555e28573c5bcca5f772b58db25797a09",
+      "log_path": "reports/checks/continuation-recovery-v13.log",
+      "log_sha256": "df2921ce2ea30312c35dc871a2fd9b04543c2189e90c7df8e0b51acd6a009c07",
+      "limitations": [
+        "Historical14-test recovery run before the independently found conflict-index fix; current15-test run needs a new retained record."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "result": "not_run",
+      "exit_code": null,
+      "limitations": [
+        "Latest integrated Unicode/resolver/CLI batch still requires a retained committed-source run."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-hosted-language.mjs"
+      ],
+      "result": "not_run",
+      "exit_code": null,
+      "limitations": [
+        "18 earlier source checks passed; latest Unicode/fixture additions await retained integrated execution."
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/checks/continuation-recovery-v13.json",
+      "bytes": 1022,
+      "sha256": "ec264268ebf93a5c7fb9d87801855a89d481bfc472675d59b9fdfdaa2f83616e"
+    },
+    {
+      "path": "reports/checks/continuation-recovery-v13.log",
+      "bytes": 1628,
+      "sha256": "df2921ce2ea30312c35dc871a2fd9b04543c2189e90c7df8e0b51acd6a009c07"
+    },
+    {
+      "path": "reports/continuity/FRESH_AGENT_DRILL.md",
+      "bytes": 8768,
+      "sha256": "a42b5c3b628e312c3c7aa081a851baecf02b7f7415f8af6c944a4fc7365b3f30"
+    },
+    {
+      "path": "reports/reviews/HOSTED_NATIVE_V13.md",
+      "bytes": 10804,
+      "sha256": "6ffa7e29eb016894a269f12e37d9b8c54a4493ccb22cb01863c3e9752edf51a7"
+    }
+  ],
+  "blockers": [],
+  "unsafe_intermediate_states": [
+    "Current source/planning edits are preserved and still require committed-source integrated evidence.",
+    "Earlier private recovery fingerprints use the superseded index digest and are retained without automatic readiness upgrades.",
+    "Hosted integer arena has no reclamation, runtime loop quota, general objects or exception recovery."
+  ],
+  "next_action": "Commit the coherent integration snapshot, record full scoped checks, then continue CLI execution, native assertions and value/runtime foundations.",
+  "next_commands": [
+    [
+      "git",
+      "status",
+      "--short",
+      "--branch"
+    ],
+    [
+      "cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "--offline"
+    ],
+    [
+      "cargo",
+      "build",
+      "--workspace",
+      "--locked",
+      "--offline"
+    ],
+    [
+      "node",
+      "scripts/test-hosted-language.mjs"
+    ]
+  ],
   "ownership": {
     "reservation": "<git-common-dir>/naja-integration.lock",
-    "reclaim": "explicit verified release only",
-    "process_identity": null
+    "fencing_generation": 2,
+    "status": "held",
+    "observed_at": "2026-10-25T19:00:31.849Z",
+    "reclaim": "explicit verified release only"
   },
   "budget": {
-    "context_remaining": null,
-    "provider_usage_percent": 0,
-    "provider_window_minutes": 10080,
-    "rate_limit_reached": false,
-    "execution_deadline": null,
-    "extra_billing_authorized": false,
-    "monetary_ceiling": null,
-    "limitations": [
-      "Context/deadline/spend counters unavailable; provider quota is account-shared and separate from context.",
-      "Usage snapshot is operational telemetry, not authorization to spend credits or launch a paid fallback."
-    ]
+    "context": {
+      "status": "unknown",
+      "remaining_tokens": null,
+      "observed_at": null,
+      "source": null
+    },
+    "provider_quota": {
+      "status": "observed",
+      "account_shared": true,
+      "used_percent": 13,
+      "remaining_percent": 87,
+      "window_minutes": 10080,
+      "resets_at": "2026-11-01T08:14:13.000Z",
+      "observed_at": "2026-10-25T18:59:08Z",
+      "source": "Codex app usage-limit observation; primary subscription window shared across the account."
+    },
+    "rate_limit": {
+      "status": "unknown",
+      "limited": null,
+      "retry_after_seconds": null,
+      "resets_at": null,
+      "observed_at": null,
+      "source": null
+    },
+    "execution_deadline": {
+      "status": "unknown",
+      "at": null,
+      "remaining_seconds": null,
+      "observed_at": null,
+      "source": null
+    },
+    "spend": {
+      "status": "unknown",
+      "extra_billing_authorized": false,
+      "remaining": null,
+      "monetary_ceiling": null,
+      "currency": null,
+      "observed_at": null,
+      "source": null
+    },
+    "limitations": []
   },
-  "checks": {
-    "baseline_rust": "passed:43",
-    "baseline_native": "passed:25",
-    "baseline_planning": "passed:37",
-    "source": "05df50551d9591036e4403e26d626ee19d1c2a15",
-    "retained_new_logs": "pending committed integration",
-    "integrated_rust": "passed:68 (unretained transcript)",
-    "integrated_native": "passed:35 (unretained transcript)",
-    "integrated_clippy": "passed after correcting collapsible if"
-  },
-  "updated_at": "2026-10-25T18:37:12.851Z",
   "automatic_runner": {
-    "status": "unavailable_not_tested",
-    "mode": "current chat continuation; supported manual fresh-session resume",
-    "provider_requests_started": false
-  }
+    "status": "manual_only",
+    "mode": "manual_resume",
+    "manual_resume_required": true,
+    "provider_requests_started": false,
+    "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
+  },
+  "updated_at": "2026-10-25T19:00:31.849Z"
 }

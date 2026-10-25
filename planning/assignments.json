@@ -35,11 +35,12 @@
     {
       "task_id": "T05",
       "owner": "/root/frontend",
-      "branch": "agent/frontend-blocks-v13",
+      "branch": "agent/frontend-literals-v13",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
         "bootstrap/frontend/",
-        "tests/syntax/"
+        "tests/syntax/",
+        "compatibility/literals/"
       ],
       "status": "active",
       "history": [
@@ -51,23 +52,62 @@
             "tests/syntax/"
           ],
           "status": "completed"
+        },
+        {
+          "branch": "agent/frontend-blocks-v13",
+          "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "bootstrap/frontend/",
+            "tests/syntax/"
+          ],
+          "status": "active"
+        },
+        {
+          "branch": "agent/frontend-unicode-v13",
+          "base_commit": "73548e075b9d623c526f47e3add7b0f63f728f4e",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "bootstrap/frontend/",
+            "tests/syntax/",
+            "compatibility/unicode/",
+            "Cargo.lock"
+          ],
+          "status": "completed",
+          "integrated_commit": "0ef8dc1f904fd5efbd2948357dbb7ab20c36ebfb"
         }
       ],
-      "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "base_commit": "0ef8dc1f904fd5efbd2948357dbb7ab20c36ebfb",
       "acceptance": "Dialect-aware lossless brace/named block lexer/CST; original Python tests plus mixed/negative/source-span fixtures.",
-      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp."
+      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp.",
+      "deliverable": "Shared specification-derived text/bytes literal decoding with exact source spans; no Python oracle.",
+      "acceptance_commands": [
+        [
+          "cargo",
+          "test",
+          "-p",
+          "naja-frontend",
+          "--locked",
+          "--offline"
+        ]
+      ],
+      "forbidden_paths": [
+        "Cargo.lock",
+        "bootstrap/driver/",
+        "planning/"
+      ],
+      "handoff": "Scoped commit/report to sole integrator."
     },
     {
       "task_id": "T04",
       "owner": "/root/planning_validation",
-      "branch": "agent/contracts-v13",
+      "branch": "agent/public-continuity-v13",
       "worktree": "../naja-worktrees/planning-validation",
       "paths": [
-        "planning/foundations.json",
-        "planning/fc1.json",
-        "planning/contract-migration.json",
-        "scripts/validation/check-foundations.mjs",
-        "tests/foundations/"
+        "planning/continuity.schema.json",
+        "scripts/validation/check-continuity.mjs",
+        "tests/continuity/public.test.mjs",
+        "tests/continuity/PUBLIC_SCHEMA.md"
       ],
       "status": "active",
       "history": [
@@ -79,11 +119,38 @@
             "tests/planning/"
           ],
           "status": "completed"
+        },
+        {
+          "branch": "agent/contracts-v13",
+          "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+          "worktree": "../naja-worktrees/planning-validation",
+          "paths": [
+            "planning/foundations.json",
+            "planning/fc1.json",
+            "planning/contract-migration.json",
+            "scripts/validation/check-foundations.mjs",
+            "tests/foundations/"
+          ],
+          "status": "completed"
         }
       ],
-      "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "base_commit": "d641e072a3b9040126d2273c7a9a93be2262f799",
       "acceptance": "Additive L01-L15/C01-C07/FC1 coverage, inherited ID preservation and negative validator fixtures.",
-      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp."
+      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp.",
+      "deliverable": "Closed sanitized public checkpoint schema/validator, independent of private lock readiness.",
+      "acceptance_commands": [
+        [
+          "node",
+          "--test",
+          "tests/continuity/public.test.mjs"
+        ]
+      ],
+      "forbidden_paths": [
+        "planning/continuity.json",
+        "planning/state.json",
+        "planning/assignments.json"
+      ],
+      "handoff": "Schema/proposal commit only; actual record migration by root."
     },
     {
       "task_id": "T04",
@@ -95,7 +162,7 @@
         "tests/continuity/",
         "reports/continuity/CLIENT_CAPABILITIES.md"
       ],
-      "status": "active",
+      "status": "completed",
       "history": [
         {
           "branch": "agent/seed-setup-T02",
@@ -127,8 +194,6 @@
       "branch": "agent/integrator-H0",
       "worktree": ".",
       "paths": [
-        "bootstrap/driver/",
-        "backends/native/",
         "scripts/test-native.mjs",
         "scripts/record-check.ps1",
         "planning/evidence.schema.json",
@@ -139,7 +204,17 @@
         "reports/checks/",
         "launch/HANDOFF.md",
         "launch/RESUME_PROMPT.md",
-        "docs/decisions/0003-language-edition-2026-1.md"
+        "docs/decisions/0003-language-edition-2026-1.md",
+        "bootstrap/driver/src/lib.rs",
+        "bootstrap/driver/src/values.rs",
+        "scripts/test-hosted-language.mjs",
+        "tests/native/",
+        "README.md",
+        "NOTICE",
+        ".github/",
+        ".gitattributes",
+        "third_party/",
+        "bootstrap/README.md"
       ],
       "status": "active",
       "history": [
@@ -193,6 +268,142 @@
         "reports/governance/PUBLICATION_REVIEW.md"
       ],
       "status": "completed"
+    },
+    {
+      "task_id": "T09",
+      "owner": "/root/seed_setup",
+      "branch": "agent/hosted-native-v13",
+      "worktree": "../naja-worktrees/seed-setup",
+      "base_commit": "bbb35e0555e28573c5bcca5f772b58db25797a09",
+      "paths": [
+        "backends/native/",
+        "scripts/test-hosted.mjs",
+        "tests/hosted/"
+      ],
+      "forbidden_paths": [
+        "planning/",
+        "bootstrap/driver/",
+        "Cargo.toml",
+        "Cargo.lock"
+      ],
+      "deliverable": "Native hosted integer IR/runtime ELF with bounded allocation and independent arithmetic execution evidence.",
+      "acceptance_commands": [
+        [
+          "cargo",
+          "test",
+          "-p",
+          "naja-native",
+          "--locked",
+          "--offline"
+        ],
+        [
+          "node",
+          "scripts/test-hosted.mjs"
+        ]
+      ],
+      "status": "completed",
+      "handoff": "Scoped commit and worker report; integrate through /root only."
+    },
+    {
+      "task_id": "T12",
+      "owner": "/root/seed_setup",
+      "branch": "agent/cli-execution-v13",
+      "base_commit": "551214d92976357b55614ebad4d9e5bfafc7b1e0",
+      "worktree": "../naja-worktrees/seed-setup",
+      "paths": [
+        "bootstrap/driver/src/main.rs",
+        "bootstrap/driver/src/execution.rs",
+        "tests/cli/",
+        "scripts/test-cli.mjs"
+      ],
+      "status": "active",
+      "deliverable": "Native run and deterministic program-file test CLI, explicit WSL adapter, bounded artifacts and machine reports.",
+      "acceptance_commands": [
+        [
+          "cargo",
+          "test",
+          "-p",
+          "naja-seed",
+          "--locked",
+          "--offline"
+        ],
+        [
+          "node",
+          "scripts/test-cli.mjs"
+        ]
+      ],
+      "forbidden_paths": [
+        "bootstrap/driver/src/lib.rs",
+        "backends/",
+        "Cargo.lock",
+        "planning/"
+      ],
+      "handoff": "Scoped commit/report to sole integrator."
+    },
+    {
+      "task_id": "T04",
+      "owner": "/root/recovery_review",
+      "branch": "agent/recovery-review-v13",
+      "base_commit": "dcbee519ad4da6a60d93bfba1cd5a4c280c7d2ec",
+      "worktree": "../naja-worktrees/recovery-review",
+      "paths": [
+        "reports/continuity/FRESH_AGENT_DRILL.md"
+      ],
+      "status": "completed",
+      "deliverable": "Fresh-agent synthetic handoff and read-only helper review; disposable ownership released.",
+      "acceptance_commands": [
+        [
+          "node",
+          "verify.mjs"
+        ]
+      ],
+      "handoff": "Reports integrated as8b3e25b and95ab630; commands in disposable fixture, not product acceptance."
+    },
+    {
+      "task_id": "T09",
+      "owner": "/root/recovery_review",
+      "branch": "agent/hosted-review-v13",
+      "base_commit": "551214d92976357b55614ebad4d9e5bfafc7b1e0",
+      "worktree": "../naja-worktrees/recovery-review",
+      "paths": [
+        "reports/reviews/HOSTED_NATIVE_V13.md"
+      ],
+      "status": "completed",
+      "deliverable": "Read-only independent hosted runtime/parser review and native probes.",
+      "acceptance_commands": [
+        [
+          "node",
+          "scripts/test-hosted.mjs"
+        ],
+        [
+          "node",
+          "scripts/test-hosted-language.mjs"
+        ]
+      ],
+      "handoff": "Report-only commit b435150; no product edits."
+    },
+    {
+      "task_id": "T09",
+      "owner": "/root",
+      "branch": "agent/integrator-H0",
+      "base_commit": "551214d92976357b55614ebad4d9e5bfafc7b1e0",
+      "worktree": ".",
+      "paths": [
+        "backends/native/"
+      ],
+      "status": "active",
+      "deliverable": "Integrate and extend native semantics after contributor release; preserve checked-i64 and hosted integer evidence.",
+      "acceptance_commands": [
+        [
+          "cargo",
+          "test",
+          "-p",
+          "naja-native",
+          "--locked",
+          "--offline"
+        ]
+      ],
+      "handoff": "Private fenced checkpoint plus public progress."
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

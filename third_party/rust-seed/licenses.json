@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "scope": "Temporary Rust seed dependency license copies; archive identities in Cargo.lock and compatibility/unicode/provenance.json.",
+  "records": [
+    {
+      "package": "tinyvec",
+      "version": "1.12.0",
+      "file": "third_party/rust-seed/tinyvec-1.12.0/LICENSE-APACHE.md",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "package": "tinyvec_macros",
+      "version": "0.1.1",
+      "file": "third_party/rust-seed/tinyvec_macros-0.1.1/LICENSE-APACHE.md",
+      "sha256": "4f44572785f35152c1fd2eadf565b7e079c0f300b4324f0af653419f9d76b735"
+    },
+    {
+      "package": "unicode-ident",
+      "version": "1.0.24",
+      "file": "third_party/rust-seed/unicode-ident-1.0.24/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "package": "unicode-ident",
+      "version": "1.0.24",
+      "file": "third_party/rust-seed/unicode-ident-1.0.24/LICENSE-UNICODE",
+      "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1"
+    },
+    {
+      "package": "unicode-normalization",
+      "version": "0.1.25",
+      "file": "third_party/rust-seed/unicode-normalization-0.1.25/LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    }
+  ]
+}

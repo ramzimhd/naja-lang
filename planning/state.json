@@ -10,11 +10,17 @@
     "T02",
     "T04",
     "T05",
+    "T06",
+    "T09",
+    "T11",
+    "T12",
     "T35"
   ],
   "blockers": [],
-  "last_checkpoint": "2026-10-24T09:26:07.8784901-04:00",
-  "note": "Public repository created and anonymous access verified; Apache-2.0 selected by the owner. At source 6e702ca, seed CI passed on Windows, Linux and macOS, with 25 native checks on Linux. Only scoped requirements/tasks are verified; no release gate is complete. Setup installer/target checks, full grammar, hosted semantics, autonomy, cells, VSIX and productivity remain incomplete. No external account blocker remains.",
+  "last_checkpoint": "2026-10-25T19:00:31.849Z",
+  "note": "Revision1.3 is additive; all19 inherited release gates remain open. Ordinary decimal hosted integers, explicit checkedi64, shared brace/marker/name services, Unicode17/NFKC and recovery tooling are implemented in scoped slices. Current integration evidence is pending; prior verified source/evidence is preserved. CLI execution and literal decoding contributors are active. No standalone FC1, selfhosting, cells, VSIX or human productivity proof exists.",
   "official_language": "en",
-  "package_revision": "1.2"
+  "package_revision": "1.2",
+  "continuation_revision": "1.3",
+  "language_edition": "2026.1"
 }

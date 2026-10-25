@@ -3,3 +3,4 @@
 *.docx binary
 # Evidence hashes cover retained bytes, including original line endings.
 reports/checks/*.log -text
+third_party/rust-seed/**/LICENSE* -text

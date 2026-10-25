@@ -10,25 +10,32 @@ Development has started from the English HATCH specifications, expanded by the
 [founder's revision 1.3](docs/continuation/README.md). This is an early
 experimental Rust seed, **not a HATCH release**. The implementation currently has
 a lossless lexer/logical-line CST and a small native Linux x86-64 code-generation
-spike. It does not yet parse the complete grammar, implement hosted integers,
-self-host, provide native sessions, or supply an installable VS Code extension.
+backend. It does not yet parse the complete grammar, implement the full hosted
+value model, self-host, provide native sessions, or supply an installable VS Code
+extension. FC1 and HATCH remain incomplete.
 
-The native spike requires `from naja.core import i64`, explicit `i64(...)`
-literal constructors and `: i64` declarations. It supports checked addition, subtraction, multiplication, signed
-comparisons, assignment, `if`/`else`, `while` and integer output. `.naja` edition
+Ordinary decimal integers, including values beyond machine width, compile through
+a native multi-limb runtime. The current operations are addition, subtraction,
+multiplication, negation, comparisons, assignment, `if`/`else`, `while` and integer
+output. A 64 MiB temporary arena reports exhaustion without narrowing or wrapping.
+Explicit `from naja.core import i64` selects a separate checked-i64 slice;
+mixing these value domains is still unsupported. `.naja` edition
 2026.1 adds brace suites, transparent named sections and indentation depth markers
-through the shared frontend. It rejects
+through the shared frontend. Unicode 17 identifier rules and canonical name
+resolution preserve original source spans. The compiler rejects
 unimplemented features rather than executing Python or silently narrowing `int`.
 See [the seed limits](bootstrap/README.md) and
 [frontend limits](bootstrap/frontend/README.md).
 
-With the pinned Rust seed and a working platform linker/SDK:
+With the pinned Rust seed, a working platform linker/SDK and the locked packages
+available locally (one-time development preparation: `cargo fetch --locked`):
 
 ```sh
 cargo build --workspace --locked --offline
 cargo test --workspace --locked --offline
 cargo run --locked --offline -p naja-seed -- check tests/native/fixtures/sum.py
 cargo run --locked --offline -p naja-seed -- build tests/native/fixtures/sum.py --target x86_64-unknown-linux-gnu --output target/readme-sum.elf
+cargo run --locked --offline -p naja-seed -- check tests/native/fixtures/integers.naja
 ```
 
 The emitted file targets **Linux x86-64**, including when compiled on Windows.
@@ -37,6 +44,8 @@ execution tests on Windows with Ubuntu WSL or Linux x86-64:
 
 ```sh
 node scripts/test-native.mjs
+node scripts/test-hosted.mjs
+node scripts/test-hosted-language.mjs
 ```
 
 The commands above were executed on Windows x64, with ELF execution in Ubuntu

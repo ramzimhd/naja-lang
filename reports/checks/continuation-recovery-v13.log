@@ -1,0 +1,25 @@
+Recorded command: node --test tests/continuity/local.test.mjs
+Recorded exit code: 0
+--- captured output ---
+✔ fresh session resumes a clean checkpoint after explicit release/acquire (3870.8899ms)
+✔ competing processes have exactly one reservation winner (1162.693ms)
+✔ same repository worktrees share the reservation and age never steals it (1629.3376ms)
+✔ incomplete or legacy reservation is read-only and cannot be automatically reclaimed (1431.5898ms)
+✔ explicit confirmed manual migration retains old ownership and acquires generation two (1575.985ms)
+✔ dirty WIP, untracked bytes and failed tests are retained without advancing verification (7501.6284ms)
+✔ source edit followed by forced process exit makes old metadata non-resumable (3322.9803ms)
+✔ malformed pointer, stale generation, content tampering and changed commit fail closed (4125.2331ms)
+✔ cached newer remote commit blocks recovery without fetch, reset or overwriting source (5414.5935ms)
+✔ strict schemas and outcome classification retain unknown telemetry and distinguish tests from quotas (0.7769ms)
+✔ invalid checks cannot publish or poison the last valid checkpoint (4044.1845ms)
+✔ quota and context warning checkpoints preserve source and verification without a provider retry (5188.3891ms)
+✔ held mutation guards and incomplete atomic temporary files never authorize lock theft (3457.0915ms)
+✔ fresh process reads checkpoint without private chat history or provider calls (4173.9403ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47068.1431

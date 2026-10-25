@@ -20,6 +20,8 @@ jobs:
           check-latest: false
       - name: Prepare pinned seed
         run: rustup toolchain install 1.97.1 --profile minimal --component rustfmt --component clippy --no-self-update
+      - name: Prepare locked temporary seed dependencies
+        run: cargo fetch --locked
       - name: Check readable formatting
         run: cargo fmt --all -- --check
       - name: Execute source tests offline
@@ -31,7 +33,18 @@ jobs:
       - name: Execute emitted Linux machine code
         if: runner.os == 'Linux'
         run: node scripts/test-native.mjs
+      - name: Execute hosted native arithmetic and source programs
+        if: runner.os == 'Linux'
+        run: |
+          node scripts/test-hosted.mjs
+          node scripts/test-hosted-language.mjs
       - name: Check planning and evidence integrity
         run: node scripts/validation/check-planning.mjs
       - name: Execute planning mutation tests
         run: node --test tests/planning/*.test.mjs
+      - name: Check additive foundation contracts
+        run: node scripts/validation/check-foundations.mjs
+      - name: Execute contract mutation tests
+        run: node --test tests/foundations/*.test.mjs
+      - name: Exercise disposable recovery repositories
+        run: node --test tests/continuity/*.test.mjs

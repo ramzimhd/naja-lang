@@ -4,9 +4,18 @@ The owner selected the Apache License, Version 2.0 on October 24, 2026.
 The founding specifications were supplied by the project owner. Implementation
 and verification are AI-assisted; no independent external audit is claimed.
 
-The current Cargo workspace has no external crate dependencies. Rust/Cargo and
-the host SDK are seed development tools, not bundled NAJA implementation sources.
-Their licenses and official origins are inventoried in bootstrap/toolchains.json.
+The temporary Rust seed uses unicode-ident 1.0.24, unicode-normalization 0.1.25,
+tinyvec 1.12.0 and tinyvec_macros 0.1.1. Their Apache-2.0 license option is selected;
+unicode-ident also requires the Unicode-3.0 data license. Cargo.lock pins archive
+checksums; compatibility/unicode/provenance.json records sources, licenses and
+the enabled dependency surface. Exact license files are retained in third_party/.
+The Unicode conformance data is attributed to Unicode, Inc. and contributors;
+compatibility/unicode/LICENSE-UNICODE.txt contains its license.
+
+Rust/Cargo and the host SDK are temporary seed development tools. Their licenses
+and official origins are inventoried in bootstrap/toolchains.json. The historical
+bootstrap/manifest.json and independence-seed report describe their pinned older
+source; they do not certify the expanded current closure or final self-hosting.
 
 This notice is an initial provenance record, not a completed release SBOM or
 assurance that future dependencies have already been audited.
