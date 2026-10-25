@@ -1,3 +1,13 @@
+# Quota stop and exact resume boundary — October 25, 2026
+
+Observed account quota100%used/0%remaining at2026-10-25T23:18:50.686Z; reset2026-11-01T08:14:13Z. Engineering stops at this real quota limit. No automatic runner, paid fallback or background continuation is promised. Manually resume when quota is available.
+
+Published05e8dee98a940a1b8c1770b0eadd26d6d21a293b fixes the exact202 harness comparing Windows preparation-host metadata to Linux execution-host metadata. Original3cb7 run40243893202 remains FAILED; all earlier native/source suites passed and exact202 did not run there. The correction changes no case source/oracle/work/budget, and preserves original preparation bytes. Node syntax/prepare-only/current-plan identity passed. New exact CI40244168721 was in_progress; inspect its real conclusion before claiming Linux success. Any final metadata-head CI needs its own observation.
+
+Retained verified compiler6d8fb04 remains unchanged: Rust291/fmt/Clippy/JSON21/editor and firstWindows/WSL exact202 passed. StageA150/Rational220 compatibility passedf0; independent49 passing outcomes preserve its original reviewer assumption failure. All contributor paths released, all code/reports committed. All19 gates and L/C/FC1 remain open.
+
+Private checkpoint26 saved clean05e8dee before this metadata; a later ordinary checkpoint supersedes it. Actual fence2 remains held; never reclaim by age/PID. Read actual Git/state/private checkpoint and preserve all worktrees, rawcaptures and original frontend Cargo.lock. Then verify pending CI and continue founder work. Earlier checkpoint text is historical.
+
 # Current exact decimal literal checkpoint — October 25, 2026
 
 Retained source6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0 passed Rust291, fmt, strict Clippy, JSON21 and editor12+9. First frozen exact source202 passed (74ELFs), with independent49 passing outcomes across two phases. Original reviewer17/1/31 assumption failure remains distinct from continuation32. StageA150 and unchanged Rational220 compatibility passed exactf0f8994. Five StageA diagnostic changes followed44paired unchanged-source commands; all150 source hashes/original proofs remain preserved.

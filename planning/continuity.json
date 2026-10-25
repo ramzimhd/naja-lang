@@ -4,9 +4,9 @@
   "language_edition": "2026.1",
   "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
   "owner": "/root",
-  "status": "running",
-  "checkpoint_generation": 24,
-  "head": "3e76cd3b712ef378b4b9082b953b4eb91c98a8db",
+  "status": "waiting_for_quota",
+  "checkpoint_generation": 26,
+  "head": "05e8dee98a940a1b8c1770b0eadd26d6d21a293b",
   "branch": "agent/integrator-H0",
   "last_verified_source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
   "dirty_paths": [],
@@ -64,7 +64,9 @@
     "Exact202 first unchanged run passed6d8fb04 with74ELFs; independent49 passing outcomes preserve original17/1/31 reviewer-assumption failure and continuation32.",
     "Rust291/fmt/Clippy/JSON21/editor passed6d; StageA150 and unchanged Rational220 passedf0f8994. Five diagnostic migrations followed44paired unchanged-source commands; all150 source hashes stayed unchanged.",
     "All1058 exact-suite streams and4 frontend logs were decoded/hash/length/pattern checked. Original frontend failures and transcript-only baseline are retained accurately.",
-    "PublicRational487901d passed allthreehosts at exactCI40242650531. Private integrity audit/checkpoint24 advanced retained6d on clean3e76cd3 before metadata."
+    "PublicRational487901d passed allthreehosts at exactCI40242650531. Private integrity audit/checkpoint24 advanced retained6d on clean3e76cd3 before metadata.",
+    "Host-evidence mismatch failed exact3cb7 Ubuntu CI before exact202 execution; corrected05e8dee preserves all202 cases/oracles/budgets. NewCI40244168721 remains pending.",
+    "Observed provider quota100%used/0%remaining; private checkpoint26 preserved clean05e8dee before final quota metadata."
   ],
   "checks": [
     {
@@ -2968,13 +2970,15 @@
       "sha256": "3ec54c0d4cb90d3cbe8e4bf658a8e464e53e7f15f5062ee0cb9c9b4f8ff8e700"
     }
   ],
-  "blockers": [],
+  "blockers": [
+    "Provider quota100% used/0% remaining observed2026-10-25T23:18:50.686Z; reset2026-11-01T08:14:13Z."
+  ],
   "unsafe_intermediate_states": [
     "All exact contributor paths released; preserve branches/worktrees and raw captures.",
     "Publication review/push and exact new CI observation remain pending.",
     "All full founder acceptance gates remain open; approaching provider quota is distinct from context and spending."
   ],
-  "next_action": "Review/publish exact-literal integration, observe exact CI and continue FC1/HATCH while capacity remains; on actual quota exhaustion retain checkpoint and manually resume after observed reset.",
+  "next_action": "Manually resume after observed quota availability, inspect actual Git/private reservation/checkpoint, verify05e8dee CI40244168721 and any newer metadata-head run, then continue FC1/HATCH.",
   "next_commands": [
     [
       "git",
@@ -3014,11 +3018,11 @@
     "provider_quota": {
       "status": "observed",
       "account_shared": true,
-      "used_percent": 99,
-      "remaining_percent": 1,
+      "used_percent": 100,
+      "remaining_percent": 0,
       "window_minutes": 10080,
       "resets_at": "2026-11-01T08:14:13.000Z",
-      "observed_at": "2026-10-25T23:14:02.732Z",
+      "observed_at": "2026-10-25T23:18:50.686Z",
       "source": "Codex app get_usage_limits; primary subscription window shared across the account."
     },
     "rate_limit": {
@@ -3054,5 +3058,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-25T23:14:59.657Z"
+  "updated_at": "2026-10-25T23:19:42.985Z"
 }

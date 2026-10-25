@@ -19,9 +19,11 @@
     "T18",
     "T35"
   ],
-  "blockers": [],
-  "last_checkpoint": "2026-10-25T23:11:47.925Z",
-  "note": "Exact decimal capability is integrated: first source202 passed6d8fb04, independent49 passing outcomes preserve one reviewer-assumption failure, Rust291/fmt/Clippy/JSON21/editor passed6d, StageA150 and unchanged Rational220 compatibility passedf0f8994. All inherited gates and L/C/FC1 contracts remain open; counts remain3verified requirements/2tasks/0gates. Private checkpoint24 advanced retained6d. Quota98%used/2%remaining observed23:10:44Z; preserve coherent recovery and continue while capacity remains.",
+  "blockers": [
+    "Provider quota100% used/0% remaining observed2026-10-25T23:18:50.686Z; reset2026-11-01T08:14:13Z."
+  ],
+  "last_checkpoint": "2026-10-25T23:19:42.985Z",
+  "note": "Exact decimal capability is integrated: first source202 passed6d8fb04, independent49 passing outcomes preserve one reviewer-assumption failure, Rust291/fmt/Clippy/JSON21/editor passed6d, StageA150 and unchanged Rational220 compatibility passedf0f8994. All inherited gates and L/C/FC1 contracts remain open; counts remain3verified requirements/2tasks/0gates. Private checkpoint24 advanced retained6d. Quota98%used/2%remaining observed23:10:44Z; preserve coherent recovery and continue while capacity remains. Exact3cb7 CI failed only host metadata comparison; corrected05e8dee published, CI40244168721 remains pending. Stopping at observed quota exhaustion with coherent recovery; no mission completion claim.",
   "official_language": "en",
   "package_revision": "1.2",
   "continuation_revision": "1.3",
