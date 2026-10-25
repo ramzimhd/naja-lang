@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "unicode_version": "17.0.0",
+  "checked_on": "2026-10-25",
+  "python_reference_commit": "d220409a13b77de7a6c30abe16ea90db01528edc",
+  "sources": [
+    {
+      "file": "DerivedCoreProperties.txt",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt",
+      "byte_length": 1134783,
+      "sha256": "24c7fed1195c482faaefd5c1e7eb821c5ee1fb6de07ecdbaa64b56a99da22c08"
+    },
+    {
+      "file": "NormalizationTest.txt",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/NormalizationTest.txt",
+      "byte_length": 2827429,
+      "sha256": "5019ffd530751a741900c849c0e010332f142a3612234639bd200b82138a87db"
+    },
+    {
+      "file": "ReadMe.txt",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/ReadMe.txt",
+      "byte_length": 740,
+      "sha256": "9fe1a90bd32659d7953616283dc2bffaa165518aae9ace026040c42c559ba606"
+    },
+    {
+      "file": "UNICODE-LICENSE.txt",
+      "url": "https://www.unicode.org/license.txt",
+      "byte_length": 1995,
+      "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96"
+    },
+    {
+      "file": "unicodedata_db.h",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Modules/unicodedata_db.h",
+      "byte_length": 650759,
+      "sha256": "72d255787e46683c3642e338ea07e7b37fc77d7052ca283c84f8611235a1d75e"
+    },
+    {
+      "file": "lexical_analysis.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Doc/reference/lexical_analysis.rst",
+      "byte_length": 50990,
+      "sha256": "1e249882d4f745150dc0a39188a67fa6e46fd204f6a4c0066382d12c20872c19"
+    }
+  ],
+  "generated_fixtures": [
+    { "file": "xid-ranges-17.0.0.txt", "byte_length": 50255, "sha256": "1b913460b53a24819a6ee688f4d85531cbaf009d064efdd2ab34bdbef5f07d09" },
+    { "file": "normalization-17.0.0.txt", "byte_length": 1035172, "sha256": "53b38364b68abe9783603e216ab682ba21efca3f6ed5552c2678c86d0e7f5a5e" },
+    { "file": "LICENSE-UNICODE.txt", "byte_length": 1995, "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96" }
+  ],
+  "seed_dependencies": [
+    {
+      "name": "unicode-ident",
+      "version": "1.0.24",
+      "url": "https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.24.crate",
+      "sha256": "e6e4313cd5fcd3dad5cafa179702e2b244f760991f45397d14d4ebf38247da75",
+      "license": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "unicode_version": "17.0.0",
+      "normal_dependencies": []
+    },
+    {
+      "name": "unicode-normalization",
+      "version": "0.1.25",
+      "url": "https://static.crates.io/crates/unicode-normalization/unicode-normalization-0.1.25.crate",
+      "sha256": "5fd4f6878c9cb28d874b009da9e8d183b5abc80117c40bbd187a1fde336be6e8",
+      "license": "MIT OR Apache-2.0",
+      "unicode_version": "17.0.0",
+      "normal_dependencies": ["tinyvec"],
+      "features": ["std"]
+    },
+    {
+      "name": "tinyvec",
+      "version": "1.12.0",
+      "url": "https://static.crates.io/crates/tinyvec/tinyvec-1.12.0.crate",
+      "sha256": "bb4ebadaa0af04fab11ae01eb5f9fdb5f9c5b875506e210e71c07873528baa7f",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "normal_dependencies": ["tinyvec_macros"],
+      "features": ["alloc", "tinyvec_macros"]
+    },
+    {
+      "name": "tinyvec_macros",
+      "version": "0.1.1",
+      "url": "https://static.crates.io/crates/tinyvec_macros/tinyvec_macros-0.1.1.crate",
+      "sha256": "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "normal_dependencies": []
+    }
+  ],
+  "execution_boundary": "Unicode/Python sources are read-only references. Fixture generation uses Node and verified source bytes; ordinary builds and tests consume checked-in fixtures and Rust tables with no Python or network invocation. Upstream maintainer generators and dev dependencies are not invoked.",
+  "acquisition_note": "unicode-ident, tinyvec and tinyvec_macros source archives were already in the local public Cargo package cache. unicode-normalization 0.1.25 was fetched from static.crates.io, hashed and added to that package cache. Explicit cargo info unicode-normalization@0.1.25 --registry crates-io acquired missing public registry metadata before offline lock generation."
+}

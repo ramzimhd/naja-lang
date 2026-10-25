@@ -1,6 +1,8 @@
 # Initial lossless frontend
 
-`naja-frontend` is an independent Rust seed crate with no external dependencies.
+`naja-frontend` is an independent Rust seed crate. Unicode services use two
+exactly pinned direct Rust dependencies and two transitive dependencies;
+`compatibility/unicode/` records their versions, checksums, licenses and limits.
 It is an implemented lexical/CST foundation for T05, not a complete parser or a
 claim of Python 3.15 grammar coverage. It invokes no Python interpreter or oracle.
 
@@ -20,7 +22,7 @@ ranges, while `Lexed::position` reports one-based Unicode-scalar positions.
 Structural indent/dedent, EOF and a final logical newline may have empty spans.
 `Lexed::reconstruct()` concatenates token text to reproduce the exact input.
 
-Implemented tokenization covers ASCII identifiers, decimal/base integer lexemes
+Implemented tokenization covers Unicode 17.0.0 identifiers, decimal/base integer lexemes
 without numeric conversion or width limits, decimal float lexemes, ordinary and
 raw single/triple quoted strings, byte strings, comments, standard operators,
 bracket continuation and explicit backslash continuation. Indentation uses tab
@@ -29,14 +31,22 @@ comments and blank lines do not change indentation. Escapes are retained rather
 than evaluated. Invalid numbers, characters, delimiters, indentation and
 unterminated strings have English diagnostics with source spans.
 
-Unicode string/comment data is preserved. Full Unicode identifier recognition
-and normalization remain unimplemented: non-ASCII source tokens outside strings
-and comments produce an explicit temporary unsupported diagnostic. This is an
-initial implementation limit, not the HATCH identifier policy. Formatted/template
+Unicode string/comment data is preserved. Identifier starts follow XID_Start
+plus underscore; continuation characters follow XID_Continue. Raw source names
+remain byte-for-byte tokens. `is_identifier` validates lexical NAME spelling;
+`canonical_identifier` returns its NFKC symbol key or a relative-byte error.
+Resolvers call the shared service after raw keyword recognition and use canonical
+keys for declarations, uses and duplicate-name detection. Neither tokenization
+nor this service silently reserves a compatibility spelling that normalizes to
+a keyword. Case is significant; no case folding or confusable-name restriction
+is implied. String prefixes remain their raw ASCII spellings. Labels, comments,
+string data and runtime string-based lookups are not normalized by these APIs.
+
+Formatted/template
 string interpolation and imaginary literals also receive explicit unsupported
 diagnostics. String escape validity, literal values, encodings other than
-already-decoded UTF-8, complete grammar, parsing/resource budgets, Unicode XID
-tables, semantic analysis and execution remain future work. An unsupported
+already-decoded UTF-8, complete grammar, parsing/resource budgets, semantic
+analysis and execution remain future work. An unsupported
 formatted string is scanned as an opaque ordinary quote-delimited string for
 recovery; no grammar accuracy is claimed for its contents.
 
@@ -125,8 +135,11 @@ Run the specification-derived positive, negative and metamorphic tests with:
 cargo test --manifest-path bootstrap/frontend/Cargo.toml
 ```
 
-Tests use no external packages or interpreter. They cover source reconstruction,
+Tests use the locked Rust dependency graph and no external interpreter. They cover source reconstruction,
 byte spans, line-ending/trivia transformations, integer preservation,
 indentation/continuation, strings/comments and explicit unsupported cases. The
 small generated-input test checks lexical progress and losslessness; it is not
-an exhaustive fuzzing or robustness claim.
+an exhaustive fuzzing or robustness claim. Official checked-in Unicode fixtures
+compare XID rules for every Unicode scalar and NFKC against every Unicode 17.0.0
+normalization vector, plus the default scalar invariant. Fixture regeneration
+and reference acquisition are development operations outside normal tests.

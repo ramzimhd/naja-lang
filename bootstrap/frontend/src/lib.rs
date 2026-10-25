@@ -3,8 +3,13 @@
 //! This is an initial lexer foundation, not a complete Python/NAJA grammar.
 //! See the adjacent README for the exact supported and unsupported surface.
 
+mod identifier;
 mod lexer;
 
+pub use identifier::{
+    IDENTIFIER_UNICODE_VERSION, IdentifierError, IdentifierErrorKind, canonical_identifier,
+    is_identifier,
+};
 pub use lexer::{lex, lex_with_dialect};
 
 /// Source syntax is selected explicitly, never by ambient machine settings.

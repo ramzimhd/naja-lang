@@ -1,6 +1,7 @@
 use naja_frontend::{Span, Symbol, TokenKind, lex, parse_cst};
 
 mod blocks;
+mod identifiers;
 
 fn significant(source: &str) -> Vec<(TokenKind, String)> {
     let lexed = lex(source);
@@ -483,18 +484,16 @@ fn unicode_user_data_and_byte_spans_are_preserved() {
 }
 
 #[test]
-fn unicode_identifiers_have_honest_temporary_unsupported_diagnostic() {
+fn unicode_identifiers_have_lossless_original_name_tokens() {
     for source in ["café = 1", "变量 = 2", "_Δ = 3"] {
         let lexed = lex(source);
-        let diagnostic = lexed
-            .diagnostics
+        assert!(lexed.diagnostics.is_empty());
+        let token = lexed
+            .tokens
             .iter()
-            .find(|diagnostic| diagnostic.code == "F0010")
+            .find(|token| token.kind == TokenKind::Identifier)
             .unwrap();
-        assert_eq!(
-            &source[diagnostic.span.start..diagnostic.span.end],
-            source.split(' ').next().unwrap()
-        );
+        assert_eq!(lexed.text(token), source.split(' ').next().unwrap());
         assert_lossless(source);
     }
 }

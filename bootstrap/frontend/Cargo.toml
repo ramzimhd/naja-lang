@@ -9,6 +9,10 @@ description = "Initial independent, lossless NAJA source frontend"
 [lib]
 path = "src/lib.rs"
 
+[dependencies]
+unicode-ident = "=1.0.24"
+unicode-normalization = "=0.1.25"
+
 [[test]]
 name = "syntax"
 path = "../../tests/syntax/frontend.rs"

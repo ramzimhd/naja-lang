@@ -1,3 +1,4 @@
+use crate::identifier::{is_continue, is_start};
 use crate::{Diagnostic, Dialect, Lexed, Span, Symbol, Token, TokenKind};
 
 const MAX_NAJA_SOURCE_BYTES: usize = 1_048_576;
@@ -308,7 +309,12 @@ impl Lexer<'_> {
                 {
                     self.close_suite()
                 }
-                _ if !ch.is_ascii() => self.unsupported_identifier(),
+                _ if !ch.is_ascii()
+                    && is_start(self.source[self.offset..].chars().next().unwrap()) =>
+                {
+                    self.identifier_or_string()
+                }
+                _ if !ch.is_ascii() => self.invalid_unicode_character(),
                 _ => self.symbol_or_invalid(),
             }
         }
@@ -576,12 +582,9 @@ impl Lexer<'_> {
             self.brace_indentation(start, self.line_indent);
         }
         let companion = ["else", "elif", "except", "finally"].iter().any(|word| {
-            following.strip_prefix(word).is_some_and(|tail| {
-                !tail
-                    .chars()
-                    .next()
-                    .is_some_and(|ch| ch.is_alphanumeric() || ch == '_')
-            })
+            following
+                .strip_prefix(word)
+                .is_some_and(|tail| !tail.chars().next().is_some_and(is_continue))
         });
         if !following.is_empty() && !following.starts_with(['\r', '\n', '#', '}']) && !companion {
             let end = self.source[self.offset..]
@@ -658,20 +661,16 @@ impl Lexer<'_> {
 
     fn identifier_or_string(&mut self) {
         let start = self.offset;
-        while self
-            .byte()
-            .is_some_and(|ch| ch.is_ascii_alphanumeric() || ch == b'_')
-        {
-            self.offset += 1;
-        }
-        if self.source[self.offset..]
+        self.offset += self.source[self.offset..]
             .chars()
             .next()
-            .is_some_and(|ch| !ch.is_ascii() && !ch.is_whitespace())
-        {
-            self.offset = start;
-            self.unsupported_identifier();
-            return;
+            .unwrap()
+            .len_utf8();
+        while let Some(ch) = self.source[self.offset..].chars().next() {
+            if !is_continue(ch) {
+                break;
+            }
+            self.offset += ch.len_utf8();
         }
         let prefix = &self.source[start..self.offset];
         let lower = prefix.to_ascii_lowercase();
@@ -688,24 +687,24 @@ impl Lexer<'_> {
         }
     }
 
-    fn unsupported_identifier(&mut self) {
+    fn invalid_unicode_character(&mut self) {
         let start = self.offset;
-        while let Some(ch) = self.source[self.offset..].chars().next() {
-            if ch.is_alphanumeric() || ch == '_' || (!ch.is_ascii() && !ch.is_whitespace()) {
-                self.offset += ch.len_utf8();
-            } else {
-                break;
-            }
-        }
-        if self.offset == start {
-            self.offset += self.source[self.offset..]
-                .chars()
-                .next()
-                .unwrap()
-                .len_utf8();
-        }
+        let ch = self.source[self.offset..].chars().next().unwrap();
+        self.offset += ch.len_utf8();
         self.push(TokenKind::Invalid, start, self.offset);
-        self.error("F0010", "Non-ASCII source tokens outside strings and comments are unsupported by this initial frontend. Full Unicode identifier rules and normalization are pending.", start, self.offset);
+        self.error(
+            "F0010",
+            if is_continue(ch) {
+                format!(
+                    "Unicode character U+{:04X} cannot start an identifier.",
+                    ch as u32
+                )
+            } else {
+                format!("Unexpected Unicode source character U+{:04X}.", ch as u32)
+            },
+            start,
+            self.offset,
+        );
         self.logical_content = true;
     }
 
@@ -844,23 +843,19 @@ impl Lexer<'_> {
                     );
                 }
             }
-            if self
-                .byte()
-                .is_some_and(|ch| ch.is_ascii_alphabetic() || ch == b'_')
-            {
-                while self
-                    .byte()
-                    .is_some_and(|ch| ch.is_ascii_alphanumeric() || ch == b'_')
-                {
-                    self.offset += 1;
+        }
+        if self.source[self.offset..]
+            .chars()
+            .next()
+            .is_some_and(is_continue)
+        {
+            while let Some(ch) = self.source[self.offset..].chars().next() {
+                if !is_continue(ch) {
+                    break;
                 }
-                self.error(
-                    "F0006",
-                    "Invalid suffix on number literal.",
-                    start,
-                    self.offset,
-                );
+                self.offset += ch.len_utf8();
             }
+            self.error("F0006", "Invalid suffix on number literal; typed literal construction is not implemented here.", start, self.offset);
         }
         self.push(kind, start, self.offset);
         self.logical_content = true;
