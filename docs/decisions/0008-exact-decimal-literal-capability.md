@@ -63,8 +63,10 @@ exponent accumulator is bounded by the possible expansion and fractional length,
 without truncating overflow to zero or rejecting merely by exponent text length.
 
 Maintain a cumulative parser literal ledger matching native validation: actual
-Int string bytes, decoded Text/Bytes bytes and each unique canonical static
-attribute/method name's UTF-8 bytes. Reserve generated pairs atomically before
+Int string bytes, decoded Text/Bytes bytes and every canonical static attribute/
+method name validation occurrence's UTF-8 bytes, including repeated names.
+The distinct-name cardinality limit is separate; do not reduce existing charges
+to one per unique name. Reserve generated pairs atomically before
 allocation, including inside skipped/unused code. Preserve the independent
 backend aggregate check. Expansion excess diagnoses NJA101 at the original
 NUMERIC span: `typed exact literal expansion exceeds the 1 MiB literal budget`.
@@ -99,3 +101,9 @@ native work guards before execution. Keep first failures and pending `not_run`.
 No Python/decimal host oracle or binary-float path is authorized. Full Decimal,
 imported types, generic capabilities/algebra, coherent hashing, dimensions,
 scale/affine point/delta relations, self-hosting and FC1/HATCH remain required.
+
+Pre-execution correction: initial contract546f8e3 incorrectly described existing
+name charges as unique. Read-only inspection found native validation charges
+every occurrence. This amendment preserves that existing accounting before any
+literal expansion/native proof; it does not weaken the backend guard. All
+independent preparations remain `not_run` until the amended contract is consumed.
