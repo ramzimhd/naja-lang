@@ -1,0 +1,12 @@
+{
+  "name": "NAJA", "scopeName": "source.naja",
+  "patterns": [
+    { "name": "comment.line.number-sign.naja", "match": "#.*$" },
+    { "name": "string.quoted.double.naja", "begin": "\"", "end": "\"", "patterns": [{ "name": "constant.character.escape.naja", "match": "\\\\." }] },
+    { "name": "string.quoted.single.naja", "begin": "'", "end": "'", "patterns": [{ "name": "constant.character.escape.naja", "match": "\\\\." }] },
+    { "name": "keyword.control.naja", "match": "\\b(?:if|elif|else|while|for|in|def|return|class|pass|break|continue|import|from|as|assert|try|except|finally|raise|with|match|case|async|await|yield|and|or|not|is)\\b" },
+    { "name": "constant.language.naja", "match": "\\b(?:True|False|None)\\b" },
+    { "name": "constant.numeric.naja", "match": "\\b[0-9]+\\b" },
+    { "name": "punctuation.definition.depth.naja", "match": ":\\([0-9]+\\)" }
+  ]
+}

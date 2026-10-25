@@ -1,0 +1,112 @@
+{
+  "name": "naja-cli-preview",
+  "displayName": "NAJA CLI Preview (Experimental)",
+  "description": "Explicit native compiler check/build/run for saved NAJA files. Experimental CLI adapter; no LSP or debugger.",
+  "version": "0.0.1",
+  "preview": true,
+  "publisher": "ramzimhd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ramzimhd/naja-lang.git",
+    "directory": "editor/vscode"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "main": "./extension.cjs",
+  "activationEvents": [
+    "onCommand:naja.check",
+    "onCommand:naja.build",
+    "onCommand:naja.run",
+    "onCommand:naja.cancel"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Highlighting only until trust is granted; compiler commands always require explicit invocation and trust."
+    },
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "This preview uses a manually selected compiler and saved local files."
+    }
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "naja",
+        "aliases": [
+          "NAJA"
+        ],
+        "extensions": [
+          ".naja"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "naja",
+        "scopeName": "source.naja",
+        "path": "./syntaxes/naja.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "naja.check",
+        "title": "NAJA: Check Saved File",
+        "enablement": "isWorkspaceTrusted && editorLangId == naja"
+      },
+      {
+        "command": "naja.build",
+        "title": "NAJA: Build Saved File to New ELF",
+        "enablement": "isWorkspaceTrusted && editorLangId == naja"
+      },
+      {
+        "command": "naja.run",
+        "title": "NAJA: Run Saved File",
+        "enablement": "isWorkspaceTrusted && editorLangId == naja"
+      },
+      {
+        "command": "naja.cancel",
+        "title": "NAJA: Cancel Compiler Command"
+      }
+    ],
+    "configuration": {
+      "title": "NAJA CLI Preview",
+      "properties": {
+        "naja.compilerPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "Explicit absolute path to the trusted native NAJA compiler executable. No automatic installation or PATH discovery."
+        },
+        "naja.projectRoot": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "Optional absolute owning project root passed literally to --project-root. Empty disables project alias activation; no ambient discovery."
+        },
+        "naja.windowsRunner": {
+          "type": "string",
+          "enum": [
+            "disabled",
+            "wsl"
+          ],
+          "default": "disabled",
+          "scope": "machine",
+          "description": "Windows execution requires explicit wsl selection and the compiler's documented local WSL prerequisites. Check/build do not execute source."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@vscode/vsce": "4.0.0"
+  }
+}
