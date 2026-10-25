@@ -16,6 +16,11 @@ and Bytes, with Unicode-scalar Text results and unsigned byte Int results. See
 [native indexing](../../tests/index/README.md) for bounds, view lifetimes and
 executed checks. This does not add slices or collection indexing.
 
+`dynamic::Expression::Tuple` adds bounded immutable tuples with shallow len,
+truthiness and exact indexing. Tuple display, comparison and arithmetic remain
+explicit type errors. See [native tuples](../../tests/tuples/README.md) for the
+private array layout, limits and verification scope.
+
 The original `naja_native::emit_elf` keeps the explicit checked-i64 IR and overflow
 policy. `naja_native::hosted::emit_elf` accepts a separate hosted-integer IR with
 `Integer(String)`, locals, negation, addition/subtraction/multiplication, signed

@@ -1,0 +1,12 @@
+# Mixed immutable values and shallow nested tuple capabilities.
+set 0 999999999999999999999999999999999999 t:c3a900f09d849e b:00ff true false none 1 2 tuple:2 tuple:0 tuple:8
+print %0 0 index
+print %0 1 index
+print %0 2 index
+print %0 3 index
+print %0 4 index
+print %0 5 index
+print %0 6 index len
+print %0 6 index -1 index
+print %0 -1 index len
+print %0 -1 index not
