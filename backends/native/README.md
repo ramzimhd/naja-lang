@@ -11,6 +11,11 @@ ABI, separate call/stack budgets and executed tests are documented in
 [native functions](../../tests/functions/README.md). Existing slice-based
 `dynamic::emit_elf` remains functionless and rejects calls/returns.
 
+`dynamic::Expression::Index` adds exact integer/Bool indexing for immutable Text
+and Bytes, with Unicode-scalar Text results and unsigned byte Int results. See
+[native indexing](../../tests/index/README.md) for bounds, view lifetimes and
+executed checks. This does not add slices or collection indexing.
+
 The original `naja_native::emit_elf` keeps the explicit checked-i64 IR and overflow
 policy. `naja_native::hosted::emit_elf` accepts a separate hosted-integer IR with
 `Integer(String)`, locals, negation, addition/subtraction/multiplication, signed

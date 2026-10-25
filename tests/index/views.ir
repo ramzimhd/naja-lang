@@ -1,0 +1,14 @@
+# Immutable literal/arena views and exact numeric results.
+set 0 t:c3a9f09d849e
+set 1 %0 -1 index
+set 2 %0 0 index
+print %1
+print %2
+print %2 %1 +
+set 3 %2 %1 +
+set 4 %3 -2 index
+set 3 t:6368616e676564
+print %4 0 index
+set 5 b:00ff
+print %5 -1 index
+print %5 -1 index 1 +
