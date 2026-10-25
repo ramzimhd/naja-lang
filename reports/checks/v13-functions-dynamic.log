@@ -1,0 +1,90 @@
+Recorded command: node scripts/test-dynamic.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS display-truth-and-all-byte-repr exit=0 sha256=53d038b8fd511b81bb2f85bf927ddea64aa7e3fa9682c703e10c61690e5e86ba
+PASS operand-returning-and-or exit=0 sha256=c4861bf05fe03d80ab73d5879c92131e34107b4c2a8faeba55b42faca96de864
+PASS numeric-text-bytes-and-unrelated-comparisons exit=0 sha256=c59f2742cc45eae9b56ef44645db53b62e99521c800602fba75d5874be3b3857
+PASS bool-integer-arithmetic-and-metamorphic exit=0 sha256=bc8da765806f3dda9c822d3b385c27084dcca3c50ff0faedb4d5e33dc005c018
+PASS immutable-text-and-bytes-concatenation exit=0 sha256=183afe88a579012ef4163819bad6d5aab404818209cf7bba2b8575d745c6602e
+PASS control-reassignment-and-aliases exit=0 sha256=5e16f3f6679884650b75a907e47955d8c6c49f70ebcc91d9cbc579f4552d5d64
+PASS short-circuit-skips-runtime-type-errors exit=0 sha256=9ab467af72c40e558f3dedb2e10c3245ffb2279ed100b5fa041a5be5f31e69ea
+PASS positive-and-integer-boundary-preserve-exact-values exit=0 sha256=b9d23c13ddac6e78c46fda6bcfe1f38dd7bb88338c1dd600f03d25178f328470
+PASS unicode-scalar-and-raw-byte-lengths exit=0 sha256=93479fedd80422e27bfa854e338e14936b92fad095acfc6c06e68efac5939257
+PASS comparison-chain-independent-value-oracles exit=0 sha256=57cc3bb8baca9fd30f248e028a9d14580a45f701ce54282d73258c415e8e69b5
+PASS comparison-chain-short-circuit-and-nesting exit=0 sha256=3263ea8358f917635727281746bcb3d190e047b49454763c64454027b274148a
+PASS comparison-chain-max-supported-width exit=0 sha256=37dc64aa2919069d9eaf3d0445da9050495a87c92c725c66b75f411497fe995a
+PASS chain-intermediate-evaluated-once-under-arena-bound exit=0 sha256=3d812645a702e47399700e331d3efe2bea831513e79cf58f0bd0da563e6788c5
+PASS repeated-intermediate-control-exhausts-arena exit=103 sha256=0a2d47cd3d186cf3c330cdc787441fccd04e4affe9c449038b6bb59433d1c7b7
+PASS chain-false-skips-resource-failure exit=0 sha256=a5abecbfac2e2451d171064be28144805fc85e16aeb3c3389d456342c28353eb
+PASS chain-evaluation-order-preserves-first-error exit=105 sha256=4384787ed380bfa28c9eb0051de224d5261aedbd4639272f77b9e060c43cfd73
+PASS length-result-allocation-obeys-arena-limit exit=103 sha256=e1d0aad373925570183ea8147027dcef71b27e293439e9cf856e48bd6cdb019d
+PASS positive-bool-allocation-obeys-arena-limit exit=103 sha256=b7a9a7f772eed39dced9a737b880a1bc95059a0581d7044088d8e6567e5d781b
+PASS type-error-int-text-add exit=105 sha256=3ce3a6eb92b7148e83260705243698c74a50b7dbf75bdb885e4444ae32310c81
+PASS type-error-bool-bytes-multiply exit=105 sha256=d8c491969e852b317c762939d9393228362dc6a05f9491eaa6ed4f25ec95805e
+PASS type-error-text-bytes-add exit=105 sha256=c8d651ac8431a5cbd74d5f461092bf7674f683ac1e899325b91c1c81d4872c83
+PASS type-error-none-negation exit=105 sha256=c5397851d1921f708663a23009454404df13f3f800b5bab3cb3c03a0c1048e62
+PASS type-error-text-text-multiply exit=105 sha256=ab1e8e6a056b0f246d962c6225145cedada0c178ddf56f6a23073aa04dfc394c
+PASS type-error-text-ordered-int exit=105 sha256=98030c0154a1b34fc771d66bc9b42739a3f834b4d8fa8e5b30b0a12f21f6c0aa
+PASS type-error-none-ordered-none exit=105 sha256=f8f6271c87466ef66006e5fb5977f573fb5b677690dbaa50e8913a1eadf0f98c
+PASS type-error-bool-ordered-text exit=105 sha256=c3b368aad6eeb5dd328337330759fa6333652c48031e498a260d62eb7da877a1
+PASS type-error-bytes-subtract exit=105 sha256=571a7d94241d7975e63f68f64e044ce4a81f4da14787ce6dae8a827dd09701a6
+PASS type-error-text-positive exit=105 sha256=d1a8a5367dd8e76af7c4e40303157d8d922034ccdbac97d1a029bbd8ea673bdd
+PASS type-error-bytes-positive exit=105 sha256=7d19e3dedf867734160d706f36c06d5411158c7869dd8ba29ac3d302617fc0d3
+PASS type-error-none-positive exit=105 sha256=ba2ccb7e589f1aa4348ea4c4591736df0a3b0cf6fcb7fb4a3a1750b2be7046bf
+PASS type-error-int-length exit=105 sha256=8f3f552e1ffd56850c1f0be978dfcf69e7e6b96bbac2cbbbee5d165d4c269b08
+PASS type-error-bool-length exit=105 sha256=287031630937fdb0c6ab6dbfb4fc4a7399a4c123e6f9d18984f9bfda48080246
+PASS type-error-none-length exit=105 sha256=a94a1e1e7d47201ef0b58357b4d2a0e19eed5ddd3712ecc6c8b20ba0f4b76dac
+PASS type-error-text-int-boundary exit=105 sha256=d2e4413e9b3a90892e36e407388e1f5153ad3c6e393e581019654f1429a3bb6b
+PASS type-error-bytes-int-boundary exit=105 sha256=21792296cf2efe24881669dd26decf908d85be183a801cb2b8b7201a5cd9a374
+PASS type-error-none-int-boundary exit=105 sha256=00671f38029983eb83cd1da57526670b784ac2c134793117f373c7d208a55b4e
+PASS type-error-chain-reached-invalid-order exit=105 sha256=7aba5a2a6960e47a4cba427aa3d60e5936afa66aac4273fe9417447d66f4b261
+PASS assertion-failure exit=104 sha256=fe0800a7209d984b34622c69741a2315e8c223a12d467f8168a0e8e1348c1338
+PASS arena-resource-text-concat exit=103 sha256=460d3f5b3e249563460a8ef6d3e9098709a5a1a5b1b11e5d348fc2b1d5bfdfde
+PASS arena-resource-integer-descriptors exit=103 sha256=e65c0a563295065b7326df478b465168399c3eb5be0d24fe9164276894fce81e
+PASS arena-resource-bytes-format-buffer exit=103 sha256=2d902efbe10499ab3116d682f117a3e31968a1a6161bb63e2ffeab77a3e8dc6f
+PASS text stdout write failure exit102
+PASS bytes stdout write failure exit102
+PASS bool stdout write failure exit102
+PASS int stdout write failure exit102
+PASS invalid IR rejected before output: uninitialized
+PASS invalid IR rejected before output: out-of-frame
+PASS invalid IR rejected before output: bad-literal
+PASS invalid IR rejected before output: invalid-text-utf8
+PASS invalid IR rejected before output: deep-expression
+PASS invalid IR rejected before output: loop-scope
+PASS invalid IR rejected before output: empty-chain
+PASS invalid IR rejected before output: excessive-chain
+PASS invalid IR rejected before output: skipped-uninitialized-chain
+PASS repeated emission has identical unsigned ELF bytes
+PASS malformed tag descriptor is guarded before payload access
+PASS malformed length descriptor is guarded before payload access
+PASS native output depends on runtime literal data rather than a canned result
+PASS divrem-sign-boundary-random-and-identities-0 exit=0 sha256=1e5d5b5be903442c11121d85e8f9ee785de7e91aedbc46d92136924a9f18db11
+PASS divrem-sign-boundary-random-and-identities-1 exit=0 sha256=752f6beec3a42602fe8ca525f6772187274be45f2d084b9a3a6ac95e0d57a809
+PASS divrem-sign-boundary-random-and-identities-2 exit=0 sha256=dc74e1d5bb2bedfe4d945178a5ce222a967516d347dca103da705bd4e10851ee
+PASS divrem-sign-boundary-random-and-identities-3 exit=0 sha256=562ac024e62fd62858a30e6cef244622b1a91775e813b31564de46741389da1f
+PASS divrem-very-large-linear-and-general-paths exit=0 sha256=58cb90f9069d12942fc85e65f369c2f3f0b255e6993f172f29b2900ad28d0d16
+PASS divrem-general-work-boundary-one-million-limb-pairs exit=0 sha256=b2dd10d2884922e61df3f12aa01d26f03f238b18d92aa4c066a295eedd915a0d
+PASS divrem-general-work-limit-quotient exit=103 sha256=03ab341f097751323595034cdd1c419a1cbbff8c4c0aeca5b9390af768a7b315
+PASS divrem-general-work-limit-remainder exit=103 sha256=8e07559cb94b04a729c17434af34301e80ada569c3455063d34be7d41692f4c4
+PASS division-by-zero-floor exit=106 sha256=4b420c644cff033e7793d4a4347a96ddcba7051a3e76bc0dddec91814234c6c5
+PASS division-by-zero-modulo exit=106 sha256=545cbc05ced9219af0b4d5ba17cca4883ff41e3dcac8f77b45d42605334a44a1
+PASS division-by-zero-zero-over-zero exit=106 sha256=128aed3d9e5881fe94b08264927528878035333ef762bcdb9460b962f5a8c4bb
+PASS division-by-zero-bool-zero exit=106 sha256=a9747c98b69701559b71c65e9bcf3917ab8e91b2e577fc7bbe8cf5425fc5d6cb
+PASS division-by-zero-modulo-bool-zero exit=106 sha256=42b75d84d25c6c05da5744524dec49403a4c616a85dc6447e2017d42796749dc
+PASS division-by-zero-computed-zero exit=106 sha256=1a7f259621973a05148bf89279f000f58cbfafb2a967cac6d5633d58be9365cb
+PASS division-type-error-text-left exit=105 sha256=4886057715a0827cb25845d90d76ea4126d35cf9e82bd8bbb1f035b2c3784bf0
+PASS division-type-error-bytes-right exit=105 sha256=901dc99eed92fe6c39b5f171017aa862bae6a72df4fe5d5f2075e83a8b8c9cfd
+PASS division-type-error-none-left exit=105 sha256=f5b7b45e77cc0887beffc843070cb8c1ee6fce8e637d40bcd20ba2acfb9d99bf
+PASS division-type-error-bad-type-before-zero exit=105 sha256=fd12932abeaab85c4d84e18872336f47399de5d94adce69b6445d94f4bc22d58
+PASS division-left-to-right-zero-before-later-type exit=106 sha256=5da783a2197382baaf673d3ed878985e60d896d40cec363f9b5768b5722585ab
+PASS division-left-to-right-type-before-later-zero exit=105 sha256=63c42d0a678c6926df5a5e0d19b0f46fddba02e1db7af79775bd35d0f8411892
+PASS division-evaluates-right-before-operator-type-guard exit=106 sha256=06dddfed085a7c93841fa2a67cfd4f7d89079d505eab3aeab59dc156790123cd
+PASS division-zero-is-skipped-by-short-circuit exit=0 sha256=e64464d0c4b9a34f0bb8610a583727c6d5b6cf3b781ccf5a4c919e3d5c6a3741
+PASS division-identical-operand-aliases-are-immutable exit=0 sha256=ad3940b13d0d142d91ae09f7190c9cc0b9cd5808d0222e7c21edc4958d9609e7
+PASS division-single-limb-arena-exhaustion exit=103 sha256=e92de24db04baf9e092d786b437adc5d2fe0ac1600c180aa521b938a56603e37
+PASS division-general-scratch-arena-exhaustion exit=103 sha256=ddccaa181083e177fb324c52ff22db857cc1ebb67f7b867c35402ee7d12db9ee
+PASS runtime divrem responds to divisor-limb mutants
+PASS removed signed-floor adjustment is detected by independent expectations
+85 dynamic native/IR checks passed; 8194 independent arithmetic, comparison, truth, bytes-repr and metamorphic outputs matched.
+Limits: B0 development IR; Linuxx64/explicit local WSL; bounded 64MiB temporary arena; no float/container/functions/exception-unwinding, complete runtime, FC1, self-hosting or release claim.

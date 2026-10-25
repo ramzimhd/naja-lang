@@ -1,0 +1,104 @@
+Recorded command: node scripts/test-values-language.mjs
+Recorded exit code: 1
+--- captured output ---
+PASSED literal-values exit=0
+PASSED literal-values-python exit=0
+PASSED truthy-control exit=0
+PASSED boolean-precedence-and-operands exit=0
+PASSED naja-int-annotation exit=0
+PASSED python-informational-annotation exit=0
+PASSED comparison-chains exit=0
+PASSED equality-cross-kinds exit=0
+PASSED ordered-value-comparisons exit=0
+PASSED truth-and-returned-operand-matrix exit=0
+PASSED numeric-bool-arithmetic exit=0
+PASSED signed-divrem-matrix-naja exit=0
+PASSED signed-divrem-matrix-py exit=0
+PASSED divrem-large-immutable-alias exit=0
+PASSED divrem-precedence-associativity exit=0
+PASSED divrem-short-circuit exit=0
+PASSED floor-zero exit=106
+PASSED modulo-computed-zero exit=106
+PASSED floor-false exit=106
+PASSED divrem-left-error-order exit=105
+PASSED divrem-right-before-operand-guard exit=106
+PASSED divrem-work-limit exit=103
+PASSED divrem-fixed-domain-floor
+PASSED divrem-fixed-domain-modulo
+PASSED all-byte-formatting exit=0
+PASSED immutable-text-and-byte-aliases exit=0
+PASSED text-subtraction exit=105
+PASSED mixed-concatenation exit=105
+PASSED numeric-text-addition exit=105
+PASSED text-negation exit=105
+PASSED text-positive exit=105
+PASSED numeric-len exit=105
+PASSED bool-len exit=105
+PASSED text-floor-division exit=105
+PASSED bytes-modulo exit=105
+PASSED none-ordering exit=105
+PASSED unrelated-ordering exit=105
+PASSED byte-text-ordering exit=105
+PASSED runtime-text-repetition exit=105
+PASSED byte-repetition exit=105
+PASSED chain-live-type-error exit=105
+PASSED and-live-type-error exit=105
+PASSED or-live-type-error exit=105
+PASSED annotation-initial-guard exit=105
+PASSED annotation-reassignment-guard exit=105
+PASSED annotation-none-guard exit=105
+PASSED false-truth-assertion-0 exit=104
+PASSED false-truth-assertion-1 exit=104
+PASSED false-truth-assertion-2 exit=104
+PASSED false-truth-assertion-3 exit=104
+PASSED false-truth-assertion-4 exit=104
+PASSED chain-middle-once-arena exit=0
+PASSED duplicate-middle-resource-control exit=103
+PASSED unsupported-float
+PASSED unsupported-function-default
+PASSED unsupported-list
+PASSED unsupported-dictionary
+PASSED unsupported-tuple
+PASSED unsupported-set
+PASSED unsupported-method
+PASSED unsupported-formatted-string
+PASSED unsupported-named-escape
+PASSED unsupported-surrogate-escape
+PASSED unsupported-byte-octal
+PASSED unsupported-adjacent-literals
+PASSED unsupported-other-annotation
+PASSED unsupported-division
+PASSED explicit-project-aliases exit=0
+PASSED no-ambient-alias-activation
+PASSED run-explicit-project-root exit=0
+PASSED test-explicit-project-root exit=0
+PASSED bound-builtin-alias-not-rewritten
+PASSED builtin-alias-not-an-operator
+PASSED operator-alias-not-a-builtin
+PASSED alias-case-is-not-corrected
+PASSED alias-use-retains-source-position
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: project-a-table: check: NJA030: invalid project manifest \\?\<workspace>\target\values-language-GprmKu\projects\first\naja.toml
+  M0005 at manifest bytes 33..33: Manifest requires [project] name.
+
+
+1 !== 0
+
+    at emit (file:///<workspace>/scripts/test-values-language.mjs:75:10)
+    at run (file:///<workspace>/scripts/test-values-language.mjs:97:20)
+    at file:///<workspace>/scripts/test-values-language.mjs:324:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:691:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.11.0

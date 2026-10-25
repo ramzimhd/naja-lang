@@ -313,7 +313,7 @@ reject('alias-use-retains-source-position', '# café\nprint(1 equalTo unknown_na
 
 function project(name, alias, source = 'print(1 eq 1)\n') {
   const path = join(projects, name); mkdirSync(path);
-  writeFileSync(join(path, 'naja.toml'), '# Explicit seed ownership marker\n');
+  writeFileSync(join(path, 'naja.toml'), '[project]\nname = ' + JSON.stringify(name) + '\n');
   if (alias !== null) writeFileSync(join(path, 'naja.alias'), alias);
   const input = join(path, 'main.naja'); writeFileSync(input, source);
   return { path, input, source };
@@ -328,7 +328,7 @@ writeFileSync(join(first.path, 'naja.alias'), config('!='));
 run('changed-table-not-stale', first.source, 'False\n', { input: first.input, projectRoot: first.path });
 reject('module-outside-root', second.source, { input: second.input, projectRoot: first.path, code: /NJA030/ });
 const nested = join(first.path, 'nested'); mkdirSync(nested);
-writeFileSync(join(nested, 'naja.toml'), '# Nested owner\n'); writeFileSync(join(nested, 'naja.alias'), config('=='));
+writeFileSync(join(nested, 'naja.toml'), '[project]\nname = "nested-owner"\n'); writeFileSync(join(nested, 'naja.alias'), config('=='));
 const nestedInput = join(nested, 'main.naja'); writeFileSync(nestedInput, first.source);
 reject('nested-module-owner-boundary', first.source, { input: nestedInput, projectRoot: first.path, code: /NJA030/ });
 run('nested-explicit-owner', first.source, 'True\n', { input: nestedInput, projectRoot: nested });
@@ -357,6 +357,19 @@ for (const [name, alias] of [
   reject('project-' + name, invalid.source, { input: invalid.input, projectRoot: invalid.path, code: /NJA030/ });
 }
 const noMarker = project('missing-marker', null, 'print(1)\n'); unlinkSync(join(noMarker.path, 'naja.toml'));
+for (const [name, manifest] of [
+  ['comment-only', '# The old ownership marker is no longer a valid project.\n'],
+  ['malformed', '[project\nname = "broken"\n'],
+  ['profile', '[project]\nname = "core"\nprofile = "core"\n'],
+  ['target', '[project]\nname = "other"\ntarget = "aarch64-unknown-linux-gnu"\n'],
+  ['style', '[project]\nname = "style"\n[style]\nrequire_block_levels = true\n'],
+  ['dependencies', '[project]\nname = "deps"\n[dependencies.other]\npath = "../sibling"\n'],
+  ['dialect', '[project]\nname = "python"\ndialect = "python"\n'],
+]) {
+  const invalid = project('manifest-' + name, null, 'print(1)\n');
+  writeFileSync(join(invalid.path, 'naja.toml'), manifest);
+  reject('manifest-' + name, invalid.source, { input: invalid.input, projectRoot: invalid.path, code: /NJA030/ });
+}
 reject('project-marker-required', noMarker.source, { input: noMarker.input, projectRoot: noMarker.path, code: /NJA030/ });
 const traversalInput = first.path + '/nested/../main.naja';
 reject('module-parent-traversal-rejected', first.source, { input: traversalInput, projectRoot: first.path, code: /NJA030/ });

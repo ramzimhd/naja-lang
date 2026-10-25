@@ -153,3 +153,12 @@ outcomes are unchanged. Fixed-i64 division remains rejected and `/` remains
 unsupported. The original 84-case historical execution above remains pinned to
 its original source; later retained command records identify the expanded
 harness execution separately.
+
+The manifest-loader integration requires generated alias-project fixtures to
+contain real schema-1 `[project] name` declarations. The earlier comment-only
+markers now have their own explicit rejection case, alongside malformed
+manifests, unenforced profiles/style, unavailable targets, unresolved dependencies
+and Python-dialect activation. The failed combined run at source432ee9d is
+retained in `reports/checks/v13-functions-values-language.json`; it found a stale
+fixture, not a reason to relax manifest validation. Existing ownership, symlink,
+namespace and alias-conflict expectations are unchanged.
