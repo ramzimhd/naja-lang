@@ -136,3 +136,11 @@ identities, expectations and budgets. The original failed run remains failed;
 all 202 outcomes of the corrected preparation are `not_run` until a new exact
 integrated source commit is supplied and executed. No parser relaxation or
 other case change accompanies this correction.
+
+The corrected-alias run subsequently stopped at unsupported sequence repetition
+in the first large-key constructor: 146 cases passed, one failed and 55 remained
+`not_run`. That separate preparation failure is retained in
+[FAILED_REPETITION_RUN_2026-10-25.md](FAILED_REPETITION_RUN_2026-10-25.md) and
+[FAILED_REPETITION_RESULTS_2026-10-25.json](FAILED_REPETITION_RESULTS_2026-10-25.json).
+It reached no successful key-work boundary and does not establish a compiler
+mapping defect.
