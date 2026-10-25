@@ -2,7 +2,7 @@
 
 ## Intent
 
-Create common servers quickly, with explicit receive/error callbacks when needed. `Network.App.Server.TCP(80) { ... }` expressed the original intent, not a new brace-based grammar. Use ordinary functions, decorators and the already approved optional block markers.
+Create common servers quickly, with explicit receive/error callbacks when needed. `Network.App.Server.TCP(80) { ... }` expressed the original API intent. Use ordinary functions, decorators and the general suite forms authorized by [ADR-003](decisions/0003-language-edition-2026-1.md); networking introduces no separate grammar.
 
 “Native” means a NAJA standard library independent of Python, compiled natively and using declared platform services. It does not mean a networking keyword or rewriting the host TCP stack.
 

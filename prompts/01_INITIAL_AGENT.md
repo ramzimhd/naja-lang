@@ -18,7 +18,7 @@ Earlier ADAM/Python-prototype/CPython-fallback/mandatory-LLVM proposals are supe
 
 1. No Python dependency: no interpreter, package, transpilation, embedded runtime, required Python oracle, PyO3 or Python-based LSP/debug workflow.
 2. The seed language is temporary. Independently generate/link native code and rebuild/evolve the reference core in NAJA by HATCH completion; optional LLVM is not the sole backend.
-3. Preserve Python-like source forms and only the agreed optional `:(x)` and `naja.alias` extensions. Standard `.py` is not silently reinterpreted. No new networking brace syntax.
+3. Preserve Python-like source forms. `.naja` edition 2026.1 follows the founder-authorized L01–L15 contracts and ADR-003, including depth markers, aliases, general brace suites and transparent named sections. Standard `.py` is separately versioned and never silently reinterpreted. Networking requires no domain-specific grammar.
 4. Automatic optimization and explicit hardware control coexist under correct semantics, memory rules and permissions. Do not silently narrow integers or claim safety from the seed implementation language.
 5. Native NAJA runtime services are permitted; Python runtime services are not. Hosted/core/embedded declare different capabilities.
 6. Claims of compatibility, safety and speed require scoped evidence, not automatic marketing.

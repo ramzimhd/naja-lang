@@ -4,7 +4,7 @@
 
 Implementation specification subject to explicit founder decisions. Nesting depth, rather than a global sequence number, is the documented interpretation of `:(x)`.
 
-`.py` uses the pinned standard grammar without implicit alias-token reinterpretation. `.naja` enables the two extensions. A file does not change dialect depending on the machine. Explicit project associations may add extensions, never silently rewrite third-party files.
+`.py` uses the pinned standard grammar without implicit alias-token reinterpretation. `.naja` edition 2026.1 additionally follows [L01–L15](continuation/02_LANGUAGE_CONTRACTS.md) and [ADR-003](decisions/0003-language-edition-2026-1.md), including general brace suites and transparent named sections. The depth and alias rules below remain applicable. A file does not change dialect depending on the machine. Explicit project associations may add extensions, never silently rewrite third-party files.
 
 A standard Python suite can already start on the same line after `:`; `(0)` there can be an expression. Preserve that behavior. [S01]
 

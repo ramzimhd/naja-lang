@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "contract_revision": "1.3",
+  "language_edition": "2026.1",
+  "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
+  "owner": "/root",
+  "status": "running",
+  "checkpoint_generation": 2,
+  "head": "c10e7ec4e0828b6b857f2eebb008688efaddc2b1",
+  "branch": "agent/integrator-H0",
+  "last_verified_source": "05df50551d9591036e4403e26d626ee19d1c2a15",
+  "task": "T05",
+  "next_action": "Complete independent block review, integrate recovery/contract tooling, retain exact-source evidence, then implement hosted integer foundations.",
+  "ownership": {
+    "reservation": "<git-common-dir>/naja-integration.lock",
+    "reclaim": "explicit verified release only",
+    "process_identity": null
+  },
+  "budget": {
+    "context_remaining": null,
+    "provider_usage_percent": 0,
+    "provider_window_minutes": 10080,
+    "rate_limit_reached": false,
+    "execution_deadline": null,
+    "extra_billing_authorized": false,
+    "monetary_ceiling": null,
+    "limitations": [
+      "Context/deadline/spend counters unavailable; provider quota is account-shared and separate from context.",
+      "Usage snapshot is operational telemetry, not authorization to spend credits or launch a paid fallback."
+    ]
+  },
+  "checks": {
+    "baseline_rust": "passed:43",
+    "baseline_native": "passed:25",
+    "baseline_planning": "passed:37",
+    "source": "05df50551d9591036e4403e26d626ee19d1c2a15",
+    "retained_new_logs": "pending committed integration",
+    "integrated_rust": "passed:68 (unretained transcript)",
+    "integrated_native": "passed:35 (unretained transcript)",
+    "integrated_clippy": "passed after correcting collapsible if"
+  },
+  "updated_at": "2026-10-25T18:37:12.851Z",
+  "automatic_runner": {
+    "status": "unavailable_not_tested",
+    "mode": "current chat continuation; supported manual fresh-session resume",
+    "provider_requests_started": false
+  }
+}

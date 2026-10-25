@@ -12,7 +12,7 @@ Dynamic objects need runtime services; a kernel cannot assume an existing hosted
 
 ## 3. Standard syntax, aliases and block markers
 
-Alphabetic operators and block markers are real grammar extensions. Standard Python already permits a same-line suite following `:`. [S01] Keep `.py` standard by default and enable extensions in `.naja`. Never globally replace text or alter a dependency's dialect. Network braces in the original concept express API intent, not an additional grammar feature.
+Alphabetic operators and block markers are real grammar extensions. Standard Python already permits a same-line suite following `:`. [S01] Keep `.py` standard by default and enable extensions in `.naja`. Never globally replace text or alter a dependency's dialect. [ADR-003](decisions/0003-language-edition-2026-1.md) records the founder-authorized general brace and named-section grammar for edition 2026.1. Network APIs need no domain-specific grammar.
 
 ## 4. Self-hosting is not complete independence
 

@@ -35,35 +35,81 @@
     {
       "task_id": "T05",
       "owner": "/root/frontend",
-      "branch": "agent/frontend-T05",
+      "branch": "agent/frontend-blocks-v13",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
         "bootstrap/frontend/",
         "tests/syntax/"
       ],
-      "status": "completed"
+      "status": "active",
+      "history": [
+        {
+          "branch": "agent/frontend-T05",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "bootstrap/frontend/",
+            "tests/syntax/"
+          ],
+          "status": "completed"
+        }
+      ],
+      "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "acceptance": "Dialect-aware lossless brace/named block lexer/CST; original Python tests plus mixed/negative/source-span fixtures.",
+      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp."
     },
     {
       "task_id": "T04",
       "owner": "/root/planning_validation",
-      "branch": "agent/planning-validation-T04",
+      "branch": "agent/contracts-v13",
       "worktree": "../naja-worktrees/planning-validation",
       "paths": [
-        "scripts/validation/",
-        "tests/planning/"
+        "planning/foundations.json",
+        "planning/fc1.json",
+        "planning/contract-migration.json",
+        "scripts/validation/check-foundations.mjs",
+        "tests/foundations/"
       ],
-      "status": "completed"
+      "status": "active",
+      "history": [
+        {
+          "branch": "agent/planning-validation-T04",
+          "worktree": "../naja-worktrees/planning-validation",
+          "paths": [
+            "scripts/validation/",
+            "tests/planning/"
+          ],
+          "status": "completed"
+        }
+      ],
+      "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "acceptance": "Additive L01-L15/C01-C07/FC1 coverage, inherited ID preservation and negative validator fixtures.",
+      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp."
     },
     {
       "task_id": "T04",
       "owner": "/root/seed_setup",
-      "branch": "agent/seed-setup-T02",
+      "branch": "agent/continuity-v13",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
-        "scripts/validation/",
-        "tests/planning/"
+        "tools/continuity/",
+        "tests/continuity/",
+        "reports/continuity/CLIENT_CAPABILITIES.md"
       ],
-      "status": "completed"
+      "status": "active",
+      "history": [
+        {
+          "branch": "agent/seed-setup-T02",
+          "worktree": "../naja-worktrees/seed-setup",
+          "paths": [
+            "scripts/validation/",
+            "tests/planning/"
+          ],
+          "status": "completed"
+        }
+      ],
+      "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "acceptance": "Atomic ownership and exact-source checkpoint/recovery tests in disposable Git repositories; no provider requests or live-lock mutation.",
+      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp."
     },
     {
       "task_id": "T05",
@@ -81,27 +127,52 @@
       "branch": "agent/integrator-H0",
       "worktree": ".",
       "paths": [
-        "README.md",
-        "LICENSE",
-        "NOTICE",
-        "CONTRIBUTING.md",
-        "SECURITY.md",
-        "CODE_OF_CONDUCT.md",
-        ".github/",
-        "Cargo.toml",
-        "Cargo.lock",
-        "rust-toolchain.toml",
-        ".gitattributes",
-        ".gitignore",
         "bootstrap/driver/",
         "backends/native/",
-        "tests/native/",
         "scripts/test-native.mjs",
         "scripts/record-check.ps1",
-        "bootstrap/README.md",
-        "docs/decisions/0002-native-seed-spike.md"
+        "planning/evidence.schema.json",
+        "planning/assignments.json",
+        "planning/state.json",
+        "planning/continuity.json",
+        "reports/progress.md",
+        "reports/checks/",
+        "launch/HANDOFF.md",
+        "launch/RESUME_PROMPT.md",
+        "docs/decisions/0003-language-edition-2026-1.md"
       ],
-      "status": "released"
+      "status": "active",
+      "history": [
+        {
+          "branch": "agent/integrator-H0",
+          "worktree": ".",
+          "paths": [
+            "README.md",
+            "LICENSE",
+            "NOTICE",
+            "CONTRIBUTING.md",
+            "SECURITY.md",
+            "CODE_OF_CONDUCT.md",
+            ".github/",
+            "Cargo.toml",
+            "Cargo.lock",
+            "rust-toolchain.toml",
+            ".gitattributes",
+            ".gitignore",
+            "bootstrap/driver/",
+            "backends/native/",
+            "tests/native/",
+            "scripts/test-native.mjs",
+            "scripts/record-check.ps1",
+            "bootstrap/README.md",
+            "docs/decisions/0002-native-seed-spike.md"
+          ],
+          "status": "released"
+        }
+      ],
+      "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
+      "acceptance": "Integrate reviewed scoped commits; execute native block equivalence; retain evidence against committed source and contract 1.3.",
+      "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp."
     },
     {
       "task_id": "T35",
@@ -124,5 +195,5 @@
       "status": "completed"
     }
   ],
-  "coordination": "Single integrator allocates and merges. This file alone is not a distributed lock."
+  "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."
 }

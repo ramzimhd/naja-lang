@@ -4,6 +4,7 @@ param(
     [Parameter(Mandatory)][string]$Target,
     [Parameter(Mandatory)][ValidatePattern('^[a-z0-9-]+$')][string]$Name,
     [Parameter(Mandatory)][string]$Tool,
+    [ValidatePattern('^[0-9]+\.[0-9]+$')][string]$ContractRevision = '1.3',
     [string[]]$ToolArguments = @()
 )
 $ErrorActionPreference = 'Stop'
@@ -35,6 +36,7 @@ try {
     $log = "Recorded command: $Tool $($ToolArguments -join ' ')`nRecorded exit code: $code`n--- captured output ---`n$sanitized"
     [System.IO.File]::WriteAllText($logPath, $log, [System.Text.UTF8Encoding]::new($false))
     $record = [ordered]@{
+        contract_revision = $ContractRevision
         requirement_id = $RequirementId
         commit = $commit
         target = $Target

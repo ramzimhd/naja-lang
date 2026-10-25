@@ -16,6 +16,11 @@
     "limitations"
   ],
   "properties": {
+    "contract_revision": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "description": "Governing acceptance revision for this run. Older records without this field retain their original 1.2 scope."
+    },
     "requirement_id": {
       "type": "string"
     },
