@@ -1,5 +1,10 @@
 # Independent native seed backends
 
+`naja_native::dynamic::emit_elf` adds native int, UTF-8 text, bytes, bool and None
+descriptors with shared integer kernels, truthiness, short-circuit operands and
+typed operation failures. Its supported semantics, private layout, temporary
+arena limits and native tests are documented in [dynamic values](../../tests/dynamic/README.md).
+
 The original `naja_native::emit_elf` keeps the explicit checked-i64 IR and overflow
 policy. `naja_native::hosted::emit_elf` accepts a separate hosted-integer IR with
 `Integer(String)`, locals, negation, addition/subtraction/multiplication, signed

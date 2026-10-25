@@ -1,0 +1,80 @@
+# Native dynamic value foundation
+
+`naja_native::dynamic` emits Linux x86-64 machine code and ELF directly from its
+internal Rust IR. There is no bytecode dispatch loop, external compiler/linker,
+foreign interpreter, embedded seed compiler or result service in emitted code.
+This is an experimental B0 construction slice, not FC1 or HATCH completion.
+The shared frontend and parser are separate integration work.
+
+The IR supports immutable `Integer(String)`, `Text(String)`, `Bytes(Vec<u8>)`,
+`Boolean(bool)`, `None`, local references, unary negation, `Binary` addition,
+subtraction and multiplication, `Compare`, `Not`, `And`, and `Or`. Statements
+assign a local, print, assert a truthy expression, branch, loop, or group a suite.
+`validate` rejects invalid decimal spelling, uninitialized/out-of-frame reads,
+more than 128 locals, 128 expression levels, 64 suite levels, 10000 combined IR
+nodes or 1 MiB of aggregate integer/text/bytes literal data. Loop-body assignment
+does not initialize a local after a possibly unexecuted loop; branches intersect
+their initialized locals. No source rewriting or silent integer narrowing occurs.
+
+Integer payloads use the existing hosted immutable sign/magnitude base-1e9
+objects and exactly the same native arithmetic kernels. Boolean numeric operands
+act as integer zero or one; arithmetic, including negation, returns an integer.
+Text+Text and Bytes+Bytes concatenate into fresh immutable storage. Other
+arithmetic combinations fail explicitly. Numeric int/bool comparisons operate on
+their exact values. Text orders lexicographically by Unicode scalar value
+(implemented by valid UTF-8 byte ordering); bytes order by unsigned byte.
+Different nonnumeric kinds compare unequal. None equals None, but neither None
+nor unrelated kinds support ordering. No normalization changes text data.
+
+Truthiness is false for zero integers, False, empty text/bytes and None. `not`
+returns a Boolean. `and`/`or` return an original operand descriptor and evaluate
+their right operand only when required. Printing text writes the raw UTF-8 bytes
+and a newline, including embedded NUL; Booleans print True/False and None prints
+None. Bytes use `b` plus quoted ASCII representation: double quotes only when an
+apostrophe exists and no double quote exists; escape the selected quote,
+backslash, tab/newline/carriage return, and use lowercase hex for other bytes
+outside printable ASCII. This behavior was checked by reading the pinned
+[Python 3.15.0 primary source](https://raw.githubusercontent.com/python/cpython/d220409a13b77de7a6c30abe16ea90db01528edc/Objects/bytesobject.c),
+`_Py_bytes_repr` (lines 1354–1426). No Python runtime or oracle was executed.
+The native formatter and independent Node specification vectors cover all 256
+byte values and the quote-selection cases.
+
+The private descriptor is three 64-bit fields: tag, payload pointer, byte length.
+Tags are int=0, text=1, bytes=2, bool=3, None=4. Bool points to an immutable integer
+zero/one object; other numeric payloads remain arbitrary precision. Literal
+descriptors/data reside in the ELF read/execute segment; result descriptors,
+concatenated data, integer objects and formatting buffers share one 64 MiB RW
+anonymous arena. Allocation is aligned, checked before construction/copying, and
+never reclaimed. Byte formatting reserves its bounded worst-case output size.
+Lengths/tags are checked before interpreting sequence payloads. IR cannot inject
+pointers or arbitrary descriptor tags, and this private layout is not an FFI or
+a defense against arbitrary external memory corruption. Tests mutate tags and
+lengths to verify the implemented guards explicitly.
+
+Resource exhaustion reports `NJA203: native value arena exhausted` and exits
+103; failed assertions report NJA204 and exit 104; unsupported operand types or
+ordering report `NJA205: native value type mismatch` and exit 105. These are
+process failures, not catchable exceptions or an unwinding implementation.
+Output failures report NJA202/exit 102; diagnostic stderr writes are best effort.
+The default OS SIGPIPE policy remains unchanged. The arena is not managed memory
+or a sandbox. Execution uses ordinary Linux process rights and an external
+five-second timeout in the test harness.
+
+`cargo test --workspace --locked --offline` checks IR limits and ELF structure.
+`node scripts/test-dynamic.mjs` builds the development-only `dynamic_ir` example,
+then executes emitted artifacts on Linux x86-64 or an explicitly declared local
+WSL Linux x86-64 target on Windows. The adapter's line/RPN format is not NAJA
+syntax: `t:HEX_UTF8`, `b:HEX`, decimal integers, true/false/none, `%SLOT` and
+postfix operators; statements are print/assert/set/if/while/group with else/end.
+It is bounded and refuses existing output files. Node BigInt, Unicode codepoint
+and byte oracles check arithmetic, comparisons, truthiness and repr, together
+with metamorphic properties, native resource/type/assert/output failures,
+short-circuiting, immutable aliases, malformed IR and descriptor/data mutants.
+Fixtures and unsigned ELF hashes are retained under ignored `target/`.
+
+Floats, repetition, list/dict/set/tuple, functions, classes, user methods,
+identity/hashing, mutable objects, conversions, exception handling and managed
+memory remain required future work. The `.naja` edition's numeric string-literal
+multiplication rule belongs to frontend semantic resolution and is not inferred
+from arbitrary runtime text here. No Windows/macOS native target, self-hosting,
+clean-host, performance or release-distribution claim follows from these tests.

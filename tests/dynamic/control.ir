@@ -1,0 +1,23 @@
+# Development IR fixture; root parser integration is tested separately.
+set 0 0
+set 1 t:
+set 2 t:616c696173
+set 3 %2
+while %0 5 <
+group
+set 1 %1 t:c3a9 +
+set 0 %0 1 +
+end
+end
+set 2 b:ff00
+print %1
+print %3
+print %2
+if %1
+print true
+else
+print false
+end
+assert %0 5 ==
+assert %3 t:616c696173 ==
+print %0
