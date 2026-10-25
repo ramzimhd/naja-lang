@@ -12,6 +12,9 @@ pub(super) struct Runtime {
     pub subtract: usize,
     pub multiply: usize,
     pub negate: usize,
+    pub positive: usize,
+    pub len: usize,
+    pub require_integer: usize,
     pub compare: usize,
     pub truth: usize,
     pub print: usize,
@@ -31,6 +34,7 @@ pub(super) struct Runtime {
     none_text: usize,
     newline: usize,
     hex: usize,
+    small_integer: usize,
 }
 impl Runtime {
     pub fn new(c: &mut Code) -> Self {
@@ -39,6 +43,9 @@ impl Runtime {
             subtract: c.label(),
             multiply: c.label(),
             negate: c.label(),
+            positive: c.label(),
+            len: c.label(),
+            require_integer: c.label(),
             compare: c.label(),
             truth: c.label(),
             print: c.label(),
@@ -58,11 +65,13 @@ impl Runtime {
             none_text: c.label(),
             newline: c.label(),
             hex: c.label(),
+            small_integer: c.label(),
         }
     }
     pub fn emit(&self, c: &mut Code, integers: &runtime::Runtime) {
         self.check(c, integers);
         self.numeric(c, integers);
+        self.length(c, integers);
         self.concatenation(c, integers);
         self.comparison(c, integers);
         self.truthiness(c);
@@ -110,6 +119,10 @@ impl Runtime {
         c.bind(done);
         c.ret();
         c.bind(self.number);
+        c.call(self.require_integer);
+        c.load(Ax, Ax, 8);
+        c.ret();
+        c.bind(self.require_integer);
         c.call(self.check);
         c.load(Dx, Ax, 0);
         let number = c.label();
@@ -118,7 +131,6 @@ impl Runtime {
         c.immediate(7, Dx, 3);
         c.j(0x85, self.type_error);
         c.bind(number);
-        c.load(Ax, Ax, 8);
         c.ret();
     }
     fn numeric(&self, c: &mut Code, integers: &runtime::Runtime) {
@@ -136,6 +148,16 @@ impl Runtime {
         c.call(self.number);
         c.call(integers.negate);
         c.jump(self.wrap);
+        c.bind(self.positive);
+        c.call(self.require_integer);
+        c.load(Dx, Ax, 0);
+        let positive_int = c.label();
+        c.immediate(7, Dx, 0);
+        c.j(0x84, positive_int);
+        c.load(Ax, Ax, 8);
+        c.jump(self.wrap);
+        c.bind(positive_int);
+        c.ret();
         c.bind(self.add);
         c.mov(Ax, Di);
         c.call(self.check);
@@ -163,6 +185,61 @@ impl Runtime {
         self.numeric_pair(c, integers.subtract);
         c.bind(self.multiply);
         self.numeric_pair(c, integers.multiply);
+    }
+    fn length(&self, c: &mut Code, integers: &runtime::Runtime) {
+        c.bind(self.len);
+        c.call(self.check);
+        c.load(Dx, Ax, 0);
+        let text = c.label();
+        c.immediate(7, Dx, 1);
+        c.j(0x84, text);
+        c.immediate(7, Dx, 2);
+        c.j(0x85, self.type_error);
+        c.load(Ax, Ax, 16);
+        c.jump(self.small_integer);
+        c.bind(text);
+        c.load(R8, Ax, 8);
+        c.load(R9, Ax, 16);
+        c.zero(R12);
+        let loop_ = c.label();
+        let next = c.label();
+        let done = c.label();
+        c.bind(loop_);
+        c.immediate(7, R9, 0);
+        c.j(0x84, done);
+        // Text construction and concatenation preserve valid UTF-8. Count
+        // leading bytes, not continuation bytes or grapheme clusters.
+        c.load_byte(Dx, R8);
+        c.immediate(4, Dx, 0xc0);
+        c.immediate(7, Dx, 0x80);
+        c.j(0x84, next);
+        c.step(R12, false);
+        c.bind(next);
+        c.step(R8, false);
+        c.step(R9, true);
+        c.jump(loop_);
+        c.bind(done);
+        c.mov(Ax, R12);
+        c.bind(self.small_integer);
+        // Length is bounded by the 64 MiB sequence limit, below one base-1e9
+        // limb. The explicit guard prevents a future limit change truncating it.
+        c.immediate(7, Ax, 999_999_999);
+        c.j(0x87, integers.resource);
+        let zero = c.label();
+        c.immediate(7, Ax, 0);
+        c.j(0x84, zero);
+        c.mov(R12, Ax);
+        c.imm(Ax, 24);
+        c.call(integers.allocate);
+        c.imm(Dx, 1);
+        c.store(Ax, 0, Dx);
+        c.store(Ax, 8, Dx);
+        c.zero(Cx);
+        c.put(Ax, Cx, R12);
+        c.jump(self.wrap);
+        c.bind(zero);
+        c.lea(Ax, integers.zero);
+        c.jump(self.wrap);
     }
     fn numeric_pair(&self, c: &mut Code, operation: usize) {
         c.push(Si);

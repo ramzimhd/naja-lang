@@ -30,7 +30,7 @@ fn hex(value: &str) -> Result<Vec<u8>, String> {
 fn expression(text: &str) -> Result<E, String> {
     let mut stack: Vec<(E, usize)> = Vec::new();
     for token in text.split_whitespace() {
-        let unary = matches!(token, "neg" | "not");
+        let unary = matches!(token, "neg" | "not" | "pos" | "len" | "require_int");
         let binary = matches!(
             token,
             "+" | "-" | "*" | "==" | "!=" | "<" | "<=" | ">" | ">=" | "and" | "or"
@@ -41,13 +41,39 @@ fn expression(text: &str) -> Result<E, String> {
                 return Err("fixture expression depth limit".into());
             }
             stack.push((
-                if token == "neg" {
-                    E::Negate(Box::new(value))
-                } else {
-                    E::Not(Box::new(value))
+                match token {
+                    "neg" => E::Negate(Box::new(value)),
+                    "pos" => E::Positive(Box::new(value)),
+                    "len" => E::Len(Box::new(value)),
+                    "require_int" => E::RequireInteger(Box::new(value)),
+                    _ => E::Not(Box::new(value)),
                 },
                 depth + 1,
             ));
+        } else if let Some(operators) = token.strip_prefix("chain:") {
+            let operators = operators
+                .split(',')
+                .map(comparison)
+                .collect::<Result<Vec<_>, _>>()?;
+            if operators.is_empty() || operators.len() > dynamic::MAX_CHAIN_COMPARISONS {
+                return Err("fixture chain requires 1..128 comparisons".into());
+            }
+            let count = operators.len() + 1;
+            if stack.len() < count {
+                return Err("fixture chain stack underflow".into());
+            }
+            let operands = stack.split_off(stack.len() - count);
+            let depth = operands.iter().map(|(_, depth)| *depth).max().unwrap() + 1;
+            if depth > 128 {
+                return Err("fixture expression depth limit".into());
+            }
+            let mut operands = operands.into_iter();
+            let first = Box::new(operands.next().unwrap().0);
+            let rest = operators
+                .into_iter()
+                .zip(operands.map(|(value, _)| value))
+                .collect();
+            stack.push((E::CompareChain(first, rest), depth));
         } else if binary {
             let (right, rd) = stack.pop().ok_or("fixture stack underflow")?;
             let (left, ld) = stack.pop().ok_or("fixture stack underflow")?;
@@ -63,18 +89,7 @@ fn expression(text: &str) -> Result<E, String> {
                 "*" => E::Binary(Binary::Multiply, left, right),
                 "and" => E::And(left, right),
                 "or" => E::Or(left, right),
-                _ => E::Compare(
-                    match token {
-                        "==" => Comparison::Equal,
-                        "!=" => Comparison::NotEqual,
-                        "<" => Comparison::Less,
-                        "<=" => Comparison::LessEqual,
-                        ">" => Comparison::Greater,
-                        _ => Comparison::GreaterEqual,
-                    },
-                    left,
-                    right,
-                ),
+                _ => E::Compare(comparison(token)?, left, right),
             };
             stack.push((value, depth));
         } else {
@@ -106,6 +121,17 @@ fn expression(text: &str) -> Result<E, String> {
         return Err("fixture expression must leave one value".into());
     }
     Ok(stack.pop().unwrap().0)
+}
+fn comparison(token: &str) -> Result<Comparison, String> {
+    Ok(match token {
+        "==" => Comparison::Equal,
+        "!=" => Comparison::NotEqual,
+        "<" => Comparison::Less,
+        "<=" => Comparison::LessEqual,
+        ">" => Comparison::Greater,
+        ">=" => Comparison::GreaterEqual,
+        _ => return Err("invalid fixture comparison".into()),
+    })
 }
 fn block(lines: &[&str], cursor: &mut usize, depth: usize) -> Result<Vec<S>, String> {
     if depth > 64 {

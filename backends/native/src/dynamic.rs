@@ -11,6 +11,7 @@ mod routines;
 pub const ARENA_BYTES: usize = hosted::ARENA_BYTES;
 const MAX_LITERAL_BYTES: usize = 1_048_576;
 const MAX_NODES: usize = 10_000;
+pub const MAX_CHAIN_COMPARISONS: usize = 128;
 
 #[derive(Clone, Debug)]
 pub enum Expression {
@@ -21,8 +22,12 @@ pub enum Expression {
     None,
     Local(usize),
     Negate(Box<Self>),
+    Positive(Box<Self>),
+    Len(Box<Self>),
+    RequireInteger(Box<Self>),
     Binary(Binary, Box<Self>, Box<Self>),
     Compare(Comparison, Box<Self>, Box<Self>),
+    CompareChain(Box<Self>, Vec<(Comparison, Self)>),
     Not(Box<Self>),
     And(Box<Self>, Box<Self>),
     Or(Box<Self>, Box<Self>),
@@ -74,8 +79,22 @@ impl Validator {
                 }
                 0
             }
-            Expression::Negate(value) | Expression::Not(value) => {
+            Expression::Negate(value)
+            | Expression::Not(value)
+            | Expression::Positive(value)
+            | Expression::Len(value)
+            | Expression::RequireInteger(value) => {
                 self.expression(value, initialized, depth + 1)?;
+                0
+            }
+            Expression::CompareChain(first, rest) => {
+                if rest.is_empty() || rest.len() > MAX_CHAIN_COMPARISONS {
+                    return Err("dynamic comparison chain requires 1..128 comparisons".into());
+                }
+                self.expression(first, initialized, depth + 1)?;
+                for (_, value) in rest {
+                    self.expression(value, initialized, depth + 1)?;
+                }
                 0
             }
             Expression::Binary(_, left, right)
@@ -183,6 +202,16 @@ impl Emitter {
                 self.expression(value)?;
                 self.code.call(self.runtime.negate);
             }
+            Expression::Positive(value)
+            | Expression::Len(value)
+            | Expression::RequireInteger(value) => {
+                self.expression(value)?;
+                self.code.call(match expression {
+                    Expression::Positive(_) => self.runtime.positive,
+                    Expression::Len(_) => self.runtime.len,
+                    _ => self.runtime.require_integer,
+                });
+            }
             Expression::Not(value) => {
                 self.expression(value)?;
                 self.code.call(self.runtime.truth);
@@ -199,26 +228,31 @@ impl Emitter {
             }
             Expression::Compare(comparison, left, right) => {
                 self.operands(left, right)?;
-                self.code.call(self.runtime.compare);
-                if matches!(comparison, Comparison::Equal | Comparison::NotEqual) {
-                    let ordinary = self.code.label();
-                    self.code.immediate(7, Ax, 3);
-                    self.code.j(0x85, ordinary);
-                    self.code.zero(Ax);
-                    self.code.bind(ordinary);
-                } else {
-                    self.code.immediate(7, Ax, 2);
-                    self.code.j(0x8d, self.runtime.type_error);
+                let condition = self.comparison_flags(*comparison);
+                self.boolean(condition);
+            }
+            Expression::CompareChain(first, rest) => {
+                let false_ = self.code.label();
+                let end = self.code.label();
+                self.expression(first)?;
+                self.code.push(Ax);
+                for (comparison, right) in rest {
+                    self.expression(right)?;
+                    self.code.mov(Si, Ax);
+                    self.code.pop(Di);
+                    // The exact RHS descriptor becomes the next LHS; evaluating
+                    // another expression or comparison may clobber all scratch registers.
+                    self.code.push(Si);
+                    let condition = self.comparison_flags(*comparison);
+                    self.code.j(condition ^ 1, false_);
                 }
-                self.code.immediate(7, Ax, 0);
-                self.boolean(match comparison {
-                    Comparison::Equal => 0x84,
-                    Comparison::NotEqual => 0x85,
-                    Comparison::Less => 0x8c,
-                    Comparison::LessEqual => 0x8e,
-                    Comparison::Greater => 0x8f,
-                    Comparison::GreaterEqual => 0x8d,
-                });
+                self.code.pop(Ax);
+                self.code.lea(Ax, self.runtime.true_value);
+                self.code.jump(end);
+                self.code.bind(false_);
+                self.code.pop(Ax);
+                self.code.lea(Ax, self.runtime.false_value);
+                self.code.bind(end);
             }
             Expression::And(left, right) | Expression::Or(left, right) => {
                 self.expression(left)?;
@@ -244,6 +278,28 @@ impl Emitter {
             }
         }
         Ok(())
+    }
+    fn comparison_flags(&mut self, comparison: Comparison) -> u8 {
+        self.code.call(self.runtime.compare);
+        if matches!(comparison, Comparison::Equal | Comparison::NotEqual) {
+            let ordinary = self.code.label();
+            self.code.immediate(7, Ax, 3);
+            self.code.j(0x85, ordinary);
+            self.code.zero(Ax);
+            self.code.bind(ordinary);
+        } else {
+            self.code.immediate(7, Ax, 2);
+            self.code.j(0x8d, self.runtime.type_error);
+        }
+        self.code.immediate(7, Ax, 0);
+        match comparison {
+            Comparison::Equal => 0x84,
+            Comparison::NotEqual => 0x85,
+            Comparison::Less => 0x8c,
+            Comparison::LessEqual => 0x8e,
+            Comparison::Greater => 0x8f,
+            Comparison::GreaterEqual => 0x8d,
+        }
     }
     fn sequence(&mut self, tag: u64, value: &[u8]) {
         let label = self.code.label();
@@ -483,5 +539,77 @@ mod tests {
             0x6474e551
         );
         assert_eq!(u32::from_le_bytes(a[124..128].try_into().unwrap()), 6);
+    }
+    #[test]
+    fn comparison_chains_validate_every_operand_and_enforce_all_limits() {
+        let value = Expression::Boolean(false);
+        assert!(
+            validate(&[Statement::Print(Expression::CompareChain(
+                Box::new(value.clone()),
+                vec![]
+            ))])
+            .is_err()
+        );
+        let chain = Expression::CompareChain(
+            Box::new(value.clone()),
+            vec![(Comparison::Equal, value.clone()); MAX_CHAIN_COMPARISONS],
+        );
+        assert!(validate(&[Statement::Print(chain.clone())]).is_ok());
+        assert!(
+            validate(&[Statement::Print(Expression::CompareChain(
+                Box::new(value.clone()),
+                vec![(Comparison::Equal, value.clone()); MAX_CHAIN_COMPARISONS + 1]
+            ))])
+            .is_err()
+        );
+        assert!(validate(&vec![Statement::Print(chain); 80]).is_err());
+        let skipped = Expression::CompareChain(
+            Box::new(value.clone()),
+            vec![
+                (Comparison::Equal, Expression::Boolean(true)),
+                (Comparison::Equal, Expression::Local(0)),
+            ],
+        );
+        assert!(validate(&[Statement::Print(skipped)]).is_err());
+        let skipped = Expression::CompareChain(
+            Box::new(value),
+            vec![
+                (Comparison::Equal, Expression::Boolean(true)),
+                (
+                    Comparison::Equal,
+                    Expression::Text("x".repeat(MAX_LITERAL_BYTES + 1)),
+                ),
+            ],
+        );
+        assert!(validate(&[Statement::Print(skipped)]).is_err());
+    }
+    #[test]
+    fn new_unary_expressions_share_depth_node_and_initialization_accounting() {
+        for constructor in [
+            Expression::Positive,
+            Expression::Len,
+            Expression::RequireInteger,
+        ] {
+            assert!(
+                validate(&[Statement::Print(constructor(Box::new(Expression::Local(
+                    0
+                ))))])
+                .is_err()
+            );
+            let mut expression = Expression::Integer("1".into());
+            for _ in 0..130 {
+                expression = constructor(Box::new(expression));
+            }
+            assert!(validate(&[Statement::Print(expression)]).is_err());
+            assert!(
+                validate(&vec![
+                    Statement::Print(constructor(Box::new(
+                        Expression::Integer("1".into())
+                    )));
+                    4000
+                ])
+                .is_err()
+            );
+        }
     }
 }
