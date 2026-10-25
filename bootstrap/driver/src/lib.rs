@@ -6,6 +6,7 @@ use naja_frontend::{
 use naja_native::{Binary, Comparison, MAX_LOCALS, Statement, dynamic, hosted};
 use std::collections::{BTreeMap, BTreeSet};
 use std::marker::PhantomData;
+pub mod manifest;
 mod values;
 use values::{Dynamic, Fixed, Hosted, Values};
 
