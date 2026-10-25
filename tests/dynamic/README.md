@@ -49,6 +49,39 @@ conversion guard prevents truncation if that resource policy changes. Nonzero
 length results allocate one checked integer object and descriptor, and zero
 length results share the immutable integer zero through a new descriptor.
 
+`FloorDivide(Box<Expression>, Box<Expression>)` and `Modulo` accept Int/Bool
+operands and return Int, using the same private native div/rem kernel. They do
+not extend the legacy fixed-i64/hosted IR or the shared `Binary` enum. For a
+nonzero divisor, the exact results satisfy `a = q*b + r`, `abs(r) < abs(b)`, and
+the remainder has the divisor's sign unless zero. Different operand signs with
+a nonzero magnitude remainder adjust the quotient away from zero and complement
+the remainder. Operands remain immutable, including identical operand aliases.
+Both operand expressions evaluate left-to-right before the operation's type
+guard; a skipped short-circuit branch does not perform division at all.
+
+The kernel traverses numerator limbs from high to low. A one-limb divisor uses
+hardware unsigned DIV on each exact two-limb intermediate. The general path
+binary-searches each base-1e9 quotient digit in at most 30 trials, reusing one
+divisor-product buffer and doing one final product before subtraction. Leading
+zero quotient digits avoid candidate products. It never subtracts once per unit
+of quotient. Scratch consists of quotient capacity `N+1` limbs and remainder
+and product capacities `M+1` limbs, each with a 16-byte object header and 8-byte
+allocation alignment; the single-limb path omits the product buffer. Scratch
+and output descriptors share the existing arena and are not reclaimed.
+
+For a nonzero numerator and a divisor of at least two limbs, the temporary
+per-operation work limit is `N*M <= 1000000`, where N/M are normalized magnitude
+limb counts. The guard checks `N <= floor(1000000/M)` without overflowing a count
+product, before scratch allocation or traversal. The single-limb path remains
+linear and arena-bounded; zero numerators return exact zero immediately after
+the nonzero divisor check. Explicit count bounds keep scratch-size arithmetic
+within range. This limit is not fixed-width integer arithmetic or truncation.
+Exceeding it reports `NJA203: native division work limit exceeded` / exit 103,
+distinct from arena exhaustion. A zero divisor reports
+`NJA206: integer division by zero` / exit 106 with best-effort stderr output.
+Unsupported operand kinds still report type failure 105. These process failures
+do not implement catchable language exceptions.
+
 Truthiness is false for zero integers, False, empty text/bytes and None. `not`
 returns a Boolean. `and`/`or` return an original operand descriptor and evaluate
 their right operand only when required. Printing text writes the raw UTF-8 bytes
@@ -74,7 +107,7 @@ pointers or arbitrary descriptor tags, and this private layout is not an FFI or
 a defense against arbitrary external memory corruption. Tests mutate tags and
 lengths to verify the implemented guards explicitly.
 
-Resource exhaustion reports `NJA203: native value arena exhausted` and exits
+Arena exhaustion reports `NJA203: native value arena exhausted` and exits
 103; failed assertions report NJA204 and exit 104; unsupported operand types or
 ordering report `NJA205: native value type mismatch` and exit 105. These are
 process failures, not catchable exceptions or an unwinding implementation.
@@ -92,6 +125,7 @@ postfix operators; statements are print/assert/set/if/while/group with else/end.
 Unary postfix operators include `pos`, `len` and `require_int`. A postfix
 `chain:<,<=,==` consumes four existing expression operands in order and creates
 one three-comparison chain. The fixture format does not change source grammar.
+Postfix `//` and `%` construct the separate dynamic division/modulo variants.
 It is bounded and refuses existing output files. Node BigInt, Unicode codepoint
 and byte oracles check arithmetic, comparisons, truthiness and repr, together
 with metamorphic properties, native resource/type/assert/output failures,
@@ -100,6 +134,12 @@ Chain tests also reserve about 32 MiB, then evaluate an allocating 16 MiB middle
 operand once: the proper chain passes while an explicit repeated-middle control
 exhausts the same 64 MiB arena. Separate probes skip resource/type failures,
 preserve the first failure's evaluation order and exercise maximum chain width.
+Division checks use Node BigInt with an explicit floor adjustment, signed range
+and reconstruction identities, all signs and Bool inputs, carry/borrow cases,
+20,000-digit single-limb and 5,000/2,000-digit general division, immutable aliases,
+runtime-computed zero divisors, evaluation order, arena/work failures and literal
+and signed-adjustment mutants. A 1000-by-1000-limb general case exercises the
+exact work boundary, and 1001-by-1000 is rejected with the work-limit diagnostic.
 Fixtures and unsigned ELF hashes are retained under ignored `target/`.
 
 Floats, repetition, list/dict/set/tuple, functions, classes, user methods,

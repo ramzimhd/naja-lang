@@ -166,5 +166,75 @@ for(const [name,mutate,status,diagnostic] of [
   ['length',image=>image.writeBigUInt64LE(0xffffffffffffffffn,image.indexOf(marker)-8),103,'NJA203: native value arena exhausted\n'],
 ]){const artifact=emit('mutant-'+name,'print '+text(marker)+'\n'),image=readFileSync(artifact.output);assert.ok(image.indexOf(marker)>4096);mutate(image);writeFileSync(artifact.output,image);const result=execute(artifact);assert.equal(result.status,status,result.stderr);assert.equal(result.stdout,'');assert.equal(result.stderr,diagnostic);console.log('PASS malformed '+name+' descriptor is guarded before payload access');checks++;}
 const content=emit('mutant-content','print '+text('seed-value')+'\n');assert.equal(execute(content).stdout,'seed-value\n');const image=readFileSync(content.output),position=image.indexOf('seed-value');assert.ok(position>4096);image[position]='n'.charCodeAt(0);writeFileSync(content.output,image);assert.equal(execute(content).stdout,'need-value\n');console.log('PASS native output depends on runtime literal data rather than a canned result');checks++;
+// Independent BigInt division truncates toward zero; explicitly adjust to the
+// required floor quotient and divisor-signed remainder, without Python.
+const numericValue=value=>typeof value==='boolean'?(value?1n:0n):value;
+const numericToken=value=>String(value);
+function floorDivRem(left,right) {
+  const a=numericValue(left),b=numericValue(right);assert.notEqual(b,0n);
+  let q=a/b,r=a%b;
+  if(r!==0n&&(r>0n)!==(b>0n)){q-=1n;r+=b;}
+  assert.equal(q*b+r,a);assert.ok((r<0n?-r:r)<(b<0n?-b:b));assert.ok(r===0n||(r>0n)===(b>0n));
+  return [q,r];
+}
+function divisionCase(a,b,shift=false) {
+  const [q,r]=floorDivRem(a,b),x=numericValue(a),y=numericValue(b);
+  source+=`set 0 ${numericToken(a)}\nset 1 ${numericToken(b)}\nset 2 %0 %1 //\nset 3 %0 %1 %\n`;
+  check('%2',q);check('%3',r);check('%2 %1 * %3 +',x);
+  check('%0',typeof a==='boolean'?(a?'True':'False'):a);check('%1',typeof b==='boolean'?(b?'True':'False'):b);
+  source+='assert %2 %1 * %3 + %0 ==\n';
+  source+=y>0n?'assert 0 %3 %1 chain:<=,<\n':'assert %1 %3 0 chain:<,<=\n';
+  if(shift){check('%0 %1 3 * + %1 //',q+3n);check('%0 %1 3 * + %1 %',r);}
+}
+const radix=1000000000n;
+const numerators=[0n,1n,-1n,2n,-2n,7n,-7n,radix-1n,radix,radix+1n,-radix-1n,2n**63n,-(2n**63n),2n**128n+1n,radix**12n-1n,-(radix**12n+1n)];
+const denominators=[1n,-1n,2n,-2n,3n,-3n,radix-1n,-radix,radix+1n,-radix-1n,radix**7n+1n,-(radix**7n+1n)];
+const cases=[];for(const a of numerators)for(const b of denominators)cases.push([a,b]);
+let divisionSeed=0x56b71329;
+function divisionRandom(){divisionSeed=(Math.imul(divisionSeed,1664525)+1013904223)>>>0;return divisionSeed;}
+function randomInteger(digits){let value=String(1+divisionRandom()%9);for(let i=1;i<digits;i++)value+=String(divisionRandom()%10);return BigInt((divisionRandom()&1?'-':'')+value);}
+for(let i=0;i<120;i++)cases.push([randomInteger(1+divisionRandom()%300),randomInteger(1+divisionRandom()%180)]);
+for(const pair of [[true,true],[false,true],[true,3n],[true,-3n],[false,-3n],[7n,true],[-7n,true]])cases.push(pair);
+for(const digits of [1n,2n,5n,10n]) {
+  const divisor=radix**3n+17n;
+  cases.push([-((radix**digits-1n)*divisor+1n),divisor]);
+  cases.push([(radix**digits+1n)*divisor-1n,-divisor]);
+}
+for(let start=0;start<cases.length;start+=100) {
+  source='';expected='';for(const [a,b]of cases.slice(start,start+100))divisionCase(a,b,true);
+  run('divrem-sign-boundary-random-and-identities-'+Math.floor(start/100),source,expected);
+}
+source='';expected='';
+const linear=BigInt('9876543210'.repeat(2000));
+for(const [a,b] of [[linear,999999937n],[-linear,999999937n],[linear,-999999937n],[-linear,-1n]])divisionCase(a,b);
+const wideA=BigInt('9876543210'.repeat(500)),wideB=BigInt('1234567890'.repeat(200));
+for(const [a,b] of [[wideA,wideB],[-wideA,wideB],[wideA,-wideB],[-wideA,-wideB]])divisionCase(a,b);
+run('divrem-very-large-linear-and-general-paths',source,expected);
+const boundaryDivisor=10n**8999n+123456789n;
+source='';expected='';divisionCase(boundaryDivisor+1n,boundaryDivisor);divisionCase(-(boundaryDivisor+1n),boundaryDivisor);
+run('divrem-general-work-boundary-one-million-limb-pairs',source,expected);
+for(const operator of ['//','%'])run('divrem-general-work-limit-'+(operator==='//'?'quotient':'remainder'),`print ${10n**9000n+1n} ${boundaryDivisor} ${operator}\n`,'',103,'NJA203: native division work limit exceeded\n');
+for(const [name,expression] of [['floor','1 0 //'],['modulo','1 0 %'],['zero-over-zero','0 0 //'],['bool-zero','true false //'],['modulo-bool-zero','true false %'],['computed-zero','1 7 1 % //']])run('division-by-zero-'+name,'print '+expression+'\n','',106,'NJA206: integer division by zero\n');
+for(const [name,expression] of [['text-left',text('5')+' 1 //'],['bytes-right','1 b:31 %'],['none-left','none 1 //'],['bad-type-before-zero',text('5')+' 0 //']])run('division-type-error-'+name,'print '+expression+'\n','',105,'NJA205: native value type mismatch\n');
+run('division-left-to-right-zero-before-later-type','print 1 0 // none +\n','',106,'NJA206: integer division by zero\n');
+run('division-left-to-right-type-before-later-zero','print 1 len 1 0 // //\n','',105,'NJA205: native value type mismatch\n');
+run('division-evaluates-right-before-operator-type-guard','print '+text('5')+' 1 0 // //\n','',106,'NJA206: integer division by zero\n');
+run('division-zero-is-skipped-by-short-circuit','print false 1 0 // and\nprint 2 1 1 0 % chain:<,<\n','False\nFalse\n');
+const aliasValue=-(10n**100n+7n);
+run('division-identical-operand-aliases-are-immutable',`set 0 ${aliasValue}\nset 1 %0\nprint %0 %1 //\nprint %0 %1 %\nprint %0\nprint %1\n`,'1\n0\n'+aliasValue+'\n'+aliasValue+'\n');
+run('division-single-limb-arena-exhaustion','while true\nset 0 7 1 //\nend\n','',103,'NJA203: native value arena exhausted\n');
+run('division-general-scratch-arena-exhaustion','while true\nset 0 1 '+('1'+'0'.repeat(99999))+' //\nend\n','',103,'NJA203: native value arena exhausted\n');
+const divisorMutant=emit('divrem-literal-mutant','print 25 3 //\nprint 25 3 %\n');assert.equal(execute(divisorMutant).stdout,'8\n1\n');
+const divisorBytes=readFileSync(divisorMutant.output),signature=Buffer.alloc(20);signature.writeBigInt64LE(1n,0);signature.writeBigUInt64LE(1n,8);signature.writeUInt32LE(3,16);
+let mutated=0;
+for(let offset=divisorBytes.indexOf(signature,4096);offset>=0;offset=divisorBytes.indexOf(signature,offset+20)){
+  // Match the containing Int descriptor as well: raw bytes can overlap the
+  // singleton one object and the following Bool tag without being a literal.
+  if(divisorBytes.readBigUInt64LE(offset-24)!==0n||divisorBytes.readBigUInt64LE(offset-16)!==0x400000n+BigInt(offset)||divisorBytes.readBigUInt64LE(offset-8)!==0n)continue;
+  divisorBytes.writeUInt32LE(4,offset+16);mutated++;
+}
+assert.equal(mutated,2);writeFileSync(divisorMutant.output,divisorBytes);assert.equal(execute(divisorMutant).stdout,'6\n1\n');console.log('PASS runtime divrem responds to divisor-limb mutants');checks++;
+const floorMutant=emit('divrem-floor-adjustment-mutant','print -7 3 //\nprint -7 3 %\n');assert.equal(execute(floorMutant).stdout,'-3\n2\n');
+const floorBytes=readFileSync(floorMutant.output),signBranch=Buffer.from('488b85c0ffffff488b95b8ffffff4839d00f84','hex'),signOffset=floorBytes.indexOf(signBranch,4096);assert.ok(signOffset>=4096);floorBytes[signOffset+signBranch.length-1]=0x85;writeFileSync(floorMutant.output,floorBytes);const incorrectFloor=execute(floorMutant);assert.equal(incorrectFloor.status,0,incorrectFloor.stderr);assert.notEqual(incorrectFloor.stdout,'-3\n2\n');console.log('PASS removed signed-floor adjustment is detected by independent expectations');checks++;
 console.log(`${checks} dynamic native/IR checks passed; ${oracleOutputs} independent arithmetic, comparison, truth, bytes-repr and metamorphic outputs matched.`);
 console.log('Limits: B0 development IR; Linuxx64/explicit local WSL; bounded 64MiB temporary arena; no float/container/functions/exception-unwinding, complete runtime, FC1, self-hosting or release claim.');
