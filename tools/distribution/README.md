@@ -4,7 +4,11 @@ This developer tooling packages a pinned native Rust-built compiler; it does
 not implement `naja package`, self-hosting, a signed release or full FC1/HATCH.
 It belongs to T12/FC1-01 groundwork. T22 is a different build-closure task.
 
-From the repository root on the observed Windows/Ubuntu WSL host:
+This historical experiment requires compiler inputs identical to the pinned
+source below. The current class compiler has newer inputs, so the verifier
+deliberately refuses to package it under the old source identity. Reproduce the
+experiment from a separate checkout at `72ef3b0` (which contains these tools and
+the original compiler inputs), on the observed Windows/Ubuntu WSL host:
 
 ```text
 node tools/distribution/verify.mjs
