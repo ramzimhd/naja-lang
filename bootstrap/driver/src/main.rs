@@ -1,5 +1,7 @@
+mod doctor;
 mod execution;
 mod project;
+mod scaffold;
 
 use execution::{Outcome, Runner};
 use std::{
@@ -11,7 +13,7 @@ use std::{
     time::Duration,
 };
 
-const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja lex SOURCE\n  naja check SOURCE [--project-root PATH]\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE [--project-root PATH]\n  naja run SOURCE [--runner wsl] [--timeout-ms N] [--project-root PATH] [-- ARGS...]\n  naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N] [--project-root PATH]\n\nUse naja COMMAND --help for command options and limits.\nThis seed supports native arbitrary-precision decimal integers, text, bytes, booleans and None; +, -, *, //, %, comparisons/chains, not/and/or, assignment, truthy if/else/while, assertions, print, len(text/bytes) and Text/Bytes[index].\nNegative indices count from the end; text indexing returns one Unicode scalar and bytes indexing returns Int. Bounds report NJA207 and exit 107; slices remain unsupported.\nThe hosted arena is limited to 64 MiB; exhaustion reports NJA203 and exits 103.\nGeneral division work is bounded to 1000000 numerator/divisor limb pairs; exceeding it exits 103. Division by zero reports NJA206 and exits 106.\nExplicit from naja.core import i64 selects the separate checked-i64 slice; mixed domains remain unsupported.\n.naja selects edition 2026.1; .py keeps its separate compatibility dialect.\n--project-root PATH explicitly activates the owning .naja project alias table; no ambient discovery or .py alias activation.\nFirst-order top-level functions support plain positional parameters, self/earlier calls, return/fallthrough None and isolated local frames. Calls are bounded to depth 256 and 2 MiB source stack (4 KiB helper reserve); ordinary OS stack availability is required.\nGlobals/closures/defaults/kwargs/function values, floats, collections, classes, complete modules/types, full grammar and self-hosting remain unimplemented.\n";
+const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja doctor [--json] [--runner direct|wsl]\n  naja init NEW_DIRECTORY\n  naja lex SOURCE\n  naja check SOURCE [--project-root PATH]\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE [--project-root PATH]\n  naja run SOURCE [--runner wsl] [--timeout-ms N] [--project-root PATH] [-- ARGS...]\n  naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N] [--project-root PATH]\n\nUse naja COMMAND --help for command options and limits.\nThis seed supports native arbitrary-precision decimal integers, text, bytes, booleans and None; +, -, *, //, %, comparisons/chains, not/and/or, assignment, truthy if/else/while, assertions, print, len(text/bytes) and Text/Bytes[index].\nNegative indices count from the end; text indexing returns one Unicode scalar and bytes indexing returns Int. Bounds report NJA207 and exit 107; slices remain unsupported.\nThe hosted arena is limited to 64 MiB; exhaustion reports NJA203 and exits 103.\nGeneral division work is bounded to 1000000 numerator/divisor limb pairs; exceeding it exits 103. Division by zero reports NJA206 and exits 106.\nExplicit from naja.core import i64 selects the separate checked-i64 slice; mixed domains remain unsupported.\n.naja selects edition 2026.1; .py keeps its separate compatibility dialect.\n--project-root PATH explicitly activates the owning .naja project alias table; no ambient discovery or .py alias activation.\nFirst-order top-level functions support plain positional parameters, self/earlier calls, return/fallthrough None and isolated local frames. Calls are bounded to depth 256 and 2 MiB source stack (4 KiB helper reserve); ordinary OS stack availability is required.\nGlobals/closures/defaults/kwargs/function values, floats, collections, classes, complete modules/types, full grammar and self-hosting remain unimplemented.\n";
 const RUN_HELP: &str = "Usage: naja run SOURCE [--runner wsl] [--timeout-ms N] [--project-root PATH] [-- ARGS...]\n\nCompile to a new temporary Linux x86-64 ELF and execute with literal argument boundaries.\nLinux x86-64 runs directly. Windows requires explicit --runner wsl and a Linux x86-64 WSL distribution with /usr/bin/{uname,wslpath,chmod,timeout}.\nThe default program deadline is 5000 ms; --timeout-ms accepts 1..60000. Temporary ELF size is limited to 16 MiB.\nChild stdin/stdout/stderr are inherited. Numeric child exits are preserved; a directly observed signal returns 128+signal and is reported on stderr.\nWSL exposes translated statuses, not an exact child signal. Its target-side timeout returns 124, which cannot be distinguished from a child exit 124; a forced timeout may return 137.\n--project-root PATH activates only the owning .naja aliases; SOURCE remains relative to the current directory.\nTemporary files are removed after execution. Execution uses ordinary OS rights and is not a sandbox.\n";
 const TEST_HELP: &str = "Usage: naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N] [--project-root PATH]\n\nA program-file test passes when compilation succeeds and native execution exits zero. This is not a test-function framework.\nDirectory discovery recursively selects test_*.naja and test_*.py; explicit SOURCE accepts either extension. Names sort by Unicode UTF-8 relative path; --filter is a case-sensitive substring.\nSymlinks are skipped (an explicit symlink is rejected); limits are 256 files, 4096 entries and depth 16, applied before filtering. No selected tests is an error.\nEach program has null stdin, a default 5000 ms deadline (1..60000 via --timeout-ms), and at most 65536 retained bytes per output stream. Exceeding the output limit fails the case.\n--json emits one schema-version-1 report on stdout, including compile/runtime failures, exact observed exits/signals, UTF-8 display validity flags and lossless stdout_hex/stderr_hex output bytes. Operational/argument errors use stderr.\n--project-root PATH is checked for each owning .naja module; .py cases fail explicitly when activation is requested.\nTests run sequentially under ordinary OS rights, not in a sandbox. Windows requires --runner wsl; WSL signal information is unavailable and status 124 means timeout-or-child-exit-124.\n";
 
@@ -29,6 +31,8 @@ fn main() {
 
 fn command_help(operation: &str) -> String {
     match operation {
+        "doctor" => doctor::HELP.into(),
+        "init" => "Usage: naja init NEW_DIRECTORY\n\nCreate a new leaf project under an existing ordinary local parent, with a validated manifest, main.naja and test_smoke.naja.\nExisting directories, files and links are refused. Parent traversal, links/reparse points and device/network paths are unsupported.\nSource is checked before writing and never executed automatically. Partial IO failures preserve created output for inspection.\nNames support Unicode and spaces within a 128-byte portable filename limit. No tools, dependencies or network services are installed.\n".into(),
         "run" => RUN_HELP.into(), "test" => TEST_HELP.into(),
         "build" => "Usage: naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE [--project-root PATH]\n\nCompile the experimental native value subset to Linux x86-64 ELF without execution. Refuses to overwrite any existing output. Source is UTF-8 .py or .naja, at most 1 MiB.\n".into(),
         "check" => "Usage: naja check SOURCE [--project-root PATH]\n\nCheck the experimental native value subset without executing user code or creating a native artifact. Source is UTF-8 .py or .naja, at most 1 MiB.\n".into(),
@@ -53,11 +57,36 @@ fn run() -> Result<i32, String> {
         .first()
         .and_then(|value| value.to_str())
         .ok_or_else(|| format!("NJA001: a command is required\n{HELP}"))?;
-    if !matches!(operation, "lex" | "check" | "build" | "run" | "test") {
+    if !matches!(
+        operation,
+        "doctor" | "init" | "lex" | "check" | "build" | "run" | "test"
+    ) {
         return Err(format!("NJA001: unknown command '{operation}'\n{HELP}"));
     }
     if arguments.len() == 2 && (arguments[1] == "--help" || arguments[1] == "-h") {
         print!("{}", command_help(operation));
+        return Ok(0);
+    }
+    if operation == "doctor" {
+        print!("{}", doctor::report(&arguments[1..])?);
+        return Ok(0);
+    }
+    if operation == "init" {
+        if arguments.len() != 2
+            || arguments[1]
+                .to_str()
+                .is_some_and(|value| value.starts_with('-'))
+        {
+            return Err(
+                "NJA040: init requires exactly one new directory; use naja init --help".into(),
+            );
+        }
+        let summary = scaffold::init_project(Path::new(&arguments[1]))?;
+        println!(
+            "Created NAJA project '{}': {}",
+            summary.name,
+            summary.created_files.join(", ")
+        );
         return Ok(0);
     }
     if arguments.len() < 2

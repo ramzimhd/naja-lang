@@ -18,7 +18,9 @@ Ordinary decimal integers, including values beyond machine width, compile throug
 a native multi-limb runtime. Text, bytes, booleans and `None` also execute natively.
 The current slice supports arithmetic, comparisons and chains, truthiness,
 short-circuit expressions, assignment, `if`/`else`, `while`, assertions, printing
-and text/bytes length. A 64 MiB temporary arena reports exhaustion without
+and text/bytes length/indexing. First-order functions use native calls and
+isolated local frames, with explicit binding and resource limits. A 64 MiB
+temporary arena reports exhaustion without
 narrowing or wrapping.
 Explicit `from naja.core import i64` selects a separate checked-i64 slice;
 mixing these value domains is still unsupported. `.naja` edition
@@ -49,7 +51,12 @@ node scripts/test-native.mjs
 node scripts/test-hosted.mjs
 node scripts/test-hosted-language.mjs
 node scripts/test-dynamic.mjs
+node scripts/test-functions.mjs
+node scripts/test-index.mjs
 node scripts/test-values-language.mjs
+node scripts/test-functions-language.mjs
+node scripts/test-index-language.mjs
+node scripts/test-project-cli.mjs
 node scripts/test-cli.mjs
 ```
 
@@ -59,6 +66,13 @@ runs deterministic program-file discovery, supports native comparison assertions
 and provides bounded, lossless machine reports. See
 [execution limits and options](tests/cli/README.md). This does not yet provide
 the complete HATCH test framework or native Windows/macOS application execution.
+
+`naja doctor --json` reports declared capabilities and limits; an explicit runner
+option checks local preparation separately from program execution. `naja init
+NEW_DIRECTORY` creates a validated manifest, ordinary native example and
+program-file smoke test without executing them. Existing targets are refused.
+See [the project CLI workflow](tests/cli/PROJECT.md) for empty-PATH compilation
+checks, creation limits and the distinction from clean-host installation.
 
 `--project-root PATH` explicitly activates the owning `.naja` project's optional
 comparison/print/len aliases on check/build/run/test. Conventional spellings still

@@ -17,6 +17,13 @@ implemented. The frontend's logical-line CST and suite metadata are not a comple
 grammar parser. `.naja` selects edition 2026.1; `.py` retains the separate
 compatibility dialect. Both use the same frontend implementation.
 
+`naja doctor` reports declared host/target and resource facts without loading an
+ambient project. `--runner direct|wsl` explicitly requests bounded preparation;
+the report distinguishes preparation from executing source. `naja init
+NEW_DIRECTORY` exclusively creates three checked project files under an existing
+ordinary parent, with no automatic execution or dependency installation. See
+[the project CLI checks](../tests/cli/PROJECT.md).
+
 ## Executable subset
 
 Without an initial core import, ordinary decimal integer literals and inferred

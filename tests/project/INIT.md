@@ -1,7 +1,7 @@
 # Bounded new-project scaffolder
 
 The module API is `init_project(&Path) -> Result<InitSummary, String>`. This slice
-does not wire a CLI command. The integrator supplies `naja init NEW_DIRECTORY`.
+is exposed by `naja init NEW_DIRECTORY` through the ordinary compiler CLI.
 The returned summary contains the exact leaf project name and three relative
 created filenames, never an absolute path, user-profile inventory or credentials.
 
@@ -77,5 +77,7 @@ On October 25, 2026, the scoped command exited 0 on the Windows development host
 with Rust/Cargo 1.97.1: 14 tests passed, 0 failed and 0 ignored, including actual
 symlinks and a junction. Scoped Clippy, rustfmt and authored whitespace checks
 also exited 0. Unix-specific variants are provided but were not executed by this
-Windows run. Generated ELF output was inspected, not executed; actual `init`
-CLI wiring and end-to-end build/run/test checks remain integrator work.
+Windows run. Generated ELF output was inspected, not executed by those unit
+tests. The integrator subsequently wired the CLI and added separate actual
+build/run/test checks in `scripts/test-project-cli.mjs`; its retained records
+identify that broader execution separately.
