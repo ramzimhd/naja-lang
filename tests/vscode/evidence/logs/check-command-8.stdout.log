@@ -1,0 +1,1 @@
+{"schema_version":1,"source":"C:\\naja-worktrees\\planning-validation\\editor\\vscode\\artifacts\\checks-5zr8vp\\original-utf16-2.naja","status":"failed","diagnostics":[{"code":"NJA101","message":"undefined or uninitialized name in the experimental executable subset","start":{"line":1,"character":14},"end":{"line":1,"character":21}}],"omitted_diagnostics":0}

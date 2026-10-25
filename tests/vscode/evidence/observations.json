@@ -1,0 +1,770 @@
+{
+  "schema_version": 1,
+  "contract_revision": "1.3",
+  "status": "passed",
+  "scope": "Experimental CLI adapter unit tests, real native compiler semantic checks, VSIX packaging/archive inspection and isolated local VS Code CLI installation/listing.",
+  "adapter_source": "aa414355e1b84ba4c999d90e6b5e0480a04c54cb",
+  "compiler_source": "662bcdcff3a5742d9271b5f449becaa724503d78",
+  "compiler": {
+    "schema_version": 1,
+    "contract_revision": "1.3",
+    "state": "passed",
+    "compiler_source": "662bcdcff3a5742d9271b5f449becaa724503d78",
+    "adapter_source": "aa414355e1b84ba4c999d90e6b5e0480a04c54cb",
+    "node": "v24.11.0",
+    "host": "win32-x64",
+    "timestamp": "2026-10-25T21:02:16.063Z",
+    "commands": [
+      {
+        "command": [
+          "git",
+          "diff",
+          "662bcdcff3a5742d9271b5f449becaa724503d78",
+          "--",
+          "bootstrap/",
+          "backends/",
+          "Cargo.toml",
+          "Cargo.lock",
+          "rust-toolchain.toml"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-0.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-0.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-0.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-0.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "git",
+          "ls-files",
+          "--others",
+          "--exclude-standard",
+          "--",
+          "bootstrap/",
+          "backends/"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-1.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-1.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-1.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-1.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-2.stdout.log",
+            "sha256": "81e2a885c5b9b8da38f70486190f3b0c7043a13d4bf7719b05ad2bb2635e76e6",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-2.stdout.log",
+              "sha256": "81e2a885c5b9b8da38f70486190f3b0c7043a13d4bf7719b05ad2bb2635e76e6",
+              "bytes": 41,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-2.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-2.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--test",
+          "<repo>/tests\\vscode\\adapter.test.mjs"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-3.stdout.log",
+            "sha256": "49a49a27d83ba6dd45bd623f0212c072eafc72ae80300e8c4336a1d975832b51",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-3.stdout.log",
+              "sha256": "49a49a27d83ba6dd45bd623f0212c072eafc72ae80300e8c4336a1d975832b51",
+              "bytes": 1336,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-3.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-3.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "cargo",
+          "build",
+          "--workspace",
+          "--locked",
+          "--offline"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-4.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-4.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-4.stderr.log",
+            "sha256": "54b030997e5338b7f87fbbe2d0e3e3bdc1524a9e12564dd4b894804777fffd29",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-4.stderr.log",
+              "sha256": "fddd6e4d8b527319858473a21c579dced8f43e605734bc0fec42b45ecefa4f3a",
+              "bytes": 185,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "<repo>/target\\debug\\naja.exe",
+          "check",
+          "<repo>/editor\\vscode\\artifacts\\checks-5zr8vp\\valid-no-execution-é & inert.naja",
+          "--json"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-5.stdout.log",
+            "sha256": "d6fe291db8e99bb9cf0e01db8fcff026755427253cef2ab3a52ebdb05af9be7a",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-5.stdout.log",
+              "sha256": "d6fe291db8e99bb9cf0e01db8fcff026755427253cef2ab3a52ebdb05af9be7a",
+              "bytes": 209,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-5.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-5.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "<repo>/target\\debug\\naja.exe",
+          "check",
+          "<repo>/editor\\vscode\\artifacts\\checks-5zr8vp\\original-utf16-0.naja",
+          "--json"
+        ],
+        "exit_code": 1,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-6.stdout.log",
+            "sha256": "12caf6209f0a7c2627d1c94b16e4915c49c6fb35e1324ca6aab03621ce0bf8d1",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-6.stdout.log",
+              "sha256": "12caf6209f0a7c2627d1c94b16e4915c49c6fb35e1324ca6aab03621ce0bf8d1",
+              "bytes": 361,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-6.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-6.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "<repo>/target\\debug\\naja.exe",
+          "check",
+          "<repo>/editor\\vscode\\artifacts\\checks-5zr8vp\\original-utf16-1.naja",
+          "--json"
+        ],
+        "exit_code": 1,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-7.stdout.log",
+            "sha256": "60c9ba85063d3d06664478faf1678428ccca2cf815d2a4ef3d78989d53b774ba",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-7.stdout.log",
+              "sha256": "60c9ba85063d3d06664478faf1678428ccca2cf815d2a4ef3d78989d53b774ba",
+              "bytes": 361,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-7.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-7.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "<repo>/target\\debug\\naja.exe",
+          "check",
+          "<repo>/editor\\vscode\\artifacts\\checks-5zr8vp\\original-utf16-2.naja",
+          "--json"
+        ],
+        "exit_code": 1,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-8.stdout.log",
+            "sha256": "c8fab84eb6e7ade62f3cfa3155de590725cdabe7feeaa732700af98fbd70172f",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-8.stdout.log",
+              "sha256": "c8fab84eb6e7ade62f3cfa3155de590725cdabe7feeaa732700af98fbd70172f",
+              "bytes": 361,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-8.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-8.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "<repo>/target\\debug\\naja.exe",
+          "check",
+          "<repo>/editor\\vscode\\artifacts\\checks-5zr8vp\\owner é\\main.naja",
+          "--json",
+          "--project-root",
+          "<repo>/editor\\vscode\\artifacts\\checks-5zr8vp\\owner é"
+        ],
+        "exit_code": 1,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-9.stdout.log",
+            "sha256": "ef650023a2353bd3e042e64c72fc4b080ec8c5dd3d5c2319080799f7d0e56f8a",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-9.stdout.log",
+              "sha256": "ef650023a2353bd3e042e64c72fc4b080ec8c5dd3d5c2319080799f7d0e56f8a",
+              "bytes": 359,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-9.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-9.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "<repo>/target\\debug\\naja.exe",
+          "check",
+          "<repo>/editor\\vscode\\artifacts\\checks-5zr8vp\\absent.naja",
+          "--json"
+        ],
+        "exit_code": 1,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-10.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-10.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-10.stderr.log",
+            "sha256": "faa50f83eed618a68ae5cb3d216a90a99d47b8aafab9c1d174b3a0515979d78a",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-10.stderr.log",
+              "sha256": "4af3c34aee9e204c046218527ba986e0c9434531eacfc9bba58428412e3b1717",
+              "bytes": 144,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "command": [
+          "<repo>/target\\debug\\naja.exe",
+          "check",
+          "<repo>/editor\\vscode\\artifacts\\checks-5zr8vp\\omission-is-explicit.naja",
+          "--json"
+        ],
+        "exit_code": 1,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-11.stdout.log",
+            "sha256": "f8a21957d9ba7feb26775247d1f76b7f4f3b85bdaf5f61abc69e6892cf53b87e",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-11.stdout.log",
+              "sha256": "f8a21957d9ba7feb26775247d1f76b7f4f3b85bdaf5f61abc69e6892cf53b87e",
+              "bytes": 4147,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/checks-5zr8vp/command-11.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/check-command-11.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      }
+    ],
+    "cases": [
+      {
+        "name": "adapter-unit-suite",
+        "result": "passed"
+      },
+      {
+        "name": "locked-offline-pinned-compiler-build",
+        "result": "passed"
+      },
+      {
+        "name": "valid-no-execution-é & inert",
+        "result": "passed"
+      },
+      {
+        "name": "original-utf16-0",
+        "result": "passed"
+      },
+      {
+        "name": "original-utf16-1",
+        "result": "passed"
+      },
+      {
+        "name": "original-utf16-2",
+        "result": "passed"
+      },
+      {
+        "name": "real-project-alias-original-range",
+        "result": "passed"
+      },
+      {
+        "name": "input-error-is-not-semantic-pass",
+        "result": "passed"
+      },
+      {
+        "name": "omission-is-explicit",
+        "result": "passed"
+      }
+    ],
+    "error": null,
+    "limits": {
+      "build_ms": 45000,
+      "command_ms": 10000,
+      "suite_ms": 120000,
+      "output_bytes": 1048576
+    },
+    "scope": "Unit mock host and real compiler CLI only; no IDE end-to-end or source execution claim."
+  },
+  "packaging": {
+    "schema_version": 1,
+    "contract_revision": "1.3",
+    "state": "passed",
+    "observed_at": "2026-10-25T21:03:21.659Z",
+    "packaging_tool": "@vscode/vsce 4.0.0",
+    "node": "v24.11.0",
+    "vscode_version": [
+      "1.142.0",
+      "6d62b1d5dace93a33b3a6d3eca1317bd5e15bcb1",
+      "x64"
+    ],
+    "artifact": {
+      "path": "editor/vscode/artifacts/naja-cli-preview-0.0.1.vsix",
+      "sha256": "4ec98c344702801e6195f364578c500914ad1c75e4dec18d8898dca7531759a0",
+      "bytes": 15947,
+      "signature": "unsigned"
+    },
+    "installation": "Local VS Code CLI install and listing in isolated owned profile; no editor interaction.",
+    "observations": [
+      {
+        "label": "vsce-version",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "node_modules/@vscode/vsce/vsce",
+          "--version"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/vsce-version.stdout.log",
+            "sha256": "e1d49c569ae09b2ede16e2d83820a3809b35eb6c44c13ba9b5330598d6b8f43c",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-vsce-version.stdout.log",
+              "sha256": "e1d49c569ae09b2ede16e2d83820a3809b35eb6c44c13ba9b5330598d6b8f43c",
+              "bytes": 6,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/vsce-version.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-vsce-version.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "label": "package",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "node_modules/@vscode/vsce/vsce",
+          "package",
+          "--no-dependencies",
+          "--out",
+          "artifacts/naja-cli-preview-0.0.1.vsix"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/package.stdout.log",
+            "sha256": "917562a718120c10b3c688162149de992096f12ce64c26178db80e08fad4e353",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-package.stdout.log",
+              "sha256": "d206f2c8fa44d0e23052124e377dbaa9f49fa5387c55c4bfbb35d49c125e0fef",
+              "bytes": 486,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/package.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-package.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "label": "vscode-version",
+        "command": [
+          "<profile>\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+          "<profile>\\AppData\\Local\\Programs\\Microsoft VS Code\\6d62b1d5da\\resources\\app\\out\\cli.js",
+          "--version"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/vscode-version.stdout.log",
+            "sha256": "c9b5982e197463dc4019f21cf0bac7515730e759a5fe367e49059e44373b365b",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-vscode-version.stdout.log",
+              "sha256": "c9b5982e197463dc4019f21cf0bac7515730e759a5fe367e49059e44373b365b",
+              "bytes": 53,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/vscode-version.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-vscode-version.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "label": "install-vsix",
+        "command": [
+          "<profile>\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+          "<profile>\\AppData\\Local\\Programs\\Microsoft VS Code\\6d62b1d5da\\resources\\app\\out\\cli.js",
+          "--user-data-dir",
+          "<repo>\\editor\\vscode\\artifacts\\install-ntVNHn\\profile",
+          "--extensions-dir",
+          "<repo>\\editor\\vscode\\artifacts\\install-ntVNHn\\extensions",
+          "--install-extension",
+          "<repo>\\editor\\vscode\\artifacts\\naja-cli-preview-0.0.1.vsix"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/install-vsix.stdout.log",
+            "sha256": "bdf1e2de1061960ea69c899c0305f6da3826b9134fdb8748220951b12ab52a5e",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-install-vsix.stdout.log",
+              "sha256": "bdf1e2de1061960ea69c899c0305f6da3826b9134fdb8748220951b12ab52a5e",
+              "bytes": 93,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/install-vsix.stderr.log",
+            "sha256": "6037eed4156ec6964bb8cb472eeed22cdc0d9dbe0ada6edc48a14397b5e4c8df",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-install-vsix.stderr.log",
+              "sha256": "6037eed4156ec6964bb8cb472eeed22cdc0d9dbe0ada6edc48a14397b5e4c8df",
+              "bytes": 301,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      },
+      {
+        "label": "list-extensions",
+        "command": [
+          "<profile>\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+          "<profile>\\AppData\\Local\\Programs\\Microsoft VS Code\\6d62b1d5da\\resources\\app\\out\\cli.js",
+          "--user-data-dir",
+          "<repo>\\editor\\vscode\\artifacts\\install-ntVNHn\\profile",
+          "--extensions-dir",
+          "<repo>\\editor\\vscode\\artifacts\\install-ntVNHn\\extensions",
+          "--list-extensions",
+          "--show-versions"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "spawn_error": null,
+        "logs": {
+          "stdout": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/list-extensions.stdout.log",
+            "sha256": "2848d4ef64b0e692e9b6add9e34e4257af140a95bc9086cb5c04c58267f456a5",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-list-extensions.stdout.log",
+              "sha256": "2848d4ef64b0e692e9b6add9e34e4257af140a95bc9086cb5c04c58267f456a5",
+              "bytes": 32,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          },
+          "stderr": {
+            "path": "editor/vscode/artifacts/install-ntVNHn/list-extensions.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "retention": "private local ignored file",
+            "public_sanitized": {
+              "path": "tests/vscode/evidence/logs/package-list-extensions.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository and user-profile paths replaced; line endings normalized to LF; trailing horizontal whitespace removed; raw hash remains separately retained."
+            }
+          }
+        }
+      }
+    ]
+  },
+  "archive": {
+    "schema_version": 1,
+    "state": "passed",
+    "check": "Exact 9-entry allowlist, no runtime dependencies/artifacts/private workspace/profile path",
+    "entries": [
+      {
+        "path": "extension.vsixmanifest",
+        "bytes": 2595,
+        "sha256": "9fbc7198c770556f0beff6c55008ec799e8417e51b310c2a75c0d475104da705"
+      },
+      {
+        "path": "[Content_Types].xml",
+        "bytes": 414,
+        "sha256": "794ec89c81f3ce964e00812687cbe53914852a117c60f91b563dcc74e21c672f"
+      },
+      {
+        "path": "extension/core.cjs",
+        "bytes": 12480,
+        "sha256": "8e093fa554d980cf50c34b6cd4251e10815efdfbcd8d1a6af5d772fae0fbbb44"
+      },
+      {
+        "path": "extension/extension.cjs",
+        "bytes": 5294,
+        "sha256": "a04765a72c874b927fde964da96a6fb8bd56cf372fe1dfe291460bd277e35429"
+      },
+      {
+        "path": "extension/language-configuration.json",
+        "bytes": 475,
+        "sha256": "501b8020a382bca53ef2e17812c46b2cdcc0899a204858adc484365642a21216"
+      },
+      {
+        "path": "extension/LICENSE.txt",
+        "bytes": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "extension/package.json",
+        "bytes": 3212,
+        "sha256": "7833dd6b3c182113d8b73cb1abf1df292df5a11114952d2609b6251eef4f2c3f"
+      },
+      {
+        "path": "extension/readme.md",
+        "bytes": 4188,
+        "sha256": "c7930eec10b58267747bf34fd13c21ce7de218003e10a01c0d073c779c80fa52"
+      },
+      {
+        "path": "extension/syntaxes/naja.tmLanguage.json",
+        "bytes": 880,
+        "sha256": "0f264b8ab85f577700778b4baf99f507ce57a440de9ee1e2d3285574cc558433"
+      }
+    ]
+  },
+  "limits": [
+    "No actual IDE interaction or extension-host command workflow was observed.",
+    "Build/run invocation plans are unit tested; real editor build/run and WSL execution were not run here.",
+    "No native LSP, DAP, full project resolver, completion, cells, FC1 or HATCH acceptance is claimed.",
+    "Compiler build reused an existing toolchain/cache; not a clean-host or self-hosting proof.",
+    "The unsigned VSIX remains a local ignored artifact, not a Marketplace or release publication.",
+    "Local raw captures are retained separately; public logs are explicitly sanitized derivatives, not raw evidence."
+  ],
+  "setup_notes": [
+    "Official @vscode/vsce 4.0.0 was installed locally as a pinned dev dependency using npm --ignore-scripts --no-audit --no-fund. No runtime npm dependencies are bundled.",
+    "An initial syntax-check invocation used root-relative paths from the nested extension directory and reported MODULE_NOT_FOUND. Root-directory syntax checks then passed before the committed test execution. Those initial tool-transcript outputs were not saved as raw evidence.",
+    "The first successful package invocation was repeated once to retain exact process output with the isolated installation observations; the recorded VSIX is the latter artifact."
+  ]
+}

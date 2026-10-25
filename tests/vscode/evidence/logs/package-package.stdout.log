@@ -1,0 +1,15 @@
+ INFO  Files included in the VSIX:
+naja-cli-preview-0.0.1.vsix
+├─ [Content_Types].xml
+├─ extension.vsixmanifest
+└─ extension/
+   ├─ LICENSE.txt [11.09 KB]
+   ├─ core.cjs [12.19 KB]
+   ├─ extension.cjs [5.17 KB]
+   ├─ language-configuration.json [0.46 KB]
+   ├─ package.json [3.14 KB]
+   ├─ readme.md [4.09 KB]
+   └─ syntaxes/
+      └─ naja.tmLanguage.json [0.86 KB]
+
+ DONE  Packaged: artifacts/naja-cli-preview-0.0.1.vsix (9 files, 15.57 KB)

@@ -1,0 +1,20 @@
+✔ frozen budgets and package association keep Python and automatic activation untouched (5.8586ms)
+✔ trust, URI, extension, dirty/closed state and source budget gate every launch (1.5914ms)
+✔ check/build/run plans preserve literal argument boundaries and explicit project selection (0.5941ms)
+✔ valid original UTF16 diagnostics handle astral scalars and LF/CRLF/CR (0.8309ms)
+✔ malformed schema/status/source/ranges and oversized diagnostics never become passes (1.1011ms)
+✔ disk and project snapshots reject unsaved, external, invalid UTF8 and oversized changes (33.0606ms)
+✔ native compiler selection rejects script files and relative paths without executing (10.0479ms)
+✔ subprocess API uses shell false, literal args, null stdin and forced direct-child cancellation (1.0717ms)
+✔ real observed child output, timeout, cancellation and missing-tool errors are bounded (426.4983ms)
+✔ new sessions and changed URI/version/text/config discard responses before and after launch (0.607ms)
+✔ adapter activation and document/config events never launch a compiler; untrusted commands refuse (0.6576ms)
+✔ mock host maps validated UTF16 ranges and invalidates them after edits without auto-save (5.1449ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 653.3213
