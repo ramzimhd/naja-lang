@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "source_commit": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+  "target": "Linux x86-64 via explicit local WSL",
+  "source": "value = []\nvalue.append(1)\n",
+  "source_sha256": "bf733a54b0d994b9865da7cce61ae6aa9b96b658ffba9f74a6647af16db3ab74",
+  "elf_sha256": "e6262820c186b4a3e70e5d054c1ed911e7e4355fdbfb462198ddb6a9e4671b9c",
+  "commands": [
+    {
+      "command": [
+        "C:\\naja\\target\\debug\\naja.exe",
+        "check",
+        "C:\\naja\\target\\objects-lists-migration-4vJgqP\\original.naja"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "436865636b6564206578706572696d656e74616c206e6174697665207375627365743a20433a5c6e616a615c7461726765745c6f626a656374732d6c697374732d6d6967726174696f6e2d34764a6771505c6f726967696e616c2e6e616a610a",
+      "stderr_hex": ""
+    },
+    {
+      "command": [
+        "C:\\naja\\target\\debug\\naja.exe",
+        "build",
+        "C:\\naja\\target\\objects-lists-migration-4vJgqP\\original.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja\\target\\objects-lists-migration-4vJgqP\\original.elf"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "4275696c74204c696e7578207838362d363420454c463a20433a5c6e616a615c7461726765745c6f626a656374732d6c697374732d6d6967726174696f6e2d34764a6771505c6f726967696e616c2e656c6620283138313430206279746573290a",
+      "stderr_hex": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "/usr/bin/wslpath",
+        "-a",
+        "C:\\naja\\target\\objects-lists-migration-4vJgqP\\original.elf"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "2f6d6e742f632f6e616a612f7461726765742f6f626a656374732d6c697374732d6d6967726174696f6e2d34764a6771502f6f726967696e616c2e656c660a",
+      "stderr_hex": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "/usr/bin/chmod",
+        "u+x",
+        "/mnt/c/naja/target/objects-lists-migration-4vJgqP/original.elf"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "",
+      "stderr_hex": ""
+    },
+    {
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "/usr/bin/timeout",
+        "--signal=TERM",
+        "--kill-after=1s",
+        "5",
+        "/mnt/c/naja/target/objects-lists-migration-4vJgqP/original.elf"
+      ],
+      "exit_code": 105,
+      "stdout_hex": "",
+      "stderr_hex": "4e4a413230353a206e61746976652076616c75652074797065206d69736d617463680a"
+    }
+  ],
+  "scope": "Original list append source now lowers through generic receiver dispatch and fails runtime105; list.append remains unsupported.",
+  "artifacts": "C:/naja/target/objects-lists-migration-4vJgqP"
+}

@@ -88,6 +88,9 @@ runtime('near-arena-stores-reuse-descriptors', 'def store(values, payload):\n' +
 runtime('near-arena-allocation-control', 'def allocate(payload):\n' + '    [payload]\n'.repeat(20) + arenaPrefix + 'allocate(payload)\n'.repeat(100) + 'print("unreachable")\n', '', { exit: 103, stderr: 'NJA203: native value arena exhausted\n' });
 
 const typeFailure = { exit: 105, stderr: 'NJA205: native value type mismatch\n' };
+// Generic member syntax is accepted; list methods still fail the receiver guard.
+// The original source was independently executed before migrating this baseline.
+runtime('append-method-receiver-guard', 'value = []\nvalue.append(1)\n', '', typeFailure);
 const boundsFailure = { exit: 107, stderr: 'NJA207: sequence index out of range\n' };
 const zeroFailure = { exit: 106, stderr: 'NJA206: integer division by zero\n' };
 for (const [name, source] of [
@@ -122,7 +125,7 @@ runtime('list-comparison-right-error-order', 'print([1] == 1 // 0)\n', '', zeroF
 runtime('list-false-assertion', 'assert []\n', '', { exit: 104, stderr: 'NJA204: assertion failed\n' });
 
 for (const [name, source, diagnostic] of [
-  ['append', 'value = []\nvalue.append(1)\n', 'NJA101:'], ['resize', 'value = [1]\ndel value[0]\n', 'NJA101:'],
+  ['resize', 'value = [1]\ndel value[0]\n', 'NJA101:'],
   ['slice-read', 'print([1, 2][0:1])\n', 'slices and multidimensional indices'], ['slice-store', 'value = [1]\nvalue[:] = []\n', 'NJA101:'],
   ['augmented-store', 'value = [1]\nvalue[0] += 1\n', 'NJA101:'], ['unpacking', 'a, b = [1, 2]\n', 'NJA101:'],
   ['comprehension', 'value = [x for x in [1]]\n', 'NJA101:'], ['iteration', 'for value in [1]:\n    print(value)\n', 'NJA101:'],
