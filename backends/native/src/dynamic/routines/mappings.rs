@@ -245,9 +245,9 @@ impl Runtime {
         c.jump(dict_capacity);
         c.bind(room);
         c.load(Ax, Bp, MAP);
-        c.mov(R13, R12);
-        c.step(R13, false);
-        c.store(Ax, 16, R13);
+        c.mov(Bx, R12);
+        c.step(Bx, false);
+        c.store(Ax, 16, Bx);
         c.shift_left(R12, 4);
         c.load(Dx, Bp, TABLE);
         c.add(R12, Dx);
