@@ -1,0 +1,1 @@
+{"schema_version":1,"kind":"native_program_tests","runner":"direct","signal_observation":"direct","selected":1,"passed":1,"failed":0,"tests":[{"path":"test_smoke.naja","status":"passed","exit_code":0,"signal":null,"stdout":"","stderr":"","stdout_utf8_valid":true,"stderr_utf8_valid":true,"stdout_hex":"","stderr_hex":"","diagnostic":null}]}

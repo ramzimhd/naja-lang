@@ -1,0 +1,2 @@
+rootfs_target=/dev/null
+filesystem=devtmpfs source=none options=rw,size=24594608k,nr_inodes=6148652,mode=755

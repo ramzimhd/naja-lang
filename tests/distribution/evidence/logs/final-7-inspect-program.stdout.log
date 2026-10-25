@@ -1,0 +1,35 @@
+
+Elf file type is DYN (Position-Independent Executable file)
+Entry point 0x533b0
+There are 12 program headers, starting at offset 64
+
+Program Headers:
+  Type           Offset   VirtAddr           PhysAddr           FileSiz  MemSiz   Flg Align
+  PHDR           0x000040 0x0000000000000040 0x0000000000000040 0x0002a0 0x0002a0 R   0x8
+  INTERP         0x0002e0 0x00000000000002e0 0x00000000000002e0 0x00001c 0x00001c R   0x1
+      [Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]
+  LOAD           0x000000 0x0000000000000000 0x0000000000000000 0x0523ac 0x0523ac R   0x1000
+  LOAD           0x0523b0 0x00000000000533b0 0x00000000000533b0 0x0cd3a0 0x0cd3a0 R E 0x1000
+  LOAD           0x11f750 0x0000000000121750 0x0000000000121750 0x0047a8 0x0048b0 RW  0x1000
+  LOAD           0x123ef8 0x0000000000126ef8 0x0000000000126ef8 0x0009c8 0x000aba RW  0x1000
+  TLS            0x11f750 0x0000000000121750 0x0000000000121750 0x000020 0x000060 R   0x8
+  DYNAMIC        0x122ce8 0x0000000000124ce8 0x0000000000124ce8 0x0001d0 0x0001d0 RW  0x8
+  GNU_RELRO      0x11f750 0x0000000000121750 0x0000000000121750 0x0047a8 0x0048b0 R   0x1
+  GNU_EH_FRAME   0x03eb28 0x000000000003eb28 0x000000000003eb28 0x00293c 0x00293c R   0x4
+  GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0
+  NOTE           0x0002fc 0x00000000000002fc 0x00000000000002fc 0x000044 0x000044 R   0x4
+
+ Section to Segment mapping:
+  Segment Sections...
+   00
+   01     .interp
+   02     .interp .note.ABI-tag .note.gnu.build-id .dynsym .gnu.version .gnu.version_r .gnu.hash .dynstr .rela.dyn .rela.plt .gcc_except_table .rodata .eh_frame_hdr .eh_frame
+   03     .text .init .fini .plt
+   04     .tdata .fini_array .init_array .data.rel.ro .dynamic .got .got.plt .relro_padding
+   05     .tm_clone_table .data .bss
+   06     .tdata .tbss
+   07     .dynamic
+   08     .tdata .fini_array .init_array .data.rel.ro .dynamic .got .got.plt .relro_padding
+   09     .eh_frame_hdr
+   10
+   11     .note.ABI-tag .note.gnu.build-id

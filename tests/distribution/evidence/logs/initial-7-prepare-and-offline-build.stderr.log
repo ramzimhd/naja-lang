@@ -1,0 +1,25 @@
+info: profile set to minimal
+info: default host tuple is x86_64-unknown-linux-gnu
+info: syncing channel updates for 1.97.1-x86_64-unknown-linux-gnu
+info: latest update on 2026-07-16 for version 1.97.1 (8bab26f4f 2026-07-14)
+info: downloading 3 components
+info: default toolchain set to 1.97.1-x86_64-unknown-linux-gnu
+info: This is the version for the rustup toolchain manager, not the rustc compiler.
+info: syncing channel updates for 1.97.1-x86_64-unknown-linux-gnu
+info: latest update on 2026-07-16 for version 1.97.1 (8bab26f4f 2026-07-14)
+info: downloading 2 components
+info: the currently active `rustc` version is `rustc 1.97.1 (8bab26f4f 2026-07-14)`
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded tinyvec_macros v0.1.1
+  Downloaded unicode-ident v1.0.24
+  Downloaded unicode-normalization v0.1.25
+  Downloaded tinyvec v1.12.0
+   Compiling tinyvec_macros v0.1.1
+   Compiling unicode-ident v1.0.24
+   Compiling naja-native v0.0.1 (<private-linux>/source/backends/native)
+   Compiling tinyvec v1.12.0
+   Compiling unicode-normalization v0.1.25
+   Compiling naja-frontend v0.1.0 (<private-linux>/source/bootstrap/frontend)
+   Compiling naja-seed v0.0.1 (<private-linux>/source/bootstrap/driver)
+    Finished `release` profile [optimized] target(s) in 3.15s

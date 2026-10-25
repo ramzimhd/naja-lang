@@ -1,0 +1,1257 @@
+{
+  "schema_version": 1,
+  "contract_revision": "1.3",
+  "scope": "T12 CLI/tools + FC1-01 preparatory distribution; T22 is build-closure porting, T28 publication and full gates stay open.",
+  "compiler_source": "a51c2808bae4b57596f7f957ce53530004a504f8",
+  "initial_failure": {
+    "schema_version": 1,
+    "contract_revision": "1.3",
+    "state": "failed",
+    "compiler_source": "a51c2808bae4b57596f7f957ce53530004a504f8",
+    "helper_source": "bfe181c724b08f62be06fa5e1b366820e3c8321a",
+    "observed_at": "2026-10-25T21:36:09.538Z",
+    "host": "Windows x64 / Ubuntu 24.04 WSL x86-64",
+    "node": "v24.11.0",
+    "commands": [
+      {
+        "label": "helper-source",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/0-helper-source.stdout.log",
+            "sha256": "633d8be9986f8800fd10c5347c49b3a8c7147272a20a34a085b8eff07abf54b7",
+            "bytes": 41,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-0-helper-source.stdout.log",
+              "sha256": "633d8be9986f8800fd10c5347c49b3a8c7147272a20a34a085b8eff07abf54b7",
+              "bytes": 41,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/0-helper-source.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-0-helper-source.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "source-control",
+        "command": [
+          "git",
+          "diff",
+          "a51c2808bae4b57596f7f957ce53530004a504f8",
+          "--",
+          "bootstrap/",
+          "backends/",
+          "Cargo.toml",
+          "Cargo.lock",
+          "rust-toolchain.toml",
+          "third_party/"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/1-source-control.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-1-source-control.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/1-source-control.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-1-source-control.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "untracked-compiler-control",
+        "command": [
+          "git",
+          "ls-files",
+          "--others",
+          "--exclude-standard",
+          "--",
+          "bootstrap/",
+          "backends/",
+          "third_party/"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/2-untracked-compiler-control.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-2-untracked-compiler-control.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/2-untracked-compiler-control.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-2-untracked-compiler-control.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "package-units",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--test",
+          "tests/distribution/package.test.mjs"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/3-package-units.stdout.log",
+            "sha256": "bed095f2485830db5fae958f3b8036d7e5601e2b02b2f7f5dba0a963ad0b4915",
+            "bytes": 669,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-3-package-units.stdout.log",
+              "sha256": "bed095f2485830db5fae958f3b8036d7e5601e2b02b2f7f5dba0a963ad0b4915",
+              "bytes": 669,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/3-package-units.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-3-package-units.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "source-archive",
+        "command": [
+          "git",
+          "archive",
+          "--format=tar",
+          "a51c2808bae4b57596f7f957ce53530004a504f8"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 67108864,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/4-source-archive.stdout.log",
+            "sha256": "a90a8179f62ba86b0bc623c804ec4868c3a8ac4e421202c62d651619a2c9f004",
+            "bytes": 5918720,
+            "retention": "Local ignored raw capture",
+            "content_kind": "Git source tar; no public binary copy"
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/4-source-archive.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-4-source-archive.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "wsl-output-path",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/wslpath",
+          "-a",
+          "<repo>\\tools\\distribution\\artifacts\\verify-Uynctd"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/5-wsl-output-path.stdout.log",
+            "sha256": "e92d4e4b9099a37a136356ea6eeabd1a31abe45ba388905aec477ef57d5eacb6",
+            "bytes": 85,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-5-wsl-output-path.stdout.log",
+              "sha256": "3362ac3ff78a605088bb905d974f393e82b6158b6a1c02bbf74d9028cccc5add",
+              "bytes": 50,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/5-wsl-output-path.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-5-wsl-output-path.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "wsl-script-path",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/wslpath",
+          "-a",
+          "<repo>\\tools\\distribution"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/6-wsl-script-path.stdout.log",
+            "sha256": "801950925f3dbe0fba5428cde4976eb326d590002dbbdfdb2bd0f212626e6f37",
+            "bytes": 61,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-6-wsl-script-path.stdout.log",
+              "sha256": "3a6f81b80d2e3da31ae6570f2aeb16c72696f8cd787c05f6d0cc0385d9e451b9",
+              "bytes": 26,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/6-wsl-script-path.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-6-wsl-script-path.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "prepare-and-offline-build",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/timeout",
+          "-k",
+          "5",
+          "900",
+          "/bin/sh",
+          "<repo>/tools/distribution/prepare-linux.sh",
+          "<repo>/tools/distribution/artifacts/verify-Uynctd"
+        ],
+        "budget_ms": 910000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/7-prepare-and-offline-build.stdout.log",
+            "sha256": "b3cf09c04605a0ed468b3a7b7d3e0af67c0713256e6dfec44f9af3ba29b93ecd",
+            "bytes": 3423,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-7-prepare-and-offline-build.stdout.log",
+              "sha256": "8e3e6dcc9e8b24bbb2f07a8c282ac88b11fa02cdafc67265392eca33572066a8",
+              "bytes": 3090,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-Uynctd/7-prepare-and-offline-build.stderr.log",
+            "sha256": "db0569f90bdd42b6c42d371cf03a7484befed0205f74aba3c1b37ea54acd3785",
+            "bytes": 1329,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/initial-7-prepare-and-offline-build.stderr.log",
+              "sha256": "e25a9071d87e2dab9138b7b748ff20f2022441a47f24fec302ddc4702f3e4f97",
+              "bytes": 1281,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      }
+    ],
+    "error": "Unexpected or missing native OS dependency/interpreter."
+  },
+  "corrected_run": {
+    "schema_version": 1,
+    "contract_revision": "1.3",
+    "state": "passed",
+    "compiler_source": "a51c2808bae4b57596f7f957ce53530004a504f8",
+    "helper_source": "6f409ac6fb27a5c943b808a674dbca6c25e8c8d6",
+    "reused_preparation": {
+      "directory": "tools/distribution/artifacts/verify-Uynctd",
+      "helper_source": "bfe181c724b08f62be06fa5e1b366820e3c8321a",
+      "compiler_source": "a51c2808bae4b57596f7f957ce53530004a504f8",
+      "preparation_stdout_sha256": "b3cf09c04605a0ed468b3a7b7d3e0af67c0713256e6dfec44f9af3ba29b93ecd",
+      "preparation_stderr_sha256": "db0569f90bdd42b6c42d371cf03a7484befed0205f74aba3c1b37ea54acd3785",
+      "boundary": "Explicit local static record/hash audit; no execution replay or independent log-authenticity claim."
+    },
+    "observed_at": "2026-10-25T21:37:59.034Z",
+    "host": "Windows x64 / Ubuntu 24.04 WSL x86-64",
+    "node": "v24.11.0",
+    "commands": [
+      {
+        "label": "helper-source",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/0-helper-source.stdout.log",
+            "sha256": "20d97720691fd977566a77bccd713ac49103b9ff7ff986549109b2fb874807f9",
+            "bytes": 41,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-0-helper-source.stdout.log",
+              "sha256": "20d97720691fd977566a77bccd713ac49103b9ff7ff986549109b2fb874807f9",
+              "bytes": 41,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/0-helper-source.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-0-helper-source.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "source-control",
+        "command": [
+          "git",
+          "diff",
+          "a51c2808bae4b57596f7f957ce53530004a504f8",
+          "--",
+          "bootstrap/",
+          "backends/",
+          "Cargo.toml",
+          "Cargo.lock",
+          "rust-toolchain.toml",
+          "third_party/"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/1-source-control.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-1-source-control.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/1-source-control.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-1-source-control.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "untracked-compiler-control",
+        "command": [
+          "git",
+          "ls-files",
+          "--others",
+          "--exclude-standard",
+          "--",
+          "bootstrap/",
+          "backends/",
+          "third_party/"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/2-untracked-compiler-control.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-2-untracked-compiler-control.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/2-untracked-compiler-control.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-2-untracked-compiler-control.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "package-units",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--test",
+          "tests/distribution/package.test.mjs"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/3-package-units.stdout.log",
+            "sha256": "9724551a1d583ecab514a4a55b3a98574bdaeee6deeb0673380e0c480793c972",
+            "bytes": 868,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-3-package-units.stdout.log",
+              "sha256": "9724551a1d583ecab514a4a55b3a98574bdaeee6deeb0673380e0c480793c972",
+              "bytes": 868,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/3-package-units.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-3-package-units.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "wsl-output-path",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/wslpath",
+          "-a",
+          "<repo>\\tools\\distribution\\artifacts\\verify-c6JAHA"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/4-wsl-output-path.stdout.log",
+            "sha256": "d0ce79d1d6b155fa258e78b57f700a8b4c244d5485efdae0e16b2e8b03b52bcd",
+            "bytes": 85,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-4-wsl-output-path.stdout.log",
+              "sha256": "d77dc19c4645da9c9e7c18defafce5ce6ce0da22745b3f17edd6332bdcb2a218",
+              "bytes": 50,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/4-wsl-output-path.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-4-wsl-output-path.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "wsl-script-path",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/wslpath",
+          "-a",
+          "<repo>\\tools\\distribution"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/5-wsl-script-path.stdout.log",
+            "sha256": "801950925f3dbe0fba5428cde4976eb326d590002dbbdfdb2bd0f212626e6f37",
+            "bytes": 61,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-5-wsl-script-path.stdout.log",
+              "sha256": "3a6f81b80d2e3da31ae6570f2aeb16c72696f8cd787c05f6d0cc0385d9e451b9",
+              "bytes": 26,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/5-wsl-script-path.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-5-wsl-script-path.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "inspect-dynamic",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/readelf",
+          "-dW",
+          "<repo>/tools/distribution/artifacts/verify-c6JAHA/linux-build/naja"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/6-inspect-dynamic.stdout.log",
+            "sha256": "d0f137f86bdb27093b99aaf4ee07bfe2af05c4d99540d959c6c9b6a594d872e1",
+            "bytes": 1615,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-6-inspect-dynamic.stdout.log",
+              "sha256": "d0f137f86bdb27093b99aaf4ee07bfe2af05c4d99540d959c6c9b6a594d872e1",
+              "bytes": 1615,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/6-inspect-dynamic.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-6-inspect-dynamic.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "inspect-program",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/readelf",
+          "-lW",
+          "<repo>/tools/distribution/artifacts/verify-c6JAHA/linux-build/naja"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/7-inspect-program.stdout.log",
+            "sha256": "96cb4fa3ba55443a63238db9ded491dbcf3e4c6b7a889aada1d139275b1559ad",
+            "bytes": 2041,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-7-inspect-program.stdout.log",
+              "sha256": "47141c5b567e8bd02819b5404bd31ccd29b6b5fef8311c57ef6d735357223161",
+              "bytes": 2021,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/7-inspect-program.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-7-inspect-program.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "inspect-versions",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/readelf",
+          "--version-info",
+          "-W",
+          "<repo>/tools/distribution/artifacts/verify-c6JAHA/linux-build/naja"
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/8-inspect-versions.stdout.log",
+            "sha256": "8efcb12fa84dbc60bc61d996a0744a11a69375db24f6ef4f4261e03a55457147",
+            "bytes": 4018,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-8-inspect-versions.stdout.log",
+              "sha256": "2e45906379ff74b37607dc883d0a3e30a1f7421b5281385a2d359142d7c537dc",
+              "bytes": 3990,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/8-inspect-versions.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-8-inspect-versions.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "archive-package",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/tar",
+          "--sort=name",
+          "--mtime=@0",
+          "--owner=0",
+          "--group=0",
+          "--numeric-owner",
+          "-czf",
+          "<repo>/tools/distribution/artifacts/verify-c6JAHA/naja-linux-x86_64-unsigned.tar.gz",
+          "-C",
+          "<repo>/tools/distribution/artifacts/verify-c6JAHA/package",
+          "."
+        ],
+        "budget_ms": 10000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/9-archive-package.stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-9-archive-package.stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/9-archive-package.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-9-archive-package.stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      },
+      {
+        "label": "installed-compiler-rootfs-controls",
+        "command": [
+          "wsl.exe",
+          "--distribution",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/timeout",
+          "-k",
+          "5",
+          "120",
+          "/bin/sh",
+          "<repo>/tools/distribution/test-linux.sh",
+          "<repo>/tools/distribution/artifacts/verify-c6JAHA",
+          "<repo>/tools/distribution"
+        ],
+        "budget_ms": 130000,
+        "output_cap_bytes": 2097152,
+        "exit_code": 0,
+        "signal": null,
+        "failure": null,
+        "logs": {
+          "stdout": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/10-installed-compiler-rootfs-controls.stdout.log",
+            "sha256": "3b29cb47dac2f7aa780744a9bae146e8bd850514c476523bb45b569118773c6a",
+            "bytes": 5619,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-10-installed-compiler-rootfs-controls.stdout.log",
+              "sha256": "f7ce2d3e4677bc3148ed6d30f61b49a8c7f17e23563208230d72d079e1e8f558",
+              "bytes": 5571,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          },
+          "stderr": {
+            "path": "tools/distribution/artifacts/verify-c6JAHA/10-installed-compiler-rootfs-controls.stderr.log",
+            "sha256": "675ff987de5ea51ace287fa3ed54eeade98ff9d91fbea6ee2a8b874efae6d37d",
+            "bytes": 98,
+            "retention": "Local ignored raw capture",
+            "public_sanitized": {
+              "path": "tests/distribution/evidence/logs/final-10-installed-compiler-rootfs-controls.stderr.log",
+              "sha256": "675ff987de5ea51ace287fa3ed54eeade98ff9d91fbea6ee2a8b874efae6d37d",
+              "bytes": 98,
+              "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+            }
+          }
+        }
+      }
+    ],
+    "error": null,
+    "artifact": {
+      "path": "tools/distribution/artifacts/verify-c6JAHA/naja-linux-x86_64-unsigned.tar.gz",
+      "sha256": "60dba88639a972bef3cfa8bed9109a4b0e37943f758980d59c881b812025562c",
+      "bytes": 589051,
+      "compiler_sha256": "565c75155c8a64390481f5db95e20576720b354d39fedca6fc9d5ca75e00d55c",
+      "signature": "unsigned"
+    },
+    "dependencies": {
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libc.so.6",
+        "libgcc_s.so.1"
+      ],
+      "glibc_symbol_versions": [
+        "2.2.5",
+        "2.3",
+        "2.3.4",
+        "2.9",
+        "2.14",
+        "2.15",
+        "2.16",
+        "2.17",
+        "2.18",
+        "2.28",
+        "2.29",
+        "2.30",
+        "2.32",
+        "2.33",
+        "2.34",
+        "2.39"
+      ],
+      "highest_required_glibc_symbol": "2.39",
+      "allowed_runtime": "Declared Linux loader/glibc/libgcc OS libraries; no bundled Python, Rust compiler, Node or LLVM."
+    },
+    "scope": {
+      "private_prefix": "passed",
+      "copied_minimal_userland": "passed",
+      "device_bind": "/dev/null only; no host/source/toolchain tree mounts",
+      "fresh_vm": "not_run",
+      "other_platforms": "not_run",
+      "fc1_01": "open",
+      "hatch": "open"
+    },
+    "limits": [
+      "User/mount/PID/network namespace plus copied userland is scoped execution evidence, not a security sandbox or fresh VM.",
+      "Seed preparation used Rust/LLVM and four pinned crates; installed compiler/application checks use no Rust/Cargo/Node/Python/C compiler in the copied userland.",
+      "Compiler source is pinned; helper/test source is independently identified.",
+      "The final rootfs package copy is deliberately corrupted for a checksum rejection control; installed compiler remains unchanged.",
+      "No release publication or whole-task/gate verification."
+    ]
+  },
+  "package_manifest": {
+    "schema_version": 1,
+    "contract_revision": "1.3",
+    "kind": "experimental_native_rust_seed",
+    "compiler_version": "0.0.1",
+    "source_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
+    "target": "x86_64-unknown-linux-gnu",
+    "language_edition": "2026.1",
+    "signature": "unsigned",
+    "dependencies": {
+      "interpreter": "/lib64/ld-linux-x86-64.so.2",
+      "needed": [
+        "ld-linux-x86-64.so.2",
+        "libc.so.6",
+        "libgcc_s.so.1"
+      ],
+      "glibc_symbol_versions": [
+        "2.2.5",
+        "2.3",
+        "2.3.4",
+        "2.9",
+        "2.14",
+        "2.15",
+        "2.16",
+        "2.17",
+        "2.18",
+        "2.28",
+        "2.29",
+        "2.30",
+        "2.32",
+        "2.33",
+        "2.34",
+        "2.39"
+      ],
+      "highest_required_glibc_symbol": "2.39",
+      "allowed_runtime": "Declared Linux loader/glibc/libgcc OS libraries; no bundled Python, Rust compiler, Node or LLVM."
+    },
+    "files": [
+      {
+        "path": "bin/naja",
+        "bytes": 1446824,
+        "sha256": "565c75155c8a64390481f5db95e20576720b354d39fedca6fc9d5ca75e00d55c"
+      },
+      {
+        "path": "install.sh",
+        "bytes": 2045,
+        "sha256": "cc6afc59407db95390c96e5388514c174e8166b12abead6ec2dfde8db6ba75e2"
+      },
+      {
+        "path": "LICENSE",
+        "bytes": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "licenses/rust/COPYRIGHT",
+        "bytes": 1571,
+        "sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af"
+      },
+      {
+        "path": "licenses/rust/LICENSE-APACHE",
+        "bytes": 9723,
+        "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+      },
+      {
+        "path": "licenses/rust/LICENSE-MIT",
+        "bytes": 1068,
+        "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1"
+      },
+      {
+        "path": "licenses/seed/tinyvec_macros-APACHE.md",
+        "bytes": 11350,
+        "sha256": "4f44572785f35152c1fd2eadf565b7e079c0f300b4324f0af653419f9d76b735"
+      },
+      {
+        "path": "licenses/seed/tinyvec-APACHE.md",
+        "bytes": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "licenses/seed/unicode-ident-APACHE",
+        "bytes": 9723,
+        "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+      },
+      {
+        "path": "licenses/seed/unicode-ident-UNICODE",
+        "bytes": 1995,
+        "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1"
+      },
+      {
+        "path": "licenses/seed/unicode-normalization-APACHE",
+        "bytes": 10847,
+        "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+      },
+      {
+        "path": "NOTICE",
+        "bytes": 1626,
+        "sha256": "16ff5cd55dca4a256c78b307f59ff6c7ba0d6bf6e23a268525caa8706614d168"
+      },
+      {
+        "path": "provenance/Cargo.lock",
+        "bytes": 1238,
+        "sha256": "be5fb2dc74157b29c97bf5eb60d8af900ace90dbeaae4bc76d8013e6e74e4d70"
+      },
+      {
+        "path": "provenance/toolchains.json",
+        "bytes": 3019,
+        "sha256": "b12a76685f5c21dc221d41084c6b513389f15be398ebac25145f2c9b84711ca2"
+      },
+      {
+        "path": "provenance/unicode.json",
+        "bytes": 4345,
+        "sha256": "d3cffb550452bcb22350c7f61fea41cd6e2f4205448fc46081527179b9c441b6"
+      },
+      {
+        "path": "README.md",
+        "bytes": 1803,
+        "sha256": "c2384ab33ddec1fafc99ea821c9025f0578f9ce548ba690e380d65b728df3f99"
+      }
+    ],
+    "limits": [
+      "T12 / FC1-01 preparatory scoped artifact, not full milestone acceptance.",
+      "Rust-built seed; no self-hosting or clean-VM/security-sandbox claim.",
+      "Seed Unicode licenses and Rust notices retained; OS libraries are supplied by the operating system."
+    ]
+  },
+  "supplemental": {
+    "rootfs-files.txt": {
+      "path": "tools/distribution/artifacts/verify-c6JAHA/rootfs-files.txt",
+      "sha256": "db3b073b06a158c9f15bd670b85a4d10708100cd6576c0f7f8d23e7d402d10b7",
+      "bytes": 1801,
+      "retention": "Local ignored raw capture",
+      "public_sanitized": {
+        "path": "tests/distribution/evidence/logs/inventory-rootfs-files.txt",
+        "sha256": "db3b073b06a158c9f15bd670b85a4d10708100cd6576c0f7f8d23e7d402d10b7",
+        "bytes": 1801,
+        "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+      }
+    },
+    "rootfs-sha256.txt": {
+      "path": "tools/distribution/artifacts/verify-c6JAHA/rootfs-sha256.txt",
+      "sha256": "2b1ccb8abafd3711e3dd431c273b70baed18d9e5dc4c104bf02af6ace5d107fd",
+      "bytes": 5761,
+      "retention": "Local ignored raw capture",
+      "public_sanitized": {
+        "path": "tests/distribution/evidence/logs/inventory-rootfs-sha256.txt",
+        "sha256": "2b1ccb8abafd3711e3dd431c273b70baed18d9e5dc4c104bf02af6ace5d107fd",
+        "bytes": 5761,
+        "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+      }
+    },
+    "app-program.txt": {
+      "path": "tools/distribution/artifacts/verify-c6JAHA/app-program.txt",
+      "sha256": "d2851aeb0061fec92efb1702cb19a38170aa2a90e383677bcaed566d25aabf1e",
+      "bytes": 407,
+      "retention": "Local ignored raw capture",
+      "public_sanitized": {
+        "path": "tests/distribution/evidence/logs/inventory-app-program.txt",
+        "sha256": "d2851aeb0061fec92efb1702cb19a38170aa2a90e383677bcaed566d25aabf1e",
+        "bytes": 407,
+        "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+      }
+    },
+    "app-dynamic.txt": {
+      "path": "tools/distribution/artifacts/verify-c6JAHA/app-dynamic.txt",
+      "sha256": "8f440b11aa34c5145152189d4391ece1272b24d2739a2a33ebcdb30fa0d8d29d",
+      "bytes": 43,
+      "retention": "Local ignored raw capture",
+      "public_sanitized": {
+        "path": "tests/distribution/evidence/logs/inventory-app-dynamic.txt",
+        "sha256": "8f440b11aa34c5145152189d4391ece1272b24d2739a2a33ebcdb30fa0d8d29d",
+        "bytes": 43,
+        "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+      }
+    },
+    "generated-tests.json": {
+      "path": "tools/distribution/artifacts/verify-c6JAHA/generated-tests.json",
+      "sha256": "3dddd2225aac034f7d893a2a08f74a5866479baa745a9c2f120c52b6eae5980b",
+      "bytes": 341,
+      "retention": "Local ignored raw capture",
+      "public_sanitized": {
+        "path": "tests/distribution/evidence/logs/inventory-generated-tests.json",
+        "sha256": "3dddd2225aac034f7d893a2a08f74a5866479baa745a9c2f120c52b6eae5980b",
+        "bytes": 341,
+        "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+      }
+    },
+    "failure-tests.json": {
+      "path": "tools/distribution/artifacts/verify-c6JAHA/failure-tests.json",
+      "sha256": "e0e7d184d04b78988df73f3b3468ffe032c31a936461fe759447d5cc7430667a",
+      "bytes": 421,
+      "retention": "Local ignored raw capture",
+      "public_sanitized": {
+        "path": "tests/distribution/evidence/logs/inventory-failure-tests.json",
+        "sha256": "e0e7d184d04b78988df73f3b3468ffe032c31a936461fe759447d5cc7430667a",
+        "bytes": 421,
+        "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+      }
+    },
+    "unsupported-check.json": {
+      "path": "tools/distribution/artifacts/verify-c6JAHA/unsupported-check.json",
+      "sha256": "ac944937216cc52b673763cbf0d1d6f1bb0c467787666765c353ad20581b003a",
+      "bytes": 263,
+      "retention": "Local ignored raw capture",
+      "public_sanitized": {
+        "path": "tests/distribution/evidence/logs/inventory-unsupported-check.json",
+        "sha256": "ac944937216cc52b673763cbf0d1d6f1bb0c467787666765c353ad20581b003a",
+        "bytes": 263,
+        "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+      }
+    }
+  },
+  "tools": {
+    "kind": "environment_versions",
+    "exit_code": 0,
+    "command": "wsl.exe --distribution Ubuntu --exec /bin/sh -c (uname, os-release, readelf, ldd, tar, unshare, gcc versions)",
+    "logs": {
+      "stdout": {
+        "path": "tools/distribution/artifacts/verify-c6JAHA/environment.stdout.log",
+        "sha256": "14da5ae8fc7987960cd11f67e6e9070be6e2afd6daaa6c8921ed1c6cd312c9c3",
+        "bytes": 1598,
+        "retention": "Local ignored raw capture",
+        "public_sanitized": {
+          "path": "tests/distribution/evidence/logs/environment-environment.stdout.log",
+          "sha256": "006dcdbc3e6b2e99823be916687bfa31625d2b60cc19a65b7f0f2f24ac801717",
+          "bytes": 1597,
+          "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+        }
+      },
+      "stderr": {
+        "path": "tools/distribution/artifacts/verify-c6JAHA/environment.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "retention": "Local ignored raw capture",
+        "public_sanitized": {
+          "path": "tests/distribution/evidence/logs/environment-environment.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+        }
+      }
+    }
+  },
+  "optional_audit": {
+    "kind": "optional_followup",
+    "controller_exit_code": 1,
+    "audit_status": "failed",
+    "child_exit_code": null,
+    "limit": "Private preparation directory was unavailable at follow-up; find reported ENOENT. The helper threw before serializing its child exit code. No cause is inferred, no absence-of-build-scripts result is claimed.",
+    "commands": [
+      "/bin/sh -s <private-build> (fixed find build.rs inspection)"
+    ],
+    "logs": {
+      "stdout": {
+        "path": "tools/distribution/artifacts/verify-c6JAHA/crate-build-script-audit.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "retention": "Local ignored raw capture",
+        "public_sanitized": {
+          "path": "tests/distribution/evidence/logs/optional-crate-build-script-audit.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+        }
+      },
+      "stderr": {
+        "path": "tools/distribution/artifacts/verify-c6JAHA/crate-build-script-audit.stderr.log",
+        "sha256": "b1261d81925370d8221a0d408511ab3fd6592e6bca548873e69fdd887fe9da2b",
+        "bytes": 90,
+        "retention": "Local ignored raw capture",
+        "public_sanitized": {
+          "path": "tests/distribution/evidence/logs/optional-crate-build-script-audit.stderr.log",
+          "sha256": "b2c832958768a8cb6cbdc08925672224e0f11bb9266e214e8d89fb66a505d486",
+          "bytes": 74,
+          "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+        }
+      }
+    }
+  },
+  "mount_audit": {
+    "schema_version": 1,
+    "kind": "recreated_device_bind_audit",
+    "command": [
+      "wsl.exe",
+      "--distribution",
+      "Ubuntu",
+      "--exec",
+      "/usr/bin/unshare",
+      "--user",
+      "--map-root-user",
+      "--mount",
+      "--pid",
+      "--fork",
+      "--net",
+      "--",
+      "/bin/sh",
+      "-s",
+      "<private-test>/rootfs"
+    ],
+    "input": "set -eu\nmount --bind /dev/null \"$1/dev/null\"\nawk -v target=\"$1/dev/null\" '$5 == target {print \"rootfs_target=/dev/null\"; for(i=1;i<=NF;i++) if($i==\"-\") print \"filesystem=\" $(i+1), \"source=\" $(i+2), \"options=\" $(i+3)}' /proc/self/mountinfo\n",
+    "exit_code": 0,
+    "signal": null,
+    "spawn_error": null,
+    "logs": {
+      "stdout": {
+        "path": "tools/distribution/artifacts/verify-c6JAHA/mount-audit.stdout.log",
+        "sha256": "c3c8bc2fe534acc981a58c2f352dcecca432f4f1bbe4f8a782ca4034c482ec70",
+        "bytes": 109,
+        "retention": "Local ignored raw capture",
+        "public_sanitized": {
+          "path": "tests/distribution/evidence/logs/mount-mount-audit.stdout.log",
+          "sha256": "c3c8bc2fe534acc981a58c2f352dcecca432f4f1bbe4f8a782ca4034c482ec70",
+          "bytes": 109,
+          "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+        }
+      },
+      "stderr": {
+        "path": "tools/distribution/artifacts/verify-c6JAHA/mount-audit.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "retention": "Local ignored raw capture",
+        "public_sanitized": {
+          "path": "tests/distribution/evidence/logs/mount-mount-audit.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "transformation": "UTF-8 decoded; repository/profile/private temporary paths replaced; LF line endings; trailing horizontal whitespace/excess final blank lines removed. Raw bytes/hash remain separate."
+        }
+      }
+    }
+  },
+  "rootfs_file_count": 60,
+  "provenance_urls": {
+    "rust_manifest": "https://static.rust-lang.org/dist/channel-rust-1.97.1.toml",
+    "rust_manifest_sha256": "03569b1886ceb5c05276b50c8431ab111de944cd6140fe1fa7d821dd8e0f29cf",
+    "rustup_installer": "https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init",
+    "rustup_installer_checksum": "https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init.sha256",
+    "rustup_installer_sha256": "5be191e8c70a5007074254cb74d78dbfdd25cd5a61c27de7b8e5410122ec24f4",
+    "rustup_observed": "1.29.2 (d8c92c676 2026-10-21)",
+    "rustc_observed": "1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo_observed": "1.97.1 (c980f4866 2026-06-30)",
+    "rust_llvm": "22.1.6; seed compilation only",
+    "crates": "Four exact URLs/checksums in package_manifest provenance/unicode.json and pinned Cargo.lock, actually checksum-checked before offline compilation."
+  },
+  "retention_limits": [
+    "The private Linux preparation directory was unavailable at the optional follow-up. No retained live SDK/cache claim is made. Windows-side source archive, compiler, licenses and raw captures remain.",
+    "The successful minimal rootfs was present at follow-up and the sole device bind was recreated/audited in another fresh namespace. Test-kernel mounts are transient; no fresh VM or general sandbox claim.",
+    "No external source-closure audit, complete language/tool acceptance or release publication."
+  ]
+}

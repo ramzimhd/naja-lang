@@ -1,0 +1,44 @@
+Installed unsigned experimental NAJA seed into the new prefix.
+naja 0.0.1 HATCH experimental Rust seed; native target Linux x86-64; no self-hosting claim
+Installed unsigned experimental NAJA seed into the new prefix.
+naja 0.0.1 HATCH experimental Rust seed; native target Linux x86-64; no self-hosting claim
+NAJA HATCH 0.0.1 experimental Rust seed
+
+Usage:
+  naja --version
+  naja doctor [--json] [--runner direct|wsl]
+  naja init NEW_DIRECTORY
+  naja lex SOURCE
+  naja check SOURCE [--json] [--project-root PATH]
+  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE [--project-root PATH]
+  naja run SOURCE [--runner wsl] [--timeout-ms N] [--project-root PATH] [-- ARGS...]
+  naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N] [--project-root PATH]
+
+Use naja COMMAND --help for command options and limits.
+This seed supports native arbitrary-precision decimal integers, text, bytes, booleans and None; +, -, *, //, %, comparisons/chains, not/and/or, assignment, truthy if/else/while, assertions, print, len(text/bytes/tuple/list) and Text/Bytes/Tuple/List[index].
+Negative indices count from the end; text indexing returns one Unicode scalar and bytes indexing returns Int. Bounds report NJA207 and exit 107; slices remain unsupported.
+Parenthesized tuples support up to 128 elements, len, truth and indexing; (value) remains grouping and (value,) is a singleton. Tuple display/comparison/numeric operations report type exit 105.
+Lists use [elements] with at most 128 entries, len/truth/index and shared indexed mutation. Assignment evaluates value, sequence, index once in that order. List display/comparison/numeric operations report type exit 105; resizing remains unsupported.
+The hosted arena is limited to 64 MiB; exhaustion reports NJA203 and exits 103.
+General division work is bounded to 1000000 numerator/divisor limb pairs; exceeding it exits 103. Division by zero reports NJA206 and exits 106.
+Explicit from naja.core import i64 selects the separate checked-i64 slice; mixed domains remain unsupported.
+.naja selects edition 2026.1; .py keeps its separate compatibility dialect.
+--project-root PATH explicitly activates the owning .naja project alias table; no ambient discovery or .py alias activation.
+First-order top-level functions support plain positional parameters, self/earlier calls, return/fallthrough None and isolated local frames. Calls are bounded to depth 256 and 2 MiB source stack (4 KiB helper reserve); ordinary OS stack availability is required.
+Globals/closures/defaults/kwargs/function values, floats, full collection semantics, classes, complete modules/types, full grammar and self-hosting remain unimplemented.
+{"schema_version":1,"compiler_version":"0.0.1","implementation":"experimental Rust seed","host":{"os":"linux","arch":"x86_64"},"emitted_targets":["x86_64-unknown-linux-gnu"],"dialects":{"naja":"2026.1","python_subset":"3.15.0"},"execution":{"selected_runner":"none","preparation":"not_probed","direct_option_supported":true,"wsl_option_supported":false,"user_program_executed":false},"limits":{"compilation_stack_bytes":8388608,"native_arena_bytes":67108864,"native_source_stack_bytes":2097152,"active_calls":256,"locals_per_frame":128,"general_division_limb_product":1000000},"self_hosted":false,"cells_available":false,"lsp_available":false,"dap_available":false,"vsix_available":false,"limitations":["Runner preparation is separate from executing generated code.","Native source stack guards assume the documented ordinary OS stack availability.","Hosted arena has no reclamation or runtime loop quota.","Complete language, clean-host installation, FC1 and HATCH remain unverified."]}
+{"schema_version":1,"source":"/workspace/input é.naja","status":"passed","diagnostics":[],"omitted_diagnostics":0}
+Built Linux x86-64 ELF: /workspace/app (18052 bytes)
+PASS independently-supplied-native-output=43
+Built Linux x86-64 ELF: /workspace/changed-app (18052 bytes)
+PASS changed-source-native-output=52; artifact differs
+PASS direct-run-empty-PATH
+Created NAJA project 'generated é': naja.toml, main.naja, test_smoke.naja
+{"schema_version":1,"kind":"native_program_tests","runner":"direct","signal_observation":"direct","selected":1,"passed":1,"failed":0,"tests":[{"path":"test_smoke.naja","status":"passed","exit_code":0,"signal":null,"stdout":"","stderr":"","stdout_utf8_valid":true,"stderr_utf8_valid":true,"stdout_hex":"","stderr_hex":"","diagnostic":null}]}
+{"schema_version":1,"source":"/workspace/unsupported.naja","status":"failed","diagnostics":[{"code":"NJA101","message":"unsupported expression in the hosted integer slice","start":{"line":0,"character":0},"end":{"line":0,"character":5}}],"omitted_diagnostics":0}
+{"schema_version":1,"kind":"native_program_tests","runner":"direct","signal_observation":"direct","selected":1,"passed":0,"failed":1,"tests":[{"path":"test_failure.naja","status":"failed","exit_code":104,"signal":null,"stdout":"","stderr":"NJA204: assertion failed\n","stdout_utf8_valid":true,"stderr_utf8_valid":true,"stdout_hex":"","stderr_hex":"4e4a413230343a20617373657274696f6e206661696c65640a","diagnostic":null}]}
+6be1382764a8b4219d0eb2ad2aae715511ac2fa3eb4f358138e03ba38e52a3f2  <private-linux>/rootfs/workspace/app
+cdba27507f904dd0c69475bf8285244eb9a3f84cbcc22bcd50c17a4cd1bfd210  <private-linux>/rootfs/workspace/changed-app
+565c75155c8a64390481f5db95e20576720b354d39fedca6fc9d5ca75e00d55c  <private-linux>/rootfs/opt/naja/bin/naja
+PASS existing-prefix preserved; corrupted-package refused; rootfs inventory retained
+ROOTFS_CHECKS_PASSED

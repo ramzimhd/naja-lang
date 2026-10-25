@@ -1,0 +1,14 @@
+✔ frozen source and bounds identify a seed artifact rather than full release (0.9901ms)
+✔ ELF header mutations reject wrong architecture, format, endian and size (0.4549ms)
+✔ dependency reports require a bounded explicit loader and OS library closure (1.8587ms)
+✔ synthetic staging preserves checksums/notices and refuses an existing output (1776.483ms)
+✔ invalid inputs fail before creating output, including missing/empty license and wrong ELF (736.0539ms)
+✔ installer has no downloader/eval/Python path and shell files retain LF (2.7404ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2651.2315

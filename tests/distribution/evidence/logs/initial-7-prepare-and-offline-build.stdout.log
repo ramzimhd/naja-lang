@@ -1,0 +1,65 @@
+<private-linux>/rust-manifest.toml: OK
+<private-linux>/rustup-init: OK
+
+  1.97.1-x86_64-unknown-linux-gnu installed - rustc 1.97.1 (8bab26f4f 2026-07-14)
+
+
+Rust is installed now. Great!
+
+To get started you need Cargo's bin directory
+(<private-linux>/cargo/bin) in your PATH
+environment variable. This has not been done automatically.
+
+To configure your current shell, you need to source
+the corresponding env file under <private-linux>/cargo.
+
+Consider running the right command for your shell (note the leading DOT):
+. "<private-linux>/cargo/env" # For sh/ash/dash/pdksh/bash
+cargo:rerun-if-env-changed=CC_x86_64-unknown-linux-gnu
+CC_x86_64-unknown-linux-gnu = None
+cargo:rerun-if-env-changed=CC_x86_64_unknown_linux_gnu
+CC_x86_64_unknown_linux_gnu = None
+cargo:rerun-if-env-changed=HOST_CC
+HOST_CC = None
+cargo:rerun-if-env-changed=CC
+CC = None
+cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+CRATE_CC_NO_DEFAULTS = None
+cargo:rerun-if-env-changed=CFLAGS
+CFLAGS = None
+cargo:rerun-if-env-changed=HOST_CFLAGS
+HOST_CFLAGS = None
+cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu
+CFLAGS_x86_64_unknown_linux_gnu = None
+cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
+CFLAGS_x86_64-unknown-linux-gnu = None
+rustup 1.29.2 (d8c92c676 2026-10-21)
+rustc 1.97.1 (8bab26f4f 2026-07-14)
+binary: rustc
+commit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452
+commit-date: 2026-07-14
+host: x86_64-unknown-linux-gnu
+release: 1.97.1
+LLVM version: 22.1.6
+cargo 1.97.1 (c980f4866 2026-06-30)
+release: 1.97.1
+commit-hash: c980f4866141969fab6254a680546a277789d6f0
+commit-date: 2026-06-30
+host: x86_64-unknown-linux-gnu
+libgit2: 1.9.2 (sys:0.20.4 vendored)
+libcurl: 8.20.0-DEV (sys:0.4.88+curl-8.20.0 vendored ssl:OpenSSL/3.6.2)
+ssl: OpenSSL 3.6.2 7 Apr 2026
+os: Ubuntu 24.4.0 (noble) [64-bit]
+<private-linux>/cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/tinyvec-1.12.0.crate: OK
+<private-linux>/cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/tinyvec_macros-0.1.1.crate: OK
+<private-linux>/cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/unicode-ident-1.0.24.crate: OK
+<private-linux>/cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/unicode-normalization-0.1.25.crate: OK
+03569b1886ceb5c05276b50c8431ab111de944cd6140fe1fa7d821dd8e0f29cf  <private-linux>/rust-manifest.toml
+5be191e8c70a5007074254cb74d78dbfdd25cd5a61c27de7b8e5410122ec24f4  <private-linux>/rustup-init
+565c75155c8a64390481f5db95e20576720b354d39fedca6fc9d5ca75e00d55c  <repo>/tools/distribution/artifacts/verify-Uynctd/linux-build/naja
+172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af  <repo>/tools/distribution/artifacts/verify-Uynctd/linux-build/rust-licenses/COPYRIGHT
+62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a  <repo>/tools/distribution/artifacts/verify-Uynctd/linux-build/rust-licenses/LICENSE-APACHE
+b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1  <repo>/tools/distribution/artifacts/verify-Uynctd/linux-build/rust-licenses/LICENSE-MIT
+700484	<private-linux>
+PREPARED_PINNED_LINUX_SEED
