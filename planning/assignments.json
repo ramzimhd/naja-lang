@@ -236,7 +236,10 @@
         "bootstrap/driver/src/project.rs",
         "docs/decisions/0005-native-values-and-project-alias-activation.md",
         "scripts/test-compiler-boundaries.mjs",
-        "tests/compiler/"
+        "tests/compiler/",
+        "bootstrap/driver/src/manifest.rs",
+        "bootstrap/driver/tests/manifest.rs",
+        "bootstrap/driver/tests/project.rs"
       ],
       "status": "active",
       "history": [
@@ -441,20 +444,19 @@
         "scripts/test-functions.mjs",
         "tests/functions/"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Direct native first-order functions with isolated frames, real calls/returns and explicit call-depth/source-stack limits; no interpreter or host callbacks.",
       "acceptance_commands": [
         [
           "cargo",
           "test",
-          "-p",
-          "naja-native",
+          "--workspace",
           "--locked",
           "--offline"
         ],
         [
           "node",
-          "scripts/test-dynamic.mjs"
+          "scripts/test-functions.mjs"
         ]
       ],
       "forbidden_paths": [
@@ -496,7 +498,8 @@
           ],
           "status": "completed"
         }
-      ]
+      ],
+      "integrated_commit": "5193e9f/92d529c"
     },
     {
       "task_id": "T12",
@@ -567,6 +570,17 @@
           ],
           "status": "completed",
           "integrated_commit": "af774725201f770eb678b5c6ade3d1d9fea96364"
+        },
+        {
+          "branch": "agent/frontend-manifest-context-v13",
+          "base_commit": "92d529c272dcbf34f6394b9cffe8616e8b347ab8",
+          "paths": [
+            "bootstrap/frontend/src/alias.rs",
+            "tests/syntax/aliases.rs",
+            "compatibility/aliases/README.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "0168f46"
         }
       ],
       "integrated_commit": "593c84e"
@@ -574,14 +588,15 @@
     {
       "task_id": "T11",
       "owner": "/root/frontend",
-      "branch": "agent/dynamic-source-review-v13",
-      "base_commit": "bccb6092e901a86273da031713f1381b4e60a2f4",
+      "branch": "agent/functions-source-harness-v13",
+      "base_commit": "92d529c272dcbf34f6394b9cffe8616e8b347ab8",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
-        "reports/reviews/DYNAMIC_SOURCE_V13.md"
+        "scripts/test-functions-language.mjs",
+        "tests/functions-source/"
       ],
-      "status": "completed",
-      "deliverable": "Independent read-only shared source/native value/alias review with bounded specification-based probes.",
+      "status": "active",
+      "deliverable": "Bounded actual-source/native function cases with independent oracles, original spans and mutated-source controls; final report pending.",
       "acceptance_commands": [
         [
           "cargo",
@@ -602,30 +617,75 @@
           ],
           "status": "completed",
           "integrated_commit": "33beb62"
+        },
+        {
+          "branch": "agent/dynamic-source-review-v13",
+          "base_commit": "bccb6092e901a86273da031713f1381b4e60a2f4",
+          "paths": [
+            "reports/reviews/DYNAMIC_SOURCE_V13.md"
+          ],
+          "status": "completed"
         }
-      ]
+      ],
+      "integrated_commit": "bb7acce"
     },
     {
       "task_id": "T12",
       "owner": "/root/planning_validation",
-      "branch": "agent/project-manifest-v13",
-      "base_commit": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
+      "branch": "agent/project-loading-v13",
+      "base_commit": "bceb487c6264f825eb94a6a39898c82ddade00e3",
       "worktree": "../naja-worktrees/planning-validation",
       "paths": [
-        "bootstrap/driver/src/manifest.rs",
-        "bootstrap/driver/tests/manifest.rs",
+        "bootstrap/driver/src/project.rs",
+        "bootstrap/driver/tests/project.rs",
+        "tests/project/README.md",
         "tests/project/MANIFEST.md"
       ],
-      "status": "active",
-      "deliverable": "Bounded pure manifest subset parser with exact original spans and explicit unsupported-form diagnostics; no filesystem/network/environment resolution.",
+      "status": "completed",
+      "deliverable": "Schema1 manifest validation and capability refusal before alias loading; rawmanifest identity, no resolver or silent unenforced profile/style activation.",
       "forbidden_paths": [
         "bootstrap/driver/src/lib.rs",
         "bootstrap/driver/src/main.rs",
-        "bootstrap/driver/src/project.rs",
         "Cargo.lock",
         "planning/"
       ],
-      "handoff": "Scoped committed parser/tests to sole integrator; loader wiring remains root work."
+      "handoff": "Completed/released; root resumes loader ownership.",
+      "history": [
+        {
+          "branch": "agent/project-manifest-v13",
+          "base_commit": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
+          "paths": [
+            "bootstrap/driver/src/manifest.rs",
+            "bootstrap/driver/tests/manifest.rs",
+            "tests/project/MANIFEST.md"
+          ],
+          "status": "completed"
+        }
+      ],
+      "integrated_commit": "701ae41"
+    },
+    {
+      "task_id": "T11",
+      "owner": "/root/recovery_review",
+      "branch": "agent/function-source-review-v13",
+      "base_commit": "0168f4605a5208d71138233887ef8ca25039929a",
+      "worktree": "../naja-worktrees/recovery-review",
+      "paths": [
+        "reports/reviews/FUNCTION_SOURCE_V13.md"
+      ],
+      "status": "active",
+      "deliverable": "Independent read-only actual function source/native semantic and stack-bound review; report only.",
+      "history": [
+        {
+          "branch": "agent/divrem-review-v13",
+          "base_commit": "8e5344b502cddc6fc6e7a28a27f032c4a1ce370d",
+          "paths": [
+            "reports/reviews/NATIVE_DIVREM_V13.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "9fd3be0"
+        }
+      ]
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

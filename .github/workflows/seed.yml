@@ -41,7 +41,9 @@ jobs:
           node scripts/test-hosted.mjs
           node scripts/test-hosted-language.mjs
           node scripts/test-dynamic.mjs
+          node scripts/test-functions.mjs
           node scripts/test-values-language.mjs
+          node scripts/test-functions-language.mjs
           node scripts/test-cli.mjs
       - name: Check planning and evidence integrity
         run: node scripts/validation/check-planning.mjs

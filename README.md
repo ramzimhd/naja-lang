@@ -63,8 +63,9 @@ the complete HATCH test framework or native Windows/macOS application execution.
 `--project-root PATH` explicitly activates the owning `.naja` project's optional
 comparison/print/len aliases on check/build/run/test. Conventional spellings still
 work. No ambient alias search occurs; `.py` explicit activation is rejected.
-The current bounded `naja.toml` ownership marker is not a complete manifest or
-dependency implementation. See [the source foundation](docs/decisions/0005-native-values-and-project-alias-activation.md)
+The bounded schema-1 `naja.toml` parser validates the explicit project and rejects
+unavailable capabilities; dependency resolution remains incomplete. See
+[the source foundation](docs/decisions/0005-native-values-and-project-alias-activation.md)
 for annotation behavior, semantics and remaining limits.
 
 The commands above were executed on Windows x64, with ELF execution in Ubuntu

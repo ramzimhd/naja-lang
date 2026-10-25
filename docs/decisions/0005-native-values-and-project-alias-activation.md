@@ -32,7 +32,7 @@ In `.py`, the supported int annotation is informational and never narrows,
 converts or rejects a dynamic value. Other annotation forms, general type
 resolution, repeated declarations and a complete type system remain unsupported.
 
-Floats, repetition, general conversions, user functions/classes/collections,
+Floats, repetition, general conversions, complete functions/classes/collections,
 recoverable exceptions and other promised operations remain required. In
 particular, unsupported string multiplication does not settle the founder's
 numeric-literal conversion contract. It must later resolve direct operations and
@@ -47,8 +47,10 @@ without erasing link/traversal components. No alias file is discovered without
 this option, and `.py` explicit activation is an error. Only the supplied root's
 `naja.alias` participates. The root/module/marker paths, containment, nested
 project boundaries and bounded configuration are validated as documented in
-`tests/project/README.md`. The current nonempty UTF-8 naja.toml marker is not a
-manifest parser, dependency resolver or permission sandbox.
+`tests/project/README.md`. The bounded schema-1 manifest subset is parsed before
+alias loading. Unavailable profiles/targets, unenforced required-depth style and
+declared dependencies reject explicitly. Entry remains declarative when the
+command supplies SOURCE. No dependency resolver or permission sandbox is implied.
 
 The shared alias table maps only documented comparisons and print/len. Original
 source/config spans remain available. Lookup occurs in comparison-operator or
@@ -59,7 +61,9 @@ Conventional spellings continue to work. Source imports and dependency ownership
 resolution remain unimplemented; callers must supply each module's actual owner.
 
 The table exposes collision-free versioned identity bytes covering raw config,
-edition and policy. There is currently no compiler cache, package lockfile alias
+edition, policy and exact original manifest bytes. A separately bounded manifest
+context replaces its predecessor without increasing the policy limit. There is
+currently no compiler cache, package lockfile alias
 entry or LSP invalidation implementation to claim. These remain acceptance work.
 
 ## Limits and evidence
