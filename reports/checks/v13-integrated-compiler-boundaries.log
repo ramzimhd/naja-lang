@@ -1,0 +1,13 @@
+Recorded command: node scripts/test-compiler-boundaries.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS actual CLI plus depth 127; unchanged advertised bound
+PASS actual CLI plus depth 128; unchanged advertised bound
+PASS actual CLI not depth 127; unchanged advertised bound
+PASS actual CLI not depth 128; unchanged advertised bound
+PASS actual CLI parentheses depth 128; unchanged advertised bound
+PASS actual CLI parentheses depth 129; unchanged advertised bound
+PASS combined 64 suites and 128 expression nodes in actual CLI
+PASS private Windows named-pipe rejection before connection; server and peers closed
+Compiler boundary checks: 25 passed; child deadline 5000ms, suite deadline 120000ms; source artifacts retained under target/
+Limits: stable-filesystem validation and a capped 8 MiB compilation stack reservation; no hostile-race confinement, universal OS I/O deadline or sandbox claim. macOS native run/test remains unsupported.

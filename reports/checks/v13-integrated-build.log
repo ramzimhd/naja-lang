@@ -1,0 +1,4 @@
+Recorded command: cargo build --workspace --locked --offline
+Recorded exit code: 0
+--- captured output ---
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s

@@ -1,0 +1,34 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "b9d884dbd3577d104c92593469e894de88062400",
+  "target": "Windows x64 seed; emitted Linux x86-64 through explicit WSL",
+  "command": [
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "--offline",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "tool_versions": {
+    "git": "git version 2.51.0.windows.1",
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "powershell": "7.6.4",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T20:17:52.0032521+00:00",
+  "log_path": "reports/checks/v13-integrated-clippy.log",
+  "log_sha256": "ae824cd39187d64e7078a2881b61a9cadfc02107958923c312c12ea8522a5348",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

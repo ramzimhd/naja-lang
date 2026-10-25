@@ -436,27 +436,27 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/native-functions-v13",
-      "base_commit": "8e5344b502cddc6fc6e7a28a27f032c4a1ce370d",
+      "branch": "agent/native-index-v13",
+      "base_commit": "0168f4605a5208d71138233887ef8ca25039929a",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
         "backends/native/",
-        "scripts/test-functions.mjs",
-        "tests/functions/"
+        "scripts/test-index.mjs",
+        "tests/index/"
       ],
-      "status": "completed",
-      "deliverable": "Direct native first-order functions with isolated frames, real calls/returns and explicit call-depth/source-stack limits; no interpreter or host callbacks.",
+      "status": "active",
+      "deliverable": "Native scalar Text/Bytes indexing, exact signed integer indices and explicit bounds/span guards; no slicing or containers.",
       "acceptance_commands": [
+        [
+          "node",
+          "scripts/test-index.mjs"
+        ],
         [
           "cargo",
           "test",
           "--workspace",
           "--locked",
           "--offline"
-        ],
-        [
-          "node",
-          "scripts/test-functions.mjs"
         ]
       ],
       "forbidden_paths": [
@@ -464,7 +464,7 @@
         "planning/",
         "Cargo.lock"
       ],
-      "handoff": "Root explicitly released backend paths; shared parser source integration remains root-owned.",
+      "handoff": "Core0763a9a and separately authorized height arm ee8203d await integration; values.rs ownership already returned.",
       "history": [
         {
           "branch": "agent/dynamic-values-v13",
@@ -497,9 +497,19 @@
             "tests/dynamic/"
           ],
           "status": "completed"
+        },
+        {
+          "branch": "agent/native-functions-v13",
+          "base_commit": "8e5344b502cddc6fc6e7a28a27f032c4a1ce370d",
+          "paths": [
+            "backends/native/",
+            "scripts/test-functions.mjs",
+            "tests/functions/"
+          ],
+          "status": "completed",
+          "integrated_commit": "5193e9f/92d529c"
         }
-      ],
-      "integrated_commit": "5193e9f/92d529c"
+      ]
     },
     {
       "task_id": "T12",
@@ -595,7 +605,7 @@
         "scripts/test-functions-language.mjs",
         "tests/functions-source/"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Bounded actual-source/native function cases with independent oracles, original spans and mutated-source controls; final report pending.",
       "acceptance_commands": [
         [
@@ -627,29 +637,30 @@
           "status": "completed"
         }
       ],
-      "integrated_commit": "bb7acce"
+      "integrated_commit": "bb7acce/1c35fda"
     },
     {
       "task_id": "T12",
       "owner": "/root/planning_validation",
-      "branch": "agent/project-loading-v13",
-      "base_commit": "bceb487c6264f825eb94a6a39898c82ddade00e3",
+      "branch": "agent/project-scaffold-v13",
+      "base_commit": "b9d884dbd3577d104c92593469e894de88062400",
       "worktree": "../naja-worktrees/planning-validation",
       "paths": [
-        "bootstrap/driver/src/project.rs",
-        "bootstrap/driver/tests/project.rs",
-        "tests/project/README.md",
-        "tests/project/MANIFEST.md"
+        "bootstrap/driver/src/scaffold.rs",
+        "bootstrap/driver/tests/scaffold.rs",
+        "tests/project/INIT.md"
       ],
-      "status": "completed",
-      "deliverable": "Schema1 manifest validation and capability refusal before alias loading; rawmanifest identity, no resolver or silent unenforced profile/style activation.",
+      "status": "active",
+      "deliverable": "Exclusive new-directory scaffold with validated manifest/source and nonoverwriting files; no execution/downloads.",
       "forbidden_paths": [
         "bootstrap/driver/src/lib.rs",
         "bootstrap/driver/src/main.rs",
+        "bootstrap/driver/src/project.rs",
+        "bootstrap/driver/src/manifest.rs",
         "Cargo.lock",
         "planning/"
       ],
-      "handoff": "Completed/released; root resumes loader ownership.",
+      "handoff": "Module/test/doc commit only; root wires CLI.",
       "history": [
         {
           "branch": "agent/project-manifest-v13",
@@ -660,9 +671,20 @@
             "tests/project/MANIFEST.md"
           ],
           "status": "completed"
+        },
+        {
+          "branch": "agent/project-loading-v13",
+          "base_commit": "bceb487c6264f825eb94a6a39898c82ddade00e3",
+          "paths": [
+            "bootstrap/driver/src/project.rs",
+            "bootstrap/driver/tests/project.rs",
+            "tests/project/README.md",
+            "tests/project/MANIFEST.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "701ae41"
         }
-      ],
-      "integrated_commit": "701ae41"
+      ]
     },
     {
       "task_id": "T11",
@@ -673,7 +695,7 @@
       "paths": [
         "reports/reviews/FUNCTION_SOURCE_V13.md"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Independent read-only actual function source/native semantic and stack-bound review; report only.",
       "history": [
         {
@@ -685,7 +707,8 @@
           "status": "completed",
           "integrated_commit": "9fd3be0"
         }
-      ]
+      ],
+      "integrated_commit": "935d397"
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

@@ -5,10 +5,10 @@
   "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
   "owner": "/root",
   "status": "running",
-  "checkpoint_generation": 5,
-  "head": "33beb62be5c9b34a40d4f035da36720b5ca664ef",
+  "checkpoint_generation": 7,
+  "head": "935d397b0329cbcc98977faa4107b2e381c5053a",
   "branch": "agent/integrator-H0",
-  "last_verified_source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
+  "last_verified_source": "b9d884dbd3577d104c92593469e894de88062400",
   "dirty_paths": [
     "launch/HANDOFF.md",
     "launch/RESUME_PROMPT.md",
@@ -16,36 +16,40 @@
     "planning/continuity.json",
     "planning/state.json",
     "planning/tasks.json",
-    "reports/checks/v13-boundaries-build.json",
-    "reports/checks/v13-boundaries-build.log",
-    "reports/checks/v13-boundaries-cli.json",
-    "reports/checks/v13-boundaries-cli.log",
-    "reports/checks/v13-boundaries-clippy.json",
-    "reports/checks/v13-boundaries-clippy.log",
-    "reports/checks/v13-boundaries-compiler-boundaries.json",
-    "reports/checks/v13-boundaries-compiler-boundaries.log",
-    "reports/checks/v13-boundaries-continuity.json",
-    "reports/checks/v13-boundaries-continuity.log",
-    "reports/checks/v13-boundaries-dynamic.json",
-    "reports/checks/v13-boundaries-dynamic.log",
-    "reports/checks/v13-boundaries-fmt.json",
-    "reports/checks/v13-boundaries-fmt.log",
-    "reports/checks/v13-boundaries-foundations.json",
-    "reports/checks/v13-boundaries-foundations.log",
-    "reports/checks/v13-boundaries-hosted-language.json",
-    "reports/checks/v13-boundaries-hosted-language.log",
-    "reports/checks/v13-boundaries-hosted.json",
-    "reports/checks/v13-boundaries-hosted.log",
-    "reports/checks/v13-boundaries-native.json",
-    "reports/checks/v13-boundaries-native.log",
-    "reports/checks/v13-boundaries-planning.json",
-    "reports/checks/v13-boundaries-planning.log",
-    "reports/checks/v13-boundaries-rust.json",
-    "reports/checks/v13-boundaries-rust.log",
-    "reports/checks/v13-boundaries-values-language.json",
-    "reports/checks/v13-boundaries-values-language.log",
-    "reports/checks/v13-boundaries-whitespace.json",
-    "reports/checks/v13-boundaries-whitespace.log",
+    "reports/checks/v13-integrated-build.json",
+    "reports/checks/v13-integrated-build.log",
+    "reports/checks/v13-integrated-cli.json",
+    "reports/checks/v13-integrated-cli.log",
+    "reports/checks/v13-integrated-clippy.json",
+    "reports/checks/v13-integrated-clippy.log",
+    "reports/checks/v13-integrated-compiler-boundaries.json",
+    "reports/checks/v13-integrated-compiler-boundaries.log",
+    "reports/checks/v13-integrated-continuity.json",
+    "reports/checks/v13-integrated-continuity.log",
+    "reports/checks/v13-integrated-dynamic.json",
+    "reports/checks/v13-integrated-dynamic.log",
+    "reports/checks/v13-integrated-fmt.json",
+    "reports/checks/v13-integrated-fmt.log",
+    "reports/checks/v13-integrated-foundations.json",
+    "reports/checks/v13-integrated-foundations.log",
+    "reports/checks/v13-integrated-functions-language.json",
+    "reports/checks/v13-integrated-functions-language.log",
+    "reports/checks/v13-integrated-functions.json",
+    "reports/checks/v13-integrated-functions.log",
+    "reports/checks/v13-integrated-hosted-language.json",
+    "reports/checks/v13-integrated-hosted-language.log",
+    "reports/checks/v13-integrated-hosted.json",
+    "reports/checks/v13-integrated-hosted.log",
+    "reports/checks/v13-integrated-native.json",
+    "reports/checks/v13-integrated-native.log",
+    "reports/checks/v13-integrated-planning.json",
+    "reports/checks/v13-integrated-planning.log",
+    "reports/checks/v13-integrated-rust.json",
+    "reports/checks/v13-integrated-rust.log",
+    "reports/checks/v13-integrated-values-language.json",
+    "reports/checks/v13-integrated-values-language.log",
+    "reports/checks/v13-integrated-whitespace.json",
+    "reports/checks/v13-integrated-whitespace.log",
     "reports/progress.md"
   ],
   "task": "T05/T06/T07/T09/T11/T12",
@@ -62,7 +66,11 @@
     "Explicit retained-verification audit and private checkpoint2 completed under the actual fence2; acknowledged evidence-only dirty snapshot assessed ready before subsequent metadata edits.",
     "Native Int/Text/Bytes/Bool/None ordinary source expressions, contextual alias activation, noncoercing annotations and explicit project-root ownership are integrated; all contracts remain open.",
     "Independent review retained real compiler stack abort/source-stream/annotation findings at earlier source. Fix865a0d2 reran unchanged inputs without aborts or pipe connections.",
-    "Fifteen retained checks at865a0d2 passed:178 Rust tests; native36/14/23/58/84/43 plus25 compiler-boundary checks. Private integrity audit and checkpoint5 advanced retained source; metadata edits need a new ordinary checkpoint."
+    "Fifteen retained checks at865a0d2 passed:178 Rust tests; native36/14/23/58/84/43 plus25 compiler-boundary checks. Private integrity audit and checkpoint5 advanced retained source; metadata edits need a new ordinary checkpoint.",
+    "Native signed floor division/remainder and first-order source functions now execute without a foreign runtime; exact binding, flow and resource limitations remain explicit.",
+    "Schema1 bounded manifests validate before aliases; unavailable capabilities reject and exact rawmanifest context replaces bounded alias identity without increasing policy limits.",
+    "Seventeen sourceb9d884d records passed:216 Rust, native36/14/23/85/43, value106/function76 source, CLI43/boundary25; Node126 remains separately pinned432ee9d. Earlier failed fixture record retained.",
+    "Private integrity audit/checkpoint7 advanced retained sourceb9d884d under fence2; independent pinned div/rem and source-function reviews found no actionable defect."
   ],
   "checks": [
     {
@@ -75,9 +83,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-build.log",
-      "log_sha256": "0dc5dc01caf8710011500dba6f542322f6ef64e5933c7a9abdb4f6f2e57c49d2",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-build.log",
+      "log_sha256": "76fb33e0c416c4b1699570ff6bc014f75da7aa6e926fb324c61a2fc53f811bc6",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -91,8 +99,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-cli.log",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-cli.log",
       "log_sha256": "b77486fb7315b18a18224e7e1c28f5926e4da4483504bb8d37ad4e9a2729aec5",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -114,9 +122,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-clippy.log",
-      "log_sha256": "8bdd36387e8783798f4d7e8dfe69bcf37e8630a77da74531c499648a38b5adab",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-clippy.log",
+      "log_sha256": "ae824cd39187d64e7078a2881b61a9cadfc02107958923c312c12ea8522a5348",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -130,8 +138,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-compiler-boundaries.log",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-compiler-boundaries.log",
       "log_sha256": "dd1c96d6c19db59dab50f871c8654ce3db705c56d0972f1a46370d3e7cc7bb6f",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -146,8 +154,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-continuity.log",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-continuity.log",
       "log_sha256": "4fcd5cdf45ad73ea1b50a922f22f80711a8a7dd16fe71fc2a825d9f3974f3218",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -162,9 +170,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-dynamic.log",
-      "log_sha256": "516492279adc44ca8025e7b207deaff0fd669ee6d66dfd5db5273ffc1add74ab",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-dynamic.log",
+      "log_sha256": "489263867032ba4f7631c7debec91aa48504d2ee9ebebc6dded75e2188395ad7",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -181,8 +189,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-fmt.log",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-fmt.log",
       "log_sha256": "a5bda159cfd82b8914fb9460a8fa4d543b5e00e65af5b64a12127f49dcdd343b",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -197,9 +205,41 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-foundations.log",
-      "log_sha256": "03110ed4f0d57bbb997030f0ca91f16dc35a525cec82f12381124a6a3f3f7ac1",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-foundations.log",
+      "log_sha256": "a66d513d596a1be42fe882a54ee2b9f8b6dde72556c8853f900e5630379f6061",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-functions-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-functions-language.log",
+      "log_sha256": "988b4da60db40c8fee9bc09a9d73f775b75c43697bd5b6befa034530c26c6dcd",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-functions.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-functions.log",
+      "log_sha256": "48ff39d8fcb489121cd0ceb964e897d0cfad856b6e33534b8993bf75c7287a7b",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -213,9 +253,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-hosted-language.log",
-      "log_sha256": "b863c06b214ba9cb10f03b0f24a6b25bb1d74cfe131f4ba270e53af6d4f3e9c1",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-hosted-language.log",
+      "log_sha256": "c33553fa1cd36fc459b24341ef072f3e058ad4659732c6753eb6814db21a02bb",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -229,8 +269,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-hosted.log",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-hosted.log",
       "log_sha256": "c1bc4f77cf08d29eb7c0a8f3a6af07aa9a70900a76bd6dffe6433f35d3bfc7f0",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -245,8 +285,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-native.log",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-native.log",
       "log_sha256": "96281b526e6fb1fbe659f7e46c4b348580948b483c37b668f85472b18393317a",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -261,8 +301,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-planning.log",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-planning.log",
       "log_sha256": "1677065a0df775d0f424b1f804905d2f993cd144f1b5bec2286e8c20c9227b8e",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -280,9 +320,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-rust.log",
-      "log_sha256": "ec77077566eb55fcdcbb20965464dde150d1916c7dc0e29165e0b9b471cae37d",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-rust.log",
+      "log_sha256": "9d8ea2ff8e6a1fe54af658996ce0e630b3301ad218ea4ed548b1c7ff3dc527b1",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -296,9 +336,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-values-language.log",
-      "log_sha256": "14ba65f6dfcce65b521c12a301fc43792f58dd0a596719245c58cbc78518e051",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-values-language.log",
+      "log_sha256": "b828e79e0cd9a9c914e2bf19ef6236ed40489125334dd2f7ab9bd6bd421a83e3",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -310,17 +350,38 @@
         "git",
         "diff",
         "--check",
-        "5c555bc6e3ff51c9f2f945b069654aa287bc446b",
+        "dea427a1963d6f9cf8d6f5e63070de1df8da5655",
         "HEAD",
         "--",
         ".",
-        ":!reports/checks/*.log"
+        ":!reports/checks/*.log",
+        ":!third_party/rust-seed/**/LICENSE*"
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
-      "log_path": "reports/checks/v13-boundaries-whitespace.log",
-      "log_sha256": "7a80115f9c8710344708bcf377322a96e9d6c41b219d360221019010a7904f78",
+      "source": "b9d884dbd3577d104c92593469e894de88062400",
+      "log_path": "reports/checks/v13-integrated-whitespace.log",
+      "log_sha256": "0b7dcb8dff1fe0be4322456b4ecffff8a8ce091268b40c8277bd9ba1e0d40b5a",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/planning/*.test.mjs",
+        "tests/foundations/*.test.mjs",
+        "tests/continuity/*.test.mjs",
+        "tests/evidence/*.test.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "432ee9d375cd29dc453f7862666ef6dd0861f4dc",
+      "log_path": "reports/checks/v13-functions-node.log",
+      "log_sha256": "fd5c7277c1b641b9305eeb9e8cbc982e809213fcaeb01e5e21909e8613a9ac31",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -330,168 +391,214 @@
   ],
   "artifacts": [
     {
-      "path": "reports/checks/v13-boundaries-build.json",
-      "bytes": 1166,
-      "sha256": "fdc7a419d55460ac1cf65fac2be3af856930f74523a267d3f877640c771effb9"
+      "path": "reports/checks/v13-integrated-build.json",
+      "bytes": 1180,
+      "sha256": "fb67504185f1d7a30cd6ec3d4170820d2ef107fe84746430bfc51e3d75759085"
     },
     {
-      "path": "reports/checks/v13-boundaries-build.log",
+      "path": "reports/checks/v13-integrated-build.log",
       "bytes": 180,
-      "sha256": "0dc5dc01caf8710011500dba6f542322f6ef64e5933c7a9abdb4f6f2e57c49d2"
+      "sha256": "76fb33e0c416c4b1699570ff6bc014f75da7aa6e926fb324c61a2fc53f811bc6"
     },
     {
-      "path": "reports/checks/v13-boundaries-cli.json",
-      "bytes": 1170,
-      "sha256": "cf7bbe10f3f35bd10e14127400fa59af3a2be14a80c415a7cb58e70827a6a8db"
+      "path": "reports/checks/v13-integrated-cli.json",
+      "bytes": 1140,
+      "sha256": "9ee4a6d05baad29ebadd15bb12a96722aad2b898dfad156b7604e4c7d6049462"
     },
     {
-      "path": "reports/checks/v13-boundaries-cli.log",
+      "path": "reports/checks/v13-integrated-cli.log",
       "bytes": 2410,
       "sha256": "b77486fb7315b18a18224e7e1c28f5926e4da4483504bb8d37ad4e9a2729aec5"
     },
     {
-      "path": "reports/checks/v13-boundaries-clippy.json",
-      "bytes": 1225,
-      "sha256": "547763cb184be197f397c4484cdc9bbac5683783d9ddb5d17091d6295f5c3523"
+      "path": "reports/checks/v13-integrated-clippy.json",
+      "bytes": 1239,
+      "sha256": "7b202f779b4f7f8a9743a0537e043d2c3442f20799cd07413e7f70f70459a264"
     },
     {
-      "path": "reports/checks/v13-boundaries-clippy.log",
-      "bytes": 272,
-      "sha256": "8bdd36387e8783798f4d7e8dfe69bcf37e8630a77da74531c499648a38b5adab"
+      "path": "reports/checks/v13-integrated-clippy.log",
+      "bytes": 210,
+      "sha256": "ae824cd39187d64e7078a2881b61a9cadfc02107958923c312c12ea8522a5348"
     },
     {
-      "path": "reports/checks/v13-boundaries-compiler-boundaries.json",
-      "bytes": 1202,
-      "sha256": "8e3cc460ceacad401ebf37e3640b6e37320584e1331adef0d11f20e01ec1135d"
+      "path": "reports/checks/v13-integrated-compiler-boundaries.json",
+      "bytes": 1172,
+      "sha256": "6b7fc084e38b02ff2c73469cfa5720252dee188839b34f0b73e19dde62b9dcdf"
     },
     {
-      "path": "reports/checks/v13-boundaries-compiler-boundaries.log",
+      "path": "reports/checks/v13-integrated-compiler-boundaries.log",
       "bytes": 958,
       "sha256": "dd1c96d6c19db59dab50f871c8654ce3db705c56d0972f1a46370d3e7cc7bb6f"
     },
     {
-      "path": "reports/checks/v13-boundaries-continuity.json",
-      "bytes": 1155,
-      "sha256": "9d53bc49b51c008623e94da70ba982efa58b60264c6aa7c9b92848f8525b3d5e"
+      "path": "reports/checks/v13-integrated-continuity.json",
+      "bytes": 1166,
+      "sha256": "2483280a20d9f5aec4387b2a163a2f12ef378e9648f7be15b98542f16f27a55f"
     },
     {
-      "path": "reports/checks/v13-boundaries-continuity.log",
+      "path": "reports/checks/v13-integrated-continuity.log",
       "bytes": 255,
       "sha256": "4fcd5cdf45ad73ea1b50a922f22f80711a8a7dd16fe71fc2a825d9f3974f3218"
     },
     {
-      "path": "reports/checks/v13-boundaries-dynamic.json",
-      "bytes": 1178,
-      "sha256": "2876df7ad48ea3db7b1b9f25f9548d377252420bf233b51e287199ea45659a3f"
-    },
-    {
-      "path": "reports/checks/v13-boundaries-dynamic.log",
-      "bytes": 6253,
-      "sha256": "516492279adc44ca8025e7b207deaff0fd669ee6d66dfd5db5273ffc1add74ab"
-    },
-    {
-      "path": "reports/checks/v13-boundaries-fmt.json",
+      "path": "reports/checks/v13-integrated-dynamic.json",
       "bytes": 1148,
-      "sha256": "14a0891b5a56fbb841998c66803e245a8b2b8b913fe6e9e31209d547721da549"
+      "sha256": "34b84ea6937b7632dde3a8872b451e2a535c51281433f5f2e6d8d278ea16e91e"
     },
     {
-      "path": "reports/checks/v13-boundaries-fmt.log",
+      "path": "reports/checks/v13-integrated-dynamic.log",
+      "bytes": 9509,
+      "sha256": "489263867032ba4f7631c7debec91aa48504d2ee9ebebc6dded75e2188395ad7"
+    },
+    {
+      "path": "reports/checks/v13-integrated-fmt.json",
+      "bytes": 1162,
+      "sha256": "7366c7b8098cc36c5d328253cc18b7c215fe0fcc41d37d9ec75a751cbddb729f"
+    },
+    {
+      "path": "reports/checks/v13-integrated-fmt.log",
       "bytes": 91,
       "sha256": "a5bda159cfd82b8914fb9460a8fa4d543b5e00e65af5b64a12127f49dcdd343b"
     },
     {
-      "path": "reports/checks/v13-boundaries-foundations.json",
-      "bytes": 1157,
-      "sha256": "1691bfd69610c31cdce1927ed2423d3c095c1bec0a59bae1f329d63657dddadf"
+      "path": "reports/checks/v13-integrated-foundations.json",
+      "bytes": 1168,
+      "sha256": "dec0bbd01ea7a51c86da664300a00e4fa2d447e65a089a1b8355138069d6f1eb"
     },
     {
-      "path": "reports/checks/v13-boundaries-foundations.log",
+      "path": "reports/checks/v13-integrated-foundations.log",
       "bytes": 531,
-      "sha256": "03110ed4f0d57bbb997030f0ca91f16dc35a525cec82f12381124a6a3f3f7ac1"
+      "sha256": "a66d513d596a1be42fe882a54ee2b9f8b6dde72556c8853f900e5630379f6061"
     },
     {
-      "path": "reports/checks/v13-boundaries-hosted-language.json",
-      "bytes": 1194,
-      "sha256": "d9630de0d0e8b53f58a9039c5eae6369a16b982959f53ca8c247b933c73d83b3"
+      "path": "reports/checks/v13-integrated-functions-language.json",
+      "bytes": 1170,
+      "sha256": "791e258c64e5845c3d8d28b6ddd60ea4d8cb7b6b1846c4cc8368a17801bf0ba7"
     },
     {
-      "path": "reports/checks/v13-boundaries-hosted-language.log",
+      "path": "reports/checks/v13-integrated-functions-language.log",
+      "bytes": 2442,
+      "sha256": "988b4da60db40c8fee9bc09a9d73f775b75c43697bd5b6befa034530c26c6dcd"
+    },
+    {
+      "path": "reports/checks/v13-integrated-functions.json",
+      "bytes": 1152,
+      "sha256": "1dfcceda9f901cebf938824392523c1008d158a5157360ac4724c0d6888481aa"
+    },
+    {
+      "path": "reports/checks/v13-integrated-functions.log",
+      "bytes": 4632,
+      "sha256": "48ff39d8fcb489121cd0ceb964e897d0cfad856b6e33534b8993bf75c7287a7b"
+    },
+    {
+      "path": "reports/checks/v13-integrated-hosted-language.json",
+      "bytes": 1164,
+      "sha256": "92df02c5bece7e256b51ab2062b061c0690459fd90cb5ddda1489444a12f9190"
+    },
+    {
+      "path": "reports/checks/v13-integrated-hosted-language.log",
       "bytes": 2362,
-      "sha256": "b863c06b214ba9cb10f03b0f24a6b25bb1d74cfe131f4ba270e53af6d4f3e9c1"
+      "sha256": "c33553fa1cd36fc459b24341ef072f3e058ad4659732c6753eb6814db21a02bb"
     },
     {
-      "path": "reports/checks/v13-boundaries-hosted.json",
-      "bytes": 1176,
-      "sha256": "5dfab818a39c1f27cb564e1054e2b273398a6ded29ad4e15ca4148de5c875379"
+      "path": "reports/checks/v13-integrated-hosted.json",
+      "bytes": 1146,
+      "sha256": "44c93b44260cc9d6a8e25f859f5ad8bc2606a5f73de7945ad29feb987fa54a62"
     },
     {
-      "path": "reports/checks/v13-boundaries-hosted.log",
+      "path": "reports/checks/v13-integrated-hosted.log",
       "bytes": 1514,
       "sha256": "c1bc4f77cf08d29eb7c0a8f3a6af07aa9a70900a76bd6dffe6433f35d3bfc7f0"
     },
     {
-      "path": "reports/checks/v13-boundaries-native.json",
-      "bytes": 1176,
-      "sha256": "e70e6a3ebe3f2e3f81775d3aec15654ee632cad63671164b3b98988f16797869"
+      "path": "reports/checks/v13-integrated-native.json",
+      "bytes": 1146,
+      "sha256": "e878c6f0594ba97cb047916a7e00481e4dd6e3d088fac52fee272bed71e4cf4b"
     },
     {
-      "path": "reports/checks/v13-boundaries-native.log",
+      "path": "reports/checks/v13-integrated-native.log",
       "bytes": 3194,
       "sha256": "96281b526e6fb1fbe659f7e46c4b348580948b483c37b668f85472b18393317a"
     },
     {
-      "path": "reports/checks/v13-boundaries-planning.json",
-      "bytes": 1151,
-      "sha256": "9b55b7962b5af8ee35270a0264c766cef55acd8e645eb228ece34fef1fbfe7a1"
+      "path": "reports/checks/v13-integrated-planning.json",
+      "bytes": 1162,
+      "sha256": "b919e87e634cdf37d111b35d08f8397b38af4bfc7cd35cb232719b338f49af57"
     },
     {
-      "path": "reports/checks/v13-boundaries-planning.log",
+      "path": "reports/checks/v13-integrated-planning.log",
       "bytes": 338,
       "sha256": "1677065a0df775d0f424b1f804905d2f993cd144f1b5bec2286e8c20c9227b8e"
     },
     {
-      "path": "reports/checks/v13-boundaries-rust.json",
+      "path": "reports/checks/v13-integrated-rust.json",
+      "bytes": 1178,
+      "sha256": "332236ed58c28c6c15f60d0ec477652c9fc1850d2e34a774ee994c8939e328dc"
+    },
+    {
+      "path": "reports/checks/v13-integrated-rust.log",
+      "bytes": 19329,
+      "sha256": "9d8ea2ff8e6a1fe54af658996ce0e630b3301ad218ea4ed548b1c7ff3dc527b1"
+    },
+    {
+      "path": "reports/checks/v13-integrated-values-language.json",
       "bytes": 1164,
-      "sha256": "e5cd5fbb1e7a738c49d2ab3af204dbdb34e204ef7d4848b54f9ee06e47008ae2"
+      "sha256": "2ca0560249776b7fab4bab02308ce9ef96ed54c84c73c0e8d7033c9e794eb9a7"
     },
     {
-      "path": "reports/checks/v13-boundaries-rust.log",
-      "bytes": 15731,
-      "sha256": "ec77077566eb55fcdcbb20965464dde150d1916c7dc0e29165e0b9b471cae37d"
+      "path": "reports/checks/v13-integrated-values-language.log",
+      "bytes": 4189,
+      "sha256": "b828e79e0cd9a9c914e2bf19ef6236ed40489125334dd2f7ab9bd6bd421a83e3"
     },
     {
-      "path": "reports/checks/v13-boundaries-values-language.json",
-      "bytes": 1194,
-      "sha256": "a129215ff49d285d838d6e4b3bd2395a351eb9ed31ff75be2a7bc30ece38dcd5"
+      "path": "reports/checks/v13-integrated-whitespace.json",
+      "bytes": 1297,
+      "sha256": "41cc23cbed313668a9d37808251c00a5f05778b4df3449207691600027e36a81"
     },
     {
-      "path": "reports/checks/v13-boundaries-values-language.log",
-      "bytes": 3431,
-      "sha256": "14ba65f6dfcce65b521c12a301fc43792f58dd0a596719245c58cbc78518e051"
+      "path": "reports/checks/v13-integrated-whitespace.log",
+      "bytes": 191,
+      "sha256": "0b7dcb8dff1fe0be4322456b4ecffff8a8ce091268b40c8277bd9ba1e0d40b5a"
     },
     {
-      "path": "reports/checks/v13-boundaries-whitespace.json",
-      "bytes": 1272,
-      "sha256": "5da9194ef441f63ffbf6ddc5b1f7d056ce7c639402b0e887c0b7e3c7197ec219"
+      "path": "reports/checks/v13-functions-node.json",
+      "bytes": 1263,
+      "sha256": "41960d658de702196e1d671fa5dce9ab3d21223799a65c849331b1aba435c9df"
     },
     {
-      "path": "reports/checks/v13-boundaries-whitespace.log",
-      "bytes": 155,
-      "sha256": "7a80115f9c8710344708bcf377322a96e9d6c41b219d360221019010a7904f78"
+      "path": "reports/checks/v13-functions-node.log",
+      "bytes": 11564,
+      "sha256": "fd5c7277c1b641b9305eeb9e8cbc982e809213fcaeb01e5e21909e8613a9ac31"
     },
     {
-      "path": "reports/reviews/DYNAMIC_SOURCE_FIXES_V13.md",
-      "bytes": 8362,
-      "sha256": "b7d94984cb277ec6da3fec70240ee0e8e74b6671fbee9fd3ece52b5e64c0b944"
+      "path": "reports/reviews/NATIVE_DIVREM_V13.md",
+      "bytes": 10765,
+      "sha256": "bdba7c6ecbc438cb226fd9fec548e96ff64d71739a47bcedd186a5b7dc6eb152"
+    },
+    {
+      "path": "reports/reviews/FUNCTION_SOURCE_V13.md",
+      "bytes": 14622,
+      "sha256": "7aeab26070bf588e46703ad3d9a75b1f44745743ef58ff0c67a1cbb853f70220"
+    },
+    {
+      "path": "reports/checks/v13-functions-values-language.json",
+      "bytes": 1163,
+      "sha256": "d8d9810112fbceaf3a37fad1d0179f1147afab35f4ddf6ee0469e2cccd6c8b2e"
+    },
+    {
+      "path": "reports/checks/v13-functions-values-language.log",
+      "bytes": 3835,
+      "sha256": "af11033527deb1859bc2b79bb5c5e6dd21456af9daf79d59a50f86e45aed06b3"
     }
   ],
   "blockers": [],
   "unsafe_intermediate_states": [
-    "Retained verification source865a0d2 precedes later review/evidence/metadata commits; checks are not relabeled to newer HEAD.",
-    "CI at5c555bc passed Windows/Linux and failed a macOS fixture creation boundary; the preserved failure and capability fix need a new CI run.",
-    "Native arena has no reclamation/loop quota; process execution is not a sandbox."
+    "Retained sourceb9d884d precedes later review/evidence/metadata commits; checks are not relabeled to newer HEAD.",
+    "PublicCI atdea427a passedWindows/macOS but failed an incorrect Linux FIFO-discovery diagnostic expectation; corrected harness needs a newCIrun.",
+    "A separate review retained one WSL control deadline failure; direct execution of that exact ELF passed. No broader run-adapter reliability clearance follows.",
+    "Native64MiB arena has no reclamation/runtime loop quota; execution is not a sandbox."
   ],
-  "next_action": "Publish reviewed source/evidence, verify its own hosted CI, refresh private checkpoint, then integrate native div/rem, direct functions and manifest parser.",
+  "next_action": "Publish reviewed source/evidence, verify new hostedCI, refresh private checkpoint, then integrate Text/Bytes indexing and new-project initialization.",
   "next_commands": [
     [
       "git",
@@ -514,7 +621,7 @@
     "reservation": "<git-common-dir>/naja-integration.lock",
     "fencing_generation": 2,
     "status": "held",
-    "observed_at": "2026-10-25T20:00:31.122Z",
+    "observed_at": "2026-10-25T20:21:35.226Z",
     "reclaim": "explicit verified release only"
   },
   "budget": {
@@ -527,11 +634,11 @@
     "provider_quota": {
       "status": "observed",
       "account_shared": true,
-      "used_percent": 27,
-      "remaining_percent": 73,
+      "used_percent": 34,
+      "remaining_percent": 66,
       "window_minutes": 10080,
       "resets_at": "2026-11-01T08:14:13.000Z",
-      "observed_at": "2026-10-25T19:52:21.671Z",
+      "observed_at": "2026-10-25T20:14:05.880Z",
       "source": "Codex app get_usage_limits observation; primary subscription window shared across the account."
     },
     "rate_limit": {
@@ -567,5 +674,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-25T20:00:31.122Z"
+  "updated_at": "2026-10-25T20:21:35.226Z"
 }
