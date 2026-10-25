@@ -5,11 +5,12 @@
   "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
   "owner": "/root",
   "status": "running",
-  "checkpoint_generation": 14,
-  "head": "1c7e4c4a73154a813300cbbe0967b9004b7574ee",
+  "checkpoint_generation": 16,
+  "head": "5398dbdff537c3dad90bbb05da99937b1997cb3a",
   "branch": "agent/integrator-H0",
-  "last_verified_source": "a51c2808bae4b57596f7f957ce53530004a504f8",
+  "last_verified_source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
   "dirty_paths": [
+    "README.md",
     "planning/assignments.json",
     "planning/state.json",
     "planning/tasks.json",
@@ -17,11 +18,10 @@
     "reports/progress.md",
     "launch/HANDOFF.md",
     "launch/RESUME_PROMPT.md",
-    ".github/workflows/seed.yml",
-    "reports/governance/PUBLICATION_REVIEW_2026-10-25_V13_FILES.json",
-    "reports/governance/PUBLICATION_DISPOSITIONS_2026-10-25_V13_FILES.md"
+    "reports/governance/PUBLICATION_REVIEW_2026-10-25_V13_OBJECTS.json",
+    "reports/governance/PUBLICATION_DISPOSITIONS_2026-10-25_V13_OBJECTS.md"
   ],
-  "task": "T08/T11/T12: files verified; ordinary objects and compiler distribution in progress",
+  "task": "T08/T11/T12: class proofs and historical Linux package retained; native mappings in progress",
   "completed": [
     "Revision1.3 contracts, additive foundation/FC1 tracking and scoped assignments integrated.",
     "Edition-aware brace suites, named sections and depth markers execute in the bounded integer subset.",
@@ -52,7 +52,13 @@
     "Public4a9fe89 CI passed Linux/Windows/macOS at exact run40234704254.",
     "Sixteen exact-source records at a51c280 passed, including253 Rust tests,70 nativefile checks, old source/CLI/editor regressions.",
     "Frozen121 source cases passed with96 actualELFs andzero not_run;350 independent review cases also passed, with a separate failed reviewer alias assumption retained.",
-    "Private integrity audit/checkpoint14 advanced retained compiler source to a51c280 under fence2; clean snapshot assessed ready before metadata edits."
+    "Private integrity audit/checkpoint14 advanced retained compiler source to a51c280 under fence2; clean snapshot assessed ready before metadata edits.",
+    "Public c10836a passed Linux/Windows/macOS at exact CI run40236076573.",
+    "Ordinary class constructors, shared fields, compiled methods and initializer guards integrated; frozen170 source cases passed at b0e54cb with120 actualELFs.",
+    "Independent object review retained a real private-name failure at564461b; conservative unsupported guard fcbe457 passed43 targeted outcomes, while full mangling remains open.",
+    "27 formal class-work records retain25 passes and2 obsolete method-syntax oracle failures; same original sources now check/build0 and native105, followed by unchanged-count value108/list167 suites passing.",
+    "Private integrity audit/checkpoint16 advanced retained compiler source to b0e54cb with10 passing exact-source records; clean HEAD5398dbd assessed ready before metadata edits.",
+    "Scoped unsigned Linux archive from earlier a51c280 installed and compiled independently supplied/changed sources inside an inventoried60-file copied userland; no current-source or clean-VM/platform acceptance follows."
   ],
   "checks": [
     {
@@ -321,6 +327,475 @@
       "source": "a51c2808bae4b57596f7f957ce53530004a504f8",
       "log_path": "reports/checks/v13-files-rust.log",
       "log_sha256": "5256e4089f63bad660ba8c47f0b703ee8789f13f9493b968949c8e2f8ccb3e00",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.97.1",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-clippy.log",
+      "log_sha256": "9c070bb5764c1f1550191f0f0924f51f1aebc00c95cf134dd37f939c11897d9c",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/distribution/package.test.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "e475855761a971148dd020695ea32391620ce75d",
+      "log_path": "reports/checks/v13-objects-distribution-units.log",
+      "log_sha256": "6d4c358631510aa8b09766d51ee2f13019e8ed60b18ddf6cf6f295fac2da988b",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-vscode.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-editor.log",
+      "log_sha256": "fe856bdbe173c021e6a86b793519951bca829abb771290cdc0bab3c0b6ef8231",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-files-language.mjs",
+        "--expect-source",
+        "564461b8066e7b6cd328ff2b362bdabfc33bda0f"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-files-source.log",
+      "log_sha256": "bad86db985046e663c8751c41753d661ec4a5315bd3a294d9dc3116fc5bd33bb",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-compiler-boundaries.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "e475855761a971148dd020695ea32391620ce75d",
+      "log_path": "reports/checks/v13-objects-final-boundaries.log",
+      "log_sha256": "dd1c96d6c19db59dab50f871c8654ce3db705c56d0972f1a46370d3e7cc7bb6f",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-check-json.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "e475855761a971148dd020695ea32391620ce75d",
+      "log_path": "reports/checks/v13-objects-final-check-json.log",
+      "log_sha256": "6a7f618abc9ff096cef56ac90697e04dfe2a73e05e301a46bf61e4f508a6ac26",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-cli.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "e475855761a971148dd020695ea32391620ce75d",
+      "log_path": "reports/checks/v13-objects-final-cli.log",
+      "log_sha256": "b77486fb7315b18a18224e7e1c28f5926e4da4483504bb8d37ad4e9a2729aec5",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-vscode.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "e475855761a971148dd020695ea32391620ce75d",
+      "log_path": "reports/checks/v13-objects-final-editor.log",
+      "log_sha256": "b449bb708534e698f6bf5279a323f2005853cfc8822ef2bda005017681ee50fa",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-lists-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "e475855761a971148dd020695ea32391620ce75d",
+      "log_path": "reports/checks/v13-objects-final-lists.log",
+      "log_sha256": "aa353125b6c38fe7c066afb206db8c9df1c0c15d5c64a5678d1aea8951d44fbd",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-project-cli.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "e475855761a971148dd020695ea32391620ce75d",
+      "log_path": "reports/checks/v13-objects-final-project-cli.log",
+      "log_sha256": "aa6661ad0d061c4f3c756feb50a64e35bff26d3f99505c9e4671dcd88638823b",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-objects-language.mjs",
+        "--expect-source",
+        "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-class-source.log",
+      "log_sha256": "bc93cc837ed71c7b241846acfdbf3e4e1108bcd63e7648c286c9afdf625b8498",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.97.1",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-clippy.log",
+      "log_sha256": "c4d3c4421b653425679727e7f77fbeca0413cc55192f3e4ec63997102135c3f3",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.97.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-fmt.log",
+      "log_sha256": "8a8322376c31357888b19840d9f218057440beb843a10e71d6bbfbac93c41dd9",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-functions-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-functions-language.log",
+      "log_sha256": "fd9105f0a1eb6022c8a04527ca215ce08d58128825f91cc6e2652fedd033d68f",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-hosted-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-hosted-language.log",
+      "log_sha256": "20a59d6488ee75bf2fe278af45f310294ed24ca203d0c5313e41c931e14f4555",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-index-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-index-language.log",
+      "log_sha256": "69402fc9e610a3e1a9cadc29a74853e5e4ea02788dce6c0ac06c87cdbcd03967",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-lists-language.mjs"
+      ],
+      "result": "failed",
+      "exit_code": 1,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-lists-language.log",
+      "log_sha256": "f9c9150b62d527ba485a591a0f78c35bb307538461ae301bd926841562b95ca1",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-native.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-native.log",
+      "log_sha256": "3e303fb69e5368f02535afcf763644828bc611a5eb3abcf16f649e5f3c240db7",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.97.1",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-rust.log",
+      "log_sha256": "1e7e43c7e3bf16f1a577d72eeb8a961ecc25f2468707986de8e1518a10bde1c1",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-tuples-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-tuples-language.log",
+      "log_sha256": "5d8fce456125c7432bfb0ca1dcf9d20a73e5b482b3b5b4f41562e88ee2390945",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-values-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+      "log_path": "reports/checks/v13-objects-fixed-values-language.log",
+      "log_sha256": "4b66249303341e25393d9096b87521f1f1f0ccaa2a8f2999756fec49ab9d3f07",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.97.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-fmt.log",
+      "log_sha256": "8a8322376c31357888b19840d9f218057440beb843a10e71d6bbfbac93c41dd9",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-objects.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-native.log",
+      "log_sha256": "4d080fc9b55d99dc94f6dcc0e3aaeff4aa47c2a85ac85e7762240d0ba04f19c7",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-hosted-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-regression-hosted-language.log",
+      "log_sha256": "20a59d6488ee75bf2fe278af45f310294ed24ca203d0c5313e41c931e14f4555",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-native.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-regression-native.log",
+      "log_sha256": "3e303fb69e5368f02535afcf763644828bc611a5eb3abcf16f649e5f3c240db7",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-values-language.mjs"
+      ],
+      "result": "failed",
+      "exit_code": 1,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-regression-values-language.log",
+      "log_sha256": "8170f3f36fa90adb12115202aa5a5c68bde583f0c183ba7660b30e56bfff4389",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.97.1",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+      "log_path": "reports/checks/v13-objects-rust.log",
+      "log_sha256": "2cb8768635442c96d65a334077738db549d858ac85b5f986d40873cb14d7eea5",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -823,19 +1298,323 @@
       "path": "reports/reviews/FILES_V13.md",
       "bytes": 12778,
       "sha256": "4ba8086f2779f01f0689aa24e52f186121de63df7ad5c8eda448b005d9f57c83"
+    },
+    {
+      "path": "reports/reviews/OBJECTS_V13.md",
+      "bytes": 14293,
+      "sha256": "4497541188a1c41ddf00eee8c319638e33044b6bfd6f07686077a990162cc152"
+    },
+    {
+      "path": "tests/objects-source/PRIVATE_FIX_RUN_2026-10-25.md",
+      "bytes": 5711,
+      "sha256": "46b8ba94c2f323704ce7b57b63441e3890b41663221693b107a94b5f2e837970"
+    },
+    {
+      "path": "tests/objects-source/PRIVATE_FIX_RESULTS_2026-10-25.json",
+      "bytes": 138544,
+      "sha256": "f36fec60d176d4dc59991e594825b567dcc66644e3c82b601a887cf1d718ec8e"
+    },
+    {
+      "path": "tests/distribution/EXECUTION.md",
+      "bytes": 6732,
+      "sha256": "28b44bb3e2ba1e8c61b955729cdd11f87c3302d1a9f41843a34577b94afe18a0"
+    },
+    {
+      "path": "tests/distribution/evidence/observations.json",
+      "bytes": 57677,
+      "sha256": "6588e2a276e8ef8d85df7550a93e068a723ac7761357762672c3c43394f31b17"
+    },
+    {
+      "path": "reports/migrations/OBJECT_METHOD_BASELINE_2026-10-25.json",
+      "bytes": 2654,
+      "sha256": "f83db29dd9fcb524bd2c4b49393c8eb98f739be27ad8d5a8f75e044c4b96ed60"
+    },
+    {
+      "path": "reports/migrations/LIST_METHOD_BASELINE_2026-10-25.json",
+      "bytes": 2644,
+      "sha256": "13bc554c6c72cadb1d660a9885cf8253b903bb05ccc0aa4f98218d0a8dd55ae4"
+    },
+    {
+      "path": "reports/checks/v13-objects-clippy.json",
+      "bytes": 1245,
+      "sha256": "faaab649083ad91ed458823964aaed22ea8224b7977a8cc12024751f9483ef4c"
+    },
+    {
+      "path": "reports/checks/v13-objects-clippy.log",
+      "bytes": 218,
+      "sha256": "9c070bb5764c1f1550191f0f0924f51f1aebc00c95cf134dd37f939c11897d9c"
+    },
+    {
+      "path": "reports/checks/v13-objects-distribution-units.json",
+      "bytes": 1157,
+      "sha256": "36fb6b85193bda7405fb4e3bc3c5bfcf5acbb5d38de1310a2b774edd7492e022"
+    },
+    {
+      "path": "reports/checks/v13-objects-distribution-units.log",
+      "bytes": 1001,
+      "sha256": "6d4c358631510aa8b09766d51ee2f13019e8ed60b18ddf6cf6f295fac2da988b"
+    },
+    {
+      "path": "reports/checks/v13-objects-editor.json",
+      "bytes": 1149,
+      "sha256": "9c77b8f0e3046c47f1bb9c1ea0883c8e85e56202cfafcd9871d9304a94ed47c1"
+    },
+    {
+      "path": "reports/checks/v13-objects-editor.log",
+      "bytes": 571,
+      "sha256": "fe856bdbe173c021e6a86b793519951bca829abb771290cdc0bab3c0b6ef8231"
+    },
+    {
+      "path": "reports/checks/v13-objects-files-source.json",
+      "bytes": 1240,
+      "sha256": "9ab6aeeb9c641f968ffa89aff310617b356832dd3e5138748590eee45c438f1c"
+    },
+    {
+      "path": "reports/checks/v13-objects-files-source.log",
+      "bytes": 4006,
+      "sha256": "bad86db985046e663c8751c41753d661ec4a5315bd3a294d9dc3116fc5bd33bb"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-boundaries.json",
+      "bytes": 1156,
+      "sha256": "50861b4b231c545a4e6821945856f87874a1f4e0a32ebca09fb24af07cd4ded9"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-boundaries.log",
+      "bytes": 958,
+      "sha256": "dd1c96d6c19db59dab50f871c8654ce3db705c56d0972f1a46370d3e7cc7bb6f"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-check-json.json",
+      "bytes": 1147,
+      "sha256": "7f4aa7d273f19c7396d870c2ff670de23698342854ad84e513c8bb2d782db45a"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-check-json.log",
+      "bytes": 807,
+      "sha256": "6a7f618abc9ff096cef56ac90697e04dfe2a73e05e301a46bf61e4f508a6ac26"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-cli.json",
+      "bytes": 1133,
+      "sha256": "fc62e0d837a9337f6d5ee502bfdf9faca540ef76afe7ddfaf275eb6c05f3b272"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-cli.log",
+      "bytes": 2410,
+      "sha256": "b77486fb7315b18a18224e7e1c28f5926e4da4483504bb8d37ad4e9a2729aec5"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-editor.json",
+      "bytes": 1139,
+      "sha256": "b4c2d2842c39d9873755a34084eebe74c5205bae71e78ec6789f13d51ac444d7"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-editor.log",
+      "bytes": 571,
+      "sha256": "b449bb708534e698f6bf5279a323f2005853cfc8822ef2bda005017681ee50fa"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-lists.json",
+      "bytes": 1146,
+      "sha256": "c11b0a781e0beaad66b221f1c22d04ba01cd4ef3e4eac012bc01a2513d5f72be"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-lists.log",
+      "bytes": 5508,
+      "sha256": "aa353125b6c38fe7c066afb206db8c9df1c0c15d5c64a5678d1aea8951d44fbd"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-project-cli.json",
+      "bytes": 1149,
+      "sha256": "0a84160de87d1498b7e44a1e72626b3eb306ab170a8db64acaf3a6fd8e3a6c4c"
+    },
+    {
+      "path": "reports/checks/v13-objects-final-project-cli.log",
+      "bytes": 1161,
+      "sha256": "aa6661ad0d061c4f3c756feb50a64e35bff26d3f99505c9e4671dcd88638823b"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-class-source.json",
+      "bytes": 1256,
+      "sha256": "ba50a752516ee6db4a3e4589ef0b3ae79ee73e9257ba11e42e6407da9b11e4c7"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-class-source.log",
+      "bytes": 6016,
+      "sha256": "bc93cc837ed71c7b241846acfdbf3e4e1108bcd63e7648c286c9afdf625b8498"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-clippy.json",
+      "bytes": 1277,
+      "sha256": "28380ddae4827b8b1db2388035037bc8790776eeef2fc571f7c6dc99270187b7"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-clippy.log",
+      "bytes": 218,
+      "sha256": "c4d3c4421b653425679727e7f77fbeca0413cc55192f3e4ec63997102135c3f3"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-fmt.json",
+      "bytes": 1200,
+      "sha256": "b897bea436ffc476370e5bbad967abb5f4c12103d3a903f2190d7fa5675734db"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-fmt.log",
+      "bytes": 99,
+      "sha256": "8a8322376c31357888b19840d9f218057440beb843a10e71d6bbfbac93c41dd9"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-functions-language.json",
+      "bytes": 1198,
+      "sha256": "ca910f8775c942d928cb37d201b253585a9a669aa691beaab93738295c3d43a1"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-functions-language.log",
+      "bytes": 2442,
+      "sha256": "fd9105f0a1eb6022c8a04527ca215ce08d58128825f91cc6e2652fedd033d68f"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-hosted-language.json",
+      "bytes": 1192,
+      "sha256": "0388af5fe5cddb8644e50a94a6cdf6d611ae4946589a5fb6e7a6c539b744ff7e"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-hosted-language.log",
+      "bytes": 2362,
+      "sha256": "20a59d6488ee75bf2fe278af45f310294ed24ca203d0c5313e41c931e14f4555"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-index-language.json",
+      "bytes": 1190,
+      "sha256": "d302a1986f9be73ad88cd81c46b58eff3bcee38b8003990e96663d001d9509f8"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-index-language.log",
+      "bytes": 2719,
+      "sha256": "69402fc9e610a3e1a9cadc29a74853e5e4ea02788dce6c0ac06c87cdbcd03967"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-lists-language.json",
+      "bytes": 1190,
+      "sha256": "fe449247165f99df54f82142a0234af2f3c075fda041fda9c9d126910a59a9a6"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-lists-language.log",
+      "bytes": 5437,
+      "sha256": "f9c9150b62d527ba485a591a0f78c35bb307538461ae301bd926841562b95ca1"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-native.json",
+      "bytes": 1174,
+      "sha256": "211a7c0587f5c70973c73788ae839f1ea847436d28a609876fa632ff3312674c"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-native.log",
+      "bytes": 3195,
+      "sha256": "3e303fb69e5368f02535afcf763644828bc611a5eb3abcf16f649e5f3c240db7"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-rust.json",
+      "bytes": 1216,
+      "sha256": "1d6f708b19a74834ac6d5376363d022b348206b2fab73a28e7ae7ad957b6c66c"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-rust.log",
+      "bytes": 24188,
+      "sha256": "1e7e43c7e3bf16f1a577d72eeb8a961ecc25f2468707986de8e1518a10bde1c1"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-tuples-language.json",
+      "bytes": 1192,
+      "sha256": "123e952f27d5c0aa49085003e60ed651ed3de1db640eacb34729998bfc74504f"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-tuples-language.log",
+      "bytes": 4567,
+      "sha256": "5d8fce456125c7432bfb0ca1dcf9d20a73e5b482b3b5b4f41562e88ee2390945"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-values-language.json",
+      "bytes": 1192,
+      "sha256": "d188ff041180b2d90c8fd815ecc74c9782bd42f6749aff3f0e891e1d8f0f763f"
+    },
+    {
+      "path": "reports/checks/v13-objects-fixed-values-language.log",
+      "bytes": 4303,
+      "sha256": "4b66249303341e25393d9096b87521f1f1f0ccaa2a8f2999756fec49ab9d3f07"
+    },
+    {
+      "path": "reports/checks/v13-objects-fmt.json",
+      "bytes": 1168,
+      "sha256": "8ae79de16c9281ddf30899266d02819092bd146f7dd8b44b4d106cb20d061e2b"
+    },
+    {
+      "path": "reports/checks/v13-objects-fmt.log",
+      "bytes": 99,
+      "sha256": "8a8322376c31357888b19840d9f218057440beb843a10e71d6bbfbac93c41dd9"
+    },
+    {
+      "path": "reports/checks/v13-objects-native.json",
+      "bytes": 1139,
+      "sha256": "055cc0d2365ada7d0328bdefca74d51afc4b56336d8071858058f52e83f2b443"
+    },
+    {
+      "path": "reports/checks/v13-objects-native.log",
+      "bytes": 6856,
+      "sha256": "4d080fc9b55d99dc94f6dcc0e3aaeff4aa47c2a85ac85e7762240d0ba04f19c7"
+    },
+    {
+      "path": "reports/checks/v13-objects-regression-hosted-language.json",
+      "bytes": 1197,
+      "sha256": "5ae27830ff7a795f1bf4e3c85fdaeed7ccc9fd8ae9b970a23ac3e6eeaab6a247"
+    },
+    {
+      "path": "reports/checks/v13-objects-regression-hosted-language.log",
+      "bytes": 2362,
+      "sha256": "20a59d6488ee75bf2fe278af45f310294ed24ca203d0c5313e41c931e14f4555"
+    },
+    {
+      "path": "reports/checks/v13-objects-regression-native.json",
+      "bytes": 1179,
+      "sha256": "5dc6c55185882d65648730b9d7e98d112707679cbf34bd698fabcad05554d6ae"
+    },
+    {
+      "path": "reports/checks/v13-objects-regression-native.log",
+      "bytes": 3195,
+      "sha256": "3e303fb69e5368f02535afcf763644828bc611a5eb3abcf16f649e5f3c240db7"
+    },
+    {
+      "path": "reports/checks/v13-objects-regression-values-language.json",
+      "bytes": 1197,
+      "sha256": "aff5cc1e991ac0663cb0c046fc280d0fcba905bc5b636b9febb359d809a04b66"
+    },
+    {
+      "path": "reports/checks/v13-objects-regression-values-language.log",
+      "bytes": 3095,
+      "sha256": "8170f3f36fa90adb12115202aa5a5c68bde583f0c183ba7660b30e56bfff4389"
+    },
+    {
+      "path": "reports/checks/v13-objects-rust.json",
+      "bytes": 1184,
+      "sha256": "4d393073c7d8cf9bc6c87861128cd7de8092825c857de252e441a3aceb83cb41"
+    },
+    {
+      "path": "reports/checks/v13-objects-rust.log",
+      "bytes": 24087,
+      "sha256": "2cb8768635442c96d65a334077738db549d858ac85b5f986d40873cb14d7eea5"
     }
   ],
   "blockers": [],
   "unsafe_intermediate_states": [
-    "Retained checks/source reviews pin a51c280; later reports/CI/metadata HEAD is distinct.",
-    "Native object core1f1382b is active on a separate branch and not integrated or verified by file records.",
-    "Compiler distribution/rootfs groundwork is active separately; no clean-host installation result yet.",
-    "The independent reviewer reserved-print alias assumption failed and remains retained; no product defect was reproduced.",
-    "All19 gates and L/C/FC1 contracts remain open; no self-hosting/cells/human productivity proof.",
-    "Filesystem bounds and subprocess termination are not sandbox, race confinement, IO deadline or process-tree guarantees.",
-    "Write and assess an ordinary private checkpoint after public metadata/publication changes."
+    "Retained compiler source b0e54cb has10 passing audited records; later final7 records pin e475855 with identical compiler inputs. Original2 obsolete syntax-oracle failures remain failed.",
+    "Distribution archive pins earlier a51c280; its historical current-input verifier deliberately refuses newer class compiler inputs. Optional later Linux crate-build-script inspection remains failed/not_run ENOENT.",
+    "Native mapping backend and frozen202-case source harness are active separately; no mapping source result is claimed yet.",
+    "All19 gates and all L/C/FC1 contracts remain open; no self-hosting/cells/human productivity proof.",
+    "Filesystem spans, namespaces and process termination do not establish sandbox, race confinement, IO deadline or process-tree guarantees.",
+    "Write and assess an ordinary private checkpoint after publication."
   ],
-  "next_action": "Publish reviewed file integration and verify exact CI, then integrate released object core/source parser and execute frozen source proofs.",
+  "next_action": "Publish reviewed class/distribution integration, observe exact CI, then integrate mapping backend and source grammar and execute frozen202 source cases.",
   "next_commands": [
     [
       "git",
@@ -862,7 +1641,7 @@
     "reservation": "<git-common-dir>/naja-integration.lock",
     "fencing_generation": 2,
     "status": "held",
-    "observed_at": "2026-10-25T21:29:33.605Z",
+    "observed_at": "2026-10-25T22:01:36.090Z",
     "reclaim": "explicit verified release only"
   },
   "budget": {
@@ -875,11 +1654,11 @@
     "provider_quota": {
       "status": "observed",
       "account_shared": true,
-      "used_percent": 59,
-      "remaining_percent": 41,
+      "used_percent": 72,
+      "remaining_percent": 28,
       "window_minutes": 10080,
       "resets_at": "2026-11-01T08:14:13.000Z",
-      "observed_at": "2026-10-25T21:25:48.000Z",
+      "observed_at": "2026-10-25T22:00:47.416Z",
       "source": "Codex app get_usage_limits; primary subscription window shared across the account."
     },
     "rate_limit": {
@@ -915,5 +1694,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-25T21:30:51.988Z"
+  "updated_at": "2026-10-25T22:02:11.481Z"
 }

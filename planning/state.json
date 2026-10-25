@@ -5,7 +5,7 @@
   "development_started": true,
   "current_gate": "H0",
   "repository_url": "https://github.com/ramzimhd/naja-lang",
-  "last_verified_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
+  "last_verified_commit": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
   "active_tasks": [
     "T02",
     "T04",
@@ -20,8 +20,8 @@
     "T35"
   ],
   "blockers": [],
-  "last_checkpoint": "2026-10-25T21:29:33.605Z",
-  "note": "All19 inherited gates and all L/C/FC1 contracts remain open. Sixteen exact-source records passed at a51c280, including253 Rust tests,70 native file checks and prior source/CLI/editor regressions; private audit/checkpoint14 advanced retained compiler source. Frozen121 file source cases and350 independent review cases passed at that source. Older Node126 and VSIX install observations retain their separate pins. Object runtime/source preparation and distribution groundwork continue in separate worktrees; no new class/installation/self-hosting/cell/human timing completion claim.",
+  "last_checkpoint": "2026-10-25T22:01:36.090Z",
+  "note": "All 19 inherited gates and all L/C/FC1 contracts remain open. Class source170 and Rust261 passed at b0e54cb; 27 class-work records retain25 passes and2 obsolete syntax-oracle failures with focused migrations. Final list167/CLI43/project23/boundary25/JSON21/editor12+9/package8 checks passed separately at e475855, whose compiler inputs equal b0. Native object review found and verified a conservative private-name guard; full mangling remains open. A locally retained unsigned Linux seed archive pins earlier a51c280 and passed scoped copied-userland installation. Native mapping backend/source preparation continues separately.",
   "official_language": "en",
   "package_revision": "1.2",
   "continuation_revision": "1.3",

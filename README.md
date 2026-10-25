@@ -22,10 +22,16 @@ short-circuit expressions, assignment, `if`/`else`, `while`, assertions, printin
 and text/bytes length/indexing. Fixed-length lists support shared indexed mutation;
 tuples support immutable indexed access. Explicit `naja.io` and `naja.text`
 imports expose bounded byte-file operations and strict UTF-8 conversion.
+Ordinary classes support native construction, shared fields and compiled methods;
+full name mangling, inheritance, descriptors, extensions and partial classes remain
+open. See the [class source evidence](tests/objects-source/PRIVATE_FIX_RUN_2026-10-25.md).
 First-order functions use native calls and
 isolated local frames, with explicit binding and resource limits. A 64 MiB
 temporary arena reports exhaustion without
 narrowing or wrapping.
+A [locally retained unsigned Linux package experiment](tests/distribution/EXECUTION.md)
+pins an earlier compiler source and records installation in a bounded copied
+userland. It is not a published release or a current-source installation result.
 Explicit `from naja.core import i64` selects a separate checked-i64 slice;
 mixing these value domains is still unsupported. `.naja` edition
 2026.1 adds brace suites, transparent named sections and indentation depth markers

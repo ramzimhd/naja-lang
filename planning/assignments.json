@@ -260,7 +260,13 @@
         "scripts/test-files.mjs",
         "tests/files/",
         "scripts/test-files-language.mjs",
-        "tests/files-source/"
+        "tests/files-source/",
+        "scripts/test-objects.mjs",
+        "tests/objects/",
+        "scripts/test-objects-language.mjs",
+        "tests/objects-source/",
+        "tools/distribution/",
+        "tests/distribution/"
       ],
       "status": "active",
       "history": [
@@ -500,16 +506,16 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/native-objects-v13",
-      "base_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
+      "branch": "agent/native-mappings-v13",
+      "base_commit": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
         "backends/native/",
-        "scripts/test-objects.mjs",
-        "tests/objects/"
+        "scripts/test-mappings.mjs",
+        "tests/mappings/"
       ],
       "status": "active",
-      "deliverable": "Frozen ordinary object backend contract845fbdc and core1f1382b; native proof and source integration pending.",
+      "deliverable": "Bounded native ordered Dict/Set, exact scalar membership/key snapshots and mixed relation chains; frozen proof and old regressions before release.",
       "acceptance_commands": [
         [
           "cargo",
@@ -651,6 +657,16 @@
           ],
           "handoff": "Backend and height paths explicitly released; root owns source integration.",
           "integrated_commit": "ac26eff/2dbe10d/2a382d4"
+        },
+        {
+          "branch": "agent/native-objects-v13",
+          "paths": [
+            "backends/native/",
+            "scripts/test-objects.mjs",
+            "tests/objects/"
+          ],
+          "status": "completed",
+          "integrated_commit": "564461b8066e7b6cd328ff2b362bdabfc33bda0f"
         }
       ]
     },
@@ -761,15 +777,15 @@
     {
       "task_id": "T11",
       "owner": "/root/frontend",
-      "branch": "agent/objects-source-harness-v13",
-      "base_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
+      "branch": "agent/mappings-source-harness-v13",
+      "base_commit": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
-        "scripts/test-objects-language.mjs",
-        "tests/objects-source/"
+        "scripts/test-mappings-language.mjs",
+        "tests/mappings-source/"
       ],
       "status": "active",
-      "deliverable": "Prepare independent frozen actual-source class cases against845fbdc; no native execution before exact root source.",
+      "deliverable": "Frozen 202-case mapping source preparation93d2be2; native outcomes not_run until exact integrated source is supplied.",
       "acceptance_commands": [
         [
           "cargo",
@@ -867,6 +883,15 @@
           ],
           "handoff": "Report only; root integrates findings.",
           "integrated_commit": "c30f0e9/7f139c7"
+        },
+        {
+          "branch": "agent/objects-source-harness-v13",
+          "paths": [
+            "scripts/test-objects-language.mjs",
+            "tests/objects-source/"
+          ],
+          "status": "completed",
+          "integrated_commit": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560"
         }
       ]
     },
@@ -880,8 +905,8 @@
         "tools/distribution/",
         "tests/distribution/"
       ],
-      "status": "active",
-      "deliverable": "Prepare unsigned native compiler package and scoped install/rootfs proof under T12/FC1-01; no HATCH publication.",
+      "status": "completed",
+      "deliverable": "Pinned a51c280 unsigned Linux archive and scoped copied-userland install evidence; current compiler is newer, all acceptance gates open.",
       "forbidden_paths": [
         "bootstrap/",
         "backends/",
@@ -937,19 +962,20 @@
           "handoff": "Module/test/doc commit only; root wires CLI.",
           "integrated_commit": "b404618"
         }
-      ]
+      ],
+      "integrated_commit": "72ef3b0"
     },
     {
       "task_id": "T11",
       "owner": "/root/recovery_review",
-      "branch": "agent/lists-review-v13",
+      "branch": "agent/objects-review-v13",
       "base_commit": "aba7307c9c044f83dc3129581744529a627b1d08",
       "worktree": "../naja-worktrees/recovery-review",
       "paths": [
-        "reports/reviews/LISTS_V13.md"
+        "reports/reviews/OBJECTS_V13.md"
       ],
       "status": "completed",
-      "deliverable": "Independent list/source/JSON review with retained failed probe assumptions; no actionable product defect.",
+      "deliverable": "Independent object audit found private-name defect; conservative guard verified in subsequent source and original failed probe preserved.",
       "history": [
         {
           "branch": "agent/divrem-review-v13",
@@ -999,9 +1025,16 @@
           ],
           "status": "completed",
           "integrated_commit": "a956839"
+        },
+        {
+          "branch": "agent/lists-review-v13",
+          "paths": [
+            "reports/reviews/LISTS_V13.md"
+          ],
+          "status": "completed"
         }
       ],
-      "integrated_commit": "f2d6c74"
+      "integrated_commit": "28c0a23"
     },
     {
       "task_id": "T12",
@@ -1046,6 +1079,19 @@
       "status": "completed",
       "deliverable": "Independent candidate VSIX/adapter review: 37 groups and three output controls passed; actual IDE workflow remains untested.",
       "integrated_commit": "5d84aed"
+    },
+    {
+      "task_id": "T11",
+      "owner": "/root/class_evidence",
+      "branch": "agent/class-fix-evidence-v13",
+      "worktree": "../naja-worktrees/class-evidence",
+      "paths": [
+        "tests/objects-source/PRIVATE_FIX_RUN_2026-10-25.md",
+        "tests/objects-source/PRIVATE_FIX_RESULTS_2026-10-25.json"
+      ],
+      "status": "completed",
+      "integrated_commit": "b43ff55",
+      "deliverable": "Read-only hash audit of root170-case rerun; no suite replay or gate promotion."
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

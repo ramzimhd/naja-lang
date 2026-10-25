@@ -1,3 +1,68 @@
+# Current class integration — October 25, 2026
+
+FC1 and HATCH remain incomplete; all 19 inherited gates and every L/C/FC1
+contract remain open. Retained compiler source is
+b0e54cb2db1a2aea20b6056c05f92ea5e6b62560. Native construction, shared instance
+fields, compiled methods and initializer guards execute through the shared parser.
+Full private mangling, class/function/bound-method values, inheritance, descriptors,
+scoped extensions and partial classes remain required work.
+
+The frozen 170-case source suite passed at that source: 120 actual Linux x86-64
+ELFs, 50 compile refusals, two changed-source controls and zero not_run outcomes.
+The read-only follow-up audited 13 frozen files, 170 source identities, 120 ELF
+hashes and 1,174 command capture hashes. Separate Rust tests passed 261 cases.
+Read tests/objects-source/PRIVATE_FIX_RUN_2026-10-25.md for exact identities.
+
+Independent review at earlier 564461b found a real private-name defect outside
+the frozen suite: class-context __value silently used an unmangled public key.
+The conservative source guard fcbe457 now rejects unsupported class-context
+private names, including NFKC forms, while preserving outside-class names and
+__init__. Separate targeted follow-up passed 43 outcomes. Original failed probes
+remain retained; this is explicit refusal, not implementation of full mangling.
+The earlier native object-as-array index dispatch defect and test-author borrow
+failure also remain documented in tests/objects/README.md.
+
+There are 27 formal class-work records: 25 passed and two failed. The failures
+were old Text.Repeat and list.append compile-rejection expectations after generic
+member grammar became accepted. Each unchanged original source was checked,
+built and executed to native type exit 105 before its fixture moved to a runtime
+guard. No method implementation is claimed; values/list suite counts remain
+108/167. Source b0e54cb passed ten post-guard records: Rust261, formatting/Clippy,
+class170, i64 source36, integer source23, values108/functions76/index83/tuple137.
+Seven later records at e475855 passed list167, CLI43, project23, boundaries25,
+JSON21, editor12 units/nine compiler groups and package8 units. Compiler inputs
+at e475855 are byte-identical to b0e54cb; the record source pins remain separate.
+Earlier 564461b records retain native object74, file source121 and their own pins.
+
+The unsigned local Linux archive from earlier a51c280 is retained at
+ tools/distribution/artifacts/retained-a51c280/naja-linux-x86_64-unsigned.tar.gz
+(589,051 bytes; SHA-256
+60dba88639a972bef3cfa8bed9109a4b0e37943f758980d59c881b812025562c).
+It contains the Rust-built compiler and declared licenses/provenance. Actual
+installation and changed-source compilation passed in an inventoried 60-file
+copied userland with no seed tools. Required compiler OS libraries are libc,
+libgcc_s and the GNU loader, highest GLIBC symbol 2.39. This shares the WSL kernel;
+it is not a clean VM, security sandbox, current-source or other-platform proof.
+The initial declared-loader parser failure and optional later Linux preparation
+ENOENT inspection remain retained. See tests/distribution/EXECUTION.md.
+The root independently checked all 18 package files and 50 sanitized log hashes.
+The existing unsigned VSIX remains separately pinned and locally retained.
+
+Private integrity audit/checkpoint 16 advanced retained source to b0e54cb,
+using ten passing exact-source records; clean HEAD5398dbd assessed ready at
+2026-10-25T22:01:36.090Z before these metadata edits. It audits report integrity,
+not complete regression coverage or log honesty. Public c10836a passed all three
+CI hosts at exact run40236076573; the next publication needs its own observation.
+Account-shared quota observed 72% used/28% remaining at22:00:47.416Z,
+reset2026-11-01T08:14:13Z. Other budget categories remain unknown.
+
+Native Dict/Set work and a frozen 202-case source harness are active on separate
+branches. Source native outcomes are not_run until root integrates the grammar
+and supplies its exact commit. Continue engineering through supported compaction;
+a passing checkpoint is a recovery boundary, not a stopping condition.
+
+Historical file/collection/editor evidence follows unchanged with original pins.
+
 # NAJA implementation progress — October 25, 2026
 
 Revision 1.3; NAJA edition 2026.1; sole integrator /root. FC1 and HATCH remain
@@ -142,3 +207,5 @@ The original tool output and these pre-fix reproduction logs remain, with exit1:
 - target/files-metadata-planning-before-correction.log: SHA-256 1deee6319cea5e1d6c6bc9ac7f77af17e78661d4596d04ae7a28a73227a2c464
 
 - target/files-metadata-foundations-before-correction.log: SHA-256 d0cebc573e4216679ef4a32fdeb754cc18b6d0d6c86e97c0e99c41f9ed0149ad
+
+Metadata preparation initially failed the unchanged assignment validator because a second T11 reviewer row repeated the existing task/owner. The historical list review was moved into that assignment history and the current object review became its active record; no evidence or validator was removed. Retained replay target/objects-metadata-before-correction.log exited1, SHA256 b1c6224ad9f6e1adfbb3c177a7b6c42795a6a1355fdb26396c13723f1a4de620. All three validators then passed; verified counts remain3 requirements/2 tasks/0 gates.

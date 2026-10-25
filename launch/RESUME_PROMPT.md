@@ -1,29 +1,29 @@
-Resume existing NAJA HATCH in C:/naja; continue FC1 and then HATCH.
+Resume NAJA HATCH in C:/naja; continue FC1 then full HATCH.
 
-Read AGENTS.md, launch/HANDOFF.md, reports/progress.md, planning state/assignments/
-continuity and actual Git/worktree/private reservation. Preserve every ID, source
-pin, failed/not_run result and collaborator change. No reset, force-push,
-credential extraction, age/PID reclaim, security bypass or paid fallback.
+Read AGENTS.md, launch/HANDOFF.md, reports/progress.md, actual Git/worktrees,
+planning assignments/state/continuity and private reservation before writes.
+Preserve every identifier/source pin/failure/not_run result. No destructive reset,
+force-push, credential extraction, age/PID reclaim, security bypass or paid fallback.
 
-Last retained compiler source a51c2808bae4b57596f7f957ce53530004a504f8 passed 16
-retained commands:253 Rust tests,70 native file checks and old source/CLI/editor
-regressions. Frozen 121 file-source cases and350 independent review cases passed
-at that source; a separate reviewer assumption failure remains failed. Private
-audit/checkpoint 14 advanced source under fence 2 before metadata/publication edits.
-Reconcile later ordinary checkpoints and actual state; public observations are
-historical. All 19 gates and all L/C/FC1 contracts remain open.
+Retained compiler b0e54cb2db1a2aea20b6056c05f92ea5e6b62560 passed frozen class170,
+Rust261 and ten audited exact-source records. Final seven records at e475855 passed
+list/CLI/project/JSON/editor/package regressions with identical compiler inputs.
+Two obsolete syntax-oracle failures remain failed alongside focused migrations;
+private-name defect was conservatively refused, not fully implemented. All19
+inherited gates and all L/C/FC1 contracts remain open.
 
-Finish reviewed file publication and exact CI, then integrate released object
-backend/source work. Seed agent/native-objects-v13 owns backend/new IR harness;
-contract 845fbdc and core 1f1382b are prepared but proof/path release pending. Root
-owns source classes; frontend owns new frozen objects-source harness and must
-receive exact integrated source before execution. Planner distribution-preview
-branch owns only new distribution paths and is preparing unsigned native compiler
-packaging/install/rootfs proof from a51c280. No installation result is assumed.
-Read full HANDOFF for source syntax, method evaluation order, bounds and ownership.
+Historical unsigned Linux archive pins a51c280 and has scoped copied-userland
+installation evidence, not current compiler/platform acceptance. Local unsigned
+VSIX retains separate pins; actual IDE UI/LSP/DAP/cells and self-hosting remain open.
+Private checkpoint16 used fence2; reconcile later ordinary checkpoints and actual
+remote state. Public c10836a CI passed three hosts at run40236076573; later pushes
+need exact-SHA observations. Full instructions/identities are in HANDOFF/progress.
 
-Unsigned CLI-preview VSIX exists locally; isolated install does not establish
-actual IDE workflows. No self-hosting, native cells, full modules/classes/libraries,
-platform-product or human timing completion is established. Continue through
-supported compaction; passing a checkpoint is not a stopping condition. After
-actual exit, manual relaunch is required; no unattended provider runner exists.
+Finish reviewed class/distribution publication then immediately continue mappings.
+Seed agent/native-mappings-v13 retains backend ownership through proof/release.
+Frontend frozen202 source preparation93d2be2 is ready; native outcomes not_run.
+Root owns grammar/lowering for Dict/Set, unbound set(), in/not in mixed chains and
+static naja.collections.keys_snapshot Tuple snapshots. Supply exact integrated
+source SHA before source native execution. Preserve caps, semantics and failures.
+Continue through supported compaction; a passing checkpoint is not a finish line.
+After actual client exit manual relaunch is required, with no background promise.
