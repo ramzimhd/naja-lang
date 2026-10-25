@@ -12,7 +12,7 @@ use std::{
 
 const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja lex SOURCE\n  naja check SOURCE\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE\n  naja run SOURCE [--runner wsl] [--timeout-ms N] [-- ARGS...]\n  naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N]\n\nUse naja COMMAND --help for command options and limits.\nThis seed supports native decimal hosted integers with +, -, *, comparisons, assignment, if/else, while and print.\nThe hosted arena is limited to 64 MiB; exhaustion reports NJA203 and exits 103.\nExplicit from naja.core import i64 selects the separate checked-i64 slice; mixed domains remain unsupported.\n.naja selects edition 2026.1; .py keeps its separate compatibility dialect.\nFull grammar, other hosted values, aliases and self-hosting remain unimplemented.\n";
 const RUN_HELP: &str = "Usage: naja run SOURCE [--runner wsl] [--timeout-ms N] [-- ARGS...]\n\nCompile to a new temporary Linux x86-64 ELF and execute with literal argument boundaries.\nLinux x86-64 runs directly. Windows requires explicit --runner wsl and a Linux x86-64 WSL distribution with /usr/bin/{uname,wslpath,chmod,timeout}.\nThe default program deadline is 5000 ms; --timeout-ms accepts 1..60000. Temporary ELF size is limited to 16 MiB.\nChild stdin/stdout/stderr are inherited. Numeric child exits are preserved; a directly observed signal returns 128+signal and is reported on stderr.\nWSL exposes translated statuses, not an exact child signal. Its target-side timeout returns 124, which cannot be distinguished from a child exit 124; a forced timeout may return 137.\nTemporary files are removed after execution. Execution uses ordinary OS rights and is not a sandbox.\n";
-const TEST_HELP: &str = "Usage: naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N]\n\nA program-file test passes when compilation succeeds and native execution exits zero. This is not a test-function framework.\nDirectory discovery recursively selects test_*.naja and test_*.py; explicit SOURCE accepts either extension. Names sort by Unicode UTF-8 relative path; --filter is a case-sensitive substring.\nSymlinks are skipped (an explicit symlink is rejected); limits are 256 files, 4096 entries and depth 16, applied before filtering. No selected tests is an error.\nEach program has null stdin, a default 5000 ms deadline (1..60000 via --timeout-ms), and at most 65536 retained bytes per output stream. Exceeding the output limit fails the case.\n--json emits one schema-version-1 report on stdout, including compile/runtime failures, exact observed exits/signals and captured output. Operational/argument errors use stderr.\nTests run sequentially under ordinary OS rights, not in a sandbox. Windows requires --runner wsl; WSL signal information is unavailable and status 124 means timeout-or-child-exit-124.\n";
+const TEST_HELP: &str = "Usage: naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N]\n\nA program-file test passes when compilation succeeds and native execution exits zero. This is not a test-function framework.\nDirectory discovery recursively selects test_*.naja and test_*.py; explicit SOURCE accepts either extension. Names sort by Unicode UTF-8 relative path; --filter is a case-sensitive substring.\nSymlinks are skipped (an explicit symlink is rejected); limits are 256 files, 4096 entries and depth 16, applied before filtering. No selected tests is an error.\nEach program has null stdin, a default 5000 ms deadline (1..60000 via --timeout-ms), and at most 65536 retained bytes per output stream. Exceeding the output limit fails the case.\n--json emits one schema-version-1 report on stdout, including compile/runtime failures, exact observed exits/signals, UTF-8 display validity flags and lossless stdout_hex/stderr_hex output bytes. Operational/argument errors use stderr.\nTests run sequentially under ordinary OS rights, not in a sandbox. Windows requires --runner wsl; WSL signal information is unavailable and status 124 means timeout-or-child-exit-124.\n";
 
 fn main() {
     let code = match run() {
@@ -331,6 +331,13 @@ fn test_programs(path: &Path, options: &ExecutionOptions) -> Result<i32, String>
         } else {
             println!("{status}: {}", file.name);
             if let Some(outcome) = outcome {
+                if std::str::from_utf8(&outcome.stdout_bytes).is_err()
+                    || std::str::from_utf8(&outcome.stderr_bytes).is_err()
+                {
+                    eprintln!(
+                        "NJA015: child output contains non-UTF-8 bytes; display uses replacement characters; --json preserves raw hex bytes"
+                    );
+                }
                 if !outcome.stdout.is_empty() {
                     print!("{}", outcome.stdout);
                 }
@@ -375,14 +382,20 @@ fn test_json(
 ) -> String {
     let optional =
         |value: Option<i32>| value.map_or_else(|| "null".into(), |value| value.to_string());
+    let stdout_bytes = outcome.map_or(&[][..], |value| value.stdout_bytes.as_slice());
+    let stderr_bytes = outcome.map_or(&[][..], |value| value.stderr_bytes.as_slice());
     format!(
-        "{{\"path\":{},\"status\":{},\"exit_code\":{},\"signal\":{},\"stdout\":{},\"stderr\":{},\"diagnostic\":{}}}",
+        "{{\"path\":{},\"status\":{},\"exit_code\":{},\"signal\":{},\"stdout\":{},\"stderr\":{},\"stdout_utf8_valid\":{},\"stderr_utf8_valid\":{},\"stdout_hex\":{},\"stderr_hex\":{},\"diagnostic\":{}}}",
         execution::json(name),
         execution::json(status),
         optional(outcome.and_then(|value| value.exit_code)),
         optional(outcome.and_then(|value| value.signal)),
         execution::json(outcome.map_or("", |value| value.stdout.as_str())),
         execution::json(outcome.map_or("", |value| value.stderr.as_str())),
+        std::str::from_utf8(stdout_bytes).is_ok(),
+        std::str::from_utf8(stderr_bytes).is_ok(),
+        execution::json(&execution::hex(stdout_bytes)),
+        execution::json(&execution::hex(stderr_bytes)),
         diagnostic.map_or_else(|| "null".into(), execution::json)
     )
 }
@@ -492,13 +505,30 @@ mod tests {
             output_limit: false,
             stdout: "é\n".into(),
             stderr: "failure".into(),
+            stdout_bytes: "é\n".as_bytes().to_vec(),
+            stderr_bytes: b"failure".to_vec(),
         };
         let report = test_json("test_é.naja", "failed", Some(&outcome), None);
         assert!(report.contains("\"exit_code\":null,\"signal\":9"));
         assert!(report.contains("\"stdout\":\"é\\n\""));
+        assert!(report.contains("\"stdout_utf8_valid\":true"));
+        assert!(report.contains("\"stdout_hex\":\"c3a90a\""));
         assert_eq!(outcome.code(), 137);
         let report = test_json("source.py", "compile_failed", None, Some("NJA100: failure"));
         assert!(report.contains("\"diagnostic\":\"NJA100: failure\""));
+        let invalid = Outcome {
+            stdout: String::from_utf8_lossy(&[0xff, 0xc3, 0]).into_owned(),
+            stdout_bytes: vec![0xff, 0xc3, 0],
+            stderr: String::new(),
+            stderr_bytes: vec![],
+            exit_code: Some(0),
+            signal: None,
+            timed_out: false,
+            output_limit: false,
+        };
+        let report = test_json("bytes.naja", "passed", Some(&invalid), None);
+        assert!(report.contains("\"stdout_utf8_valid\":false"));
+        assert!(report.contains("\"stdout_hex\":\"ffc300\""));
     }
 
     #[test]

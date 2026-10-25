@@ -66,6 +66,8 @@ pub struct Outcome {
     pub output_limit: bool,
     pub stdout: String,
     pub stderr: String,
+    pub stdout_bytes: Vec<u8>,
+    pub stderr_bytes: Vec<u8>,
 }
 
 impl Outcome {
@@ -220,6 +222,7 @@ pub fn execute(
     capture: bool,
 ) -> Result<Outcome, String> {
     runner.validate()?;
+    validate_image(binary)?;
     let mut artifact = Artifact::create(binary, &std::env::temp_dir())?;
     let mut command = match runner {
         Runner::Direct => native_command(&artifact.executable, arguments),
@@ -269,6 +272,66 @@ pub fn execute(
     Ok(outcome)
 }
 
+// Reject malformed/non-native images before the WSL timeout tool can attempt
+// execvp's ENOEXEC shell fallback. Images come only from the current AOT library.
+fn validate_image(bytes: &[u8]) -> Result<(), String> {
+    let invalid = || "NJA012: invalid independent Linux x86-64 ELF image".to_string();
+    if bytes.len() < 64 || &bytes[..7] != b"\x7fELF\x02\x01\x01" {
+        return Err(invalid());
+    }
+    let u16_at = |offset| u16::from_le_bytes(bytes[offset..offset + 2].try_into().unwrap());
+    let u32_at = |offset| u32::from_le_bytes(bytes[offset..offset + 4].try_into().unwrap());
+    let u64_at = |offset| u64::from_le_bytes(bytes[offset..offset + 8].try_into().unwrap());
+    let count = usize::from(u16_at(56));
+    if u16_at(16) != 2
+        || u16_at(18) != 62
+        || u32_at(20) != 1
+        || u16_at(52) != 64
+        || u16_at(54) != 56
+        || u64_at(32) != 64
+        || !(1..=16).contains(&count)
+        || 64 + count * 56 > bytes.len()
+    {
+        return Err(invalid());
+    }
+    let entry = u64_at(24);
+    let mut executable_entry = false;
+    for index in 0..count {
+        let offset = 64 + index * 56;
+        let kind = u32_at(offset);
+        if kind == 2 || kind == 3 {
+            return Err(invalid());
+        }
+        if kind != 1 {
+            continue;
+        }
+        let flags = u32_at(offset + 4);
+        let file_offset = u64_at(offset + 8);
+        let address = u64_at(offset + 16);
+        let file_size = u64_at(offset + 32);
+        let memory_size = u64_at(offset + 40);
+        let alignment = u64_at(offset + 48);
+        if file_size > memory_size
+            || file_offset
+                .checked_add(file_size)
+                .is_none_or(|end| end > bytes.len() as u64)
+            || address.checked_add(memory_size).is_none()
+            || address < 65536
+            || (alignment > 1
+                && (!alignment.is_power_of_two() || address % alignment != file_offset % alignment))
+            || flags & 3 == 3
+        {
+            return Err(invalid());
+        }
+        executable_entry |= flags & 1 != 0 && entry >= address && entry < address + file_size;
+    }
+    if executable_entry {
+        Ok(())
+    } else {
+        Err(invalid())
+    }
+}
+
 fn control(arguments: &[OsString]) -> Result<String, String> {
     let result = wait(&mut wsl_command(arguments), Duration::from_secs(5), true)?;
     if !result.passed() {
@@ -277,6 +340,11 @@ fn control(arguments: &[OsString]) -> Result<String, String> {
             result.code(),
             result.stderr
         ));
+    }
+    if std::str::from_utf8(&result.stdout_bytes).is_err()
+        || std::str::from_utf8(&result.stderr_bytes).is_err()
+    {
+        return Err("NJA010: WSL adapter returned non-UTF-8 control output".into());
     }
     Ok(result.stdout)
 }
@@ -371,6 +439,8 @@ fn wait(command: &mut Command, timeout: Duration, capture: bool) -> Result<Outco
         output_limit,
         stdout: String::from_utf8_lossy(&stdout).into(),
         stderr: String::from_utf8_lossy(&stderr).into(),
+        stdout_bytes: stdout,
+        stderr_bytes: stderr,
     })
 }
 
@@ -486,6 +556,16 @@ pub fn json(value: &str) -> String {
     result
 }
 
+pub fn hex(bytes: &[u8]) -> String {
+    const DIGITS: &[u8] = b"0123456789abcdef";
+    let mut output = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        output.push(DIGITS[(byte >> 4) as usize] as char);
+        output.push(DIGITS[(byte & 15) as usize] as char);
+    }
+    output
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -526,8 +606,12 @@ mod tests {
         let extra = directory.join("retain");
         fs::write(&extra, b"unowned").unwrap();
         assert!(artifact.cleanup().is_err());
+        fs::write(&artifact.executable, b"new unowned file").unwrap();
+        let executable = artifact.executable.clone();
         drop(artifact);
         assert_eq!(fs::read(&extra).unwrap(), b"unowned");
+        assert_eq!(fs::read(&executable).unwrap(), b"new unowned file");
+        fs::remove_file(executable).unwrap();
         fs::remove_file(extra).unwrap();
         fs::remove_dir(directory).unwrap();
     }
@@ -545,6 +629,26 @@ mod tests {
     #[test]
     fn json_escapes_control_characters_without_losing_unicode() {
         assert_eq!(json("a\"\\\n\r\t\0é"), "\"a\\\"\\\\\\n\\r\\t\\u0000é\"");
+    }
+
+    #[test]
+    fn only_valid_static_native_elf_images_reach_the_process_adapter() {
+        let image = naja_seed::compile("print(1)\n").unwrap();
+        validate_image(&image).unwrap();
+        for length in 0..64 {
+            assert!(validate_image(&image[..length]).is_err());
+        }
+        for (offset, value) in [(4, 1), (18, 3), (24, 0), (56, 0), (64, 3), (68, 7)] {
+            let mut mutated = image.clone();
+            mutated[offset] = value;
+            // Setting only entry byte24 to0 does not always leave its segment;
+            // clear its complete address for that mutation.
+            if offset == 24 {
+                mutated[24..32].fill(0);
+            }
+            assert!(validate_image(&mutated).is_err(), "offset {offset}");
+        }
+        assert!(validate_image(b"#!/bin/sh\nexit 0\n").is_err());
     }
 
     #[test]
