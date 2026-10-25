@@ -295,7 +295,9 @@ impl Values for Dynamic {
                     .map(|(_, value)| Self::height(value))
                     .fold(Self::height(first), usize::max)
             }
-            Call(_, arguments) => 1 + arguments.iter().map(Self::height).max().unwrap_or(0),
+            Call(_, arguments) | Tuple(arguments) => {
+                1 + arguments.iter().map(Self::height).max().unwrap_or(0)
+            }
         }
     }
     fn condition(
