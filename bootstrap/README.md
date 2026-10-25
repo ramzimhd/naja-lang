@@ -73,6 +73,15 @@ and 2 MiB source-stack limits, with a 4 KiB helper reserve, in addition to the
 64 MiB shared arena. These are temporary seed/runtime bounds; see
 [native calls](../tests/functions/README.md) for the OS stack assumption.
 
+Text/Bytes postfix indexing evaluates the sequence and exact Int/Bool index once
+in order. Negative indices count from the end; Text returns one Unicode scalar
+as Text, while Bytes returns an unsigned Int in 0..255. Oversized indices remain
+exact and report `NJA207`/exit107 instead of narrowing or wrapping. Text views
+retain their immutable backing storage. Indexing binds above unary arithmetic
+and chains left to right; slices and multidimensional indices are explicitly
+unsupported. See [native indexing](../tests/index/README.md) for the span checks,
+UTF-8 validation and unchanged arena/stack limits.
+
 An initial `from naja.core import i64` instead imports the compiler-provided checked
 signed 64-bit primitive. This is not a general module resolver or delivered
 standard library. Top-level declarations require `name: i64 = expression`.

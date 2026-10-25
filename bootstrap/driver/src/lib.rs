@@ -910,6 +910,27 @@ impl<V: Values> Parser<V> {
         };
         self.account_expression()?;
         loop {
+            if V::DYNAMIC && self.text() == "[" {
+                // Indexing binds more tightly than unary signs, multiplication,
+                // comparisons and short circuiting, and chains left to right.
+                if 8 < minimum {
+                    break;
+                }
+                self.advance();
+                let index = self.expression(0, depth + 1)?;
+                if matches!(self.text(), ":" | ",") {
+                    return Err(
+                        self.error("slices and multidimensional indices are not implemented")
+                    );
+                }
+                self.expect("]")?;
+                left = V::index(left, index).map_err(|message| self.error(message))?;
+                self.account_expression()?;
+                if V::height(&left) > 128 {
+                    return Err(self.error("experimental expression tree depth exceeds 128"));
+                }
+                continue;
+            }
             if V::DYNAMIC {
                 let logical = match self.text() {
                     "or" => Some((1, false)),
@@ -1404,5 +1425,29 @@ mod tests {
         ] {
             assert!(compile(source).is_err(), "{source}");
         }
+    }
+    #[test]
+    fn postfix_indexing_is_shared_bounded_and_distinct_from_slices() {
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            for source in [
+                "print(('é𝄞' + 'x')[1][0])\n",
+                "def value(): return b'\\xff'\nprint(value()[False] // 10)\n",
+                "print(False and 'x'[999])\n",
+            ] {
+                assert!(compile_with_dialect(source, dialect).is_ok(), "{source}");
+            }
+            for source in [
+                "print('x'[:])\n",
+                "print('x'[0:1])\n",
+                "print('x'[0, 1])\n",
+                "print('x'[])\n",
+            ] {
+                assert!(compile_with_dialect(source, dialect).is_err(), "{source}");
+            }
+        }
+        let at_limit = format!("print('x'{})\n", "[0]".repeat(127));
+        let over_limit = format!("print('x'{})\n", "[0]".repeat(128));
+        assert!(compile(&at_limit).is_ok());
+        assert!(compile(&over_limit).is_err());
     }
 }

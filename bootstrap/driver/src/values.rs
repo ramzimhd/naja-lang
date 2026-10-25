@@ -41,6 +41,12 @@ pub(crate) trait Values {
     fn length(_value: Self::Expression) -> Result<Self::Expression, String> {
         Err("len is unsupported in this explicit integer domain".into())
     }
+    fn index(
+        _sequence: Self::Expression,
+        _index: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Err("indexing is unsupported in this explicit integer domain".into())
+    }
     fn negate(value: Self::Expression) -> Self::Expression;
     fn boolean_not(_value: Self::Expression) -> Result<Self::Expression, String> {
         Err("not is unsupported in this explicit integer domain".into())
@@ -219,6 +225,15 @@ impl Values for Dynamic {
     }
     fn length(value: Self::Expression) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::Len(Box::new(value)))
+    }
+    fn index(
+        sequence: Self::Expression,
+        index: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Index(
+            Box::new(sequence),
+            Box::new(index),
+        ))
     }
     fn negate(value: Self::Expression) -> Self::Expression {
         dynamic::Expression::Negate(Box::new(value))
