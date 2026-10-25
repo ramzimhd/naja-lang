@@ -36,3 +36,12 @@ executed later against the actual compiler, alongside the positive, negative,
 effects, precision, original-span and unchanged-resource cases. Full typed
 literal protocols, exact Rational/Decimal, scale/affine algebra and productivity
 evidence remain required separately.
+
+The first corrected execution at exact integrated compiler source
+`936865c7ef4dd566b4e4523089b1e6bad09534fe` passed all 150 checks without
+changes to this frozen harness, expectations or budgets. That includes 64
+actual native ELF executions, 73 compile refusals and 13 lexer checks on
+Windows/WSL x86-64. The original `PREPARATION.json` remains `not_run`;
+the separate [execution report](EXECUTION_936865c.md) and raw results record
+the actual observation, commands, hashes and limits. This partial Stage A
+proof does not complete general typed-literal protocols, FC1 or HATCH.
