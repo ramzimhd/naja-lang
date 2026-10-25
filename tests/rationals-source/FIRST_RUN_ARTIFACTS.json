@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "state": "failed",
+  "source_commit": "5ee64ec1fb02968964a81b0f07c086ae0578c684",
+  "source_tracked_status_before_execution": "",
+  "exact_command": "node scripts/test-rationals-language.mjs --expect-source 5ee64ec1fb02968964a81b0f07c086ae0578c684",
+  "harness_exit": 1,
+  "host": "win32-x64",
+  "node": "v24.11.0",
+  "target": "x86_64-unknown-linux-gnu",
+  "native_execution": "Linux x86_64 via local Windows WSL; actual emitted ELF files",
+  "compiler_sha256": "9123142182fc2c62ced5be21286aa71633b6953a0caa0035d0af366a1b77e2f3",
+  "compiler_version": "naja 0.0.1 HATCH experimental Rust seed; native target Linux x86-64; no self-hosting claim",
+  "harness_sha256": "e1006441297c00f592d73c2d6be4c92a7b7f4456ba4d1891a827fa2b50803dc5",
+  "fixture_index_sha256": "c1ecb856a751837fe86df003cdca88f8f045cc72b332f22c0ac2047a6f9041e2",
+  "preparation_sha256": "14a957613189efd8f370768c53ad01a1702acdb2f42e7265698ff9806cb64254",
+  "local_artifact_directory": "target/rationals-language-hryYkV",
+  "failure_sha256": "8177b5f7c9032f0d17450b59ab96430ef61b00d1256c3aa36d2d9f061a0ec5f7",
+  "plan_sha256": "537610107a3d74954190cb510e8a806d3479dbc19e3267636bc25aabf840d3b5",
+  "counts": {
+    "passed": 33,
+    "failed": 1,
+    "not_run": 186
+  },
+  "commands": 141,
+  "elapsed_recorded_child_ms": 33818,
+  "child_errors": [],
+  "failed_case": "discarded-ratio-and-return",
+  "failed_check_exit": 1,
+  "failed_build_exit": 1,
+  "failed_elf_exists": false,
+  "failure_classification": "Authored source-fixture defect: static function name value is reassigned by the observation helper. Existing documented static-binding rejection applies. No production compiler defect is established.",
+  "no_repairs": "Frozen fixture/harness/expectation/budget identities remain unchanged; no second source execution occurred.",
+  "captures": {
+    "discarded-ratio-and-return.check.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "discarded-ratio-and-return.check.stderr": {
+      "bytes": 184,
+      "sha256": "20add28ad7a9e4ff8778c3af8625b2cac5ca5f9cc334853ba6e5d9ba785bc9ae",
+      "utf8": "C:\\naja-worktrees\\rationals-source-execution\\target\\rationals-language-hryYkV\\discarded-ratio-and-return.naja:5:1: NJA101: rebinding a statically resolved function name is unsupported\n"
+    },
+    "discarded-ratio-and-return.build.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "discarded-ratio-and-return.build.stderr": {
+      "bytes": 184,
+      "sha256": "20add28ad7a9e4ff8778c3af8625b2cac5ca5f9cc334853ba6e5d9ba785bc9ae",
+      "utf8": "C:\\naja-worktrees\\rationals-source-execution\\target\\rationals-language-hryYkV\\discarded-ratio-and-return.naja:5:1: NJA101: rebinding a statically resolved function name is unsupported\n"
+    },
+    "discarded-ratio-and-return.naja": {
+      "bytes": 197,
+      "sha256": "9ec65064118df7c2a0f80c2f31d4422b9b3ab3d5a68a629a743e7650110fa6d5",
+      "utf8": "from naja.numeric import rational, divide_exact, numerator, denominator\ndef value():\n    rational(1, 2)\n    return rational(-3, 4)\nvalue = value()\nprint(numerator(value))\nprint(denominator(value))\n"
+    },
+    "compiler-build.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compiler-build.stderr": {
+      "bytes": 503,
+      "sha256": "2f4c4425095376516d377a861237727182e7a719ebd1cd3bcc951fef8eee7db3",
+      "utf8": "   Compiling tinyvec_macros v0.1.1\n   Compiling unicode-ident v1.0.24\n   Compiling naja-native v0.0.1 (C:\\naja-worktrees\\rationals-source-execution\\backends\\native)\n   Compiling tinyvec v1.12.0\n   Compiling unicode-normalization v0.1.25\n   Compiling naja-frontend v0.1.0 (C:\\naja-worktrees\\rationals-source-execution\\bootstrap\\frontend)\n   Compiling naja-seed v0.0.1 (C:\\naja-worktrees\\rationals-source-execution\\bootstrap\\driver)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.89s\n"
+    },
+    "command-4.stdout": {
+      "bytes": 91,
+      "sha256": "195da64ddbce0e8c28cb3b9360fecc50d7e0e3ec95c1c36d4eb52c33238884cb",
+      "utf8": "naja 0.0.1 HATCH experimental Rust seed; native target Linux x86-64; no self-hosting claim\n"
+    },
+    "command-5.stdout": {
+      "bytes": 13,
+      "sha256": "e0109ce4bb09317acfe73f0503e7a62845d527bbceef3fd629b64be2778a1c7c",
+      "utf8": "Linux x86_64\n"
+    }
+  }
+}
