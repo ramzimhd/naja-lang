@@ -275,7 +275,13 @@
         "scripts/test-mappings-language.mjs",
         "tests/mappings-source/",
         "scripts/test-typed-literals-language.mjs",
-        "tests/typed-literals-source/"
+        "tests/typed-literals-source/",
+        "docs/decisions/0007-exact-rational-foundation.md",
+        "backends/native/",
+        "scripts/test-rationals.mjs",
+        "tests/rationals/",
+        "scripts/test-rationals-language.mjs",
+        "tests/rationals-source/"
       ],
       "status": "active",
       "history": [
@@ -308,7 +314,7 @@
       ],
       "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
       "acceptance": "Integrate reviewed scoped commits; execute native block equivalence; retain evidence against committed source and contract 1.3.",
-      "recovery": "Sole integrator holds actual fence2. Completed secondary typed integration is retained at ../naja-worktrees/typed-literal-integration branch agent/typed-literal-integration-v13, with identical compiler inputs to current integrated source. Native Rational paths remain assigned to seed; root owns source lowering."
+      "recovery": "Sole integrator holds actual fence2. Private checkpoint22 retained source29be1ef on clean469dda5 before metadata. Released Rational worktrees/branches and all source pins remain preserved. Exact decimal suffix follow-up is read-only contract review; no contributor compiler edits yet."
     },
     {
       "task_id": "T35",
@@ -523,8 +529,8 @@
         "scripts/test-rationals.mjs",
         "tests/rationals/"
       ],
-      "status": "active",
-      "deliverable": "Exact normalized native Rational foundation; precise finite work/noallocation generic guards are being frozen before proof. No Rational result yet.",
+      "status": "completed",
+      "deliverable": "Exact normalized native Rational core and frozen first-run101 proof; Rust276 and ten unchanged native regressions passed at separately recorded pins.",
       "acceptance_commands": [
         [
           "cargo",
@@ -544,7 +550,7 @@
         "planning/",
         "Cargo.lock"
       ],
-      "handoff": "Backend remains contributor-owned until final proof/corrections and explicit release.",
+      "handoff": "All assigned paths explicitly released. Complete display, hashing, Decimal, algebra and acceptance remain open.",
       "history": [
         {
           "branch": "agent/dynamic-values-v13",
@@ -707,7 +713,8 @@
           "status": "completed",
           "integrated_commit": "9666ecf"
         }
-      ]
+      ],
+      "integrated_commit": "ae4cf0cd653934fccbd25666ff4bb5bdf5607e1e"
     },
     {
       "task_id": "T12",
@@ -816,15 +823,14 @@
     {
       "task_id": "T11",
       "owner": "/root/frontend",
-      "branch": "agent/rationals-source-harness-v13",
+      "branch": "agent/rationals-source-execution-v13",
       "base_commit": "936865c7ef4dd566b4e4523089b1e6bad09534fe",
-      "worktree": "../naja-worktrees/frontend",
+      "worktree": "../naja-worktrees/rationals-source-execution",
       "paths": [
-        "scripts/test-rationals-language.mjs",
         "tests/rationals-source/"
       ],
-      "status": "active",
-      "deliverable": "Independent exact Rational source preparation/model; work-boundary contract awaits native freeze, all outcomes not_run.",
+      "status": "completed",
+      "deliverable": "Corrected frozen source220 passed with193 actual ELFs; original33/1/186 fixture failure and one-case correction retained.",
       "acceptance_commands": [
         [
           "cargo",
@@ -835,7 +841,7 @@
           "--offline"
         ]
       ],
-      "handoff": "Preparation only; root supplies integrated source before execution.",
+      "handoff": "All paths released. Original preparation branch and untracked frontend Cargo.lock preserved.",
       "history": [
         {
           "branch": "agent/dynamic-source-fixes-v13",
@@ -942,8 +948,34 @@
           "status": "completed",
           "integrated_commit": "35fb04b",
           "execution_source": "50970ba8a46f000cb6a57e5cb454228f952aeef1"
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/frontend",
+          "branch": "agent/rationals-source-harness-v13",
+          "base_commit": "936865c7ef4dd566b4e4523089b1e6bad09534fe",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "scripts/test-rationals-language.mjs",
+            "tests/rationals-source/"
+          ],
+          "status": "completed",
+          "deliverable": "Independent exact Rational source preparation/model; work-boundary contract awaits native freeze, all outcomes not_run.",
+          "acceptance_commands": [
+            [
+              "cargo",
+              "test",
+              "-p",
+              "naja-seed",
+              "--locked",
+              "--offline"
+            ]
+          ],
+          "handoff": "Preparation only; root supplies integrated source before execution."
         }
-      ]
+      ],
+      "integrated_commit": "469dda5cd855d48f3ae5637132cdf11ea0010031",
+      "execution_source": "3bb1c1f42ed77494d32cf237dc4b911c13a78c68"
     },
     {
       "task_id": "T12",
@@ -1133,14 +1165,14 @@
     {
       "task_id": "T11",
       "owner": "/root/class_evidence",
-      "branch": "agent/typed-stage-a-review-v13",
-      "worktree": "../naja-worktrees/typed-stage-a-review",
+      "branch": "agent/rationals-review-v13",
+      "worktree": "../naja-worktrees/rationals-review",
       "paths": [
-        "reports/reviews/TYPED_LITERALS_STAGE_A.md"
+        "reports/reviews/RATIONALS_V13.md"
       ],
       "status": "completed",
-      "integrated_commit": "5518320",
-      "deliverable": "Independent47 typed integer literal outcomes passed; no fullprotocol/quantity/gate promotion.",
+      "integrated_commit": "ae4cf0cd653934fccbd25666ff4bb5bdf5607e1e",
+      "deliverable": "Independent61 native outcomes passed:31 source,22 exact-work and8 structural/full-validation controls.",
       "history": [
         {
           "branch": "agent/class-fix-evidence-v13",
@@ -1169,8 +1201,22 @@
           ],
           "status": "completed",
           "integrated_commit": "e1bed88"
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/class_evidence",
+          "branch": "agent/typed-stage-a-review-v13",
+          "worktree": "../naja-worktrees/typed-stage-a-review",
+          "paths": [
+            "reports/reviews/TYPED_LITERALS_STAGE_A.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "5518320",
+          "deliverable": "Independent47 typed integer literal outcomes passed; no fullprotocol/quantity/gate promotion."
         }
-      ]
+      ],
+      "execution_source": "5ee64ec1fb02968964a81b0f07c086ae0578c684",
+      "handoff": "Only scoped report changed; paths released."
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

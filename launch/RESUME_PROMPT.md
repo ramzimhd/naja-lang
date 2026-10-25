@@ -1,30 +1,30 @@
 Resume NAJA HATCH in C:/naja; continue FC1 then full HATCH.
-Read AGENTS.md, launch/HANDOFF.md, reports/progress.md, actualGit/worktrees and
-planning/state/assignments/continuity/private reservation beforewrites.
-Preserve IDs, originalsourcepins, failures/not_run and collaborators. No reset,
-force-push, credential extraction, timestamp/PID reclaim, security bypass or paidfallback.
+Read AGENTS.md, launch/HANDOFF.md, reports/progress.md, actual Git/worktrees and
+planning/state/assignments/continuity plus private reservation before writes.
+Preserve identifiers, progress, original pins, failures and collaborators. No
+reset/force-push/credential extraction/age reclaim/security bypass/paid fallback.
 
-Retainedcompiler781f33513f679cb4e06e807da6804b83af9830cc passed Rust271/fmt/Clippy/JSON21.
-Mapping202 passed50970ba (162ELFs), typedinteger150 passed936865c (64ELFs), with
-independent41/47 reviews and separately pinned compatibilitychecks. Compilerinputs
-936865c equal781f335; keep exactnativepins. Fixture/oracle failures and narrow
-refreezes/migrations remainretained. All19 gates and all L/C/FC1 contracts remainopen.
-No self-hosting/cells/fullprotocols/quantityalgebra/human timing acceptance.
+Retained source29be1ef7b6f7508843f3a7cde29810331881474c passed Rust276/fmt/
+Clippy/JSON21/editor12+9. Rational native101 passed first at0138734; ten unchanged
+native suites passed separately at4e52156. Corrected source220 passed exact
+3bb1c1f42ed77494d32cf237dc4b911c13a78c68 (193ELFs), independent61 at5ee64ec.
+Original33/1/186 source fixture failure and one-source-only rename remain retained.
+See tests/rationals/, tests/rationals-source/ and reports/reviews/RATIONALS_V13.md.
+All proof sources are retained in integration ancestry; never relabel native pins.
 
-Privatecheckpoint18 advancedretainedsource underfence2 beforemetadata edits;
-reconcile laterordinarycheckpoints/remote state. OriginalCI b6786b7 failed shallow
-history packagecontrol; correction6e4148b passed allthreehosts at run40238645724.
-Published0d89474 passed allthreehosts at exact run40240848481. ContinueRational work.
-Historicalunsigned compilerarchive/VSIX have separatepins and scoped evidence.
+Private audit/checkpoint21 advanced retained29be; ordinarycheckpoint22 assessed
+clean469dda5 ready before metadata. Actualfence2; reconcile later checkpoints.
+Latest observed account quota90%used/10%remaining at2026-10-25T22:49:12.819Z;
+other categories unknown, no exhaustion observed. Public0d89474 CI passed three
+hosts at run40240848481. Review/publish current integration, observe exact new CI,
+and write/assess a fresh ordinary checkpoint after publication.
 
-Seed native-rationals branch owns backend/newIRharness/tests; frozen contract
-23a6a590 definesexactRatio API/work/noallocation genericguards beforeexecution.
-Frontend owns newrationals-source harness. Root owns sourceAPI/height lowering.
-No Rational native result yet; readfullHANDOFF andcontract beforechanges.
-Completed typed branch1061c58 is preserved. The same worktree now holds separate
-rational-source-integration-v13 clean5ee64ec: driver255d2a2, source220 prep d4d354c,
-formal Rust276/fmt/Clippy/JSON21 passed at exactd4d. Await seed IR proof/release,
-then execute frozen source/review plans at an assigned exact clean source pin.
-Latest quota88%used/12%remaining at22:43:26Z; no exhaustion observed. Continue throughcompaction;
-a passingcheckpoint is not a stoppingcondition. Afteractualexit, manualrelaunch
-is required; no backgroundproviderpromise.
+All Rational paths are released. Preserve worktrees/branches/artifacts and the
+inherited untracked frontend Cargo.lock. Next exact-decimal suffix work is only
+read-only contract/model review; freeze ADR008 before implementation/proof and
+assign separate branches/worktrees/non-overlapping paths. Read native contract
+and ADR006/007 before numeric changes. All19 gates and all L/C/FC1 checks remain
+open. Source /, Rational display/fullhash/Decimal/quantityalgebra, self-hosting,
+cells/full IDE/debugger and human productivity acceptance remain open.
+Continue through compaction while capacity remains; checkpoints are recovery
+boundaries. After actualexit, manual relaunch is required; no background promise.

@@ -5,23 +5,12 @@
   "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
   "owner": "/root",
   "status": "running",
-  "checkpoint_generation": 18,
-  "head": "1bb01a2f1c615f6266c90a461af9c455fba971d0",
+  "checkpoint_generation": 22,
+  "head": "469dda5cd855d48f3ae5637132cdf11ea0010031",
   "branch": "agent/integrator-H0",
-  "last_verified_source": "781f33513f679cb4e06e807da6804b83af9830cc",
-  "dirty_paths": [
-    "README.md",
-    "planning/assignments.json",
-    "planning/state.json",
-    "planning/tasks.json",
-    "planning/continuity.json",
-    "reports/progress.md",
-    "launch/HANDOFF.md",
-    "launch/RESUME_PROMPT.md",
-    "reports/governance/PUBLICATION_REVIEW_2026-10-25_V13_MAPPINGS_LITERALS.json",
-    "reports/governance/PUBLICATION_DISPOSITIONS_2026-10-25_V13_MAPPINGS_LITERALS.md"
-  ],
-  "task": "T08/T11/T12: mappings and explicit integer literals integrated; exact Rational foundation in progress",
+  "last_verified_source": "29be1ef7b6f7508843f3a7cde29810331881474c",
+  "dirty_paths": [],
+  "task": "T08/T11/T12: bounded exact Rational foundation verified within its scope; exact decimal literal contract review next",
   "completed": [
     "Revision1.3 contracts, additive foundation/FC1 tracking and scoped assignments integrated.",
     "Edition-aware brace suites, named sections and depth markers execute in the bounded integer subset.",
@@ -65,7 +54,13 @@
     "Old Dict/Set display compilation-oracle failure remainsfailed; exactoriginalsources independently check/build0 and native105 before migrating the unchanged-count108-case values suite.",
     "Explicit imported integer literal capability implemented via shared TypedInteger tokens, originalsuffixspans, earlier eligible same-module classes and ordinary native constructor effects.",
     "All150 typed source outcomes passed at936865c:64ELFs,73compile refusals,13lexicalchecks. Independent47 probes passed separately. Original allnot_run preparation and narrow pre-execution corrections are preserved.",
-    "Combined compiler inputs exactly match936865c; Rust271/fmt/Clippy/JSON21 passed at781f335. Private integrity audit/checkpoint18 advanced retained source, cleanHEAD1bb01a2 assessedready beforemetadata."
+    "Combined compiler inputs exactly match936865c; Rust271/fmt/Clippy/JSON21 passed at781f335. Private integrity audit/checkpoint18 advanced retained source, cleanHEAD1bb01a2 assessedready beforemetadata.",
+    "Public0d89474 passed all three CI hosts at exact run40240848481; original failed shallow-history CI remains retained.",
+    "Rational immutable tag10 core/native arithmetic and explicit source APIs integrated; no float/machine narrowing and no ordinary source / policy change.",
+    "First frozen IR101 passed at0138734; Rust276 and ten unchanged native regressions passed separately at4e52156. All19 encoded logs were decoded and length/hash/pattern reviewed.",
+    "Source220 passed at exact3bb1c1f with193ELFs/833commands. Original33passed/1fixturefailure/186not_run at5ee remains failed; correction changes exactly one source function/call identity.",
+    "Independent61 passed at5ee, including exact-full-arena noallocation generic paths and exact/one-under work counters.",
+    "Five formal records passed at29be1ef; private integrity audit/checkpoint21 advanced retained source. Ordinary checkpoint22 assessed clean469dda5 ready before metadata. All proof sources are retained in integration ancestry."
   ],
   "checks": [
     {
@@ -1212,6 +1207,174 @@
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
         "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
       ]
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "d4d354c066c96e7e8beb0bc7b2ab46659f0672cb",
+      "log_path": "reports/checks/v13-rational-source-rust.log",
+      "log_sha256": "4c6e417d1c78a24e92530df7b5911b69e84037594aa96edc693d08a6ba2981c8",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "d4d354c066c96e7e8beb0bc7b2ab46659f0672cb",
+      "log_path": "reports/checks/v13-rational-source-fmt.log",
+      "log_sha256": "560220d83fe85dfecebddea62ac1b3b53ecdbdf4f33bd0e48afdd53f379dda9f",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "d4d354c066c96e7e8beb0bc7b2ab46659f0672cb",
+      "log_path": "reports/checks/v13-rational-source-clippy.log",
+      "log_sha256": "b805f60dc95bec5ec57bd6135082f949b73f3d6780c3a1174e203afec0b19e97",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-check-json.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "d4d354c066c96e7e8beb0bc7b2ab46659f0672cb",
+      "log_path": "reports/checks/v13-rational-source-json.log",
+      "log_sha256": "aa60908b678d1a975cbfdfec18fd1d6a92a0a00deadf604f7a8ee6307530455c",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "29be1ef7b6f7508843f3a7cde29810331881474c",
+      "log_path": "reports/checks/v13-rational-integrated-rust.log",
+      "log_sha256": "7c7be2a0d6ce16f32aaec7be81dc6cacd905ae5ad9490e9f9f43cc860348434e",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "29be1ef7b6f7508843f3a7cde29810331881474c",
+      "log_path": "reports/checks/v13-rational-integrated-fmt.log",
+      "log_sha256": "560220d83fe85dfecebddea62ac1b3b53ecdbdf4f33bd0e48afdd53f379dda9f",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "29be1ef7b6f7508843f3a7cde29810331881474c",
+      "log_path": "reports/checks/v13-rational-integrated-clippy.log",
+      "log_sha256": "686864e989c6c28fe3dada84b9f03982754913e582078f07e8c35589f0336433",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-check-json.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "29be1ef7b6f7508843f3a7cde29810331881474c",
+      "log_path": "reports/checks/v13-rational-integrated-json.log",
+      "log_sha256": "8fcfb4c9a6027b99be507fd146ee53c1dd3eee5c64f58186332bb6a77bde7a57",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-vscode.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "29be1ef7b6f7508843f3a7cde29810331881474c",
+      "log_path": "reports/checks/v13-rational-integrated-editor.log",
+      "log_sha256": "ecb44d9146477ec5ddd39350cb4d8fe7631139ce4092d7876f59783bd061a1bb",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
     }
   ],
   "artifacts": [
@@ -2314,18 +2477,260 @@
       "path": "reports/checks/v13-mappings-values-source.log",
       "bytes": 3052,
       "sha256": "1259bcdc735703857854a5ac3357e2086d1cf2c5e59553a8404069ad24bd06e9"
+    },
+    {
+      "path": "docs/decisions/0007-exact-rational-foundation.md",
+      "bytes": 3674,
+      "sha256": "1ccb0f002abaef078af6b13c80621a72fa1b80202cb3a72c4df4f9e801cb94f9"
+    },
+    {
+      "path": "reports/governance/CI_MAPPINGS_LITERALS_2026-10-25.json",
+      "bytes": 1072,
+      "sha256": "d5802598d386eebbfe713c21173d991b93f1ec6a871bd698a5694cb58e791d44"
+    },
+    {
+      "path": "reports/reviews/RATIONALS_V13.md",
+      "bytes": 7222,
+      "sha256": "b2692f3ea8d4f4012350e1af6435a71c409e7372182ac169094bdcb2ad10d682"
+    },
+    {
+      "path": "scripts/test-rationals-language.mjs",
+      "bytes": 36395,
+      "sha256": "27ba96c217d30e2a285cae6cd5c01818767868f37783e96a32ae8244a1931e5f"
+    },
+    {
+      "path": "scripts/test-rationals.mjs",
+      "bytes": 19197,
+      "sha256": "abbedba1b2f36b40a436a83cfb999475d23810ab006fb7ef0b135071ddca550e"
+    },
+    {
+      "path": "tests/rationals-source/ARTIFACTS_3BB1C1F.json",
+      "bytes": 550908,
+      "sha256": "0d4174c375dcc06c7c1b34e75a8ebea98dc55d5ca13d18083b0cf727a29e2bcd"
+    },
+    {
+      "path": "tests/rationals-source/FIRST_RUN.md",
+      "bytes": 3863,
+      "sha256": "c030a025fd90e7392b2a29fc996f54c9d757d63426f34161e5c6bd82fe315818"
+    },
+    {
+      "path": "tests/rationals-source/FIRST_RUN_ARTIFACTS.json",
+      "bytes": 4501,
+      "sha256": "3de15b7025b4cf5c21089799dc55824b363e220d5bba8ac3fd3190228d728f69"
+    },
+    {
+      "path": "tests/rationals-source/FIRST_RUN_FAILURE.json",
+      "bytes": 233443,
+      "sha256": "8177b5f7c9032f0d17450b59ab96430ef61b00d1256c3aa36d2d9f061a0ec5f7"
+    },
+    {
+      "path": "tests/rationals-source/PREPARATION.json",
+      "bytes": 164724,
+      "sha256": "32f4df6b247d3cfddabdca4e72b7d7d88eb91bbc86c0295cf475449bd3ff4c5e"
+    },
+    {
+      "path": "tests/rationals-source/README.md",
+      "bytes": 10101,
+      "sha256": "6322ef60e15f6d71a9df5bca3a15c17d6de7602ab0f6205cf4782366b9eea4ab"
+    },
+    {
+      "path": "tests/rationals-source/RESULTS_3BB1C1F.json",
+      "bytes": 713835,
+      "sha256": "77b645b82a25812ab885bc149580de091771f96e61f0ea6046fc17c457c4ec11"
+    },
+    {
+      "path": "tests/rationals-source/RUN_3BB1C1F.md",
+      "bytes": 7216,
+      "sha256": "4e1868256e5ff668b4008b6e0add019711ab1af6dd0ac8df5a91119833540de5"
+    },
+    {
+      "path": "tests/rationals-source/blocks.naja",
+      "bytes": 423,
+      "sha256": "35aeb0a70dd1c927eef16c68e0f273bf6d0a9810dabbf758ec906541fc2cf27e"
+    },
+    {
+      "path": "tests/rationals-source/file-input.py",
+      "bytes": 221,
+      "sha256": "4a24fa8c3963264d18f19dcbf81e0fabb298ec12d84d9e3157053b6427da4dcd"
+    },
+    {
+      "path": "tests/rationals-source/fixture-index.json",
+      "bytes": 2274,
+      "sha256": "c1ecb856a751837fe86df003cdca88f8f045cc72b332f22c0ac2047a6f9041e2"
+    },
+    {
+      "path": "tests/rationals-source/forms.py",
+      "bytes": 775,
+      "sha256": "46a7c3d64f47d1f889180f6c0c2fb525f62ed21259016f840fb5cfa40e952fd1"
+    },
+    {
+      "path": "tests/rationals-source/inputs/operands.bin",
+      "bytes": 2,
+      "sha256": "1a815599f88c9f8c5727ec1c5c9993c3a4cecff7259a465f9e54589c48fbfef1"
+    },
+    {
+      "path": "tests/rationals-source/order.py",
+      "bytes": 691,
+      "sha256": "e1462809af3bc18b34ddba1cb54bfecdeecdd9e6eb8c407dadfb11f69c84cf56"
+    },
+    {
+      "path": "tests/rationals-source/project/main.naja",
+      "bytes": 352,
+      "sha256": "596d35e91be7298a3fcff09e34c8fd268b23eb9bd7c8bb6a1c39f440fced6bc9"
+    },
+    {
+      "path": "tests/rationals-source/project/naja.alias",
+      "bytes": 76,
+      "sha256": "d52b47da9891538a135a0bcf4b7924b638d14a63fd04f6b0b7792c01f8672c4d"
+    },
+    {
+      "path": "tests/rationals-source/project/naja.toml",
+      "bytes": 47,
+      "sha256": "bf3e68213173a4edd1a912617aba96951f5669258c408614737976895517e481"
+    },
+    {
+      "path": "tests/rationals-source/typed.naja",
+      "bytes": 369,
+      "sha256": "fa9e56442f713f384819b978303bf144b4d6cee019b55070538ea15d420cd872"
+    },
+    {
+      "path": "tests/rationals-source/values.py",
+      "bytes": 739,
+      "sha256": "9af2b9e4c53668c2a664a89b5532920fe81d2fdd296620e03f05f9e3dbc979b0"
+    },
+    {
+      "path": "tests/rationals/CONTRACT.md",
+      "bytes": 8766,
+      "sha256": "980e4663145eb42286840a4e64f0366e4a75b45786847dbb89b183248c7269d7"
+    },
+    {
+      "path": "tests/rationals/EXECUTION.md",
+      "bytes": 6139,
+      "sha256": "6f371b82d4df781b4d3e2553152d4fb8c643b641d50ef12f9a8e75a874a5eba4"
+    },
+    {
+      "path": "tests/rationals/EXECUTION_0138734.json",
+      "bytes": 263548,
+      "sha256": "f6515a7314229b8eef9011f489ebf898541dd5930ae4c212e3c804aa47bc0b99"
+    },
+    {
+      "path": "tests/rationals/PREPARATION.json",
+      "bytes": 71438,
+      "sha256": "017cb8d0b66472a88d44351318c77da2577d36369427d25b53d433788a16572a"
+    },
+    {
+      "path": "tests/rationals/README.md",
+      "bytes": 3778,
+      "sha256": "af5d704d0f749cfc4a6b52be4d74d1ab3c365e745fec7cb2cb9f232a4a066a05"
+    },
+    {
+      "path": "tests/rationals/REGRESSIONS_4e52156.json",
+      "bytes": 4110,
+      "sha256": "ae37e5807098e75925b72710bca12e6c39870969672112375981b1f308ed9ef6"
+    },
+    {
+      "path": "tests/rationals/STREAMS.json",
+      "bytes": 144690,
+      "sha256": "204811b1af7fc53c21d2ab0ea1afbefcb36e5aa3e06cd6094e4bb6ec666365b0"
+    },
+    {
+      "path": "reports/checks/v13-rational-source-rust.json",
+      "bytes": 1193,
+      "sha256": "cfcfe95197bbe140304db3a67b736532963b43b9d955ee6bc24055295d54f404"
+    },
+    {
+      "path": "reports/checks/v13-rational-source-fmt.json",
+      "bytes": 1136,
+      "sha256": "e7fcd5ec0e38cfe54413de7da59a17f3af144230c399aa4055b5f1ed3684775f"
+    },
+    {
+      "path": "reports/checks/v13-rational-source-clippy.json",
+      "bytes": 1247,
+      "sha256": "f869c1fc6338003a3c9f1b3d07462dc84dad43d347435c0f15016d68beed96b1"
+    },
+    {
+      "path": "reports/checks/v13-rational-source-json.json",
+      "bytes": 1160,
+      "sha256": "8ea50e6cf120e65c8e91b12e963ab6624468ae12e785d9e8c1b1be67a607a888"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-rust.json",
+      "bytes": 1181,
+      "sha256": "1194eea04bea44934aa248a4de19190a6a69427a0d7916cdf8529495e39c8c74"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-fmt.json",
+      "bytes": 1132,
+      "sha256": "6f8ca30369b711292f0b8708fe0733759cd6016b5cf63014e736a60f881702c6"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-clippy.json",
+      "bytes": 1243,
+      "sha256": "5386c7424b723b820f81c513c3f077c0d5e3dbe74ec19e5b6e403516cba7ade5"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-json.json",
+      "bytes": 1156,
+      "sha256": "94c180b2818b7cbcbc50ce874b4f80f6059ac1eb0d4bf0e52512da1befcd9bc6"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-editor.json",
+      "bytes": 1157,
+      "sha256": "63f9d24131a8e6f05a65c277999c1144e91e94b44934fb2e9a5a75b939614ee4"
+    },
+    {
+      "path": "reports/checks/v13-rational-source-rust.log",
+      "bytes": 25746,
+      "sha256": "4c6e417d1c78a24e92530df7b5911b69e84037594aa96edc693d08a6ba2981c8"
+    },
+    {
+      "path": "reports/checks/v13-rational-source-fmt.log",
+      "bytes": 88,
+      "sha256": "560220d83fe85dfecebddea62ac1b3b53ecdbdf4f33bd0e48afdd53f379dda9f"
+    },
+    {
+      "path": "reports/checks/v13-rational-source-clippy.log",
+      "bytes": 210,
+      "sha256": "b805f60dc95bec5ec57bd6135082f949b73f3d6780c3a1174e203afec0b19e97"
+    },
+    {
+      "path": "reports/checks/v13-rational-source-json.log",
+      "bytes": 807,
+      "sha256": "aa60908b678d1a975cbfdfec18fd1d6a92a0a00deadf604f7a8ee6307530455c"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-rust.log",
+      "bytes": 25871,
+      "sha256": "7c7be2a0d6ce16f32aaec7be81dc6cacd905ae5ad9490e9f9f43cc860348434e"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-fmt.log",
+      "bytes": 88,
+      "sha256": "560220d83fe85dfecebddea62ac1b3b53ecdbdf4f33bd0e48afdd53f379dda9f"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-clippy.log",
+      "bytes": 335,
+      "sha256": "686864e989c6c28fe3dada84b9f03982754913e582078f07e8c35589f0336433"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-json.log",
+      "bytes": 807,
+      "sha256": "8fcfb4c9a6027b99be507fd146ee53c1dd3eee5c64f58186332bb6a77bde7a57"
+    },
+    {
+      "path": "reports/checks/v13-rational-integrated-editor.log",
+      "bytes": 571,
+      "sha256": "ecb44d9146477ec5ddd39350cb4d8fe7631139ce4092d7876f59783bd061a1bb"
     }
   ],
   "blockers": [],
   "unsafe_intermediate_states": [
-    "Retained source781f335 has four passing combined command records; mapping202/source50970ba and typed150/source936865c retain exact separate pins. Compiler input equality936865c/current was independently checked.",
-    "Mapping fixture failures and obsolete display-oracle failure remain failed; successful revised preparation does not rewrite original evidence.",
-    "Rational core/source preparations active in separate worktrees, no native result yet. Generic Ratio checks must preserve noallocation stores; exact work algorithm frozen before native execution.",
-    "All19 gates and all L/C/FC1 contracts remain open. Scale/affine/general protocols, full semantics/libraries, self-hosting/cells/human productivity remain unverified.",
-    "Unsigned compiler archive remains earlier a51c280 and VSIX has separate historical pins; no current-source/platform artifact acceptance.",
-    "Write/assess an ordinary private checkpoint after publication."
+    "All Rational contributor paths are released; preserved worktrees and original first failure must not be overwritten.",
+    "Exact decimal literal follow-up remains read-only contract/model review, without implementation or native results.",
+    "Publication review/push and exact new CI observation remain pending; public continuity is historical, not an ownership lock."
   ],
-  "next_action": "Publish reviewed mapping/literal integration, observe exact CI, then integrate released Rational core/source work and execute frozen proofs.",
+  "next_action": "Review and publish bounded Rational integration, observe exact CI, then freeze and implement the exact decimal literal follow-up; continue FC1 and HATCH.",
   "next_commands": [
     [
       "git",
@@ -2352,7 +2757,7 @@
     "reservation": "<git-common-dir>/naja-integration.lock",
     "fencing_generation": 2,
     "status": "held",
-    "observed_at": "2026-10-25T22:30:16.598Z",
+    "observed_at": "2026-10-25T22:52:58.367Z",
     "reclaim": "explicit verified release only"
   },
   "budget": {
@@ -2365,11 +2770,11 @@
     "provider_quota": {
       "status": "observed",
       "account_shared": true,
-      "used_percent": 78,
-      "remaining_percent": 22,
+      "used_percent": 90,
+      "remaining_percent": 10,
       "window_minutes": 10080,
       "resets_at": "2026-11-01T08:14:13.000Z",
-      "observed_at": "2026-10-25T22:18:22.477Z",
+      "observed_at": "2026-10-25T22:49:12.819Z",
       "source": "Codex app get_usage_limits; primary subscription window shared across the account."
     },
     "rate_limit": {
@@ -2405,5 +2810,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-25T22:31:20.298Z"
+  "updated_at": "2026-10-25T22:52:58.367Z"
 }

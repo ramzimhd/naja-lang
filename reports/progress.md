@@ -1,4 +1,58 @@
-# Current native mappings and integer literal construction — October 25, 2026
+# Current exact Rational foundation — October 25, 2026
+
+Retained compiler source is `29be1ef7b6f7508843f3a7cde29810331881474c`.
+Its 276 Rust tests, formatting, strict Clippy, 21 structured-diagnostic checks
+and VS Code adapter 12 units/9 compiler groups passed. All 19 inherited gates,
+15 foundational additions, seven continuity additions and 12 FC1 checks remain
+open. Verified counts remain three inherited requirements and two tasks.
+
+The explicit `naja.numeric` APIs construct/read exact immutable reduced fractions
+and perform exact division. Native Int/Bool/Rational arithmetic and comparisons
+retain arbitrary precision. Ordinary source `/` remains unsupported. Generic
+truth, container/field updates and selected reads use constant structural checks
+without limb scans, gcd or allocation; explicit numeric operations validate and
+share one frozen cumulative 1,000,000-unit work counter. All earlier caps remain.
+Full display, hashing, Decimal, general protocols, dimensions and scale/affine
+point/delta relations remain required work. See ADR007 and the native contract.
+
+The first frozen IR run passed all 101 checks at exact `0138734` without a native
+repair: 95 actual ELFs, six invalid-IR refusals and precise work/corruption controls.
+At separately pinned `4e52156`, Rust276 and ten unchanged legacy native harnesses
+passed; no old selector or expected result changed. All 19 losslessly encoded
+logs were decoded and length/hash/pattern reviewed before publication.
+
+The corrected source suite passed all 220 at exact
+`3bb1c1f42ed77494d32cf237dc4b911c13a78c68`: 193 actual ELFs and 833 commands.
+Its first run at `5ee64ec` remains 33 passed/one fixture failure/186 not_run.
+The fixture defined `value()` then assigned `value = value()`, correctly refused
+by the existing static binding guard. A separate reviewed correction renamed only
+that function/call; the other 219 sources and every oracle/budget stayed unchanged.
+Both plans and observations remain retained under `tests/rationals-source/`.
+
+Independent review passed 61 outcomes at `5ee64ec`: 31 source programs, 22 precise
+work-counter controls and eight structural/full-validation controls. At exactly
+zero arena bytes free, generic alias/field/List/Tuple/Dict access and updates
+succeeded, while an extra explicit construction failed 103. Structural checks
+deliberately do not prove arbitrary modified-ELF coprimality or limb canonicality.
+The scoped report preserves these limits and the separate fixture failure.
+
+All proof source commits are retained in integration ancestry. Private integrity
+audit/checkpoint21 advanced retained source to29be1ef using five passing records;
+ordinary checkpoint22 assessed clean469dda5 ready at2026-10-25T22:52:58.367Z,
+before public metadata edits. Integrity is not complete coverage or acceptance.
+Published0d89474 passed all three CI hosts at run40240848481; the next publication
+needs its own exact-SHA observation. Latest observed account quota was90%used/
+10%remaining at22:49:12.819Z. Other budget categories remain unknown.
+
+Next: review/publish this Rational integration and observe CI, then implement the
+exact decimal literal capability after freezing lexical and preallocation rules.
+Contributor code paths are released; follow-up work is read-only contract review.
+Continue FC1 and HATCH through compaction while authorized capacity remains.
+
+Earlier checkpoint chapters follow with their original pins and historical next
+actions preserved.
+
+# Historical native mappings and integer literal construction — October 25, 2026
 
 Retained integrated compiler source is 781f33513f679cb4e06e807da6804b83af9830cc.
 Its 271 Rust tests, formatting, strict Clippy and 21 structured-diagnostic checks

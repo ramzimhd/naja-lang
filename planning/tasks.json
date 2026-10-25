@@ -275,7 +275,16 @@
         "reports/checks/v13-mappings-fmt.json",
         "reports/checks/v13-mappings-native.json",
         "reports/checks/v13-mappings-rust.json",
-        "reports/checks/v13-mappings-values-migrated.json"
+        "reports/checks/v13-mappings-values-migrated.json",
+        "reports/checks/v13-rational-source-rust.json",
+        "reports/checks/v13-rational-source-fmt.json",
+        "reports/checks/v13-rational-source-clippy.json",
+        "reports/checks/v13-rational-source-json.json",
+        "reports/checks/v13-rational-integrated-rust.json",
+        "reports/checks/v13-rational-integrated-fmt.json",
+        "reports/checks/v13-rational-integrated-clippy.json",
+        "reports/checks/v13-rational-integrated-json.json",
+        "reports/checks/v13-rational-integrated-editor.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },
@@ -373,7 +382,16 @@
         "reports/checks/v13-mappings-fmt.json",
         "reports/checks/v13-mappings-native.json",
         "reports/checks/v13-mappings-rust.json",
-        "reports/checks/v13-mappings-values-migrated.json"
+        "reports/checks/v13-mappings-values-migrated.json",
+        "reports/checks/v13-rational-source-rust.json",
+        "reports/checks/v13-rational-source-fmt.json",
+        "reports/checks/v13-rational-source-clippy.json",
+        "reports/checks/v13-rational-source-json.json",
+        "reports/checks/v13-rational-integrated-rust.json",
+        "reports/checks/v13-rational-integrated-fmt.json",
+        "reports/checks/v13-rational-integrated-clippy.json",
+        "reports/checks/v13-rational-integrated-json.json",
+        "reports/checks/v13-rational-integrated-editor.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },
@@ -488,7 +506,16 @@
         "reports/checks/v13-mappings-fmt.json",
         "reports/checks/v13-mappings-native.json",
         "reports/checks/v13-mappings-rust.json",
-        "reports/checks/v13-mappings-values-migrated.json"
+        "reports/checks/v13-mappings-values-migrated.json",
+        "reports/checks/v13-rational-source-rust.json",
+        "reports/checks/v13-rational-source-fmt.json",
+        "reports/checks/v13-rational-source-clippy.json",
+        "reports/checks/v13-rational-source-json.json",
+        "reports/checks/v13-rational-integrated-rust.json",
+        "reports/checks/v13-rational-integrated-fmt.json",
+        "reports/checks/v13-rational-integrated-clippy.json",
+        "reports/checks/v13-rational-integrated-json.json",
+        "reports/checks/v13-rational-integrated-editor.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },
@@ -588,7 +615,16 @@
         "reports/checks/v13-mappings-fmt.json",
         "reports/checks/v13-mappings-native.json",
         "reports/checks/v13-mappings-rust.json",
-        "reports/checks/v13-mappings-values-migrated.json"
+        "reports/checks/v13-mappings-values-migrated.json",
+        "reports/checks/v13-rational-source-rust.json",
+        "reports/checks/v13-rational-source-fmt.json",
+        "reports/checks/v13-rational-source-clippy.json",
+        "reports/checks/v13-rational-source-json.json",
+        "reports/checks/v13-rational-integrated-rust.json",
+        "reports/checks/v13-rational-integrated-fmt.json",
+        "reports/checks/v13-rational-integrated-clippy.json",
+        "reports/checks/v13-rational-integrated-json.json",
+        "reports/checks/v13-rational-integrated-editor.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },

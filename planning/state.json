@@ -5,7 +5,7 @@
   "development_started": true,
   "current_gate": "H0",
   "repository_url": "https://github.com/ramzimhd/naja-lang",
-  "last_verified_commit": "781f33513f679cb4e06e807da6804b83af9830cc",
+  "last_verified_commit": "29be1ef7b6f7508843f3a7cde29810331881474c",
   "active_tasks": [
     "T02",
     "T04",
@@ -20,8 +20,8 @@
     "T35"
   ],
   "blockers": [],
-  "last_checkpoint": "2026-10-25T22:30:16.598Z",
-  "note": "All 19 inherited gates and all L/C/FC1 contracts remain open. Combined compiler Rust271/fmt/Clippy/JSON21 passed at781f335. Mapping source202 passed at50970ba; native87/Rust267 and compatibility source records retain separate pins. Typed integer source150 (64ELFs) plus independent47 passed at936865c, whose compiler inputs exactly equal781f335. Mapping review41 passed; original fixture failures, preparation corrections and obsolete display rejection remain retained. Private audit/checkpoint18 advanced retained source. Exact Rational foundation is in progress; no Rational/self-hosting/cells/fullprotocol/human timing acceptance.",
+  "last_checkpoint": "2026-10-25T22:52:58.367Z",
+  "note": "All 19 inherited gates and all L/C/FC1 contracts remain open. Retained source29be1ef passed Rust276/fmt/Clippy/JSON21/editor12+9. Rational IR101 passed first unchanged at0138734, ten unchanged native regressions at4e52156; source220 passed corrected preparation at3bb1c1f (193ELFs), independent61 at5ee64ec. First source33/1/186 fixture failure remains failed; only one fixture function/call was renamed. Mapping/typed and older evidence retains original pins. Exact decimal suffix follow-up is read-only contract review; no new acceptance promotion.",
   "official_language": "en",
   "package_revision": "1.2",
   "continuation_revision": "1.3",
