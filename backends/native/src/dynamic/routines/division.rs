@@ -24,7 +24,7 @@ impl Runtime {
     pub(super) fn division(&self, c: &mut Code, integers: &runtime::Runtime) {
         let quotient = c.label();
         let remainder = c.label();
-        let kernel = c.label();
+        let kernel = self.raw_divrem;
         let product = c.label();
         let compare = c.label();
         let subtract = c.label();
@@ -426,7 +426,7 @@ impl Runtime {
         c.step(Dx, false);
         c.store(Ax, 8, Dx);
     }
-    fn division_error(c: &mut Code, label: usize, message: &[u8], status: i64) {
+    pub(super) fn division_error(c: &mut Code, label: usize, message: &[u8], status: i64) {
         c.bind(label);
         let data = c.label();
         c.imm(Ax, 1);
