@@ -2,6 +2,7 @@ use naja_frontend::{Span, Symbol, TokenKind, lex, parse_cst};
 
 mod blocks;
 mod identifiers;
+mod literals;
 
 fn significant(source: &str) -> Vec<(TokenKind, String)> {
     let lexed = lex(source);

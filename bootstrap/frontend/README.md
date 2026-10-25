@@ -27,8 +27,8 @@ without numeric conversion or width limits, decimal float lexemes, ordinary and
 raw single/triple quoted strings, byte strings, comments, standard operators,
 bracket continuation and explicit backslash continuation. Indentation uses tab
 stops of eight and a second column count to reject ambiguous tabs/spaces;
-comments and blank lines do not change indentation. Escapes are retained rather
-than evaluated. Invalid numbers, characters, delimiters, indentation and
+comments and blank lines do not change indentation. The lexer retains escapes
+as original source bytes. Invalid numbers, characters, delimiters, indentation and
 unterminated strings have English diagnostics with source spans.
 
 Unicode string/comment data is preserved. Identifier starts follow XID_Start
@@ -42,10 +42,28 @@ a keyword. Case is significant; no case folding or confusable-name restriction
 is implied. String prefixes remain their raw ASCII spellings. Labels, comments,
 string data and runtime string-based lookups are not normalized by these APIs.
 
-Formatted/template
-string interpolation and imaginary literals also receive explicit unsupported
-diagnostics. String escape validity, literal values, encodings other than
-already-decoded UTF-8, complete grammar, parsing/resource budgets, semantic
+The shared `decode_string(source: &str, token: &Token)` service validates one
+original `String` token and returns `Result<LiteralValue, Diagnostic>`.
+`LiteralValue::Text(String)` and `LiteralValue::Bytes(Vec<u8>)` keep text and
+bytes distinct. Ordinary, `u`, raw, bytes and raw-bytes single/triple forms use
+the pinned Python 3.15.0 lexical rules in both dialects. It handles control,
+octal, hexadecimal and Unicode scalar escapes, physical line continuations and
+newline normalization without altering tokens or their spans. Text values are
+never identifier-normalized. Adjacent literal concatenation belongs to the
+parser, not this one-token service.
+
+Decoder input is bounded by `STRING_LITERAL_MAX_BYTES` (1 MiB per original
+token), with linear work and output no larger than input. It validates token
+kind, ordered UTF-8 span, prefix, exact delimiters and escape syntax. Errors
+carry absolute original byte spans, including malformed external token spans.
+Unknown escapes keep their backslashes; this value-only API does not report
+the pinned reference's warnings. Named Unicode escapes, surrogate-valued text
+escapes and bytes octal escapes above 255 receive explicit unsupported
+diagnostics. See `compatibility/literals/README.md` for rules and test coverage.
+
+Formatted/template string interpolation and imaginary literals also receive
+explicit unsupported diagnostics. Encodings other than already-decoded UTF-8,
+complete grammar, parsing/resource budgets, semantic
 analysis and execution remain future work. An unsupported
 formatted string is scanned as an opaque ordinary quote-delimited string for
 recovery; no grammar accuracy is claimed for its contents.

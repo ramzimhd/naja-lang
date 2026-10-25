@@ -5,12 +5,14 @@
 
 mod identifier;
 mod lexer;
+mod literal;
 
 pub use identifier::{
     IDENTIFIER_UNICODE_VERSION, IdentifierError, IdentifierErrorKind, canonical_identifier,
     is_identifier,
 };
 pub use lexer::{lex, lex_with_dialect};
+pub use literal::{LiteralValue, STRING_LITERAL_MAX_BYTES, decode_string};
 
 /// Source syntax is selected explicitly, never by ambient machine settings.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
