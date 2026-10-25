@@ -1,0 +1,1157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:naja:public-continuity:1",
+  "title": "NAJA public continuity observation",
+  "description": "A sanitized observed checkpoint, not current Git readiness, ownership authority, product verification or an automatic runner guarantee.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_revision",
+    "language_edition",
+    "session_id",
+    "owner",
+    "status",
+    "checkpoint_generation",
+    "head",
+    "branch",
+    "last_verified_source",
+    "dirty_paths",
+    "task",
+    "completed",
+    "checks",
+    "artifacts",
+    "blockers",
+    "unsafe_intermediate_states",
+    "next_action",
+    "next_commands",
+    "ownership",
+    "budget",
+    "automatic_runner",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "contract_revision": {
+      "const": "1.3"
+    },
+    "language_edition": {
+      "const": "2026.1"
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9/][A-Za-z0-9._:/-]*$"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "checkpointing",
+        "ready_for_handoff",
+        "waiting_for_quota",
+        "blocked_external",
+        "complete"
+      ]
+    },
+    "checkpoint_generation": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "head": {
+      "$ref": "#/$defs/commit"
+    },
+    "branch": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "\\S"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "last_verified_source": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/commit"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dirty_paths": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relative_path"
+      },
+      "minItems": 0,
+      "maxItems": 10000,
+      "uniqueItems": true
+    },
+    "task": {
+      "$ref": "#/$defs/text"
+    },
+    "completed": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      },
+      "minItems": 0,
+      "maxItems": 1000
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/check"
+      },
+      "minItems": 0,
+      "maxItems": 1000
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "minItems": 0,
+      "maxItems": 1000
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      },
+      "minItems": 0,
+      "maxItems": 1000
+    },
+    "unsafe_intermediate_states": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      },
+      "minItems": 0,
+      "maxItems": 1000
+    },
+    "next_action": {
+      "$ref": "#/$defs/text"
+    },
+    "next_commands": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/command"
+      },
+      "minItems": 1,
+      "maxItems": 1000
+    },
+    "ownership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reservation",
+        "fencing_generation",
+        "status",
+        "observed_at",
+        "reclaim"
+      ],
+      "properties": {
+        "reservation": {
+          "const": "<git-common-dir>/naja-integration.lock"
+        },
+        "fencing_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "status": {
+          "enum": [
+            "held",
+            "released",
+            "unconfirmed"
+          ]
+        },
+        "observed_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "reclaim": {
+          "const": "explicit verified release only"
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context",
+        "provider_quota",
+        "rate_limit",
+        "execution_deadline",
+        "spend",
+        "limitations"
+      ],
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/context"
+        },
+        "provider_quota": {
+          "$ref": "#/$defs/provider_quota"
+        },
+        "rate_limit": {
+          "$ref": "#/$defs/rate_limit"
+        },
+        "execution_deadline": {
+          "$ref": "#/$defs/execution_deadline"
+        },
+        "spend": {
+          "$ref": "#/$defs/spend"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "minItems": 0,
+          "maxItems": 1000
+        }
+      }
+    },
+    "automatic_runner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "mode",
+        "manual_resume_required",
+        "provider_requests_started",
+        "instructions"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "manual_only",
+            "unavailable_not_tested",
+            "not_configured"
+          ]
+        },
+        "mode": {
+          "const": "manual_resume"
+        },
+        "manual_resume_required": {
+          "const": true
+        },
+        "provider_requests_started": {
+          "const": false
+        },
+        "instructions": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "updated_at": {
+      "$ref": "#/$defs/timestamp"
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "\\S"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 40
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\\\)[^\\u0000-\\u001f\\u007f:<>|?*]+$"
+    },
+    "command": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      },
+      "minItems": 1,
+      "maxItems": 128
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command",
+        "result",
+        "exit_code"
+      ],
+      "properties": {
+        "command": {
+          "$ref": "#/$defs/command"
+        },
+        "result": {
+          "enum": [
+            "passed",
+            "failed",
+            "blocked",
+            "not_run"
+          ]
+        },
+        "exit_code": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/commit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dirty_tree_sha256": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "log_path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "log_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "minItems": 0,
+          "maxItems": 1000
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "const": "passed"
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "exit_code": {
+                "const": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "const": "not_run"
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "exit_code": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bytes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "remaining_tokens",
+        "observed_at",
+        "source"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unknown",
+            "observed"
+          ]
+        },
+        "remaining_tokens": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining_tokens": {
+                "const": null
+              },
+              "observed_at": {
+                "const": null
+              },
+              "source": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "observed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_at": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "source": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "remaining_tokens": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "provider_quota": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "account_shared",
+        "used_percent",
+        "remaining_percent",
+        "window_minutes",
+        "resets_at",
+        "observed_at",
+        "source"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unknown",
+            "observed"
+          ]
+        },
+        "account_shared": {
+          "const": true
+        },
+        "used_percent": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remaining_percent": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "window_minutes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resets_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "used_percent": {
+                "const": null
+              },
+              "remaining_percent": {
+                "const": null
+              },
+              "window_minutes": {
+                "const": null
+              },
+              "resets_at": {
+                "const": null
+              },
+              "observed_at": {
+                "const": null
+              },
+              "source": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "observed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_at": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "source": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "used_percent": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "remaining_percent": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "rate_limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "limited",
+        "retry_after_seconds",
+        "resets_at",
+        "observed_at",
+        "source"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unknown",
+            "observed"
+          ]
+        },
+        "limited": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retry_after_seconds": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resets_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "limited": {
+                "const": null
+              },
+              "retry_after_seconds": {
+                "const": null
+              },
+              "resets_at": {
+                "const": null
+              },
+              "observed_at": {
+                "const": null
+              },
+              "source": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "observed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_at": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "source": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "limited": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "retry_after_seconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "resets_at": {
+                    "$ref": "#/$defs/timestamp"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "execution_deadline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "at",
+        "remaining_seconds",
+        "observed_at",
+        "source"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unknown",
+            "observed"
+          ]
+        },
+        "at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remaining_seconds": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "at": {
+                "const": null
+              },
+              "remaining_seconds": {
+                "const": null
+              },
+              "observed_at": {
+                "const": null
+              },
+              "source": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "observed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_at": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "source": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "at": {
+                    "$ref": "#/$defs/timestamp"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "remaining_seconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "spend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "extra_billing_authorized",
+        "remaining",
+        "monetary_ceiling",
+        "currency",
+        "observed_at",
+        "source"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unknown",
+            "observed"
+          ]
+        },
+        "extra_billing_authorized": {
+          "const": false
+        },
+        "remaining": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "monetary_ceiling": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remaining": {
+                "const": null
+              },
+              "monetary_ceiling": {
+                "const": null
+              },
+              "currency": {
+                "const": null
+              },
+              "observed_at": {
+                "const": null
+              },
+              "source": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "observed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_at": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "source": {
+                "$ref": "#/$defs/text"
+              },
+              "currency": {
+                "type": "string",
+                "pattern": "^[A-Z]{3}$"
+              }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "remaining": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "monetary_ceiling": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
