@@ -6,7 +6,7 @@
   "host": "win32-x64",
   "node": "v24.11.0",
   "target": "x86_64-unknown-linux-gnu",
-  "harness_sha256": "5bff2753678b8c3eaef90005f0e06d46a453188afc9093f25d3176e1688409c1",
+  "harness_sha256": "8df58c3c8b8dda3c9466945db9d9b646118647df97e89e21c906882b8d9ddb5a",
   "contract_sha256": "acfc89c0320a0b364855c2fe4860a23593787f9762333c650ccfdc8e42b2d918",
   "budgets": {
     "native_seconds": 5,
@@ -1771,10 +1771,21 @@
       "expected_exit": 1,
       "expected_stdout": null,
       "expected_stderr": null,
-      "expected_diagnostic_code": "F0006",
-      "expected_diagnostic_message": null,
-      "expected_diagnostic_substring": "use an explicit constructor",
-      "expected_original_range": null,
+      "expected_diagnostic_code": "NJA101",
+      "expected_diagnostic_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "expected_diagnostic_substring": null,
+      "expected_original_range": {
+        "start": {
+          "line": 5,
+          "character": 9
+        },
+        "end": {
+          "line": 5,
+          "character": 15
+        },
+        "byte_start": 139,
+        "byte_end": 145
+      },
       "expected_lexical_token": null,
       "input_error_without_json": false,
       "control_original_stdout": null,
@@ -1789,10 +1800,21 @@
       "expected_exit": 1,
       "expected_stdout": null,
       "expected_stderr": null,
-      "expected_diagnostic_code": "F0006",
-      "expected_diagnostic_message": null,
-      "expected_diagnostic_substring": "use an explicit constructor",
-      "expected_original_range": null,
+      "expected_diagnostic_code": "NJA101",
+      "expected_diagnostic_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "expected_diagnostic_substring": null,
+      "expected_original_range": {
+        "start": {
+          "line": 5,
+          "character": 8
+        },
+        "end": {
+          "line": 5,
+          "character": 14
+        },
+        "byte_start": 138,
+        "byte_end": 144
+      },
       "expected_lexical_token": null,
       "input_error_without_json": false,
       "control_original_stdout": null,
@@ -1807,10 +1829,21 @@
       "expected_exit": 1,
       "expected_stdout": null,
       "expected_stderr": null,
-      "expected_diagnostic_code": "F0006",
-      "expected_diagnostic_message": null,
-      "expected_diagnostic_substring": "use an explicit constructor",
-      "expected_original_range": null,
+      "expected_diagnostic_code": "NJA101",
+      "expected_diagnostic_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "expected_diagnostic_substring": null,
+      "expected_original_range": {
+        "start": {
+          "line": 5,
+          "character": 8
+        },
+        "end": {
+          "line": 5,
+          "character": 14
+        },
+        "byte_start": 138,
+        "byte_end": 144
+      },
       "expected_lexical_token": null,
       "input_error_without_json": false,
       "control_original_stdout": null,
@@ -1825,10 +1858,21 @@
       "expected_exit": 1,
       "expected_stdout": null,
       "expected_stderr": null,
-      "expected_diagnostic_code": "F0006",
-      "expected_diagnostic_message": null,
-      "expected_diagnostic_substring": "use an explicit constructor",
-      "expected_original_range": null,
+      "expected_diagnostic_code": "NJA101",
+      "expected_diagnostic_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "expected_diagnostic_substring": null,
+      "expected_original_range": {
+        "start": {
+          "line": 5,
+          "character": 9
+        },
+        "end": {
+          "line": 5,
+          "character": 15
+        },
+        "byte_start": 139,
+        "byte_end": 145
+      },
       "expected_lexical_token": null,
       "input_error_without_json": false,
       "control_original_stdout": null,
@@ -1843,10 +1887,21 @@
       "expected_exit": 1,
       "expected_stdout": null,
       "expected_stderr": null,
-      "expected_diagnostic_code": "F0006",
-      "expected_diagnostic_message": null,
-      "expected_diagnostic_substring": "use an explicit constructor",
-      "expected_original_range": null,
+      "expected_diagnostic_code": "NJA101",
+      "expected_diagnostic_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "expected_diagnostic_substring": null,
+      "expected_original_range": {
+        "start": {
+          "line": 5,
+          "character": 10
+        },
+        "end": {
+          "line": 5,
+          "character": 16
+        },
+        "byte_start": 140,
+        "byte_end": 146
+      },
       "expected_lexical_token": null,
       "input_error_without_json": false,
       "control_original_stdout": null,
@@ -2882,5 +2937,19 @@
       "control_original_stdout": null,
       "result": "not_run"
     }
-  ]
+  ],
+  "lexical_migration": {
+    "authority_adr_commit": "3fa7e09ceb82365948dd2f9793cdbf44dc5dc12f",
+    "original_preparation_sha256": "485d653e9105506a3ecb417d7d59790241fd4e67cd5dc9fc93cb0661736ea937",
+    "unchanged_sources": 150,
+    "changed_diagnostic_expectations": [
+      "ambiguous-312e3556657373656c",
+      "ambiguous-2e3556657373656c",
+      "ambiguous-312e56657373656c",
+      "ambiguous-31653356657373656c",
+      "ambiguous-31452d3356657373656c"
+    ],
+    "focused_evidence": "reports/migrations/EXACT_DECIMAL_STAGE_A_2026-10-25.json",
+    "scope": "Only five decimal suffix diagnostics migrate; all150 sources, other145 identities, categories, outputs and budgets are unchanged."
+  }
 }

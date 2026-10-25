@@ -45,3 +45,5 @@ Windows/WSL x86-64. The original `PREPARATION.json` remains `not_run`;
 the separate [execution report](EXECUTION_936865c.md) and raw results record
 the actual observation, commands, hashes and limits. This partial Stage A
 proof does not complete general typed-literal protocols, FC1 or HATCH.
+
+Current compatibility update: ADR008 supersedes five decimal-token diagnostic expectations; see [the explicit migration](EXACT_DECIMAL_MIGRATION_2026-10-25.md). Original sources, other145 identities, 150-case count, budgets and source936865c evidence remain preserved. The revised preparation is not an execution result.
