@@ -111,6 +111,8 @@ fn run() -> Result<i32, String> {
         }
         (None, None)
     };
+    let dialect = source_dialect(path)?;
+    let aliases = module_aliases(path, dialect, project_root.as_deref())?;
     let (source, dialect) = read_source(path)?;
     if operation == "lex" {
         let lexed = naja_frontend::lex_with_dialect(&source, dialect);
@@ -128,7 +130,6 @@ fn run() -> Result<i32, String> {
         }
         return Ok(0);
     }
-    let aliases = module_aliases(path, dialect, project_root.as_deref())?;
     if operation == "check" {
         naja_seed::check_with_aliases(&source, dialect, aliases.as_ref())
             .map_err(|errors| diagnostics(path, &source, &errors))?;
@@ -234,8 +235,24 @@ pub(crate) fn source_dialect(path: &Path) -> Result<naja_frontend::Dialect, Stri
 
 fn read_source(path: &Path) -> Result<(String, naja_frontend::Dialect), String> {
     let dialect = source_dialect(path)?;
+    validate_source_path(path)?;
+    let metadata = fs::metadata(path)
+        .map_err(|error| format!("NJA004: cannot inspect source {}: {error}", path.display()))?;
+    if !metadata.is_file() {
+        return Err(
+            "NJA004: source must be an ordinary regular file; streams and devices are unsupported"
+                .into(),
+        );
+    }
     let file = fs::File::open(path)
         .map_err(|error| format!("NJA004: cannot open {}: {error}", path.display()))?;
+    if !file
+        .metadata()
+        .map_err(|error| format!("NJA004: cannot inspect opened source: {error}"))?
+        .is_file()
+    {
+        return Err("NJA004: opened source must be an ordinary regular file".into());
+    }
     let mut bytes = Vec::new();
     file.take(1_048_577)
         .read_to_end(&mut bytes)
@@ -247,6 +264,21 @@ fn read_source(path: &Path) -> Result<(String, naja_frontend::Dialect), String> 
         String::from_utf8(bytes).map_err(|_| "NJA005: source must be UTF-8")?,
         dialect,
     ))
+}
+
+fn validate_source_path(path: &Path) -> Result<(), String> {
+    #[cfg(windows)]
+    for component in path.components() {
+        use std::path::{Component, Prefix};
+        match component {
+            Component::Prefix(prefix) if !matches!(prefix.kind(), Prefix::Disk(_) | Prefix::VerbatimDisk(_)) => return Err("NJA004: source device/network namespaces are unsupported; use an ordinary local file".into()),
+            Component::Normal(name) if name.to_string_lossy().contains(':') => return Err("NJA004: source alternate data streams are unsupported".into()),
+            _ => {}
+        }
+    }
+    #[cfg(not(windows))]
+    let _ = path;
+    Ok(())
 }
 
 fn module_aliases(
@@ -270,8 +302,9 @@ fn module_aliases(
 }
 
 fn compile_source_file(path: &Path, project_root: Option<&Path>) -> Result<Vec<u8>, String> {
-    let (source, dialect) = read_source(path)?;
+    let dialect = source_dialect(path)?;
     let aliases = module_aliases(path, dialect, project_root)?;
+    let (source, dialect) = read_source(path)?;
     naja_seed::compile_with_aliases(&source, dialect, aliases.as_ref())
         .map_err(|errors| diagnostics(path, &source, &errors))
 }
@@ -368,6 +401,7 @@ fn parse_execution_options(
 }
 
 fn test_programs(path: &Path, options: &ExecutionOptions) -> Result<i32, String> {
+    validate_source_path(path)?;
     let files = execution::discover(path, options.filter.as_deref())?;
     options.runner.prepare()?;
     let mut passed = 0;
@@ -646,6 +680,25 @@ mod tests {
         .unwrap();
         assert_eq!(build.project_root, Some(root));
         assert_eq!(build.output, PathBuf::from("new file.elf"));
+    }
+
+    #[test]
+    fn source_input_requires_regular_files_and_rejects_device_spellings() {
+        let directory =
+            env::temp_dir().join(format!("naja-source-kind-{}.naja", std::process::id()));
+        fs::create_dir(&directory).unwrap();
+        let result = read_source(&directory);
+        fs::remove_dir(&directory).unwrap();
+        assert!(result.unwrap_err().contains("regular file"));
+        #[cfg(windows)]
+        for name in [
+            r"\\.\pipe\naja-test.naja",
+            r"\\?\GLOBALROOT\Device\naja-test.naja",
+            r"\\server\share\naja-test.naja",
+            "local.naja:stream.naja",
+        ] {
+            assert!(read_source(Path::new(name)).unwrap_err().contains("NJA004"));
+        }
     }
 
     #[test]

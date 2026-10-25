@@ -9,6 +9,36 @@ use std::marker::PhantomData;
 mod values;
 use values::{Dynamic, Fixed, Hosted, Values};
 
+/// Bounded temporary seed stack reservation, plus platform thread overhead.
+/// This supports the advertised parser/IR depths independently of the caller's
+/// main-thread default. Native emitted programs do not create this worker.
+pub const COMPILATION_STACK_BYTES: usize = 8 * 1024 * 1024;
+
+fn compilation_worker<T: Send>(
+    operation: impl FnOnce() -> Result<T, Vec<Diagnostic>> + Send,
+) -> Result<T, Vec<Diagnostic>> {
+    std::thread::scope(|scope| {
+        let worker = std::thread::Builder::new()
+            .name("naja-compiler".into())
+            .stack_size(COMPILATION_STACK_BYTES)
+            .spawn_scoped(scope, operation)
+            .map_err(|error| {
+                vec![Diagnostic {
+                    code: "NJA107",
+                    message: format!("cannot create the bounded compilation worker: {error}"),
+                    span: Span::new(0, 0),
+                }]
+            })?;
+        worker.join().unwrap_or_else(|_| {
+            Err(vec![Diagnostic {
+                code: "NJA108",
+                message: "the compilation worker failed unexpectedly".into(),
+                span: Span::new(0, 0),
+            }])
+        })
+    })
+}
+
 /// Reject unsupported syntax instead of executing a foreign runtime or narrowing int.
 pub fn compile(source: &str) -> Result<Vec<u8>, Vec<Diagnostic>> {
     compile_with_dialect(source, Dialect::Python)
@@ -24,17 +54,19 @@ pub fn compile_with_aliases(
     dialect: Dialect,
     aliases: Option<&AliasTable>,
 ) -> Result<Vec<u8>, Vec<Diagnostic>> {
-    let result = match check_with_aliases(source, dialect, aliases)? {
-        CheckedProgram::FixedI64(statements) => naja_native::emit_elf(&statements),
-        CheckedProgram::HostedIntegers(statements) => hosted::emit_elf(&statements),
-        CheckedProgram::HostedValues(statements) => dynamic::emit_elf(&statements),
-    };
-    result.map_err(|message| {
-        vec![Diagnostic {
-            code: "NJA200",
-            message,
-            span: Span::new(0, 0),
-        }]
+    compilation_worker(|| {
+        let result = match check_with_aliases_inner(source, dialect, aliases)? {
+            CheckedProgram::FixedI64(statements) => naja_native::emit_elf(&statements),
+            CheckedProgram::HostedIntegers(statements) => hosted::emit_elf(&statements),
+            CheckedProgram::HostedValues(statements) => dynamic::emit_elf(&statements),
+        };
+        result.map_err(|message| {
+            vec![Diagnostic {
+                code: "NJA200",
+                message,
+                span: Span::new(0, 0),
+            }]
+        })
     })
 }
 
@@ -57,6 +89,14 @@ pub fn check_with_dialect(
 }
 
 pub fn check_with_aliases(
+    source: &str,
+    dialect: Dialect,
+    aliases: Option<&AliasTable>,
+) -> Result<CheckedProgram, Vec<Diagnostic>> {
+    compilation_worker(|| check_with_aliases_inner(source, dialect, aliases))
+}
+
+fn check_with_aliases_inner(
     source: &str,
     dialect: Dialect,
     aliases: Option<&AliasTable>,
@@ -95,9 +135,11 @@ pub fn check_hosted(
     source: &str,
     dialect: Dialect,
 ) -> Result<Vec<hosted::Statement>, Vec<Diagnostic>> {
-    let statements = parse_values::<Hosted>(source, dialect)?;
-    validate_hosted(&statements)?;
-    Ok(statements)
+    compilation_worker(|| {
+        let statements = parse_values::<Hosted>(source, dialect)?;
+        validate_hosted(&statements)?;
+        Ok(statements)
+    })
 }
 
 fn validate_hosted(statements: &[hosted::Statement]) -> Result<(), Vec<Diagnostic>> {

@@ -72,6 +72,24 @@ chains are limited to128 comparisons. There is no runtime loop quota or sandbox.
 Unix filename conversion is tested independently of a filesystem's ability to
 create invalid-byte names; macOS EILSEQ fixture rejection remains observable.
 
+Independent review found that the Windows main-thread default stack could abort
+the larger dynamic parser below its advertised depth. Compilation/checking now
+run in a joined scoped worker with an explicitly capped 8 MiB stack reservation,
+plus OS thread overhead. This is temporary seed implementation memory, not a
+changed source/IR depth limit or emitted-program runtime dependency. Failure to
+create the worker is diagnostic NJA107; unexpected worker failure is NJA108.
+The fixed reservation was selected before boundary revalidation and is not raised
+to make a failing test pass. Actual CLI checks cover the stated limit, rejection
+above it, and combined maximum suites/expressions.
+
+Source input must be a regular file. Windows device/network namespaces and
+alternate streams are rejected before open; explicit owning-project validation
+precedes consumption of source bytes. Metadata is checked before and after open.
+`scripts/test-compiler-boundaries.mjs` uses a real private Windows named pipe or
+Unix FIFO, bounded child processes and no writer service, alongside actual CLI
+depth tests. These checks assume a stable filesystem and do not establish hostile
+race confinement or a universal OS I/O deadline.
+
 Work-unit tests and real WSL execution demonstrate the implemented slices only.
 New retained records must name the actual committed source and preserve failures.
 The earlier 14-record proof set remains pinned to source4f93a39 and does not

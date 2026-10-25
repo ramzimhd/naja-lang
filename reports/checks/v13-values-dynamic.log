@@ -1,0 +1,63 @@
+Recorded command: node scripts/test-dynamic.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS display-truth-and-all-byte-repr exit=0 sha256=93296536e47c6d0a07b8d5c005d58da7ab4bc2ae31d6199e3210734e127fd3f8
+PASS operand-returning-and-or exit=0 sha256=adac73f324d52ceff1817f2d264632f7d12bb421b9583f937777c2f6657cad85
+PASS numeric-text-bytes-and-unrelated-comparisons exit=0 sha256=e44ce0ea121f8748e7dcbd63d3da299a3147f4463cbdb150930f56b17703add0
+PASS bool-integer-arithmetic-and-metamorphic exit=0 sha256=74ec4e228307912ebf897b1e71597f0bac502222665fe58281fe2ca6b1baa773
+PASS immutable-text-and-bytes-concatenation exit=0 sha256=fa9605a1ab622715ab7cf69b6a333bca98fac4151a03fc45a81d4e2dfcf3c77b
+PASS control-reassignment-and-aliases exit=0 sha256=934aac448ca1b730bc9ece20d22df5d8cc55268a6526deb5e2dd7640b5bc4674
+PASS short-circuit-skips-runtime-type-errors exit=0 sha256=9ef719d5574e2d08d3f43e3845b50fb87fcadb5121a1515986603fc992ad34c7
+PASS positive-and-integer-boundary-preserve-exact-values exit=0 sha256=5d6e6aa3a1fe04dd34746e1ededed71be7b5b3209891d226b7b88ad19b9d2553
+PASS unicode-scalar-and-raw-byte-lengths exit=0 sha256=e41e52e9d2954849f41429d72b0f95e122eb5693da278178a029ed578c8789c7
+PASS comparison-chain-independent-value-oracles exit=0 sha256=0ff274c628629edb011f7d6e78fe638d3035f40e1a906d243b14eb4dcd79b207
+PASS comparison-chain-short-circuit-and-nesting exit=0 sha256=4865599f9f1f5ec4a246944bfb2977faed7bac26508b11e4089307d4be84672a
+PASS comparison-chain-max-supported-width exit=0 sha256=9bc64bbf0ddcb107d3cd1c4378da5cf2cbbdfd084fd87315bb5a1ef73286efcf
+PASS chain-intermediate-evaluated-once-under-arena-bound exit=0 sha256=a32d28b08623936e1b9c65b5c9faba1fbc1a9e22aa59e9a1cf38c37a1dadf121
+PASS repeated-intermediate-control-exhausts-arena exit=103 sha256=ff8cdb1bd4e808e7dd2750e7ed07d8ca573c267ff612fd6100ed18b14ebf303c
+PASS chain-false-skips-resource-failure exit=0 sha256=8a9de26686c31e83f84e5f7ff7e4a52555b385e480412ddb10659840ee3916fa
+PASS chain-evaluation-order-preserves-first-error exit=105 sha256=319ce9a59fed8f182816278823ae29e5b4e7ddd14f15027f874dadf01d2a9967
+PASS length-result-allocation-obeys-arena-limit exit=103 sha256=f9f215bf325608f65bbe9ef26e47527113cbe745a3b782835b61b734dc67421c
+PASS positive-bool-allocation-obeys-arena-limit exit=103 sha256=6a339ba348638ad34fc4c0d66d849d83b57fa36a7398c30db9ccaed206d23ddc
+PASS type-error-int-text-add exit=105 sha256=63561331c93d44bdeed5b0ad722f3dda1c6b94648e8fbc83e8338b2153b72524
+PASS type-error-bool-bytes-multiply exit=105 sha256=ccbcdc0bfaef7f82191eaa57573e9ba09ae034750a2bc9459f84d56a524d3834
+PASS type-error-text-bytes-add exit=105 sha256=de284d6401056f4c80d48a4af78bdadf2fb179e3a40d4a7e9550ecf631229747
+PASS type-error-none-negation exit=105 sha256=5574de7e1ddff79b64296e00b2eff70e9177c9de11341626a80a194c24d37af1
+PASS type-error-text-text-multiply exit=105 sha256=672efdcad36ee2817892dfcf9b51d2b5575a5cdf8aae54008c3254d5ae270b30
+PASS type-error-text-ordered-int exit=105 sha256=7746570f7a34d287e5a33a61153e09558f24a0096defacd0a730ee101c4e194d
+PASS type-error-none-ordered-none exit=105 sha256=9957dba7527134e6afc655926c86321114f7a7ea1259b50e584f3ce81d4dfe6b
+PASS type-error-bool-ordered-text exit=105 sha256=1f8d4335977816c04a3b113f741a880cba0617e6c5c70fcc990ce55a2665d7dc
+PASS type-error-bytes-subtract exit=105 sha256=e28364a3f4ec46937ad6a5aa1744fa4d3c09a18f8ac78e32e788f906039cee0a
+PASS type-error-text-positive exit=105 sha256=238b6cf0839e15b5a9a2cc460f23f827213b30b84744c91dfb62349b0e1d2fd8
+PASS type-error-bytes-positive exit=105 sha256=260af20cfd7600b2b750d2c3b675268921e15653f9b73db55e299586d1fdc806
+PASS type-error-none-positive exit=105 sha256=04d74475b2506413b3252bbd833462ccc7529700ac1dcedf3423a6c9e35146d8
+PASS type-error-int-length exit=105 sha256=c590c302d7c56c68023b9d5b797e6f0bb106c1dcf2145f3e5610a22d97513d41
+PASS type-error-bool-length exit=105 sha256=01e1c314f0cf4935f60c6dd0cf41879a228ef2b6a9bc90cc92371ba5aa54c5d3
+PASS type-error-none-length exit=105 sha256=babf33c01cc7cd02f7e759e3afe3d872b422b015b5f4c2835a7c764fbbd3f487
+PASS type-error-text-int-boundary exit=105 sha256=94f58f019dac6384e3c9f77f0a8c3f4ec49f670a06814dfbf298aaff50441b7c
+PASS type-error-bytes-int-boundary exit=105 sha256=b2e9c2a242017c809ba2ef5b2c24a2481ff6a55d8a043c63097c8f668112d1e9
+PASS type-error-none-int-boundary exit=105 sha256=2b12bc361844e50b15d9820fd0f1d92d2841234b26ffed672d250ae6002ff4af
+PASS type-error-chain-reached-invalid-order exit=105 sha256=714b63e0b91ec5a765a862b77b9639dd2f4306aa09b89e0614856925ecaf06a1
+PASS assertion-failure exit=104 sha256=022e2830dee2556846875ced1e2f41f5786ff0ec609059334f3f178501bc57db
+PASS arena-resource-text-concat exit=103 sha256=d6d329af918804e53eb4a0cca20a5b599cedf50bff449ab039a6dbbf0475ec8d
+PASS arena-resource-integer-descriptors exit=103 sha256=5b392d60cae1076cafdbac3bb95b60aa285161bccf35417fe97907b7a301fff0
+PASS arena-resource-bytes-format-buffer exit=103 sha256=70c35797526f06e5f0bce92cc866839f41c2ed0a0c5bc814bb00e1e0920ea953
+PASS text stdout write failure exit102
+PASS bytes stdout write failure exit102
+PASS bool stdout write failure exit102
+PASS int stdout write failure exit102
+PASS invalid IR rejected before output: uninitialized
+PASS invalid IR rejected before output: out-of-frame
+PASS invalid IR rejected before output: bad-literal
+PASS invalid IR rejected before output: invalid-text-utf8
+PASS invalid IR rejected before output: deep-expression
+PASS invalid IR rejected before output: loop-scope
+PASS invalid IR rejected before output: empty-chain
+PASS invalid IR rejected before output: excessive-chain
+PASS invalid IR rejected before output: skipped-uninitialized-chain
+PASS repeated emission has identical unsigned ELF bytes
+PASS malformed tag descriptor is guarded before payload access
+PASS malformed length descriptor is guarded before payload access
+PASS native output depends on runtime literal data rather than a canned result
+58 dynamic native/IR checks passed; 5855 independent arithmetic, comparison, truth, bytes-repr and metamorphic outputs matched.
+Limits: B0 development IR; Linuxx64/explicit local WSL; bounded 64MiB temporary arena; no float/container/functions/exception-unwinding, complete runtime, FC1, self-hosting or release claim.

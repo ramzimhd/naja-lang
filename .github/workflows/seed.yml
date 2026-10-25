@@ -30,6 +30,8 @@ jobs:
         run: cargo clippy --workspace --all-targets --locked --offline -- -D warnings
       - name: Build experimental compiler offline
         run: cargo build --workspace --locked --offline
+      - name: Exercise actual CLI stack and source-input boundaries
+        run: node scripts/test-compiler-boundaries.mjs
       - name: Execute emitted Linux machine code
         if: runner.os == 'Linux'
         run: node scripts/test-native.mjs

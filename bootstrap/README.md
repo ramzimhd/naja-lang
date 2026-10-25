@@ -87,6 +87,15 @@ quota or sandbox: a source loop can run indefinitely and code executes under the
 user's OS rights. Tests use an external five-second timeout. These temporary
 compiler limits do not narrow the final HATCH requirements.
 
+The temporary seed reserves a capped 8 MiB compilation-worker stack per call,
+plus OS thread overhead, so caller/main-thread defaults do not reduce the stated
+depth bounds. Workers are joined before returning; generated programs do not
+create them. Source input must be a regular file, and explicit project ownership
+is checked before reading it. Windows device/network namespaces and alternate
+streams are unsupported. Filesystem checks assume stable paths rather than
+hostile concurrent mutation. Actual CLI boundary tests include a private named
+pipe or FIFO and the advertised maximum/over-limit depths.
+
 ## Independent emission and verification
 
 The backend emits instructions, patches local relative branches/calls and builds
