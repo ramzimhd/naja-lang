@@ -1,0 +1,29 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "f0f89944b13077bb8afe84466a34e8f73f2654da",
+  "target": "Exact decimal integration; migrated Stage A150 compatibility with unchanged source identities",
+  "command": [
+    "node",
+    "scripts/test-typed-literals-language.mjs",
+    "--expect-source",
+    "f0f89944b13077bb8afe84466a34e8f73f2654da"
+  ],
+  "tool_versions": {
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "git": "git version 2.51.0.windows.1",
+    "powershell": "7.6.4",
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T23:09:33.5535593+00:00",
+  "log_path": "reports/checks/v13-exact-stage-a-compat.log",
+  "log_sha256": "3ec54c0d4cb90d3cbe8e4bf658a8e464e53e7f15f5062ee0cb9c9b4f8ff8e700",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}
