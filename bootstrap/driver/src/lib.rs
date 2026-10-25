@@ -818,9 +818,30 @@ impl<V: Values> Parser<V> {
         } else if self.take("+") {
             V::positive(self.expression(7, depth + 1)?)
         } else if self.take("(") {
-            let value = self.expression(0, depth + 1)?;
-            self.expect(")")?;
-            value
+            if self.take(")") {
+                V::tuple(Vec::new()).map_err(|message| self.error(message))?
+            } else {
+                let first = self.expression(0, depth + 1)?;
+                if self.take(",") {
+                    let mut elements = vec![first];
+                    while self.text() != ")" {
+                        if elements.len() >= dynamic::MAX_TUPLE_ELEMENTS {
+                            return Err(
+                                self.error("experimental tuple element limit of 128 exceeded")
+                            );
+                        }
+                        elements.push(self.expression(0, depth + 1)?);
+                        if !self.take(",") {
+                            break;
+                        }
+                    }
+                    self.expect(")")?;
+                    V::tuple(elements).map_err(|message| self.error(message))?
+                } else {
+                    self.expect(")")?;
+                    first
+                }
+            }
         } else if self.take_binding("i64") {
             if V::HOSTED {
                 return Err(self.error(
@@ -1449,5 +1470,57 @@ mod tests {
         let over_limit = format!("print('x'{})\n", "[0]".repeat(128));
         assert!(compile(&at_limit).is_ok());
         assert!(compile(&over_limit).is_err());
+    }
+    #[test]
+    fn tuples_preserve_grouping_and_argument_separator_ownership() {
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            for source in [
+                "empty = ()\nassert not empty\nprint(len(empty))\n",
+                "one = (True,)\nprint(one[0])\n",
+                "pair = (1, ('é', b'\\xff'),)\nprint(pair[1][-1])\n",
+                "def pair(a, b): return (a, b)\nprint(pair((1, 2), (3,))[0][1])\n",
+                "def identity(value): return value\nprint(identity((7,))[0])\n",
+                "print((1, 2))\n", // Display is a runtime type error in this partial slice.
+            ] {
+                assert!(compile_with_dialect(source, dialect).is_ok(), "{source}");
+            }
+            for source in [
+                "values = 1, 2\n",
+                "a, b = (1, 2)\n",
+                "values = (*(),)\n",
+                "values = (,1)\n",
+                "values = (1,,2)\n",
+                "print((1, 2)[0, 1])\n",
+                "print(tuple())\n",
+                "def f(a, b): return a\nprint(f((1, 2)))\n",
+            ] {
+                assert!(compile_with_dialect(source, dialect).is_err(), "{source}");
+            }
+        }
+        assert_eq!(
+            compile("print((7))\n").unwrap(),
+            compile("print(7)\n").unwrap()
+        );
+        assert!(compile(&format!("{IMPORT}value: i64 = ()\n")).is_err());
+        assert!(compile(&format!("{IMPORT}value: i64 = (i64(1),)\n")).is_err());
+    }
+    #[test]
+    fn tuple_source_elements_and_tree_height_keep_existing_bounds() {
+        for (count, accepted) in [(128, true), (129, false)] {
+            let source = format!("values = ({})\n", "0,".repeat(count));
+            let result = compile(&source);
+            assert_eq!(result.is_ok(), accepted, "{count}: {result:?}");
+            if !accepted {
+                assert!(result.unwrap_err()[0].message.contains("128"));
+            }
+        }
+        let nested = |layers| format!("value = {}0{}\n", "(".repeat(layers), ",)".repeat(layers));
+        assert!(compile(&nested(127)).is_ok());
+        assert!(
+            compile(&nested(128)).unwrap_err()[0]
+                .message
+                .contains("128")
+        );
+        assert!(compile("values = (0, missing)\n").is_err());
     }
 }

@@ -89,6 +89,17 @@ and chains left to right; slices and multidimensional indices are explicitly
 unsupported. See [native indexing](../tests/index/README.md) for the span checks,
 UTF-8 validation and unchanged arena/stack limits.
 
+Parenthesized tuples use `()` for empty, `(value,)` for one element, and
+`(a, b, ...)` for up to 128 elements; `(value)` remains grouping. A trailing comma
+is allowed. Elements evaluate once from left to right and retain their original
+descriptors. Tuples support `len`, truth/not/and/or and exact signed indexing,
+including nested tuples and tuples returned by functions. They share the existing
+arena, expression depth, literal and node limits. Bare comma tuples, unpacking,
+starred elements, iteration, slices and the `tuple()` constructor are not yet
+implemented. Tuple display, comparisons and numeric operations explicitly report
+type exit105; they remain required semantic work, not permanent exclusions.
+See [native tuples](../tests/tuples/README.md) for lifetime and guard boundaries.
+
 An initial `from naja.core import i64` instead imports the compiler-provided checked
 signed 64-bit primitive. This is not a general module resolver or delivered
 standard library. Top-level declarations require `name: i64 = expression`.

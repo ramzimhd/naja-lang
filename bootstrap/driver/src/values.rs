@@ -19,6 +19,9 @@ pub(crate) trait Values {
     fn none() -> Result<Self::Expression, String> {
         Err("None is unsupported in this explicit integer domain".into())
     }
+    fn tuple(_elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
+        Err("tuples are unsupported in this explicit integer domain".into())
+    }
     fn local(slot: usize) -> Self::Expression;
     fn call(_index: usize, _arguments: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Err("function calls are unsupported in this explicit integer domain".into())
@@ -201,6 +204,9 @@ impl Values for Dynamic {
     }
     fn none() -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::None)
+    }
+    fn tuple(elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Tuple(elements))
     }
     fn local(slot: usize) -> Self::Expression {
         dynamic::Expression::Local(slot)
