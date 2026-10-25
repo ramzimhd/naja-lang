@@ -67,3 +67,9 @@ not establish tuple display/equality/arithmetic, general containers, full Python
 compatibility, memory reclamation, other emitted targets, self-hosting, FC1 or
 HATCH completion. Official narratives remain English; multilingual identifiers
 and string contents are intentional user data.
+
+The pinned actual run is recorded in
+[RUN_2026-10-25.md](RUN_2026-10-25.md), with all tuple outcomes in
+[RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). The unchanged older index
+baseline's obsolete expectation remains a separately retained failure in
+[INDEX_BASELINE_FAILURE_2026-10-25.json](INDEX_BASELINE_FAILURE_2026-10-25.json).
