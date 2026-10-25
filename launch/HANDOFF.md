@@ -56,6 +56,9 @@ Original b6786b7 CI run40238471265 failed newpackagecontrols because shallow
 checkout lacked pinned a51 history. Correction6e4148b passed allthreehosts at
 exactrun40238645724; originalfailure retained. Review stagedblobs, preserveknown
 synthetic scannerfinding/manualdisposition, pushnormally and verifynewexactCI.
+Published0d894742f47fdb40a1e3594c861f14aa273d02e9 passed all three hosts at
+exact run40240848481. Retained public REST observations are in
+reports/governance/CI_MAPPINGS_LITERALS_2026-10-25.json.
 No artifactrelease/Marketplace publication is implied.
 
 ## Active exact Rational work
@@ -65,7 +68,7 @@ backends/native/, scripts/test-rationals.mjs, tests/rationals/. Base936865c.
 Frozen contract23a6a59042c29502e180940bb38eab3c061a7925 precedes nativeexecution.
 Root owns driver/values source lowering. Frontend agent/rationals-source-harness-v13
 in its retained worktree owns ONLY scripts/test-rationals-language.mjs and
- tests/rationals-source/. No Rational native result/source implementation yet.
+ tests/rationals-source/. No Rational native result yet.
 Read frozen contract before editing or freezing resource expectations.
 
 Agreed API: naja.numeric rational(n,d) accepts Int/Bool only, evaluatesNUM thenDEN
@@ -86,9 +89,14 @@ muststay constant header/span checks with NO gcd/limbscan/scratchallocation, pre
 existing noallocation stores/selectedreads; this is not arbitrarymodified-ELF
 provenance/coprimality proof. All existing caps/strict mutation selectors remain.
 
-Completed secondary typed integration remains at
-C:/naja-worktrees/typed-literal-integration, agent/typed-literal-integration-v13,
-HEAD1061c58; source/evidence integrated toprimary. Earlier workerbranches/artifacts
-remainretained. Create a separate source-integration branch/worktree if needed;
-never overwrite activebackend/harness paths. Integrate releasedRational work,
-supply exact clean sourceSHA to frozen sourceharness, retain failures and continue.
+The completed typed branch1061c58 remains preserved. Its worktree
+C:/naja-worktrees/typed-literal-integration now uses the separate
+agent/rational-source-integration-v13 branch, clean at5ee64ec1fb02968964a81b0f07c086ae0578c684.
+Root source APIs/height/ADR007 are committed255d2a2; unchanged source220
+preparation is integratedd4d354c and independently reviewed. Exactd4d source
+passed Rust276/fmt/Clippy/JSON21, retained in5ee64ec. No Rational source/native
+execution yet; await seed IR proof/release before assigning clean execution pins.
+Latest shared quota88% used/12% remaining at2026-10-25T22:43:26.443Z, no observed
+exhaustion. Earlier worker branches/artifacts remain retained. Never overwrite
+active backend/harness paths. Integrate released Rational work, supply exact
+clean source SHA to the frozen source harness, retain failures and continue.

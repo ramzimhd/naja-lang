@@ -57,15 +57,21 @@ four exact-source passing records. Clean HEAD1bb01a2 assessed ready at
 not complete coverage/log honesty or acceptance. CI b6786b7 failed package controls
 because depth1 checkout lacked pinned historical source; original run40238471265
 stays failed. Corrected6e4148b passed Linux/Windows/macOS at exact40238645724.
-New publication needs its own exact-SHA CI observation. Last observed shared quota
-was78% used/22% remaining at22:18:22.477Z, reset2026-11-01T08:14:13Z;
+Published0d894742f47fdb40a1e3594c861f14aa273d02e9 passed all three hosts
+at exact run40240848481; the public REST job conclusions are retained in
+reports/governance/CI_MAPPINGS_LITERALS_2026-10-25.json. Last observed shared quota
+was88% used/12% remaining at22:43:26.443Z;
 other budget categories remain unknown.
 
 Next: exact normalized native Rational foundation and explicit numeric APIs.
 Seed owns native-rationals branch/backend/new IR harness; frontend owns only new
 rationals-source harness. Native contract23a6a590 is frozen before execution with
 cumulative work accounting and constant/noallocation generic guards. No Rational
-native result or source implementation is claimed yet. Root owns source lowering.
+native result is claimed yet. Root's separate rational-source-integration branch
+in C:/naja-worktrees/typed-literal-integration is clean at5ee64ec, with source APIs,
+height accounting and ADR007 committed. Rust276/fmt/Clippy/JSON21 passed at exact
+d4d354c066c96e7e8beb0bc7b2ab46659f0672cb. Its unchanged source220 preparation
+was independently reviewed before execution; all native outcomes remain not_run.
 Continue FC1 and HATCH through compaction; a checkpoint is not a stopping point.
 
 Historical class/distribution/file evidence follows with original pins preserved.

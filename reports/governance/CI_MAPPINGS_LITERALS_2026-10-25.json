@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-25T22:42:21Z",
+  "source_commit": "0d894742f47fdb40a1e3594c861f14aa273d02e9",
+  "run_id": 40240848481,
+  "url": "https://github.com/ramzimhd/naja-lang/actions/runs/40240848481",
+  "result": "passed",
+  "observation_method": "Public GitHub Actions REST jobs endpoint; exact run and job conclusions",
+  "jobs": [
+    { "id": 121312094626, "name": "seed (macos-15)", "status": "completed", "conclusion": "success", "failed_steps": [] },
+    { "id": 121312094789, "name": "seed (windows-2025)", "status": "completed", "conclusion": "success", "failed_steps": [] },
+    { "id": 121312094861, "name": "seed (ubuntu-24.04)", "status": "completed", "conclusion": "success", "failed_steps": [] }
+  ],
+  "limits": [
+    "Only this exact source/run is observed; later commits require their own CI result.",
+    "This is an experimental seed workflow, not platform installation, self-hosting, FC1 or HATCH acceptance.",
+    "Original failed run40238471265 and its separately verified history-fetch correction remain retained."
+  ]
+}
