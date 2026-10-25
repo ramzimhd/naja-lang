@@ -1,0 +1,15 @@
+# Development IR fixture: transparent grouping, branches and allocating loops.
+set 0 0
+set 1 0
+while < %0 | 12
+group
+if < %0 | 6
+set 1 %1 %0 1000000000000000000000000000000 * +
+else
+set 1 %1 %0 -
+end
+set 0 %0 1 +
+end
+end
+print %1
+print %0

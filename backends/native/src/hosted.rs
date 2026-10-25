@@ -353,4 +353,40 @@ mod tests {
             .is_err()
         );
     }
+
+    #[test]
+    fn emitter_validates_limits_and_has_no_interpreter_or_writable_code() {
+        let value = Expression::Integer("1844674407370955161618446744073709551616".into());
+        let program = [Statement::Print(value.clone())];
+        let elf = emit_elf(&program).unwrap();
+        assert_eq!(elf, emit_elf(&program).unwrap());
+        assert_eq!(&elf[..4], b"\x7fELF");
+        assert_eq!(u16::from_le_bytes(elf[56..58].try_into().unwrap()), 2);
+        assert_eq!(u32::from_le_bytes(elf[64..68].try_into().unwrap()), 1);
+        assert_eq!(u32::from_le_bytes(elf[68..72].try_into().unwrap()), 5);
+        assert_eq!(
+            u32::from_le_bytes(elf[120..124].try_into().unwrap()),
+            0x6474e551
+        );
+        assert_eq!(u32::from_le_bytes(elf[124..128].try_into().unwrap()), 6);
+        assert!(emit_elf(&[]).is_err());
+        assert!(emit_elf(&[Statement::Print(Expression::Local(0))]).is_err());
+        let mut deep = value;
+        for _ in 0..140 {
+            deep = Expression::Negate(Box::new(deep));
+        }
+        assert!(emit_elf(&[Statement::Print(deep)]).is_err());
+        assert!(
+            emit_elf(&vec![
+                Statement::Print(Expression::Integer("1".into()));
+                MAX_NODES
+            ])
+            .is_err()
+        );
+        let mut suite = Statement::Print(Expression::Integer("1".into()));
+        for _ in 0..66 {
+            suite = Statement::Group(vec![suite]);
+        }
+        assert!(emit_elf(&[suite]).is_err());
+    }
 }

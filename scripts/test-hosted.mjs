@@ -90,7 +90,7 @@ for (const a of [-1000000000000000000000000001n, -2n, 0n, 2n, 100000000000000000
 }
 run('all-signed-comparisons', comparisons, comparisonExpected);
 run('immutable-aliases', 'set 0 1000000000000000000000000000000000000001\nset 1 %0\nset 0 %0 1 +\nset 2 %1 neg\nprint %1\nprint %0\nprint %2\nprint %1\n', '1000000000000000000000000000000000000001\n1000000000000000000000000000000000000002\n-1000000000000000000000000000000000000001\n1000000000000000000000000000000000000001\n');
-run('group-loop-control', 'set 0 0\nset 1 0\nwhile < %0 | 12\ngroup\nif < %0 | 6\nset 1 %1 %0 1000000000000000000000000000000 * +\nelse\nset 1 %1 %0 -\nend\nset 0 %0 1 +\nend\nend\nprint %1\nprint %0\n', `${15n * 10n ** 30n - 51n}\n12\n`);
+run('group-loop-control', readFileSync(new URL('../tests/hosted/control.ir', import.meta.url), 'utf8'), `${15n * 10n ** 30n - 51n}\n12\n`);
 run('arena-resource-exhaustion', 'set 0 0\nwhile == 0 | 0\nset 0 %0 1 +\nend\n', '', 103, 'NJA203: hosted integer arena exhausted\n');
 const io = emit('output-failure', 'print 123456789012345678901234567890\n');
 const ioResult = execute(io, 'exec "$1" > /dev/full');
@@ -106,12 +106,22 @@ const repeated = emit('repeat-a', 'print 123456789123456789 987654321987654321 *
 const repeatedAgain = emit('repeat-b', 'print 123456789123456789 987654321987654321 *\n');
 assert.deepEqual(readFileSync(repeated.output), readFileSync(repeatedAgain.output));
 console.log('PASS identical unsigned ELF bytes across repeated emission'); checks++;
-const mutant = emit('mutant-literal', 'print 7\n');
+const mutant = emit('mutant-literal', 'print 7 9 *\n');
+assert.equal(execute(mutant).stdout, '63\n');
 const original = readFileSync(mutant.output), signature = Buffer.alloc(20);
 signature.writeBigInt64LE(1n, 0); signature.writeBigUInt64LE(1n, 8); signature.writeUInt32LE(7, 16);
 const offset = original.lastIndexOf(signature); assert.ok(offset >= 4096);
 const changed = Buffer.from(original); changed.writeUInt32LE(8, offset + 16); writeFileSync(mutant.output, changed);
-const changedResult = execute(mutant); assert.equal(changedResult.status, 0, changedResult.stderr); assert.equal(changedResult.stdout, '8\n'); assert.notEqual(changedResult.stdout, '7\n');
-console.log('PASS native output changes with an injected literal mutant; incorrect baseline expectation is detected'); checks++;
+const changedResult = execute(mutant); assert.equal(changedResult.status, 0, changedResult.stderr); assert.equal(changedResult.stdout, '72\n'); assert.notEqual(changedResult.stdout, '63\n');
+console.log('PASS runtime multiplication changes with an injected literal mutant; incorrect baseline expectation is detected'); checks++;
+const carryMutant = emit('mutant-carry', 'print 999999999999999999 1 +\n');
+const carryExpected = `${999999999999999999n + 1n}\n`;
+assert.equal(execute(carryMutant).stdout, carryExpected);
+const carryBytes = readFileSync(carryMutant.output);
+const carryCompare = Buffer.from([0x48, 0x81, 0xf8, 0x00, 0xca, 0x9a, 0x3b]);
+const carryOffset = carryBytes.indexOf(carryCompare, 4096); assert.ok(carryOffset >= 4096);
+carryBytes.writeInt32LE(1_000_000_001, carryOffset + 3); writeFileSync(carryMutant.output, carryBytes);
+const brokenCarry = execute(carryMutant); assert.equal(brokenCarry.status, 0, brokenCarry.stderr); assert.notEqual(brokenCarry.stdout, carryExpected);
+console.log('PASS incorrect carry-threshold mutant is detected by the BigInt expectation'); checks++;
 console.log(`${checks} hosted native/IR checks passed; ${oracleCases} arithmetic/metamorphic and 150 comparison outputs matched Node BigInt.`);
 console.log('Limits: development IR adapter; Linux x86-64 via declared WSL/native target; 64 MiB arena; no complete hosted runtime, frontend, FC1, performance or self-hosting claim.');
