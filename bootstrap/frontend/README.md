@@ -179,10 +179,24 @@ compare XID rules for every Unicode scalar and NFKC against every Unicode 17.0.0
 normalization vector, plus the default scalar invariant. Fixture regeneration
 and reference acquisition are development operations outside normal tests.
 
-NAJA2026 additionally exposes TypedInteger tokens for unambiguous adjacent valid
-decimal integers and type identifiers. typed_integer_spans returns the two
-original source ranges; no numeric conversion or type lookup happens in lexing.
-Python-dialect rejection remains unchanged. Exponent/base/imaginary classification
-is retained, and ambiguous typed spellings request an explicit constructor.
-ADR006 defines the bounded capability slice; general numeric suffix construction
-and type eligibility are not inferred by the lexer.
+NAJA2026 additionally exposes `TypedInteger` and `TypedDecimal` tokens for
+unambiguous adjacent valid decimal numbers and raw type identifiers.
+`typed_integer_spans` keeps its existing integer-only contract;
+`typed_literal_spans` returns the two original ranges for either typed token.
+No numeric conversion, expansion, normalization or type lookup happens in lexing.
+
+ADR-008 permits all currently valid decimal dot/exponent cores, including
+`.5Type`, `1.Type`, `1.e3Type` and `01.5Type`. Maximal scanning makes `1.Type`
+numeric `1.` plus suffix `Type`; use grouping or separation for integer member
+access. The integer leading-zero rule remains unchanged. Suffix identifiers use
+the shared Unicode rules, but initial raw ASCII e/E/j/J and underscore remain
+ambiguous, including after a completed exponent. Malformed numbers are never
+retried with a shorter core. Base and imaginary suffixes remain unsupported with
+explicit-constructor advice. Whitespace breaks adjacency. Ordinary suffix-free
+number classification and Python-dialect suffix rejection remain unchanged.
+
+The lexer preserves arbitrary exponent text without machine-width conversion or
+expanded strings. Checked exact Rational lowering, literal-budget accounting and
+class eligibility belong to the executable parser. ADR-006/008 define those
+bounded capabilities; accepting a lexical token does not establish an eligible
+class, native execution, general numeric protocols or acceptance evidence.

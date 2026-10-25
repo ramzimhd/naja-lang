@@ -16,7 +16,7 @@ pub use identifier::{
     IDENTIFIER_UNICODE_VERSION, IdentifierError, IdentifierErrorKind, canonical_identifier,
     is_identifier,
 };
-pub use lexer::{lex, lex_with_dialect};
+pub use lexer::{lex, lex_with_dialect, typed_literal_spans};
 pub use literal::{LiteralValue, STRING_LITERAL_MAX_BYTES, decode_string};
 
 /// Source syntax is selected explicitly, never by ambient machine settings.
@@ -97,6 +97,8 @@ pub enum TokenKind {
     Integer,
     /// Adjacent valid decimal integer and type identifier, NAJA 2026.1 only.
     TypedInteger,
+    /// Adjacent valid decimal dot/exponent core and type identifier, NAJA 2026.1.
+    TypedDecimal,
     Float,
     String,
     Symbol(Symbol),

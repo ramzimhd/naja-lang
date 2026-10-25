@@ -1,13 +1,16 @@
 //! Shared bounded executable parser with distinct checked-i64 and hosted domains.
 use naja_frontend::{
-    AliasContext, AliasTable, AliasTarget, BuiltinAlias, Diagnostic, Dialect, Lexed, Span, Symbol,
-    Token, TokenKind, canonical_identifier, decode_string, lex_with_dialect, typed_integer_spans,
+    AliasContext, AliasTable, AliasTarget, BuiltinAlias, Diagnostic, Dialect, Lexed, LiteralValue,
+    Span, Symbol, Token, TokenKind, canonical_identifier, decode_string, lex_with_dialect,
+    typed_literal_spans,
 };
 use naja_native::{Binary, Comparison, MAX_LOCALS, Statement, dynamic, hosted};
 use std::collections::{BTreeMap, BTreeSet};
 use std::marker::PhantomData;
+mod literal_construction;
 pub mod manifest;
 mod values;
+use literal_construction::{Expansion, MAX_LITERAL_BYTES};
 use values::{Dynamic, Fixed, Hosted, Values};
 
 /// Bounded temporary seed stack reservation, plus platform thread overhead.
@@ -208,6 +211,7 @@ fn parse_lexed<V: Values>(
         imported_i64: false,
         imports: BTreeMap::new(),
         nodes: 0,
+        literal_bytes: 0,
         dialect,
         aliases: aliases.cloned(),
         structural_depth: 0,
@@ -216,7 +220,7 @@ fn parse_lexed<V: Values>(
         parameter_counts: Vec::new(),
         classes: Vec::new(),
         class_names: BTreeMap::new(),
-        literal_classes: BTreeSet::new(),
+        literal_classes: BTreeMap::new(),
         class_body: None,
         constructor_calls: Vec::new(),
         in_function: false,
@@ -244,6 +248,7 @@ struct Parser<V: Values> {
     imported_i64: bool,
     imports: BTreeMap<String, ImportedApi>,
     nodes: usize,
+    literal_bytes: usize,
     dialect: Dialect,
     aliases: Option<AliasTable>,
     structural_depth: usize,
@@ -252,7 +257,7 @@ struct Parser<V: Values> {
     parameter_counts: Vec<usize>,
     classes: Vec<dynamic::Class>,
     class_names: BTreeMap<String, usize>,
-    literal_classes: BTreeSet<usize>,
+    literal_classes: BTreeMap<usize, LiteralCapability>,
     class_body: Option<usize>,
     constructor_calls: Vec<(usize, usize, Span)>,
     in_function: bool,
@@ -272,6 +277,7 @@ enum ImportedApi {
     DecodeUtf8,
     KeysSnapshot,
     IntegerLiteral,
+    ExactLiteral,
     Rational,
     DivideExact,
     Numerator,
@@ -279,11 +285,33 @@ enum ImportedApi {
 }
 
 impl ImportedApi {
+    fn capability(self) -> Option<LiteralCapability> {
+        match self {
+            Self::IntegerLiteral => Some(LiteralCapability::Integer),
+            Self::ExactLiteral => Some(LiteralCapability::Exact),
+            _ => None,
+        }
+    }
     fn arity(self) -> usize {
         if matches!(self, Self::WriteBytes | Self::Rational | Self::DivideExact) {
             2
         } else {
             1
+        }
+    }
+}
+
+#[derive(Clone, Copy)]
+enum LiteralCapability {
+    Integer,
+    Exact,
+}
+
+impl LiteralCapability {
+    fn description(self) -> &'static str {
+        match self {
+            Self::Integer => "integer literal",
+            Self::Exact => "exact literal",
         }
     }
 }
@@ -479,26 +507,31 @@ impl<V: Values> Parser<V> {
             if self.take("@") {
                 header = false;
                 let name = self.canonical_name()?;
-                if self.token().kind != TokenKind::Identifier
-                    || !matches!(self.imports.get(&name), Some(ImportedApi::IntegerLiteral))
-                {
-                    return Err(self.error("only an explicitly imported integer literal capability is supported as a decorator"));
-                }
+                let capability = self
+                    .imports
+                    .get(&name)
+                    .copied()
+                    .and_then(ImportedApi::capability);
+                let capability = capability.filter(|_| self.token().kind == TokenKind::Identifier)
+                    .ok_or_else(|| self.error("only an explicitly imported literal capability is supported as a decorator"))?;
                 self.advance();
                 self.newline()?;
                 while self.token().kind == TokenKind::Newline {
                     self.advance();
                 }
                 if self.text() != "class" {
-                    return Err(self.error("integer literal capability requires an immediately following top-level class"));
+                    return Err(self.error(format!(
+                        "{} capability requires an immediately following top-level class",
+                        capability.description()
+                    )));
                 }
-                self.class_definition(true)?;
+                self.class_definition(Some(capability))?;
             } else if self.text() == "def" {
                 header = false;
                 self.function_definition(0)?;
             } else if self.text() == "class" {
                 header = false;
-                self.class_definition(false)?;
+                self.class_definition(None)?;
             } else if self.text() == "from" {
                 if V::DYNAMIC {
                     if !header {
@@ -603,6 +636,7 @@ impl<V: Values> Parser<V> {
                 ("text", "decode_utf8") => ImportedApi::DecodeUtf8,
                 ("collections", "keys_snapshot") => ImportedApi::KeysSnapshot,
                 ("literal", "integer_literal") => ImportedApi::IntegerLiteral,
+                ("literal", "exact_literal") => ImportedApi::ExactLiteral,
                 ("numeric", "rational") => ImportedApi::Rational,
                 ("numeric", "divide_exact") => ImportedApi::DivideExact,
                 ("numeric", "numerator") => ImportedApi::Numerator,
@@ -639,7 +673,7 @@ impl<V: Values> Parser<V> {
         }
         self.newline()
     }
-    fn member_name(&self) -> Parsed<String> {
+    fn member_name(&mut self) -> Parsed<String> {
         if self.token().kind != TokenKind::Identifier
             || reserved(self.text()) && !matches!(self.text(), "print" | "i64")
         {
@@ -652,9 +686,10 @@ impl<V: Values> Parser<V> {
         if name.starts_with("__") && name.ends_with("__") && name != "__init__" {
             return Err(self.error("special members other than __init__ are unsupported"));
         }
+        self.reserve_literal(name.len())?;
         Ok(name)
     }
-    fn class_definition(&mut self, literal: bool) -> Parsed<()> {
+    fn class_definition(&mut self, literal: Option<LiteralCapability>) -> Parsed<()> {
         if !V::DYNAMIC || self.in_function || self.class_body.is_some() {
             return Err(self.error("only top-level ordinary class definitions are implemented"));
         }
@@ -680,8 +715,8 @@ impl<V: Values> Parser<V> {
         self.advance();
         let index = self.classes.len();
         self.class_names.insert(name, index);
-        if literal {
-            self.literal_classes.insert(index);
+        if let Some(capability) = literal {
+            self.literal_classes.insert(index, capability);
         }
         self.classes.push(dynamic::Class {
             methods: Vec::new(),
@@ -690,12 +725,19 @@ impl<V: Values> Parser<V> {
         let result = self.suite(1);
         self.class_body = None;
         result?;
-        if literal
+        if let Some(capability) = literal
             && !self.classes[index].methods.iter().any(|method| {
                 method.name == "__init__" && self.parameter_counts[method.function] == 2
             })
         {
-            return Err(Diagnostic { code: "NJA101", message: "integer literal capability requires an initializer with exactly one value parameter".into(), span: name_span });
+            return Err(Diagnostic {
+                code: "NJA101",
+                message: format!(
+                    "{} capability requires an initializer with exactly one value parameter",
+                    capability.description()
+                ),
+                span: name_span,
+            });
         }
         Ok(())
     }
@@ -1124,6 +1166,84 @@ impl<V: Values> Parser<V> {
         }
         Ok(())
     }
+    fn reserve_literal(&mut self, bytes: usize) -> Parsed<()> {
+        if V::DYNAMIC {
+            self.literal_bytes = self
+                .literal_bytes
+                .checked_add(bytes)
+                .filter(|total| *total <= MAX_LITERAL_BYTES)
+                .ok_or_else(|| {
+                    self.error("dynamic IR exceeds the 1 MiB aggregate literal budget")
+                })?;
+        }
+        Ok(())
+    }
+    fn typed_literal(&mut self) -> Parsed<V::Expression> {
+        let (number, suffix) = typed_literal_spans(&self.lexed.source, self.token())
+            .ok_or_else(|| self.error("invalid typed numeric token"))?;
+        let name = self.canonical_spelling(&self.lexed.source[suffix.start..suffix.end], suffix)?;
+        if self.locals.contains_key(&name)
+            || self.in_function && self.module_bindings.contains(&name)
+        {
+            return Err(Diagnostic {
+                code: "NJA101",
+                message: "typed literal type is shadowed by a value binding".into(),
+                span: suffix,
+            });
+        }
+        let (index, capability) = self
+            .class_names
+            .get(&name)
+            .copied()
+            .and_then(|index| {
+                self.literal_classes
+                    .get(&index)
+                    .copied()
+                    .map(|capability| (index, capability))
+            })
+            .ok_or_else(|| Diagnostic {
+                code: "NJA101",
+                message: "typed literal suffix requires an earlier explicitly eligible class"
+                    .into(),
+                span: suffix,
+            })?;
+        let value = match capability {
+            LiteralCapability::Integer => {
+                if self.token().kind == TokenKind::TypedDecimal {
+                    return Err(Diagnostic { code: "NJA101", message: "decimal typed literal requires an explicitly eligible exact literal class".into(), span: suffix });
+                }
+                let text = self.lexed.source[number.start..number.end].replace('_', "");
+                self.reserve_literal(text.len())?;
+                self.account_expression()?;
+                V::integer(text).map_err(|message| self.error(message))?
+            }
+            LiteralCapability::Exact => {
+                let plan = Expansion::plan(
+                    &self.lexed.source[number.start..number.end],
+                    MAX_LITERAL_BYTES - self.literal_bytes,
+                )
+                .map_err(|()| Diagnostic {
+                    code: "NJA101",
+                    message: "typed exact literal expansion exceeds the 1 MiB literal budget"
+                        .into(),
+                    span: number,
+                })?;
+                // The complete pair is reserved before either output String exists.
+                self.literal_bytes += plan.bytes();
+                let (numerator, denominator) =
+                    plan.expand(&self.lexed.source[number.start..number.end]);
+                for _ in 0..3 {
+                    self.account_expression()?;
+                }
+                let numerator = V::integer(numerator).map_err(|message| self.error(message))?;
+                let denominator = V::integer(denominator).map_err(|message| self.error(message))?;
+                V::rational(numerator, denominator).map_err(|message| self.error(message))?
+            }
+        };
+        self.constructor_calls.push((index, 1, suffix));
+        self.advance();
+        V::construct(index, vec![value]).map_err(|message| self.error(message))
+    }
     fn expression(&mut self, minimum: u8, depth: usize) -> Parsed<V::Expression> {
         if depth > 128 {
             return Err(self.error("experimental expression nesting exceeds 128"));
@@ -1237,12 +1357,17 @@ impl<V: Values> Parser<V> {
             } else {
                 text.to_owned()
             };
+            self.reserve_literal(signed.len())?;
             let value = V::integer(signed).map_err(|message| self.error(message))?;
             self.advance();
             self.expect(")")?;
             value
         } else if V::DYNAMIC && self.token().kind == TokenKind::String {
             let decoded = decode_string(&self.lexed.source, self.token())?;
+            self.reserve_literal(match &decoded {
+                LiteralValue::Text(value) => value.len(),
+                LiteralValue::Bytes(value) => value.len(),
+            })?;
             let value = V::literal(decoded).map_err(|message| self.error(message))?;
             self.advance();
             value
@@ -1257,37 +1382,13 @@ impl<V: Values> Parser<V> {
             let value = self.expression(0, depth + 1)?;
             self.expect(")")?;
             V::length(value).map_err(|message| self.error(message))?
-        } else if V::DYNAMIC && self.token().kind == TokenKind::TypedInteger {
-            let (number, suffix) = typed_integer_spans(&self.lexed.source, self.token())
-                .ok_or_else(|| self.error("invalid typed integer token"))?;
-            let name =
-                self.canonical_spelling(&self.lexed.source[suffix.start..suffix.end], suffix)?;
-            if self.locals.contains_key(&name)
-                || self.in_function && self.module_bindings.contains(&name)
-            {
-                return Err(Diagnostic {
-                    code: "NJA101",
-                    message: "typed literal type is shadowed by a value binding".into(),
-                    span: suffix,
-                });
-            }
-            let index = self
-                .class_names
-                .get(&name)
-                .copied()
-                .filter(|index| self.literal_classes.contains(index))
-                .ok_or_else(|| Diagnostic {
-                    code: "NJA101",
-                    message: "typed literal suffix requires an earlier explicitly eligible class"
-                        .into(),
-                    span: suffix,
-                })?;
-            let value = V::integer(self.lexed.source[number.start..number.end].replace('_', ""))
-                .map_err(|message| self.error(message))?;
-            self.account_expression()?;
-            self.constructor_calls.push((index, 1, suffix));
-            self.advance();
-            V::construct(index, vec![value]).map_err(|message| self.error(message))?
+        } else if V::DYNAMIC
+            && matches!(
+                self.token().kind,
+                TokenKind::TypedInteger | TokenKind::TypedDecimal
+            )
+        {
+            self.typed_literal()?
         } else if self.token().kind == TokenKind::Integer {
             if !V::HOSTED {
                 return Err(self.error("hosted integer expressions require the hosted path; use explicit i64(decimal_literal) in this fixed-width slice"));
@@ -1298,6 +1399,7 @@ impl<V: Values> Parser<V> {
                     self.error("the hosted integer slice currently supports decimal literals only")
                 );
             }
+            self.reserve_literal(text.len())?;
             let value = V::integer(text).map_err(|message| self.error(message))?;
             self.advance();
             value
@@ -1483,8 +1585,11 @@ impl<V: Values> Parser<V> {
             return V::construct(index, arguments).map_err(|message| self.error(message));
         }
         let api = self.imports.get(name).copied();
-        if matches!(api, Some(ImportedApi::IntegerLiteral)) {
-            return Err(self.error("integer literal capability is only valid as a class decorator"));
+        if let Some(capability) = api.and_then(ImportedApi::capability) {
+            return Err(self.error(format!(
+                "{} capability is only valid as a class decorator",
+                capability.description()
+            )));
         }
         if name == "set"
             && api.is_none()
@@ -1536,7 +1641,7 @@ impl<V: Values> Parser<V> {
                 ),
                 ImportedApi::Numerator => V::numerator(first),
                 ImportedApi::Denominator => V::denominator(first),
-                ImportedApi::IntegerLiteral => {
+                ImportedApi::IntegerLiteral | ImportedApi::ExactLiteral => {
                     unreachable!("literal marker calls reject before arguments")
                 }
             }
@@ -2338,6 +2443,57 @@ mod tests {
             );
         }
         assert!(compile("from naja.numeric import rational as a, rational as b, numerator\nprint(numerator(a(1, 2) + b(1, 3)))\n").is_ok());
+    }
+    #[test]
+    fn exact_literal_capability_lowers_to_unreduced_native_rational_construction() {
+        let header = "from naja.literal import exact_literal\nfrom naja.numeric import rational, numerator\n@exact_literal\nclass Parcel:\n    def __init__(self, value): self.value = value\n";
+        for (literal, arguments) in [
+            ("1.25Parcel", "125, 100"),
+            (".5Parcel", "5, 10"),
+            ("1.Parcel", "1, 1"),
+            ("1.e3Parcel", "1000, 1"),
+            ("10Parcel", "10, 1"),
+        ] {
+            let suffixed = format!("{header}print(numerator({literal}.value))\n");
+            let explicit =
+                format!("{header}print(numerator(Parcel(rational({arguments})).value))\n");
+            assert_eq!(
+                compile_with_dialect(&suffixed, Dialect::Naja2026).unwrap(),
+                compile_with_dialect(&explicit, Dialect::Naja2026).unwrap()
+            );
+            assert!(compile_with_dialect(&suffixed, Dialect::Python).is_err());
+        }
+    }
+    #[test]
+    fn exact_literal_reservation_counts_member_metadata_and_reports_numeric_span() {
+        let header = "from naja.literal import exact_literal\n@exact_literal\nclass Parcel:\n    def __init__(self, value): self.value = value\n";
+        for sign in ["", "-"] {
+            let exact = format!("{header}1e{sign}1048561Parcel\n");
+            assert!(check_with_dialect(&exact, Dialect::Naja2026).is_ok());
+            let excess = format!("{header}1e{sign}1048562Parcel\n");
+            let error = check_with_dialect(&excess, Dialect::Naja2026)
+                .unwrap_err()
+                .remove(0);
+            assert_eq!(error.code, "NJA101");
+            assert_eq!(
+                error.message,
+                "typed exact literal expansion exceeds the 1 MiB literal budget"
+            );
+            assert_eq!(
+                &excess[error.span.start..error.span.end],
+                format!("1e{sign}1048562")
+            );
+        }
+        let integer_only = header.replace("exact_literal", "integer_literal");
+        let source = format!("{integer_only}1.25Parcel\n");
+        let error = check_with_dialect(&source, Dialect::Naja2026)
+            .unwrap_err()
+            .remove(0);
+        assert_eq!(
+            error.message,
+            "decimal typed literal requires an explicitly eligible exact literal class"
+        );
+        assert_eq!(&source[error.span.start..error.span.end], "Parcel");
     }
     #[test]
     fn exact_numeric_api_arity_scope_and_original_errors_remain_static() {

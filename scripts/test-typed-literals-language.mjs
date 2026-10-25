@@ -143,7 +143,14 @@ for (const [name, source] of [
 ]) reject(name, source);
 
 for (const spelling of ['10eUnit', '10EUnit', '10jUnit', '10JUnit', '1.5Vessel', '.5Vessel', '1.Vessel', '1e3Vessel', '1E-3Vessel', '0xffVessel', '0b10Vessel', '0o7Vessel']) {
-  reject('ambiguous-' + Buffer.from(spelling).toString('hex'), eligible() + `print(${spelling})\n`, { code: 'F0006', messageIncludes: 'use an explicit constructor' });
+  const name = 'ambiguous-' + Buffer.from(spelling).toString('hex');
+  const source = eligible() + `print(${spelling})\n`;
+  if (['1.5Vessel', '.5Vessel', '1.Vessel', '1e3Vessel', '1E-3Vessel'].includes(spelling)) {
+    // ADR008 accepts decimal tokens; the integer-only class still refuses.
+    reject(name, source, { message: 'decimal typed literal requires an explicitly eligible exact literal class', range: at(source, 'Vessel', 1) });
+  } else {
+    reject(name, source, { code: 'F0006', messageIncludes: 'use an explicit constructor' });
+  }
 }
 for (const spelling of ['01Vessel', '1__0Vessel', '10_Vessel', '10__Vessel', '1e_Vessel', '0x_Vessel', '0b2Vessel', '١Vessel']) {
   reject('malformed-' + Buffer.from(spelling).toString('hex'), eligible() + `print(${spelling})\n`, { code: spelling === '١Vessel' ? 'F0010' : 'F0006' });

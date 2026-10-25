@@ -1,0 +1,733 @@
+{
+  "schema_version": 1,
+  "old_source": "936865c7ef4dd566b4e4523089b1e6bad09534fe",
+  "new_source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
+  "old_compiler_sha256": "4e2da1461d09162f9899b15d67164552814f2e0c4e939f6ee6ce987681824b0f",
+  "new_compiler_sha256": "091321c4d1dedf3d0749c76823f84db2569ae7b57f57959ca27a678be8d51dd8",
+  "result": "passed",
+  "cases": [
+    {
+      "name": "ambiguous-312e3556657373656c",
+      "source_sha256": "cd7bb4e50915f80077d9a0274b5b86de82d40cc0bc52674dbadaa295ad48d605",
+      "old_code": "F0006",
+      "new_code": "NJA101",
+      "new_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "new_suffix_range": {
+        "start": {
+          "line": 5,
+          "character": 9
+        },
+        "end": {
+          "line": 5,
+          "character": 15
+        }
+      },
+      "result": "passed"
+    },
+    {
+      "name": "ambiguous-2e3556657373656c",
+      "source_sha256": "5fc567486fa365ddaf1de6480dc29a2ae925a179b9c0efcca1c559534a05f272",
+      "old_code": "F0006",
+      "new_code": "NJA101",
+      "new_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "new_suffix_range": {
+        "start": {
+          "line": 5,
+          "character": 8
+        },
+        "end": {
+          "line": 5,
+          "character": 14
+        }
+      },
+      "result": "passed"
+    },
+    {
+      "name": "ambiguous-312e56657373656c",
+      "source_sha256": "70a1730e094dea5dadc6af8dc7b9fcfa645fe31e7e14eb3294ef19b1164d4d76",
+      "old_code": "F0006",
+      "new_code": "NJA101",
+      "new_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "new_suffix_range": {
+        "start": {
+          "line": 5,
+          "character": 8
+        },
+        "end": {
+          "line": 5,
+          "character": 14
+        }
+      },
+      "result": "passed"
+    },
+    {
+      "name": "ambiguous-31653356657373656c",
+      "source_sha256": "f508a622ec0ee07174434a74c2a816c16d46c25a7fb824a7968c61e4901bef8c",
+      "old_code": "F0006",
+      "new_code": "NJA101",
+      "new_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "new_suffix_range": {
+        "start": {
+          "line": 5,
+          "character": 9
+        },
+        "end": {
+          "line": 5,
+          "character": 15
+        }
+      },
+      "result": "passed"
+    },
+    {
+      "name": "ambiguous-31452d3356657373656c",
+      "source_sha256": "d686bd84cdc1850f511e8e4745b0da324c317f06e718120ebfba114877781d87",
+      "old_code": "F0006",
+      "new_code": "NJA101",
+      "new_message": "decimal typed literal requires an explicitly eligible exact literal class",
+      "new_suffix_range": {
+        "start": {
+          "line": 5,
+          "character": 10
+        },
+        "end": {
+          "line": 5,
+          "character": 16
+        }
+      },
+      "result": "passed"
+    },
+    {
+      "source_sha256": "6e7e8b8de907b4aad923c9e7e843ee3c0b11d7f1b8583b1ae8bfb28a57af3f2a",
+      "extension": "naja",
+      "kind": "TypedInteger",
+      "expected_exit": 0,
+      "result": "passed"
+    },
+    {
+      "source_sha256": "b33995abf384d51ff541b52ef2f8ec8a250446d84c06669b40ace22b31e7e142",
+      "extension": "naja",
+      "kind": null,
+      "expected_exit": 1,
+      "result": "passed"
+    },
+    {
+      "source_sha256": "49c4d00d9abcb94a0994aa3d5fd5cae64a5bae334953ccd532993fe41fa64c67",
+      "extension": "naja",
+      "kind": null,
+      "expected_exit": 1,
+      "result": "passed"
+    },
+    {
+      "source_sha256": "6b2485eaa889fee1c9574dcde40de2b1eb4e822370da6e721ac42dbeb755b5d1",
+      "extension": "naja",
+      "kind": null,
+      "expected_exit": 1,
+      "result": "passed"
+    },
+    {
+      "source_sha256": "2e00aa03a6e19be7b2c1baa66fe94ebc80d8ea2fb0a7be64f60f4f0fc065cb6f",
+      "extension": "py",
+      "kind": null,
+      "expected_exit": 1,
+      "result": "passed"
+    },
+    {
+      "source_sha256": "03c76d47c407b24353b3121bd96490373bd6c5de05f6b3d32bd420c4810f1160",
+      "extension": "naja",
+      "kind": "Float",
+      "expected_exit": 0,
+      "result": "passed"
+    },
+    {
+      "source_sha256": "764477893f9c4fe2bf9d80f82c1260d45658453b449009f41481439b17f7604b",
+      "extension": "naja",
+      "kind": "Float",
+      "expected_exit": 0,
+      "result": "passed"
+    }
+  ],
+  "commands": [
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e3556657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0f836d06f90ecde1b85e972ae85574d2f192d1460d3aff5985bab34ec8c4b73d"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e3556657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "a220487cf7201d411454a70f5165fb60be2643f9452a59ba9188327e3e4778ee",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e3556657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e3556657373656c-old.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0f836d06f90ecde1b85e972ae85574d2f192d1460d3aff5985bab34ec8c4b73d"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e3556657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "4b7b6e58cbfa48c514c69a61cfc50ad30f0c30a4c20c767ce281df08debad93b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e3556657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "6f7cf2c30bb5c665d908fc20fb1aa58e6c1be39515d65328580cbcd0d0825416",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e3556657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e3556657373656c-current.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "22560f3d87b0b3f1fa70f1bc2c961b302ca23c9aa8d8bc3c721bd343038948d0"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-2e3556657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a4c4e85d3aa69cef69dc7856db5af1643ececf1b4815ac28eda86a6464532d26"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-2e3556657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "ab034e0cfe0c22dd7c8f09b8eef4586d2f2f379fe78ff83aea6158010104db9e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-2e3556657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-2e3556657373656c-old.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a4c4e85d3aa69cef69dc7856db5af1643ececf1b4815ac28eda86a6464532d26"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-2e3556657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "6a9d3c847429d4a39c94dbcb15f0b228431d8de0027da5f66f01581e824d62c5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-2e3556657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "7c545bd66aec7901d34b28909dd570d4dd77da1deca4be43d8ec92fbd1a9c26c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-2e3556657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-2e3556657373656c-current.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "bfa1fa52462fc0b248539c004ff37fb16cd66bc5af1c161d0a06ba1644876f1b"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e56657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "1f82da0b4cf0564eddcf713899ee120419985600b002e70668eff83a2db8a459"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e56657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "5ee49bdf52b4e0e6c4e2913a9fe8ce1559f200bccea9dac27d64f55e7062826b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e56657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e56657373656c-old.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "1f82da0b4cf0564eddcf713899ee120419985600b002e70668eff83a2db8a459"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e56657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "251492018f13e6d3e0e5a1b8083289bd9b93753009da7aad3c33484dbd35b86e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e56657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "74f42a2bb3348e70c002adfb3d8c5a5e72edd915188112c40fde515a7a673d7c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e56657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-312e56657373656c-current.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "f2f52a8d5dded234251d403b469769f838103e4b612b11fee3a8a2250a77186f"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31653356657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "05dcc25b8cdedd4d2f94e0d80d7b1e8adc23acb35a526851a1f28a74e3354c03"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31653356657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "c9c4b5aac39370ed75065946c4fe312b1028fb6da77fe883fee864ae2108d7f6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31653356657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31653356657373656c-old.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "05dcc25b8cdedd4d2f94e0d80d7b1e8adc23acb35a526851a1f28a74e3354c03"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31653356657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "a8b48f5b2d285ccf89691dc7d7aef3429b9fbd7db139d1cf5662097d251d59d5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31653356657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "5bbaf7c024ebe06f107eaec8625cca753eebce2147ea3a766ea7df1e2a89b66e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31653356657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31653356657373656c-current.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "4d2fd508d35053c5d4b5d42229dddd57e5092d9456099b5acad242479da72ed2"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31452d3356657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "07d6b43dbcb2b96f16fa0b64b36bc1fc4b447cd8a114bed1d4fca2b11f2eadbf"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31452d3356657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "ffc938292cc35d7059b2785785458c5a7c785b639413b5311b1e5e8ad446e00b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31452d3356657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31452d3356657373656c-old.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "07d6b43dbcb2b96f16fa0b64b36bc1fc4b447cd8a114bed1d4fca2b11f2eadbf"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31452d3356657373656c.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "4948559cc256222605e76115dba067d1557a0582afc46aef080f58851b6ba654",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "check",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31452d3356657373656c.naja",
+        "--json"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "1849a9d5cc56b58b2d41d14083c9536fe636650a38c80705a5f47d4cc8a11741",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "build",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31452d3356657373656c.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\ambiguous-31452d3356657373656c-current.elf"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c7a5703de503e40849ef264f57c33682d1ae0b547772bb1c3c1c6a4d06b6fe41"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-5.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e232b694c663561cd4175aab9fd69b904b001606096b403f0caad1bffdc85637",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-5.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e232b694c663561cd4175aab9fd69b904b001606096b403f0caad1bffdc85637",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-6.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "b38656e05a34ecceaa4af65683fc532fe4f301114fd10d44c6bac75642c87c2e"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-6.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "936dade07443b8f495336114010c8fff8e863821430a5b4053f50372b919da92"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-7.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "b3cc0eb128b1ff4c0976a6e433b3fbf81f1352946c3c33eda4908388db9a344c"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-7.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "2d69c7d86c2c7fffd2a0018945eac6222af99e745ca79c678b6e87296fb97c6d"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-8.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "125a10b314aee7345dc6e63bece119d43d686e0d862b5260c552ab75bddf54ec"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-8.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "125a10b314aee7345dc6e63bece119d43d686e0d862b5260c552ab75bddf54ec"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-9.py"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "24dc0957eab148583b430c20e683d987522b1948774e74e3b7f7bae472d45978"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-9.py"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 1,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "24dc0957eab148583b430c20e683d987522b1948774e74e3b7f7bae472d45978"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-10.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "96e1bb76f86ffc044926dbead0d5eda5195225743c9e635019f262b1823ab231",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-10.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "96e1bb76f86ffc044926dbead0d5eda5195225743c9e635019f262b1823ab231",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-11.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\typed-literals-execution\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "307181fc70a6cc65e2ea230a2ae76b8ed5f4c563eff29c2053b9a6def6093b91",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "lex",
+        "C:\\naja-worktrees\\exact-literal-integration\\target\\exact-stage-a-controls-klQwFY\\control-11.naja"
+      ],
+      "compiler": "C:\\naja-worktrees\\exact-literal-integration\\target\\debug\\naja.exe",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "stdout_sha256": "307181fc70a6cc65e2ea230a2ae76b8ed5f4c563eff29c2053b9a6def6093b91",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limits": [
+    "Five unchanged historical sources retain their SHA-256; only diagnostic expectations may migrate.",
+    "Seven unchanged lexical controls passed before and after. No native execution or acceptance promotion."
+  ]
+}
