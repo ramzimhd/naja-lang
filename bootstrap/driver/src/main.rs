@@ -263,7 +263,7 @@ fn parse_execution_options(
         let value = arguments
             .get(index + 1)
             .and_then(|value| value.to_str())
-            .filter(|value| !value.starts_with("--"))
+            .filter(|value| option == "--filter" || !value.starts_with("--"))
             .ok_or("NJA001: missing or non-Unicode option value")?;
         match option {
             "--runner" if !runner_set && value == "wsl" => {
@@ -493,6 +493,13 @@ mod tests {
             options("test", &["--json", "--filter", "café"])
                 .unwrap()
                 .json
+        );
+        assert_eq!(
+            options("test", &["--filter", "--focused", "--json"])
+                .unwrap()
+                .filter
+                .as_deref(),
+            Some("--focused")
         );
     }
 

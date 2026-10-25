@@ -127,6 +127,11 @@ writeFileSync(join(unrelated, 'test_a.py'), 'print(3)');
 report = test([unrelated]);
 assert.deepEqual(report.tests.map(item => item.path), ['test_a.py', 'test_é.naja']);
 pass('unmatched negative fixtures are not blindly executed');
+const optionLikeName = fixture('test_--focused.naja', 'assert 2 > 1\n');
+report = test([optionLikeName, '--filter', '--focused']);
+assert.equal(report.selected, 1);
+assert.equal(report.passed, 1);
+pass('filter data beginning with two hyphens retains its literal substring meaning');
 try {
   symlinkSync(join(unrelated, 'test_a.py'), join(unrelated, 'test_link.py'));
   report = test([unrelated]); assert.equal(report.selected, 2);
