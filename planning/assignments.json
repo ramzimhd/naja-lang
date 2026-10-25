@@ -42,7 +42,7 @@
         "tests/syntax/",
         "compatibility/literals/"
       ],
-      "status": "active",
+      "status": "completed",
       "history": [
         {
           "branch": "agent/frontend-T05",
@@ -61,7 +61,7 @@
             "bootstrap/frontend/",
             "tests/syntax/"
           ],
-          "status": "active"
+          "status": "completed"
         },
         {
           "branch": "agent/frontend-unicode-v13",
@@ -96,20 +96,20 @@
         "bootstrap/driver/",
         "planning/"
       ],
-      "handoff": "Scoped commit/report to sole integrator."
+      "handoff": "Scoped commit/report to sole integrator.",
+      "integrated_commit": "4d0e07f"
     },
     {
       "task_id": "T04",
       "owner": "/root/planning_validation",
-      "branch": "agent/public-continuity-v13",
+      "branch": "agent/verification-audit-v13",
       "worktree": "../naja-worktrees/planning-validation",
       "paths": [
-        "planning/continuity.schema.json",
-        "scripts/validation/check-continuity.mjs",
-        "tests/continuity/public.test.mjs",
-        "tests/continuity/PUBLIC_SCHEMA.md"
+        "tools/continuity/",
+        "tests/continuity/local.test.mjs",
+        "tests/continuity/VERIFICATION_AUDIT.md"
       ],
-      "status": "active",
+      "status": "completed",
       "history": [
         {
           "branch": "agent/planning-validation-T04",
@@ -132,25 +132,37 @@
             "tests/foundations/"
           ],
           "status": "completed"
+        },
+        {
+          "branch": "agent/public-continuity-v13",
+          "base_commit": "d641e072a3b9040126d2273c7a9a93be2262f799",
+          "worktree": "../naja-worktrees/planning-validation",
+          "paths": [
+            "planning/continuity.schema.json",
+            "scripts/validation/check-continuity.mjs",
+            "tests/continuity/public.test.mjs",
+            "tests/continuity/PUBLIC_SCHEMA.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "4c7b0073aaf2128aaf3274482ec1d126c671b8ba"
         }
       ],
-      "base_commit": "d641e072a3b9040126d2273c7a9a93be2262f799",
+      "base_commit": "4c7b0073aaf2128aaf3274482ec1d126c671b8ba",
       "acceptance": "Additive L01-L15/C01-C07/FC1 coverage, inherited ID preservation and negative validator fixtures.",
       "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp.",
-      "deliverable": "Closed sanitized public checkpoint schema/validator, independent of private lock readiness.",
+      "deliverable": "Explicit immutable exact-source retained verification audit under the active fencing token; no automatic status promotion or live ownership mutation.",
       "acceptance_commands": [
         [
           "node",
           "--test",
-          "tests/continuity/public.test.mjs"
+          "tests/continuity/*.test.mjs"
         ]
       ],
       "forbidden_paths": [
-        "planning/continuity.json",
-        "planning/state.json",
-        "planning/assignments.json"
+        "planning/"
       ],
-      "handoff": "Schema/proposal commit only; actual record migration by root."
+      "handoff": "Scoped helper/tests commit; root alone audits real evidence.",
+      "integrated_commit": "4c7b0073aaf2128aaf3274482ec1d126c671b8ba"
     },
     {
       "task_id": "T04",
@@ -214,7 +226,13 @@
         ".github/",
         ".gitattributes",
         "third_party/",
-        "bootstrap/README.md"
+        "bootstrap/README.md",
+        "tests/evidence/",
+        "launch/history/",
+        "bootstrap/driver/src/main.rs",
+        "bootstrap/driver/src/execution.rs",
+        "tests/cli/",
+        "scripts/test-cli.mjs"
       ],
       "status": "active",
       "history": [
@@ -316,7 +334,7 @@
         "tests/cli/",
         "scripts/test-cli.mjs"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Native run and deterministic program-file test CLI, explicit WSL adapter, bounded artifacts and machine reports.",
       "acceptance_commands": [
         [
@@ -338,7 +356,8 @@
         "Cargo.lock",
         "planning/"
       ],
-      "handoff": "Scoped commit/report to sole integrator."
+      "handoff": "Scoped commit/report to sole integrator.",
+      "integrated_commit": "a1bd34f"
     },
     {
       "task_id": "T04",
@@ -389,10 +408,12 @@
       "base_commit": "551214d92976357b55614ebad4d9e5bfafc7b1e0",
       "worktree": ".",
       "paths": [
-        "backends/native/"
+        "backends/native/",
+        "scripts/test-dynamic.mjs",
+        "tests/dynamic/"
       ],
       "status": "active",
-      "deliverable": "Integrate and extend native semantics after contributor release; preserve checked-i64 and hosted integer evidence.",
+      "deliverable": "Integrate released native domains and preserve their real source/IR execution evidence; next source integration is owned by root.",
       "acceptance_commands": [
         [
           "cargo",
@@ -404,6 +425,100 @@
         ]
       ],
       "handoff": "Private fenced checkpoint plus public progress."
+    },
+    {
+      "task_id": "T11",
+      "owner": "/root/seed_setup",
+      "branch": "agent/dynamic-values-v13",
+      "base_commit": "1bd8c745837f2e8813bfb38c3b4330a9f4ac5a53",
+      "worktree": "../naja-worktrees/seed-setup",
+      "paths": [
+        "backends/native/",
+        "scripts/test-dynamic.mjs",
+        "tests/dynamic/"
+      ],
+      "status": "completed",
+      "deliverable": "Direct native tagged Int/Text/Bytes/Bool/None operations, truthiness and short circuiting with bounded runtime and independent oracle; no source parser duplication.",
+      "acceptance_commands": [
+        [
+          "cargo",
+          "test",
+          "-p",
+          "naja-native",
+          "--locked",
+          "--offline"
+        ],
+        [
+          "node",
+          "scripts/test-dynamic.mjs"
+        ]
+      ],
+      "forbidden_paths": [
+        "bootstrap/driver/",
+        "planning/",
+        "Cargo.lock"
+      ],
+      "handoff": "Backend explicitly released after committed d2cd830 exact-head34-check/3886-output WSL run; integrator rerun/evidence pending."
+    },
+    {
+      "task_id": "T12",
+      "owner": "/root/recovery_review",
+      "branch": "agent/cli-review-v13",
+      "base_commit": "18ca70486db86aaff16c69a55642ddbe1a2c0c17",
+      "worktree": "../naja-worktrees/recovery-review",
+      "paths": [
+        "reports/reviews/CLI_EXECUTION_V13.md"
+      ],
+      "status": "active",
+      "deliverable": "Independent read-only bounded native CLI review and disposable execution probes; report only.",
+      "acceptance_commands": [
+        [
+          "node",
+          "scripts/test-cli.mjs"
+        ]
+      ],
+      "handoff": "Pinned source report only; actionable findings sent before completion."
+    },
+    {
+      "task_id": "T07",
+      "owner": "/root/frontend",
+      "branch": "agent/project-alias-loading-v13",
+      "base_commit": "af774725201f770eb678b5c6ade3d1d9fea96364",
+      "worktree": "../naja-worktrees/frontend",
+      "paths": [
+        "bootstrap/driver/src/project.rs",
+        "bootstrap/driver/tests/project.rs",
+        "tests/project/README.md"
+      ],
+      "status": "active",
+      "deliverable": "Bounded explicit project-root alias loading and ownership-path validation; no ambient parent/home search or source rewrite.",
+      "acceptance_commands": [
+        [
+          "cargo",
+          "test",
+          "-p",
+          "naja-seed",
+          "--test",
+          "project",
+          "--locked",
+          "--offline"
+        ]
+      ],
+      "handoff": "New-module-only commit; root owns parser/CLI integration.",
+      "history": [
+        {
+          "branch": "agent/frontend-aliases-v13",
+          "base_commit": "1bd8c745837f2e8813bfb38c3b4330a9f4ac5a53",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "bootstrap/frontend/",
+            "tests/syntax/",
+            "compatibility/aliases/"
+          ],
+          "status": "completed",
+          "integrated_commit": "af774725201f770eb678b5c6ade3d1d9fea96364"
+        }
+      ]
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

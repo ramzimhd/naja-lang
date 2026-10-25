@@ -5,30 +5,23 @@
   "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
   "owner": "/root",
   "status": "running",
-  "checkpoint_generation": 3,
-  "head": "4c7b0073aaf2128aaf3274482ec1d126c671b8ba",
+  "checkpoint_generation": 4,
+  "head": "e07a7e4e8e71327d479630a199a69165a15b61c1",
   "branch": "agent/integrator-H0",
   "last_verified_source": "05df50551d9591036e4403e26d626ee19d1c2a15",
   "dirty_paths": [
-    ".gitattributes",
     ".github/workflows/seed.yml",
-    "NOTICE",
-    "README.md",
-    "bootstrap/README.md",
-    "bootstrap/driver/src/lib.rs",
+    "bootstrap/driver/src/main.rs",
+    "launch/HANDOFF.md",
+    "launch/RESUME_PROMPT.md",
+    "launch/history/HANDOFF_2026-10-24.md",
     "planning/assignments.json",
     "planning/continuity.json",
-    "planning/tasks.json",
-    "reports/checks/continuation-recovery-v13.json",
-    "reports/checks/continuation-recovery-v13.log",
-    "scripts/test-hosted-language.mjs",
-    "tests/native/fixtures/integers.naja",
-    "third_party/rust-seed/licenses.json",
-    "third_party/rust-seed/tinyvec-1.12.0/LICENSE-APACHE.md",
-    "third_party/rust-seed/tinyvec_macros-0.1.1/LICENSE-APACHE.md",
-    "third_party/rust-seed/unicode-ident-1.0.24/LICENSE-APACHE",
-    "third_party/rust-seed/unicode-ident-1.0.24/LICENSE-UNICODE",
-    "third_party/rust-seed/unicode-normalization-0.1.25/LICENSE-APACHE"
+    "planning/state.json",
+    "scripts/record-check.ps1",
+    "scripts/test-cli.mjs",
+    "tests/evidence/README.md",
+    "tests/evidence/recorder.test.mjs"
   ],
   "task": "T05/T06/T09/T11/T12",
   "completed": [
@@ -37,7 +30,9 @@
     "Native hosted decimal integers use immutable multi-limb arithmetic without implicit i64 narrowing.",
     "Shared Unicode17 XID/NFKC services and original-span resolver integration implemented.",
     "Independent synthetic coding-agent handoff completed; production integration ownership did not transfer.",
-    "Conflict-stage checkpoint fingerprint defect fixed; all15 disposable recovery tests passed in the work unit."
+    "Conflict-stage checkpoint fingerprint defect fixed; all15 disposable recovery tests passed in the work unit.",
+    "Native bounded run/test commands, shared text/bytes decoder, contextual alias service and explicit verification-audit helper integrated; combined-source retained checks pending.",
+    "Tagged native Int/Text/Bytes/Bool/None backend integrated with independent development IR harness; ordinary source integration remains pending."
   ],
   "checks": [
     {
@@ -105,11 +100,11 @@
   ],
   "blockers": [],
   "unsafe_intermediate_states": [
-    "Current source/planning edits are preserved and still require committed-source integrated evidence.",
-    "Earlier private recovery fingerprints use the superseded index digest and are retained without automatic readiness upgrades.",
-    "Hosted integer arena has no reclamation, runtime loop quota, general objects or exception recovery."
+    "Current source/planning changes require committed-source combined evidence.",
+    "Earlier private checkpoint fingerprints are historical and cannot be assumed ready.",
+    "Native arena has no reclamation or runtime loop quota; execution is ordinary OS rights, not a sandbox."
   ],
-  "next_action": "Commit the coherent integration snapshot, record full scoped checks, then continue CLI execution, native assertions and value/runtime foundations.",
+  "next_action": "Commit recorder guards, integration metadata and review fix; retain combined-source checks and audit exact evidence, then continue dynamic source and aliases.",
   "next_commands": [
     [
       "git",
@@ -140,7 +135,7 @@
     "reservation": "<git-common-dir>/naja-integration.lock",
     "fencing_generation": 2,
     "status": "held",
-    "observed_at": "2026-10-25T19:00:31.849Z",
+    "observed_at": "2026-10-25T19:21:13.205Z",
     "reclaim": "explicit verified release only"
   },
   "budget": {
@@ -153,12 +148,12 @@
     "provider_quota": {
       "status": "observed",
       "account_shared": true,
-      "used_percent": 13,
-      "remaining_percent": 87,
+      "used_percent": 19,
+      "remaining_percent": 81,
       "window_minutes": 10080,
       "resets_at": "2026-11-01T08:14:13.000Z",
-      "observed_at": "2026-10-25T18:59:08Z",
-      "source": "Codex app usage-limit observation; primary subscription window shared across the account."
+      "observed_at": "2026-10-25T19:21:13.205Z",
+      "source": "Codex app get_usage_limits observation; primary subscription window shared across the account."
     },
     "rate_limit": {
       "status": "unknown",
@@ -193,5 +188,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-25T19:00:31.849Z"
+  "updated_at": "2026-10-25T19:21:13.205Z"
 }

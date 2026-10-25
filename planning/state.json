@@ -17,8 +17,8 @@
     "T35"
   ],
   "blockers": [],
-  "last_checkpoint": "2026-10-25T19:00:31.849Z",
-  "note": "Revision1.3 is additive; all19 inherited release gates remain open. Ordinary decimal hosted integers, explicit checkedi64, shared brace/marker/name services, Unicode17/NFKC and recovery tooling are implemented in scoped slices. Current integration evidence is pending; prior verified source/evidence is preserved. CLI execution and literal decoding contributors are active. No standalone FC1, selfhosting, cells, VSIX or human productivity proof exists.",
+  "last_checkpoint": "2026-10-25T19:16:49.173Z",
+  "note": "Revision1.3 is additive; all19 inherited gates and all new FC1/contracts remain open. Native ordinary integer programs and bounded run/test CLI are integrated. Literal decoding and Unicode/alias services are implemented in scoped seed slices; alias loading and dynamic native values remain under integration. Fresh combined-source retained checks are pending. No self-hosting, cells, VSIX or human productivity proof exists.",
   "official_language": "en",
   "package_revision": "1.2",
   "continuation_revision": "1.3",

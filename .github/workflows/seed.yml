@@ -38,6 +38,7 @@ jobs:
         run: |
           node scripts/test-hosted.mjs
           node scripts/test-hosted-language.mjs
+          node scripts/test-dynamic.mjs
           node scripts/test-cli.mjs
       - name: Check planning and evidence integrity
         run: node scripts/validation/check-planning.mjs
@@ -51,3 +52,6 @@ jobs:
         run: node --test tests/foundations/*.test.mjs
       - name: Exercise disposable recovery repositories
         run: node --test tests/continuity/*.test.mjs
+      - name: Exercise evidence recorder source-mutation guards
+        if: runner.os == 'Windows'
+        run: node --test tests/evidence/*.test.mjs
