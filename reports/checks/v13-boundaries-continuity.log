@@ -1,0 +1,5 @@
+Recorded command: node scripts/validation/check-continuity.mjs
+Recorded exit code: 0
+--- captured output ---
+Public continuity observation: PASS
+Recorded observation only; no current Git, reservation, runner or product acceptance checks were performed.

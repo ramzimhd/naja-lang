@@ -98,7 +98,10 @@
       "branch": "agent/integrator-H0",
       "evidence": [
         "reports/checks/seed-rust-tests.json",
-        "reports/checks/v13-source-rust.json"
+        "reports/checks/v13-source-rust.json",
+        "reports/checks/v13-boundaries-rust.json",
+        "reports/checks/v13-boundaries-values-language.json",
+        "reports/checks/v13-boundaries-compiler-boundaries.json"
       ]
     },
     {
@@ -117,7 +120,10 @@
       "owner": "/root",
       "branch": "agent/integrator-H0",
       "evidence": [
-        "reports/checks/v13-source-rust.json"
+        "reports/checks/v13-source-rust.json",
+        "reports/checks/v13-boundaries-rust.json",
+        "reports/checks/v13-boundaries-values-language.json",
+        "reports/checks/v13-boundaries-compiler-boundaries.json"
       ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
@@ -137,7 +143,10 @@
       "owner": "/root",
       "branch": "agent/integrator-H0",
       "evidence": [
-        "reports/checks/v13-source-rust.json"
+        "reports/checks/v13-source-rust.json",
+        "reports/checks/v13-boundaries-rust.json",
+        "reports/checks/v13-boundaries-values-language.json",
+        "reports/checks/v13-boundaries-compiler-boundaries.json"
       ]
     },
     {
@@ -174,7 +183,10 @@
       "owner": "/root",
       "branch": "agent/integrator-H0",
       "evidence": [
-        "reports/checks/v13-source-rust.json"
+        "reports/checks/v13-source-rust.json",
+        "reports/checks/v13-boundaries-rust.json",
+        "reports/checks/v13-boundaries-values-language.json",
+        "reports/checks/v13-boundaries-compiler-boundaries.json"
       ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
@@ -211,7 +223,10 @@
       "owner": "/root",
       "branch": "agent/integrator-H0",
       "evidence": [
-        "reports/checks/v13-source-rust.json"
+        "reports/checks/v13-source-rust.json",
+        "reports/checks/v13-boundaries-rust.json",
+        "reports/checks/v13-boundaries-values-language.json",
+        "reports/checks/v13-boundaries-compiler-boundaries.json"
       ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
@@ -233,7 +248,10 @@
       "branch": "agent/integrator-H0",
       "evidence": [
         "reports/checks/v13-source-rust.json",
-        "reports/checks/v13-source-cli.json"
+        "reports/checks/v13-source-cli.json",
+        "reports/checks/v13-boundaries-rust.json",
+        "reports/checks/v13-boundaries-values-language.json",
+        "reports/checks/v13-boundaries-compiler-boundaries.json"
       ],
       "note": "Basic native run/test CLI slice is in progress; libraries/module/full CLI obligations remain open."
     },

@@ -1,0 +1,47 @@
+Recorded command: node scripts/test-cli.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS lex command-specific help
+PASS check command-specific help
+PASS build command-specific help
+PASS run command-specific help
+PASS test command-specific help
+PASS native hosted AOT execution with Unicode and spaces in paths
+PASS literal child arguments after -- without shell interpretation
+PASS compile failure never executes and cleans temporary state
+PASS numeric native runtime exit 101 and stderr preserved
+PASS native assertions fail run and machine test reports without executing later output
+PASS program-file tests execute passing native comparison assertions
+PASS bounded nonterminating native execution and artifact cleanup
+PASS check does not execute nonterminating source
+PASS Windows requires explicit WSL runner
+PASS strict options: --runner --runner
+PASS strict options: --unknown
+PASS strict options: 
+PASS strict options: --timeout-ms
+PASS strict options: --timeout-ms
+PASS strict options: --timeout-ms
+PASS strict options: --timeout-ms
+PASS strict options: --runner
+PASS strict options: --filter
+PASS strict options: --json --json
+PASS strict options: --filter --filter
+PASS strict options: --
+PASS strict options: --runner
+PASS strict options: --help
+PASS deterministic sorted program discovery and stable machine JSON
+PASS case-sensitive substring filtering and empty-selection diagnostic
+PASS compile failure is a structured per-program result
+PASS runtime failure retains exact observed exit and captured stderr
+PASS deadline report distinguishes observed from unavailable signal data
+PASS test output capture is bounded and overflow fails the case
+PASS unmatched negative fixtures are not blindly executed
+PASS filter data beginning with two hyphens retains its literal substring meaning
+PASS discovery skips symlinks and explicit symlink sources fail
+PASS source UTF-8 and 1 MiB limits remain enforced
+PASS build preserves existing output bytes
+PASS directory traversal depth is bounded before execution
+PASS unmatched discovery entries still count toward the traversal budget
+PASS unusable temporary root fails without changing existing bytes
+PASS native fixture observes argv bytes, arbitrary exit42 and platform signal status
+CLI execution checks passed: 43; target=Linux x86-64 via explicit Windows WSL; fixture artifacts retained under target/

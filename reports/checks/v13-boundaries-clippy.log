@@ -1,0 +1,5 @@
+Recorded command: cargo clippy --workspace --all-targets --locked --offline -- -D warnings
+Recorded exit code: 0
+--- captured output ---
+    Checking naja-seed v0.0.1 (<workspace>\bootstrap\driver)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.85s

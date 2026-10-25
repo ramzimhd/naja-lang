@@ -1,87 +1,70 @@
-# Handoff — October 25, 2026 continuation revision 1.3
+# Running handoff — October 25, 2026, revision1.3
 
-This is a running recovery record. Continue toward FC1 and HATCH while execution
-capacity and authorized work remain. A checkpoint does not end the mission.
-The prior actual handoff is retained in `history/HANDOFF_2026-10-24.md`.
+Continue toward FC1 and HATCH while authorized capacity remains. A checkpoint
+does not end the mission. The actual earlier handoff is retained unchanged at
+history/HANDOFF_2026-10-24.md.
 
-The authorized public repository is https://github.com/ramzimhd/naja-lang under
-the owner-selected Apache-2.0 license. Integration checkout: `C:/naja`, branch
-`agent/integrator-H0`, sole integrator `/root`. Inspect actual Git, assignments
-and reservation before writing. Do not reset progress, recreate the repository,
-reinstall adequate tools or extract credentials. Ordinary Git uses its configured
-credential helper. Private Git recovery files and ignored local helpers are not
-publication inputs.
+Public repository: https://github.com/ramzimhd/naja-lang. Owner selected Apache-2.0.
+Sole integrator /root uses C:/naja, branch agent/integrator-H0. Inspect actual Git,
+assignments and reservation before writing. Use configured Git credentials;
+never extract them, reset progress, recreate the repository or publish private
+Git recovery payloads/ignored helpers. Separate contributor worktrees are under
+C:/naja-worktrees/. Public continuity is an observation, never lock authority.
 
 ## Actual implementation and evidence
 
-The temporary Rust 1.97.1 seed directly emits Linux x86-64 ELF machine code. The
-implemented compilation/execution chain invokes no Python, assembler, linker,
-other compiler or interpreter. The shared frontend has lossless lexing,
-edition-aware brace/named/depth suites, Unicode 17 XID/NFKC names, original spans,
-bounded text/bytes literal decoding and a contextual alias configuration service.
-The shared source parser supports ordinary decimal arbitrary-precision integers,
-checked explicit i64, assignment, integer comparisons, branches/loops, transparent
-groups, print and comparison assertions, with definite initialization checks.
-Literal execution and alias project loading are still integration work.
+The temporary Rust1.97.1 seed directly emits Linux x86-64 ELF machine code without
+Python, assembler, linker, other compiler or interpreter. Ordinary source native
+values include arbitrary decimal Int, Text, Bytes, Bool and None, exact +,-,*,
+sequence concatenation, unary signs, comparisons/chains, truthiness, len, print,
+assert, assignments/annotations and definite initialization across branches/loops.
+Explicit i64 stays checked. The shared frontend supplies Unicode17 XID/NFKC,
+literal decoding and edition-aware brace/named/depth suites. Explicit owning
+project roots activate bounded contextual aliases; no ambient discovery occurs.
+General functions/classes/collections/floats/module semantics remain incomplete.
 
-The CLI has lex/check/build and bounded run/program-file test commands. Linux x64
-executes directly; Windows explicitly uses `--runner wsl`. Exact process/output,
-Unicode discovery, artifact ownership and timeout limits are documented in
-`tests/cli/README.md`. There is no sandbox or native Windows/macOS execution
-claim. The temporary arithmetic arena is 64 MiB. Runtime exhaustion exits 103,
-I/O failure 102 and assertion failure 104.
+Exact source865a0d2a6a0e5509e7870d1620d1bcebac054d6b passed15 retained checks:
+178 Rust cases, native harness counts36/14/23/58/84/43 and25 compiler-boundary
+checks. Formatting, Clippy, build, three validators and scoped whitespace passed.
+The earlier126 Node checks remain pinned4f93a39. See reports/progress.md and
+reports/checks/v13-boundaries-* for exact scope, commands and raw log hashes.
+Private checkpoint5 advanced retained verification to865a0d2 through an explicit
+integrity audit under fence2; later metadata edits need an ordinary checkpoint.
 
-Exact source `4f93a39b678ca25a4372af6571b5a60617f33c80` passed 14 retained
-checks: 153 Rust tests, 126 Node tests and native harness counts 36/14/23/34/43
-(i64/hosted/source/dynamic/CLI). Formatting, Clippy, build, validators and scoped
-authored whitespace passed. Logs, commands and hashes are retained in
-`reports/checks/v13-source-*`. An explicit integrity audit advanced private
-checkpoint 2 to this source; acknowledged evidence-only dirty state assessed
-ready before later metadata edits. See `reports/progress.md` for exact scope.
-The prior baseline CI remains historical; new publication needs its own CI run.
-Independent runtime and CLI reviews retain their original source identities.
+Independent review retained earlier stack abort/stream input/annotation findings.
+Unchanged input reruns verify the fixes at865a0d2 within the reported Windows/WSL
+scope. Compilation uses a joined8MiB worker stack. Namespace/project ownership
+and regular-file checks precede source reads; hostile filesystem race resistance
+and OS IO deadlines are not claimed. Native arena64MiB has no reclamation or
+loop quota. Runtime exits:103 resource,102 IO,104 assertion,105 operand type.
+Windows uses explicit --runner wsl; Linux executes directly. No sandbox or native
+Windows/macOS program-output claim is made.
 
-All 19 inherited release gates and all new L/C/FC1 contracts remain open. Full
-functions/classes/containers, grammar/runtime semantics, productive libraries,
-reference backend/linker closure in NAJA, B1–B3, cells, LSP/DAP/VSIX and human
-productivity proof remain incomplete. Temporary seed dependencies/licenses are
-disclosed; the old independence inventory needs expanded-closure revalidation.
+Public5c555bc CI passed Windows/Linux and failed macOS invalid-filename fixture
+creation with EILSEQ. The failure is retained and capability fix awaits its own
+new CI run. All19 HATCH gates and all new L/C/FC1 contracts remain open. No
+self-hosting, productive library acceptance, cells, VSIX or human timing proof.
 
-## Ownership and recovery
+## Active ownership and next engineering
 
-The real integration reservation was explicitly migrated from manual fence 1 to
-helper fence 2, retaining its outgoing record. Only the current owner holds its
-private token. Never steal/recreate ownership based on age or a dead launcher
-PID. Public continuity is a sanitized observation, not mutation authority.
-Private checkpoint 1 and its older index digest are historical. Checkpoint 2
-retains the new digest and audited source 4f93a39. Public metadata changes after
-that observation need a fresh ordinary checkpoint; never infer current readiness
-from an earlier assessment.
+The real integration reservation was explicitly migrated to helper fence2.
+Only its current owner holds the private token. Never reclaim by age/dead PID.
+Earlier private checkpoints/evidence remain historical. Check readiness against
+the actual HEAD/index/worktree. No unattended provider runner or paid fallback
+is authorized; after client/machine exit manually reopen a supported client.
 
-`tools/continuity/` supplies local atomic ownership/checkpoints and explicit
-retained-verification audits. No provider supervisor, scheduled service or
-unattended runner is running. Context, quota, rate limits, deadlines and spend
-have independent observations; unknown stays null. After client/machine exit,
-an operator must relaunch a supported client. No paid fallback or provider CLI
-launch is authorized. The fresh-agent drill used a disposable repository and
-did not transfer the production reservation or prove provider-outage recovery.
+Current scoped branches (confirm actual state before writes):
 
-Confirmed separate contributor worktrees are under `C:/naja-worktrees/`; inspect
-`planning/assignments.json` and real branches. Current scoped work:
+- agent/native-functions-v13: direct native functions/isolated frames/calls/returns;
+  contributor owns backend plus new function harness/tests until release.
+- agent/project-manifest-v13: new pure bounded manifest parser/tests only;
+  root later wires project ownership/loader behavior.
+- agent/native-divrem-v13: completed core6847becc then8e5344b awaits root merge;
+  root adds ordinary source // and % without narrowing or legacy fixed changes.
+- Dynamic source harness/review/fix verification are complete with source-pinned
+  reports; retain original failed outcomes and unchanged-input comparisons.
 
-- `agent/dynamic-expressions-v13`: native positive/length/comparison-chain and
-  noncoercing integer type-boundary operations; backend paths belong to the
-  contributor until explicit release.
-- `agent/verification-audit-v13`: helper commit6bd5987 integrated as 96ed44a;
-  root alone audits actual evidence and updates live checkpoints.
-- `agent/frontend-aliases-v13`: service31fe380 integrated as af77472;
-  CLI/project/contextual resolution remains root integration work.
-- `agent/cli-review-v13`: completed report integrated as 9f406fb. Its filter defect
-  was fixed separately and verified in the retained 43-check CLI harness.
-
-## Next commands and work
-
-From PowerShell in `C:/naja`, inspect before mutation:
+Inspect and validate in PowerShell:
 
 ```powershell
 git status --short --branch
@@ -94,14 +77,9 @@ node scripts/validation/check-foundations.mjs
 node scripts/validation/check-continuity.mjs
 ```
 
-The combined retained checks, recorder guards and explicit audit passed at 4f93a39.
-Review staged source/evidence publication with
-`scripts/publication-audit.mjs` before a normal authorized push; check the new CI
-at its own source, then refresh the private checkpoint. Continue dynamic source
-integration, contextual aliases and
-remaining FC1 foundations after this recovery boundary.
-
-Read task-relevant continuation contracts and technical specs before each task.
-Do not mark a whole requirement from a partial command pass. Retain failures and
-exact limits; never infer human productivity from agent timing or reclassify an
-unmet target as accepted.
+Finish reviewed source/evidence publication with scripts/publication-audit.mjs,
+retain its known synthetic-fixture finding honestly, push normally and verify new
+CI. Refresh private checkpoint, then integrate div/rem, functions and manifest.
+Read relevant specifications before tasks. Preserve all inherited identifiers,
+failures, limits and historical evidence. Do not stop after a passing slice or
+promote a whole requirement from partial checks.

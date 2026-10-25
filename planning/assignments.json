@@ -234,7 +234,9 @@
         "tests/cli/",
         "scripts/test-cli.mjs",
         "bootstrap/driver/src/project.rs",
-        "docs/decisions/0005-native-values-and-project-alias-activation.md"
+        "docs/decisions/0005-native-values-and-project-alias-activation.md",
+        "scripts/test-compiler-boundaries.mjs",
+        "tests/compiler/"
       ],
       "status": "active",
       "history": [
@@ -431,16 +433,16 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/native-divrem-v13",
-      "base_commit": "8833b47c59e0a7128e07e6da67a6ce5a52986250",
+      "branch": "agent/native-functions-v13",
+      "base_commit": "8e5344b502cddc6fc6e7a28a27f032c4a1ce370d",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
         "backends/native/",
-        "scripts/test-dynamic.mjs",
-        "tests/dynamic/"
+        "scripts/test-functions.mjs",
+        "tests/functions/"
       ],
       "status": "active",
-      "deliverable": "Shared native exact signed floor division/modulo with immutable operands, bounded scratch and preregistered general-division work cap; no source parser edits.",
+      "deliverable": "Direct native first-order functions with isolated frames, real calls/returns and explicit call-depth/source-stack limits; no interpreter or host callbacks.",
       "acceptance_commands": [
         [
           "cargo",
@@ -483,6 +485,16 @@
             "tests/dynamic/"
           ],
           "status": "completed"
+        },
+        {
+          "branch": "agent/native-divrem-v13",
+          "base_commit": "8833b47c59e0a7128e07e6da67a6ce5a52986250",
+          "paths": [
+            "backends/native/",
+            "scripts/test-dynamic.mjs",
+            "tests/dynamic/"
+          ],
+          "status": "completed"
         }
       ]
     },
@@ -496,7 +508,7 @@
         "scripts/test-values-language.mjs",
         "tests/values/"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Independent ordinary-source native value/alias/annotation/chained-comparison execution harness.",
       "acceptance_commands": [
         [
@@ -568,7 +580,7 @@
       "paths": [
         "reports/reviews/DYNAMIC_SOURCE_V13.md"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Independent read-only shared source/native value/alias review with bounded specification-based probes.",
       "acceptance_commands": [
         [
@@ -580,7 +592,40 @@
           "--offline"
         ]
       ],
-      "handoff": "Report only; root integrates findings."
+      "handoff": "Report only; root integrates findings.",
+      "history": [
+        {
+          "branch": "agent/dynamic-source-fixes-v13",
+          "base_commit": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
+          "paths": [
+            "reports/reviews/DYNAMIC_SOURCE_FIXES_V13.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "33beb62"
+        }
+      ]
+    },
+    {
+      "task_id": "T12",
+      "owner": "/root/planning_validation",
+      "branch": "agent/project-manifest-v13",
+      "base_commit": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
+      "worktree": "../naja-worktrees/planning-validation",
+      "paths": [
+        "bootstrap/driver/src/manifest.rs",
+        "bootstrap/driver/tests/manifest.rs",
+        "tests/project/MANIFEST.md"
+      ],
+      "status": "active",
+      "deliverable": "Bounded pure manifest subset parser with exact original spans and explicit unsupported-form diagnostics; no filesystem/network/environment resolution.",
+      "forbidden_paths": [
+        "bootstrap/driver/src/lib.rs",
+        "bootstrap/driver/src/main.rs",
+        "bootstrap/driver/src/project.rs",
+        "Cargo.lock",
+        "planning/"
+      ],
+      "handoff": "Scoped committed parser/tests to sole integrator; loader wiring remains root work."
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

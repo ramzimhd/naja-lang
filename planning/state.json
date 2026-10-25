@@ -5,7 +5,7 @@
   "development_started": true,
   "current_gate": "H0",
   "repository_url": "https://github.com/ramzimhd/naja-lang",
-  "last_verified_commit": "4f93a39b678ca25a4372af6571b5a60617f33c80",
+  "last_verified_commit": "865a0d2a6a0e5509e7870d1620d1bcebac054d6b",
   "active_tasks": [
     "T02",
     "T04",
@@ -18,8 +18,8 @@
     "T35"
   ],
   "blockers": [],
-  "last_checkpoint": "2026-10-25T19:26:42.183Z",
-  "note": "Revision1.3 is additive; all19 inherited gates and all new L/C/FC1 contracts remain open. Fourteen retained checks at4f93a39 passed and were explicitly audited before private checkpoint2. Native source integers/assertions/run/test, Unicode/literal/alias services and tagged value backend are scoped foundations. Dynamic source integration and explicit project alias loading continue; no self-hosting, cells, VSIX or human productivity proof exists.",
+  "last_checkpoint": "2026-10-25T20:00:31.122Z",
+  "note": "Revision1.3 is additive; all19 inherited gates and all new L/C/FC1 contracts remain open. Fifteen retained checks at865a0d2 passed and were explicitly audited before private checkpoint5. Native Int/Text/Bytes/Bool/None source expressions, contextual aliases and compiler stack/input boundaries are scoped foundations. Historical failed CI and independent review findings remain retained; no self-hosting, cells, VSIX or human productivity proof exists.",
   "official_language": "en",
   "package_revision": "1.2",
   "continuation_revision": "1.3",
