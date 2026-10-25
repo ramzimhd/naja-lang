@@ -93,7 +93,7 @@ for (const [name, source, value] of [['left-bool', 'True + rational(1, 2)', frac
 const emptyClass = 'class C: pass\n';
 for (const [name, source, prefix] of [['text', '"x"', ''], ['bytes', 'b"x"', ''], ['none', 'None', ''], ['object', 'C()', emptyClass]]) for (const [side, left, right] of [['left', 'rational(0, 1)', source], ['right', source, 'rational(0, 1)']]) runtime('unrelated-equality-' + name + '-' + side, API + prefix + 'print(' + left + ' == ' + right + ')\nprint(' + left + ' != ' + right + ')\n', 'False\nTrue\n');
 runtime('int-only-results-remain-int', API + 'print(7 + 2)\nprint(7 // 2)\nprint(7 % 2)\nprint(True * 7)\n', '9\n3\n1\n7\n');
-runtime('discarded-ratio-and-return', API + 'def value():\n    rational(1, 2)\n    return rational(-3, 4)\n' + observe('value()'), '-3\n4\n');
+runtime('discarded-ratio-and-return', API + 'def make_ratio():\n    rational(1, 2)\n    return rational(-3, 4)\n' + observe('make_ratio()'), '-3\n4\n');
 runtime('distinct-import-aliases-and-raw-keyword-lookalike', 'from naja.numeric import rational as 比, rational as other, numerator as ｉｆ, denominator as 分母\nvalue = other(6, 8)\nprint(ｉｆ(value))\nprint(分母(比(1, 2)))\n', '3\n2\n');
 runtime('parameter-shadows-api-as-value', API + 'def identity(numerator):\n    numerator = True\n    return numerator\nprint(identity(False))\n', 'True\n');
 
