@@ -144,3 +144,23 @@ in the first large-key constructor: 146 cases passed, one failed and 55 remained
 [FAILED_REPETITION_RESULTS_2026-10-25.json](FAILED_REPETITION_RESULTS_2026-10-25.json).
 It reached no successful key-work boundary and does not establish a compiler
 mapping defect.
+
+Preparation revision 3 separately replaces only the 19 key-work payload sources
+that used unsupported sequence repetition. Each now contains explicit inline
+concatenations of three literal chunks, plus the original one-byte suffix where
+needed. It introduces no native helper, binding or call, so KEY/VALUE/insertion
+timing and final key descriptor aliases remain intact. Node compares modeled
+chunk bytes with independent Buffer-fill/UTF-8 string answers and freezes 19
+payload identities. Case names/counts, output/error/effect expectations, work
+formulas and budgets stay unchanged. The other 183 source identities, all static
+fixtures and near-arena sources remain unchanged. The complete original 202
+identities and both failed runs remain retained separately.
+
+The largest generated source is 1,000,283 bytes; individual key payloads are at
+most 1,000,001 bytes and each case's payload literal total remains below the
+unchanged 1 MiB literal limit. Inline concatenation allocates intermediate
+payloads: the largest one-construction total is 1,666,667 payload bytes, plus
+descriptor/alignment overhead. Work-boundary cases remain far below the existing
+64 MiB arena and no resource allowance is increased. All 202 revision-3 native
+outcomes remain `not_run` pending a new exact integrated source pin; sequence
+repetition support is not claimed.

@@ -167,23 +167,43 @@ reject('mixed-relation-count-129', 'print(' + '0 == '.repeat(128) + '0 in {0})\n
 
 // Frozen09c9ed... algorithm: query preflight once, candidate preflight once,
 // same-kind/length comparison2*payload, one saved budget across all candidates.
-for (const [kind, source, count] of [['bytes', 'b"x"', 250000], ['text-ascii', '"x"', 250000], ['text-utf8', '"é"', 125000]]) {
-  const prefix = 'key = ' + source + ' * ' + count + '\nvalue = {key: True}\n';
+// Guest source has no sequence repetition support. Inline literal chunks plus
+// native concatenation preserve expression timing without runtime helpers.
+const payloadOracles = [];
+function payloadExpression(kind, unit, count, suffix = '') {
+  assert.ok(Number.isSafeInteger(count) && count >= 3);
+  if (kind === 'bytes') assert.ok([...unit + suffix].every(character => character.codePointAt(0) < 128));
+  const chunkCounts = [Math.floor(count / 3), Math.floor(count / 3), count - 2 * Math.floor(count / 3)];
+  const chunks = chunkCounts.map(size => unit.repeat(size));
+  const literal = value => (kind === 'bytes' ? 'b' : '') + JSON.stringify(value);
+  let expression = '((' + literal(chunks[0]) + ' + ' + literal(chunks[1]) + ') + ' + literal(chunks[2]) + ')';
+  if (suffix) expression = '(' + expression + ' + ' + literal(suffix) + ')';
+  const concatenated = Buffer.concat([...chunks, suffix].map(value => Buffer.from(value, 'utf8')));
+  const expected = kind === 'bytes' ? Buffer.concat([Buffer.alloc(count, unit.charCodeAt(0)), Buffer.from(suffix)]) : Buffer.from(unit.repeat(count) + suffix, 'utf8');
+  assert.deepEqual(concatenated, expected, 'independent payload bytes for ' + kind);
+  const chunkBytes = chunks.map(value => Buffer.byteLength(value));
+  const baseBytes = chunkBytes.reduce((sum, size) => sum + size, 0);
+  payloadOracles.push({ kind, unit_utf8_hex: Buffer.from(unit).toString('hex'), unit_count: count, suffix_utf8_hex: Buffer.from(suffix).toString('hex'), chunk_unit_counts: chunkCounts, payload_bytes: expected.length, payload_sha256: hash(expected), expression_source_sha256: hash(expression), temporary_concat_payload_bytes: chunkBytes[0] + chunkBytes[1] + baseBytes + (suffix ? expected.length : 0) });
+  return expression;
+}
+for (const [kind, unit, count] of [['bytes', 'x', 250000], ['text-ascii', 'x', 250000], ['text-utf8', 'é', 125000]]) {
+  const literalKind = kind === 'bytes' ? 'bytes' : 'text';
+  const prefix = 'key = ' + payloadExpression(literalKind, unit, count) + '\nvalue = {key: True}\n';
   runtime('work-same-descriptor-exact-' + kind, prefix + 'print(value[key])\nprint(key in value)\nvalue[key] = False\nprint(value[key])\n', 'True\nTrue\nFalse\n');
-  const over = 'key = ' + source + ' * ' + count + ' + ' + (kind === 'bytes' ? 'b"x"' : '"x"') + '\nvalue = {key: True}\n';
+  const over = 'key = ' + payloadExpression(literalKind, unit, count, 'x') + '\nvalue = {key: True}\n';
   runtime('work-same-descriptor-over-read-' + kind, over + 'print(value[key])\n', '', workFailure);
   runtime('work-same-descriptor-over-contains-' + kind, over + 'print(key in value)\n', '', workFailure);
   runtime('work-same-descriptor-over-store-' + kind, mark + over + 'value[key] = mark("value", False)\n', 'value\n', workFailure);
 }
-const cumulative = 'first = b"a" * 499999\nsecond = b"b" * 500001\nvalue = {first: True, second: False}\n';
+const cumulative = 'first = ' + payloadExpression('bytes', 'a', 499999) + '\nsecond = ' + payloadExpression('bytes', 'b', 500001) + '\nvalue = {first: True, second: False}\n';
 runtime('work-cumulative-exact-membership-and-snapshot', snapshotImport + cumulative + 'print(None in value)\nprint(b"" in value)\nprint(len(keys_snapshot(value)))\nprint(len(keys_snapshot(value)[0]))\nprint(len(keys_snapshot(value)[1]))\n', 'False\nFalse\n2\n499999\n500001\n');
 runtime('work-cumulative-exact-missing-key', cumulative + 'print(value[None])\n', '', missingFailure);
 runtime('work-cumulative-over-one', cumulative + 'print(b"z" in value)\n', '', workFailure);
-const equalCandidates = count => 'value = {' + Array.from({ length: count }, (_, index) => 'b"' + String.fromCharCode(97 + index) + '" * 100000:None').join(',') + '}\n';
-runtime('work-three-equal-length-candidates-exact', equalCandidates(3) + 'print(b"z" * 100000 in value)\n', 'False\n');
-runtime('work-four-equal-length-candidates-over', equalCandidates(4) + 'print(b"z" * 100000 in value)\n', '', workFailure);
-runtime('work-empty-container-still-preflights-key', 'key = b"x" * 1000001\nprint(key in {})\n', '', workFailure);
-runtime('work-empty-container-exact-key', 'key = b"x" * 1000000\nprint(key in {})\n', 'False\n');
+const equalCandidates = count => 'value = {' + Array.from({ length: count }, (_, index) => payloadExpression('bytes', String.fromCharCode(97 + index), 100000) + ':None').join(',') + '}\n';
+runtime('work-three-equal-length-candidates-exact', equalCandidates(3) + 'print(' + payloadExpression('bytes', 'z', 100000) + ' in value)\n', 'False\n');
+runtime('work-four-equal-length-candidates-over', equalCandidates(4) + 'print(' + payloadExpression('bytes', 'z', 100000) + ' in value)\n', '', workFailure);
+runtime('work-empty-container-still-preflights-key', 'key = ' + payloadExpression('bytes', 'x', 1000001) + '\nprint(key in {})\n', '', workFailure);
+runtime('work-empty-container-exact-key', 'key = ' + payloadExpression('bytes', 'x', 1000000) + '\nprint(key in {})\n', 'False\n');
 const arenaPrefix = 'value = {"key": None}\npayload = "' + 'x'.repeat(524288) + '"\nsmall = "' + 'y'.repeat(65536) + '"\n' + 'discard = payload + ""\n'.repeat(127) + 'discard = small + ""\n'.repeat(7);
 runtime('near-arena-dict-updates-reuse-descriptors', 'def update(value, payload):\n' + '    value["key"] = payload\n'.repeat(20) + arenaPrefix + 'update(value, payload)\n'.repeat(100) + 'print(len(value["key"]))\n', '524288\n');
 runtime('near-arena-snapshot-allocations-guard', snapshotImport + 'def allocate(value):\n' + '    keys_snapshot(value)\n'.repeat(20) + arenaPrefix + 'allocate(value)\n'.repeat(100), '', arenaFailure);
@@ -233,7 +253,7 @@ const sourceHead = command('git', ['rev-parse', 'HEAD']).stdout.toString().trim(
 if (expectedSource !== null) assert.equal(sourceHead, expectedSource, 'source commit mismatch');
 const sourceStatus = command('git', ['status', '--short']).stdout.toString();
 const sourceDiff = command('git', ['diff', '--binary', 'HEAD']).stdout;
-writeFileSync(join(directory, 'plan.json'), JSON.stringify({ schema_version: 1, source_commit: sourceHead, fixture_index_sha256: hash(readFileSync(join(fixtureRoot, 'fixture-index.json'))), cases: cases.map(identity) }, null, 2) + '\n');
+writeFileSync(join(directory, 'plan.json'), JSON.stringify({ schema_version: 1, source_commit: sourceHead, fixture_index_sha256: hash(readFileSync(join(fixtureRoot, 'fixture-index.json'))), payload_construction_oracles: payloadOracles, cases: cases.map(identity) }, null, 2) + '\n');
 process.on('uncaughtExceptionMonitor', error => {
   const completed = new Set(results.map(result => result.name));
   const pending = cases.filter(test => !completed.has(test.name)).map(test => ({ ...identity(test), result: test === activeCase ? 'failed' : 'not_run' }));
@@ -248,6 +268,7 @@ if (prepareOnly) {
   assert.equal(hash(readFileSync(fileURLToPath(import.meta.url))), frozen.harness_sha256, 'frozen harness identity');
   assert.equal(hash(readFileSync(join(fixtureRoot, 'fixture-index.json'))), frozen.fixture_index_sha256, 'frozen fixture-index identity');
   assert.deepEqual(cases.map(identity), frozen.results.map(({ result, ...test }) => test), 'frozen generated cases and expectations');
+  assert.deepEqual(payloadOracles, frozen.payload_construction_oracles, 'frozen independent payload construction oracles');
   assert.deepEqual(frozen.budgets, { native_seconds: nativeLimitSeconds, cli_ms: 20_000, compiler_build_ms: 45_000, overall_ms: overallLimitMs, capture_bytes_per_child: 8 * 1024 * 1024 }, 'frozen resource budgets');
   const built = command('cargo', ['+1.97.1', 'build', '--workspace', '--locked', '--offline'], { timeout: 45_000 });
   output('compiler-build', built);
