@@ -1,0 +1,11 @@
+def Key(values): {
+values[False] = "κόσμος"
+return values
+}
+
+values = [None, True]
+表示(Key(values)[0])
+表示(長さ(values))
+表示(values[True] equalTo True)
+values[True] = "表示 equalTo 長さ"
+表示(values[-1])

@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "aliases.py",
+      "sha256": "03bf17f7864117fbdfba283f4a908900a391fbec3e5eea3cc44e41340b0819e7"
+    },
+    {
+      "path": "blocks.naja",
+      "sha256": "1c4abf78a0dba156be83f30b5033d1b060563248a1e94df595a4f2df1aadbc60"
+    },
+    {
+      "path": "cycles.py",
+      "sha256": "d71a479a4bb6097f8bdc9f486061a57208cc4ef0e7d6bb0292357a2b68f2a776"
+    },
+    {
+      "path": "discard.py",
+      "sha256": "bc80672552ce90b8ea7aef320946b271057c6765bcad12f257483165a5d17385"
+    },
+    {
+      "path": "forms.py",
+      "sha256": "e71fd1a8ac71c0a7cd5bdc076b09ac6b510bc97d699db611aa83da92e9b0d7e4"
+    },
+    {
+      "path": "order.py",
+      "sha256": "6d7d2c23033339981df9f93b1a03d5ffee56cadc434a396aeaee36aab96cef12"
+    },
+    {
+      "path": "project/main.naja",
+      "sha256": "6474efb76c4655169157dd59636898b6b15794f9d425a5aacb787e58a4ec34d9"
+    },
+    {
+      "path": "project/naja.alias",
+      "sha256": "83a34d67f874f8e9e91506f57a34ecb41264e35ea13185dec2ff2cf5db7101f8"
+    },
+    {
+      "path": "project/naja.toml",
+      "sha256": "dfd0241b5648adbf6fb83c8c10e6f69a5f61fa5230021c59e6b2c7ae329269fb"
+    }
+  ],
+  "native": [
+    {
+      "name": "forms",
+      "path": "forms.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "0\nTrue\nFalse\n8\nTrue\nFalse\nNone\n1234567890123456789012345678901234567890\n𝄞\n255\n7\n8\n2\n0\nnonempty\n1\n"
+    },
+    {
+      "name": "aliases",
+      "path": "aliases.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "changed\nTrue\n7\n2\n99\nNone\n"
+    },
+    {
+      "name": "cycles",
+      "path": "cycles.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "2\nTrue\n1\n2\nTrue\nshared cycle\nFalse\n"
+    },
+    {
+      "name": "order",
+      "path": "order.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "first child\nsecond child\nvalue\nsequence\nindex\nnested value\nouter sequence\ninner index\nouter index\n7\nTrue\n0\n17\n"
+    },
+    {
+      "name": "discard",
+      "path": "discard.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "discarded list\ndiscarded tuple\ndiscarded scalar\nFalse\nempty is false\nnonempty is true\n0\n1\n"
+    },
+    {
+      "name": "blocks",
+      "path": "blocks.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "é𝄞\nTrue\n"
+    }
+  ]
+}

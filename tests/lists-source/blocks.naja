@@ -1,0 +1,17 @@
+def change(values): {# Shared mutable list #
+{# No new scope #
+if values: {
+values[-1] = "é𝄞"
+}
+}
+return values
+}
+
+def marked(values):(0)
+    if values:(1)
+        values[False] = True
+    return values
+
+values = [0, None]
+print(change(values)[-1])
+print(marked(values)[0])
