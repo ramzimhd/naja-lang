@@ -373,7 +373,7 @@ impl<'a> Parser<'a> {
         let canonical_alias = canonical_identifier(&alias).map_err(|_| {
             error("A0006", "Alias value must be a valid Unicode identifier; glyph aliases are not implemented.", value_span)
         })?;
-        if reserved(&alias) || matches!(canonical_alias.as_str(), "print" | "len") {
+        if reserved(&alias) || matches!(canonical_alias.as_str(), "print" | "len" | "set") {
             return Err(error(
                 "A0007",
                 "Alias conflicts with a reserved raw keyword or canonical builtin spelling.",

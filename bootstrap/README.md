@@ -260,3 +260,31 @@ Reference sources consulted on October 24, 2026:
 
 The older Linux Foundation ELF mirror denied automated access; it was not used
 as verification evidence. There are no copied third-party implementation sources.
+
+## Bounded mapping source slice
+
+The shared expression parser lowers {} and {key: value} dictionaries, {element}
+sets, an unbound zero-argument set() and mixed in/not in comparison chains.
+Dictionary pairs evaluate KEY then VALUE before insertion; indexed assignment
+evaluates VALUE then CONTAINER then KEY. Operands are evaluated once and mixed
+chains retain their original middle operand while short-circuiting. Existing
+comparison-only source keeps the prior CompareChain IR. Brace expressions remain
+distinct from control suites and named sections in both dialects.
+
+Explicit from naja.collections import keys_snapshot binds a one-argument API
+returning an immutable Tuple snapshot of first key descriptors in insertion order.
+It does not implement Python dict.keys() views. Static canonical imports, aliases
+and arity use the existing module-header machinery; no ambient loader is added.
+A local, parameter, import, function or class set binding wins over the builtin.
+Project aliases cannot use canonical set, including its NFKC equivalents, just as
+print/len are reserved builtin spellings; set is not an alias target in schema1.
+
+Native mappings have128 entries, exact Int/Bool/Text/Bytes/None keys and a
+separately preregistered cumulative1,000,000-unit key-work limit per operation.
+Text/Bytes key data is never normalized. Unsupported key kinds diagnose even in
+empty containers; missing keys exit111. Full hashing, iteration, resizing, deletion,
+structural equality/display and complete container protocols remain required.
+Read tests/mappings/CONTRACT.md for exact validation, debit sequence and errors.
+Existing arena/stack/source/literal/node/function/call limits are unchanged.
+The independent202-case source preparation is frozen; execution must retain its
+actual integrated source SHA and results rather than borrowing backend proof.

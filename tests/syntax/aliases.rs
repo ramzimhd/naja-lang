@@ -203,6 +203,8 @@ fn raw_keywords_and_canonical_builtin_conflicts_are_rejected() {
         "_",
         "print",
         "len",
+        "set",
+        "ｓｅｔ",
         "ｐｒｉｎｔ",
     ] {
         errors(&format!("[operators]\n\"==\"=\"{name}\""), "A0007");

@@ -268,6 +268,7 @@ enum ImportedApi {
     WriteBytes,
     EncodeUtf8,
     DecodeUtf8,
+    KeysSnapshot,
 }
 
 impl ImportedApi {
@@ -425,6 +426,22 @@ impl<V: Values> Parser<V> {
             _ => None,
         }
     }
+    fn relation(&self) -> Option<(dynamic::Relation, usize)> {
+        if let Some(comparison) = self.comparison() {
+            Some((dynamic::Relation::Compare(comparison), 1))
+        } else if self.text() == "in" {
+            Some((dynamic::Relation::In, 1))
+        } else if self.text() == "not"
+            && self
+                .tokens
+                .get(self.cursor + 1)
+                .is_some_and(|token| self.lexed.text(token) == "in")
+        {
+            Some((dynamic::Relation::NotIn, 2))
+        } else {
+            None
+        }
+    }
     fn reserved_name(&self) -> bool {
         // Hard keywords are recognized from raw spellings. Compiler-provided
         // bindings use canonical keys and cannot yet be shadowed in this slice.
@@ -530,13 +547,15 @@ impl<V: Values> Parser<V> {
         self.expect_binding("naja")?;
         self.expect(".")?;
         if self.token().kind != TokenKind::Identifier {
-            return Err(self.error("expected an explicit naja.io or naja.text module"));
+            return Err(
+                self.error("expected an explicit naja.io, naja.text or naja.collections module")
+            );
         }
         let module = self.canonical_name()?;
-        if !matches!(module.as_str(), "io" | "text") {
-            return Err(
-                self.error("only explicit naja.io and naja.text API imports are implemented")
-            );
+        if !matches!(module.as_str(), "io" | "text" | "collections") {
+            return Err(self.error(
+                "only explicit naja.io, naja.text and naja.collections API imports are implemented",
+            ));
         }
         self.advance();
         self.expect("import")?;
@@ -551,6 +570,7 @@ impl<V: Values> Parser<V> {
                 ("io", "write_bytes") => ImportedApi::WriteBytes,
                 ("text", "encode_utf8") => ImportedApi::EncodeUtf8,
                 ("text", "decode_utf8") => ImportedApi::DecodeUtf8,
+                ("collections", "keys_snapshot") => ImportedApi::KeysSnapshot,
                 _ => return Err(self.error("unknown API in this explicit native module")),
             };
             self.advance();
@@ -1074,6 +1094,40 @@ impl<V: Values> Parser<V> {
             V::negate(self.expression(7, depth + 1)?)
         } else if self.take("+") {
             V::positive(self.expression(7, depth + 1)?)
+        } else if self.take("{") {
+            if self.take("}") {
+                V::dict(Vec::new()).map_err(|message| self.error(message))?
+            } else {
+                let first = self.expression(0, depth + 1)?;
+                if self.take(":") {
+                    let value = self.expression(0, depth + 1)?;
+                    let mut entries = vec![(first, value)];
+                    while self.take(",") && self.text() != "}" {
+                        if entries.len() >= dynamic::MAX_MAPPING_ENTRIES {
+                            return Err(self.error(
+                                "experimental dictionary literal limit of 128 pairs exceeded",
+                            ));
+                        }
+                        let key = self.expression(0, depth + 1)?;
+                        self.expect(":")?;
+                        let value = self.expression(0, depth + 1)?;
+                        entries.push((key, value));
+                    }
+                    self.expect("}")?;
+                    V::dict(entries).map_err(|message| self.error(message))?
+                } else {
+                    let mut elements = vec![first];
+                    while self.take(",") && self.text() != "}" {
+                        if elements.len() >= dynamic::MAX_MAPPING_ENTRIES {
+                            return Err(self
+                                .error("experimental set literal limit of 128 elements exceeded"));
+                        }
+                        elements.push(self.expression(0, depth + 1)?);
+                    }
+                    self.expect("}")?;
+                    V::set(elements).map_err(|message| self.error(message))?
+                }
+            }
         } else if self.take("[") {
             let mut elements = Vec::new();
             while self.text() != "]" {
@@ -1261,21 +1315,42 @@ impl<V: Values> Parser<V> {
                     }
                     continue;
                 }
-                if self.comparison().is_some() {
+                if self.relation().is_some() {
                     if 4 < minimum {
                         break;
                     }
                     let mut rest = Vec::new();
-                    while let Some(comparison) = self.comparison() {
+                    while let Some((relation, width)) = self.relation() {
                         if rest.len() >= dynamic::MAX_CHAIN_COMPARISONS {
                             return Err(self.error("comparison chain exceeds 128 comparisons"));
                         }
-                        self.advance();
+                        for _ in 0..width {
+                            self.advance();
+                        }
                         self.account_expression()?;
-                        rest.push((comparison, self.expression(5, depth + 1)?));
+                        rest.push((relation, self.expression(5, depth + 1)?));
                     }
-                    left =
-                        V::comparison_chain(left, rest).map_err(|message| self.error(message))?;
+                    // Preserve the existing IR for comparison-only chains. A mixed
+                    // chain retains its original middle descriptors in native code.
+                    left = if rest
+                        .iter()
+                        .all(|(relation, _)| matches!(relation, dynamic::Relation::Compare(_)))
+                    {
+                        V::comparison_chain(
+                            left,
+                            rest.into_iter()
+                                .map(|(relation, value)| {
+                                    let dynamic::Relation::Compare(comparison) = relation else {
+                                        unreachable!("comparison-only chain")
+                                    };
+                                    (comparison, value)
+                                })
+                                .collect(),
+                        )
+                    } else {
+                        V::relation_chain(left, rest)
+                    }
+                    .map_err(|message| self.error(message))?;
                     if V::height(&left) > 128 {
                         return Err(self.error("experimental expression tree depth exceeds 128"));
                     }
@@ -1330,6 +1405,21 @@ impl<V: Values> Parser<V> {
             return V::construct(index, arguments).map_err(|message| self.error(message));
         }
         let api = self.imports.get(name).copied();
+        if name == "set"
+            && api.is_none()
+            && !self.function_signatures.contains_key(name)
+            && !(self.in_function && self.module_bindings.contains(name))
+        {
+            if self.in_function {
+                self.function_builtin_uses.insert(name.into());
+            }
+            self.advance();
+            let arguments = self.call_arguments(depth, MAX_LOCALS)?;
+            if !arguments.is_empty() {
+                return Err(self.error("the unbound set builtin currently requires zero arguments"));
+            }
+            return V::set(Vec::new()).map_err(|message| self.error(message));
+        }
         let (index, arity) = if let Some(api) = api {
             (0, api.arity())
         } else {
@@ -1355,6 +1445,7 @@ impl<V: Values> Parser<V> {
                 }
                 ImportedApi::EncodeUtf8 => V::encode_utf8(first),
                 ImportedApi::DecodeUtf8 => V::decode_utf8(first),
+                ImportedApi::KeysSnapshot => V::keys_snapshot(first),
             }
         } else {
             V::call(index, arguments)
@@ -2079,6 +2170,45 @@ mod tests {
             ] {
                 assert!(compile_with_dialect(source, dialect).is_ok(), "{source}");
             }
+        }
+    }
+    #[test]
+    fn mapping_expressions_keep_suite_equivalence_and_original_name_spans() {
+        let body = "value = {'é': {1, True,}}\nprint(1 not in value['é'] == True)\n";
+        let marked = format!(
+            "if True:(0)\n    {}",
+            body.replace('\n', "\n    ").trim_end()
+        );
+        let braced = format!("if True: {{\n{body}}}\n");
+        let marked = format!("{marked}\n");
+        assert_eq!(
+            compile_with_dialect(&marked, Dialect::Naja2026).unwrap(),
+            compile_with_dialect(&braced, Dialect::Naja2026).unwrap()
+        );
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            let source = "# café\nvalue = {'é': 未定義}\n";
+            let error = check_with_dialect(source, dialect).unwrap_err().remove(0);
+            assert_eq!(&source[error.span.start..error.span.end], "未定義");
+        }
+    }
+    #[test]
+    fn empty_set_builtin_preserves_static_shadowing_and_import_arity() {
+        for source in [
+            "print(len(ｓｅｔ()))\n",
+            "def set(value): return value\nprint(set(7))\n",
+            "class set: pass\nprint(not set())\n",
+            "from naja.collections import keys_snapshot as set\nprint(len(set({1: True})))\n",
+            "def value(set): return set\nprint(value(True))\n",
+        ] {
+            assert!(compile(source).is_ok(), "{source}");
+        }
+        for source in [
+            "def f(): return set()\nset = True\n",
+            "def f():\n    value = set()\n    set = True\n    return value\n",
+            "def f(set): return set()\n",
+            "from naja.collections import keys_snapshot as set\nset()\n",
+        ] {
+            assert!(compile(source).is_err(), "{source}");
         }
     }
 }

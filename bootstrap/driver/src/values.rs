@@ -25,6 +25,17 @@ pub(crate) trait Values {
     fn list(_elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Err("lists are unsupported in this explicit integer domain".into())
     }
+    fn dict(
+        _entries: Vec<(Self::Expression, Self::Expression)>,
+    ) -> Result<Self::Expression, String> {
+        Err("dictionaries are unsupported in this explicit integer domain".into())
+    }
+    fn set(_elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
+        Err("sets are unsupported in this explicit integer domain".into())
+    }
+    fn keys_snapshot(_value: Self::Expression) -> Result<Self::Expression, String> {
+        Err("mapping APIs are unsupported in this explicit integer domain".into())
+    }
     fn read_file(_path: Self::Expression) -> Result<Self::Expression, String> {
         Err("file APIs are unsupported in this explicit integer domain".into())
     }
@@ -106,6 +117,12 @@ pub(crate) trait Values {
         _rest: Vec<(Comparison, Self::Expression)>,
     ) -> Result<Self::Expression, String> {
         Err("comparison values are unsupported in this explicit integer domain".into())
+    }
+    fn relation_chain(
+        _first: Self::Expression,
+        _rest: Vec<(dynamic::Relation, Self::Expression)>,
+    ) -> Result<Self::Expression, String> {
+        Err("membership is unsupported in this explicit integer domain".into())
     }
     fn truth(_value: Self::Expression) -> Result<Self::Condition, String> {
         Err("this explicit integer domain requires a comparison condition".into())
@@ -251,6 +268,17 @@ impl Values for Dynamic {
     fn list(elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::List(elements))
     }
+    fn dict(
+        entries: Vec<(Self::Expression, Self::Expression)>,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Dict(entries))
+    }
+    fn set(elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Set(elements))
+    }
+    fn keys_snapshot(value: Self::Expression) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::DictKeys(Box::new(value)))
+    }
     fn read_file(path: Self::Expression) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::ReadFile(Box::new(path)))
     }
@@ -359,6 +387,12 @@ impl Values for Dynamic {
     ) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::CompareChain(Box::new(first), rest))
     }
+    fn relation_chain(
+        first: Self::Expression,
+        rest: Vec<(dynamic::Relation, Self::Expression)>,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::RelationChain(Box::new(first), rest))
+    }
     fn truth(value: Self::Expression) -> Result<Self::Condition, String> {
         Ok(value)
     }
@@ -388,11 +422,13 @@ impl Values for Dynamic {
             | ReadFile(value)
             | EncodeUtf8(value)
             | DecodeUtf8(value)
+            | DictKeys(value)
             | GetAttribute(value, _) => 1 + Self::height(value),
             Binary(_, left, right)
             | FloorDivide(left, right)
             | Modulo(left, right)
             | Index(left, right)
+            | Contains(left, right)
             | WriteFile {
                 path: left,
                 data: right,
@@ -406,9 +442,24 @@ impl Values for Dynamic {
                     .map(|(_, value)| Self::height(value))
                     .fold(Self::height(first), usize::max)
             }
-            Call(_, arguments) | Construct(_, arguments) | Tuple(arguments) | List(arguments) => {
-                1 + arguments.iter().map(Self::height).max().unwrap_or(0)
+            RelationChain(first, rest) => {
+                1 + rest
+                    .iter()
+                    .map(|(_, value)| Self::height(value))
+                    .fold(Self::height(first), usize::max)
             }
+            Dict(pairs) => {
+                1 + pairs
+                    .iter()
+                    .map(|(key, value)| Self::height(key).max(Self::height(value)))
+                    .max()
+                    .unwrap_or(0)
+            }
+            Call(_, arguments)
+            | Construct(_, arguments)
+            | Tuple(arguments)
+            | List(arguments)
+            | Set(arguments) => 1 + arguments.iter().map(Self::height).max().unwrap_or(0),
             MethodCall(object, _, arguments) => {
                 1 + arguments
                     .iter()
