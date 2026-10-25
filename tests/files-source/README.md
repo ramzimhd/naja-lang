@@ -84,3 +84,8 @@ owned backend checks and are listed as not run by this source suite. No
 filesystem confinement, generic OS IO deadline, sandbox, durability, complete
 module/filesystem/Python implementation, self-hosting, FC1 or HATCH claim
 follows. The English narratives preserve multilingual user source/data.
+
+The first pinned actual run is retained in
+[RUN_2026-10-25.md](RUN_2026-10-25.md) and
+[RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). It applies only to the exact
+source, contract and artifact identities recorded there.
