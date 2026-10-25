@@ -13,6 +13,26 @@ const MAX_LITERAL_BYTES: usize = 1_048_576;
 const MAX_NODES: usize = 10_000;
 pub const MAX_CHAIN_COMPARISONS: usize = 128;
 pub const MAX_DIVISION_LIMB_PRODUCT: usize = 1_000_000;
+pub const MAX_FUNCTIONS: usize = 128;
+pub const MAX_CALL_DEPTH: usize = 256;
+pub const MAX_SOURCE_STACK_BYTES: usize = 2 * 1024 * 1024;
+const HELPER_STACK_RESERVE: i32 = 4096;
+const FRAME_BYTES: i32 = 2048;
+const CONTEXT_SLOT: i32 = -2032;
+const DEPTH_SLOT: i32 = -2040;
+const STACK_FLOOR_SLOT: i32 = -2048;
+
+#[derive(Clone, Debug)]
+pub struct Program {
+    pub body: Vec<Statement>,
+    pub functions: Vec<Function>,
+}
+
+#[derive(Clone, Debug)]
+pub struct Function {
+    pub parameters: usize,
+    pub body: Vec<Statement>,
+}
 
 #[derive(Clone, Debug)]
 pub enum Expression {
@@ -34,6 +54,7 @@ pub enum Expression {
     Not(Box<Self>),
     And(Box<Self>, Box<Self>),
     Or(Box<Self>, Box<Self>),
+    Call(usize, Vec<Self>),
 }
 
 #[derive(Clone, Debug)]
@@ -44,13 +65,16 @@ pub enum Statement {
     If(Expression, Vec<Self>, Vec<Self>),
     While(Expression, Vec<Self>),
     Group(Vec<Self>),
+    Return(Expression),
 }
 
-struct Validator {
+struct Validator<'a> {
     nodes: usize,
     literals: usize,
+    functions: &'a [Function],
+    in_function: bool,
 }
-impl Validator {
+impl Validator<'_> {
     fn account(&mut self) -> Result<(), String> {
         self.nodes += 1;
         if self.nodes > MAX_NODES {
@@ -79,6 +103,19 @@ impl Validator {
             Expression::Local(slot) => {
                 if *slot >= MAX_LOCALS || !initialized[*slot] {
                     return Err("dynamic IR reads an uninitialized or out-of-frame local".into());
+                }
+                0
+            }
+            Expression::Call(index, arguments) => {
+                let function = self
+                    .functions
+                    .get(*index)
+                    .ok_or("dynamic call names an unknown function")?;
+                if arguments.len() != function.parameters {
+                    return Err("dynamic call requires exact positional arity".into());
+                }
+                for argument in arguments {
+                    self.expression(argument, initialized, depth + 1)?;
                 }
                 0
             }
@@ -128,10 +165,11 @@ impl Validator {
         statements: &[Statement],
         initialized: &mut [bool; MAX_LOCALS],
         depth: usize,
-    ) -> Result<(), String> {
+    ) -> Result<bool, String> {
         if depth > 64 {
             return Err("dynamic suite nesting exceeds 64".into());
         }
+        let mut falls_through = true;
         for statement in statements {
             self.account()?;
             match statement {
@@ -145,16 +183,30 @@ impl Validator {
                 Statement::Print(value) | Statement::Assert(value) => {
                     self.expression(value, initialized, 0)?
                 }
-                Statement::Group(body) => self.statements(body, initialized, depth + 1)?,
+                Statement::Return(value) => {
+                    if !self.in_function {
+                        return Err("dynamic return is outside a function".into());
+                    }
+                    self.expression(value, initialized, 0)?;
+                    falls_through = false;
+                }
+                Statement::Group(body) => {
+                    falls_through &= self.statements(body, initialized, depth + 1)?;
+                }
                 Statement::If(condition, yes, no) => {
                     self.expression(condition, initialized, 0)?;
                     let mut a = *initialized;
                     let mut b = *initialized;
-                    self.statements(yes, &mut a, depth + 1)?;
-                    self.statements(no, &mut b, depth + 1)?;
+                    let a_live = self.statements(yes, &mut a, depth + 1)?;
+                    let b_live = self.statements(no, &mut b, depth + 1)?;
                     for index in 0..MAX_LOCALS {
-                        initialized[index] = a[index] && b[index];
+                        initialized[index] = match (a_live, b_live) {
+                            (true, true) | (false, false) => a[index] && b[index],
+                            (true, false) => a[index],
+                            (false, true) => b[index],
+                        };
                     }
+                    falls_through &= a_live || b_live;
                 }
                 Statement::While(condition, body) => {
                     self.expression(condition, initialized, 0)?;
@@ -163,19 +215,45 @@ impl Validator {
                 }
             }
         }
-        Ok(())
+        Ok(falls_through)
     }
 }
 
 pub fn validate(statements: &[Statement]) -> Result<(), String> {
+    validate_parts(statements, &[])
+}
+
+pub fn validate_program(program: &Program) -> Result<(), String> {
+    validate_parts(&program.body, &program.functions)
+}
+
+fn validate_parts(statements: &[Statement], functions: &[Function]) -> Result<(), String> {
     if statements.is_empty() {
         return Err("dynamic IR has no executable statements".into());
     }
-    Validator {
+    if functions.len() > MAX_FUNCTIONS {
+        return Err("dynamic program exceeds 128 functions".into());
+    }
+    for function in functions {
+        if function.parameters > MAX_LOCALS {
+            return Err("dynamic function exceeds 128 parameters".into());
+        }
+    }
+    let mut validator = Validator {
         nodes: 0,
         literals: 0,
+        functions,
+        in_function: false,
+    };
+    validator.statements(statements, &mut [false; MAX_LOCALS], 0)?;
+    validator.in_function = true;
+    for function in functions {
+        validator.account()?;
+        let mut initialized = [false; MAX_LOCALS];
+        initialized[..function.parameters].fill(true);
+        validator.statements(&function.body, &mut initialized, 0)?;
     }
-    .statements(statements, &mut [false; MAX_LOCALS], 0)
+    Ok(())
 }
 
 enum Literal {
@@ -187,8 +265,23 @@ struct Emitter {
     integers: runtime::Runtime,
     runtime: routines::Runtime,
     literals: Vec<Literal>,
+    functions: Vec<usize>,
+    return_label: Option<usize>,
+    depth_error: usize,
+    stack_error: usize,
 }
 impl Emitter {
+    fn push_value(&mut self, register: super::hosted::x64::R) {
+        // Only scratch rcx/rdx are clobbered. Leave bounded space for runtime
+        // helper calls even at the source temporary stack limit.
+        self.code.load(Cx, Bp, CONTEXT_SLOT);
+        self.code.load(Dx, Cx, -8);
+        self.code.mov(Cx, Sp);
+        self.code.immediate(5, Cx, 8 + HELPER_STACK_RESERVE);
+        self.code.cmp(Cx, Dx);
+        self.code.j(0x82, self.stack_error);
+        self.code.push(register);
+    }
     fn expression(&mut self, expression: &Expression) -> Result<(), String> {
         match expression {
             Expression::Integer(value) => {
@@ -209,6 +302,18 @@ impl Emitter {
             ),
             Expression::None => self.code.lea(Ax, self.runtime.none_value),
             Expression::Local(slot) => self.code.load(Ax, Bp, -8 * (*slot as i32 + 1)),
+            Expression::Call(index, arguments) => {
+                // Pending arguments stay on the caller's stack across other
+                // calls; runtime helpers may clobber every scratch register.
+                for argument in arguments {
+                    self.expression(argument)?;
+                    self.push_value(Ax);
+                }
+                self.code.load(Ax, Bp, CONTEXT_SLOT);
+                self.push_value(Ax);
+                self.code.call(self.functions[*index]);
+                self.code.immediate(0, Sp, 8 * (arguments.len() as i32 + 1));
+            }
             Expression::Negate(value) => {
                 self.expression(value)?;
                 self.code.call(self.runtime.negate);
@@ -255,14 +360,14 @@ impl Emitter {
                 let false_ = self.code.label();
                 let end = self.code.label();
                 self.expression(first)?;
-                self.code.push(Ax);
+                self.push_value(Ax);
                 for (comparison, right) in rest {
                     self.expression(right)?;
                     self.code.mov(Si, Ax);
                     self.code.pop(Di);
                     // The exact RHS descriptor becomes the next LHS; evaluating
                     // another expression or comparison may clobber all scratch registers.
-                    self.code.push(Si);
+                    self.push_value(Si);
                     let condition = self.comparison_flags(*comparison);
                     self.code.j(condition ^ 1, false_);
                 }
@@ -276,7 +381,7 @@ impl Emitter {
             }
             Expression::And(left, right) | Expression::Or(left, right) => {
                 self.expression(left)?;
-                self.code.push(Ax);
+                self.push_value(Ax);
                 self.code.call(self.runtime.truth);
                 self.code.immediate(7, Ax, 0);
                 let skip = self.code.label();
@@ -329,7 +434,7 @@ impl Emitter {
     }
     fn operands(&mut self, left: &Expression, right: &Expression) -> Result<(), String> {
         self.expression(left)?;
-        self.code.push(Ax);
+        self.push_value(Ax);
         self.expression(right)?;
         self.code.mov(Si, Ax);
         self.code.pop(Di);
@@ -364,6 +469,11 @@ impl Emitter {
                     self.code.call(self.runtime.print);
                 }
                 Statement::Assert(value) => self.condition_false(value, self.integers.assertion)?,
+                Statement::Return(value) => {
+                    self.expression(value)?;
+                    self.code
+                        .jump(self.return_label.ok_or("return outside native function")?);
+                }
                 Statement::Group(body) => self.statements(body)?,
                 Statement::If(value, yes, no) => {
                     let otherwise = self.code.label();
@@ -388,6 +498,50 @@ impl Emitter {
         }
         Ok(())
     }
+
+    fn function(&mut self, index: usize, function: &Function) -> Result<(), String> {
+        self.code.bind(self.functions[index]);
+        // Check before reserving a frame. The hidden pointer always refers to
+        // the main frame's counter, never to a scratch register or code page.
+        self.code.load(Cx, Sp, 8);
+        self.code.load(Dx, Cx, 0);
+        self.code.immediate(7, Dx, MAX_CALL_DEPTH as i32);
+        self.code.j(0x83, self.depth_error);
+        self.code.load(R8, Cx, -8);
+        self.code.mov(Ax, Sp);
+        self.code
+            .immediate(5, Ax, FRAME_BYTES + 8 + HELPER_STACK_RESERVE);
+        self.code.cmp(Ax, R8);
+        self.code.j(0x82, self.stack_error);
+        self.code.step(Dx, false);
+        self.code.store(Cx, 0, Dx);
+        self.code.push(Bp);
+        self.code.mov(Bp, Sp);
+        self.code.immediate(5, Sp, FRAME_BYTES);
+        self.code.store(Bp, CONTEXT_SLOT, Cx);
+        for parameter in 0..function.parameters {
+            self.code.load(
+                Ax,
+                Bp,
+                24 + 8 * (function.parameters - parameter - 1) as i32,
+            );
+            self.code.store(Bp, -8 * (parameter as i32 + 1), Ax);
+        }
+        let end = self.code.label();
+        self.return_label = Some(end);
+        self.statements(&function.body)?;
+        self.code.lea(Ax, self.runtime.none_value);
+        self.code.bind(end);
+        self.code.load(Cx, Bp, CONTEXT_SLOT);
+        self.code.load(Dx, Cx, 0);
+        self.code.step(Dx, true);
+        self.code.store(Cx, 0, Dx);
+        self.code.mov(Sp, Bp);
+        self.code.pop(Bp);
+        self.code.ret();
+        self.return_label = None;
+        Ok(())
+    }
 }
 
 fn pointer(code: &mut Code, label: usize, patches: &mut Vec<(usize, usize)>) {
@@ -410,19 +564,66 @@ fn descriptor(
 }
 
 pub fn emit_elf(statements: &[Statement]) -> Result<Vec<u8>, String> {
-    validate(statements)?;
+    emit_parts(statements, &[])
+}
+
+pub fn emit_program(program: &Program) -> Result<Vec<u8>, String> {
+    emit_parts(&program.body, &program.functions)
+}
+
+fn emit_parts(statements: &[Statement], functions: &[Function]) -> Result<Vec<u8>, String> {
+    validate_parts(statements, functions)?;
     let mut code = Code::new();
     let integers = runtime::Runtime::new(&mut code);
     let runtime = routines::Runtime::new(&mut code);
+    let labels = functions.iter().map(|_| code.label()).collect();
+    let depth_error = code.label();
+    let stack_error = code.label();
     let mut emitter = Emitter {
         code,
         integers,
         runtime,
         literals: Vec::new(),
+        functions: labels,
+        return_label: None,
+        depth_error,
+        stack_error,
     };
     emitter.integers.start(&mut emitter.code);
+    emitter.code.zero(Ax);
+    emitter.code.store(Bp, DEPTH_SLOT, Ax);
+    emitter.code.mov(Ax, Bp);
+    emitter.code.immediate(5, Ax, -DEPTH_SLOT);
+    emitter.code.store(Bp, CONTEXT_SLOT, Ax);
+    emitter.code.mov(Ax, Sp);
+    emitter.code.immediate(5, Ax, MAX_SOURCE_STACK_BYTES as i32);
+    emitter.code.store(Bp, STACK_FLOOR_SLOT, Ax);
     emitter.statements(statements)?;
     emitter.code.exit(0);
+    for (index, function) in functions.iter().enumerate() {
+        emitter.function(index, function)?;
+    }
+    for (label, bytes) in [
+        (
+            depth_error,
+            b"NJA203: native user-call depth limit exceeded\n".as_slice(),
+        ),
+        (
+            stack_error,
+            b"NJA203: native source stack limit exceeded\n".as_slice(),
+        ),
+    ] {
+        emitter.code.bind(label);
+        let message = emitter.code.label();
+        emitter.code.imm(Ax, 1);
+        emitter.code.imm(Di, 2);
+        emitter.code.lea(Si, message);
+        emitter.code.imm(Dx, bytes.len() as i64);
+        emitter.code.syscall();
+        emitter.code.exit(103);
+        emitter.code.bind(message);
+        emitter.code.a.bytes(bytes);
+    }
     emitter.runtime.emit(&mut emitter.code, &emitter.integers);
     emitter
         .integers
