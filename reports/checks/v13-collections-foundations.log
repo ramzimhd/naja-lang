@@ -1,0 +1,7 @@
+Recorded command: node scripts/validation/check-foundations.mjs
+Recorded exit code: 0
+--- captured output ---
+Foundation contract integrity: PASS
+{"inherited":{"requirements":147,"mandatory":139,"future":8,"tasks":38,"gates":19,"evidence_records":24,"active_assignments":2},"foundations":15,"continuity":7,"fc1_checks":12,"mandatory_test_groups":16,"named_expansions":13}
+Verified new contracts: {"foundations":0,"continuity":0,"fc1_checks":0}
+Contract integrity does not establish executable feature, FC1 or HATCH acceptance.

@@ -109,7 +109,7 @@ console.log('PASS output failure exit=102');
 passed++;
 
 for(const [name,source,code] of [
-  ['unsupported-list','x = [1, 2, 3]\n','NJA101'],
+  ['fixed-domain-list',prefix+'x: i64 = [i64(1), i64(2), i64(3)]\n','NJA101'],
   ['unsupported-import','import os\n','NJA101'],
   ['uninitialized','from naja.core import i64\nx: i64 = x + i64(1)\n','NJA101'],
   ['bare-int-after-import',prefix+'print(9223372036854775807 + 1)\n','NJA101'],

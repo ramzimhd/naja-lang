@@ -1,0 +1,50 @@
+Recorded command: node scripts/test-native.mjs
+Recorded exit code: 1
+--- captured output ---
+PASS sum exit=0 sha256=54ffb969561bcd8964e4643087590f28eaffed873bea78d8ffc094bb8dfe7add
+PASS signed-boundaries exit=0 sha256=802069baa274d3652a92c9b6b524e0f1e061240d670ba6d71466df401b52dfef
+PASS precedence exit=0 sha256=38dc0356527c56052cd5758574529f90ad7b84c071dc8d089e7acf8b93f87106
+PASS comparison-0 exit=0 sha256=770788ffb05a51b7c5f7a248dab88f3609da945d2a7260628fc4e4574fa4ed0f
+PASS comparison-1 exit=0 sha256=0a0f73eb913e413021975651ef5a16586d3b7d1eca37ba24994cfcad30067b55
+PASS comparison-2 exit=0 sha256=ffd3905484d74326a7ef5be8e424258be3cbce4ead01c4956afe76238c496efc
+PASS comparison-3 exit=0 sha256=b6386cb47672c5770ebc698bd3437efe84da8e72985283a4b4016bc344d030e6
+PASS comparison-4 exit=0 sha256=d21ef02d3d3b41e3cdba9c567356ec2253d6040bffd216e0ea432e6fdb2d041d
+PASS comparison-5 exit=0 sha256=76197fb023e5a7384f61a1d2d616377a021a259d6d415363a08c7b604e9c62c0
+PASS nested-control exit=0 sha256=4f94c0bcbfb431cca09cf63d128bda35b48795bea3c7a73e2da40cd8ed818754
+PASS block-reference exit=0 sha256=6bac2193e9e3b8304044b966d9ae980ba349eee89f5d53ee6be8f105bf36d530
+PASS brace-sections exit=0 sha256=6bac2193e9e3b8304044b966d9ae980ba349eee89f5d53ee6be8f105bf36d530
+PASS brace-sections emits identical machine code to indentation baseline
+PASS depth-markers exit=0 sha256=6bac2193e9e3b8304044b966d9ae980ba349eee89f5d53ee6be8f105bf36d530
+PASS depth-markers emits identical machine code to indentation baseline
+PASS mixed-styles exit=0 sha256=6bac2193e9e3b8304044b966d9ae980ba349eee89f5d53ee6be8f105bf36d530
+PASS mixed-styles emits identical machine code to indentation baseline
+PASS adjacent-mixed-closers exit=0 sha256=915df77e03be54a65a4ab11c4ac8f2ae0285a46d123790aa5dbf328f7ce04741
+PASS CLI .py dialect keeps NAJA brace syntax isolated
+PASS overflow-add exit=101 sha256=f4f836e9f5cc59dde7030204b9b833548ce2aeb337a62946608d019938bcaa62
+PASS overflow-subtract exit=101 sha256=b0a6c23767144683513518a87698ed47088821adc8fcd9422ab94c3a7a04be0f
+PASS overflow-multiply exit=101 sha256=34208abe564a34f10d83d406ac178f2e3c801a416cdc667ddf76877573c4cadb
+PASS overflow-negate exit=101 sha256=b79ddc892353ab259084585ec586c3e1f294870e05add565560c276ee1363321
+PASS Unicode path café exit=0 sha256=dd96b082e994ad2d00428c196d777e7ea5098ce98a39f0a87de943456c5945ea
+PASS refused output overwrite; original artifact preserved
+PASS output failure exit=102
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: unsupported-list: expected rejection
+
+0 !== 1
+
+    at file:///<workspace>/scripts/test-native.mjs:125:10
+    at ModuleJob.run (node:internal/modules/esm/module_job:377:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:691:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.11.0

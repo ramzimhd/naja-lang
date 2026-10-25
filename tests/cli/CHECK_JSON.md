@@ -41,3 +41,10 @@ ignored `target/check-json-first-test-failure.log` (exit 101,
 SHA-256 `34a3a30c3e9eab0374a1561ce321d9331c6300bdf2be6a819cbc06991be02a5a`).
 Those callers were migrated to the new parser and extended with duplicate/order
 checks; no test was disabled and no resource limit changed.
+
+The first actual CLI execution at
+`5d00f2408a1a52cf83c4768a9c5d0d45b58b62ea` passed all 21 checks. A later retained
+combined command at `aba7307` also passed; it is recorded in
+`reports/checks/v13-collections-check-json.json`. Actual user programs were not
+executed by either protocol harness. These results cover Windows x64 compiler
+host behavior; new public CI must establish each additional host separately.

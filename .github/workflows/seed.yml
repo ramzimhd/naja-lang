@@ -57,6 +57,7 @@ jobs:
           node scripts/test-functions-language.mjs
           node scripts/test-index-language.mjs
           node scripts/test-tuples-language.mjs
+          node scripts/test-lists-language.mjs
           node scripts/test-cli.mjs
       - name: Check planning and evidence integrity
         run: node scripts/validation/check-planning.mjs

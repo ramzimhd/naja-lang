@@ -1,0 +1,59 @@
+Recorded command: node scripts/test-index.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS unicode-scalar-index-positive-negative-and-length exit=0 sha256=68b2260191837fe632afe619b940dc1e9cef5d7e1af59c2eadaf1b846038007a
+PASS all-byte-values-unsigned-both-index-signs exit=0 sha256=c5d3f51153f5f3e3eb5df307e0d47464ba73de1279bca6c850aa8102a7077252
+PASS bool-and-computed-shared-zero-indices exit=0 sha256=353f2ba6ace21c7eb9d89b7d6ab6816a66a226943b8d0c6db1b337532d54c944
+PASS literal-and-arena-views-survive-aliasing-and-reindexing exit=0 sha256=32464877a2462a1d55887bbfd18f7c6e8341706b758825cc92022002289a088c
+PASS index-operands-once-left-to-right exit=0 sha256=7f926f46e080821e74e990140fd68b0970bafd39953fbf3177cc298e3f74cb0d
+PASS left-failure-precedes-right-side-effect exit=105 sha256=756e2700934c3d5d7c6d8127a89b4a6cff1306006a5a38efd5d9b57d221a3568
+PASS both-operands-before-runtime-type-check exit=105 sha256=ce00421695ba75f73bb10852399ebd6361bdae080ce468f44c86205da4b98430
+PASS short-circuit-skips-index-errors exit=0 sha256=290779298363c60860a8840a99c12c28350e767e42c113e372efce42f402c717
+PASS 128-depth-index-views exit=0 sha256=fccaebc95f73609b40ed491e7db0b868cf4368b4db4fab7f5fcf935977385de2
+PASS largest-preregistered-text-walk-fixture exit=0 sha256=acf57396daff6083fda50f923e7099d15abc5a5d38785ade6762df2992690029
+PASS bounds-empty-text exit=107 sha256=60c4a82f39d59b5defc84e8dbe0bfac6e912c1d622eb3395123a8ec02a539a45
+PASS bounds-empty-bytes exit=107 sha256=237cdf6ca88a8ae623c90d953aa73d7f18e5c51272974dfac09962d7d324365d
+PASS bounds-empty-negative exit=107 sha256=91e4301ddf3c73656d0a95f1fdbcf85beb663965d7061caf770fe4d62cc86fc2
+PASS bounds-positive-text-length exit=107 sha256=9df029a4349be6415960972924ecbe1a44d1ef0da2cb1aa60bc27ebcecbb7ac8
+PASS bounds-negative-text-before-start exit=107 sha256=931428a70d7bcc85f2a4a88588657c386ce11110ac6c218588ae0d96e0117d99
+PASS bounds-positive-bytes-length exit=107 sha256=b4fd102fae8079d6d6fb82c0b6b8c755c87ca11ffa5ab385d8341cbbc08b3323
+PASS bounds-negative-bytes-before-start exit=107 sha256=1c86595dda96033f335fcb348ac71c100fa20ccf7036cb96b812e86ee222aaae
+PASS bounds-single-bool-true exit=107 sha256=894490c26479c833757cd05c6ea5c13230ddcec505e0d0b60ec614ada0baf132
+PASS bounds-empty-bool-false exit=107 sha256=1ad9f1fbee85b8579bf8d2662da935c290f985787542f185338e773b7abf431d
+PASS bounds-huge-text-0 exit=107 sha256=084c29a4146c0b86fd22d762f2a43004f114bb1852e54dd7405342d304df3887
+PASS bounds-huge-bytes-0 exit=107 sha256=8708ea1571575fdf931315ac02895e82b76982f3955ed4f1e060709dcb66cb51
+PASS bounds-huge-text-1 exit=107 sha256=1c68021f2af29eeb965e6e33483514b65827436bb2f215fcc4d3fd434bad926d
+PASS bounds-huge-bytes-1 exit=107 sha256=80db4a0067037bb12eada8ac04e9f7d7002bc2c6c9132820d2f668282d60546d
+PASS bounds-huge-text-2 exit=107 sha256=ff1f68cd00691be5ccc2c7f6b54361f8bc7d2469268cc9a96febf98acea6526f
+PASS bounds-huge-bytes-2 exit=107 sha256=7f843c02546e278ea4d0cdabb3c16cb54f8442344b68d11b6589b48cbf1c88fa
+PASS bounds-huge-text-3 exit=107 sha256=ba4ff1b094e855049677e5d539f48ede5fb36b3bfbe39854a7a880a00de2b30d
+PASS bounds-huge-bytes-3 exit=107 sha256=402fabe2de50b6a210abd45a44e06f0d4db803a598668a4d0a345cc6da4df5b7
+PASS bounds-huge-text-4 exit=107 sha256=1d6b5db0fa0c145b515f6a3f9af5492fcebace30dfa5aa378128c85f44931c4c
+PASS bounds-huge-bytes-4 exit=107 sha256=d2d1b275bf3a6ba3a55191346df18b47114cfd7fdef44745ff86a774b4575241
+PASS bounds-huge-text-5 exit=107 sha256=f0284b4a38a621693cd146e6298d5c0091260bb6373717ea5871c711ed509313
+PASS bounds-huge-bytes-5 exit=107 sha256=7eb8f798a107025c89b59c7a7ec7c21cd6f4b695b83eaba473db499dac89f8dd
+PASS bounds-huge-text-6 exit=107 sha256=e7b49a593a7ea013a573920659f23551d806861320c0e0eb372ec27b774eb8d4
+PASS bounds-huge-bytes-6 exit=107 sha256=af838f413941e2dd87dea9aa7a62dfec385eb2c4457e4d242d1abeaa8347cd11
+PASS type-int-target exit=105 sha256=46a81f411963bf21f82db5e1aadca10c13c8e1336b0174975957a6cafdd8afd1
+PASS type-bool-target exit=105 sha256=969c04e45912518d24ccf2e110b49b017f16e51545c25549d2c63c72b9727434
+PASS type-none-target exit=105 sha256=01132dba92630883a95071713f19cef670b4e7b7461f7987e79706fc3208ddec
+PASS type-text-index exit=105 sha256=10a970fd4817c264137cc50b8da243b69ef6371cc0d24012068cf98b4a83be26
+PASS type-bytes-index exit=105 sha256=ba980c985e0cd21cbf00858ed10b9f6d1fc4259dfdd7a7daeed575fb4394cdf5
+PASS type-none-index exit=105 sha256=ca77b56ad130a8b53142ed0d260940a8f8c3bcb181bf03d7a6fa97cbb248f455
+PASS resource-only-index-results-text exit=103 sha256=455b1755a2e1a30e41368c83fc225c5b67ccf332f2825923605635fbc4f7f808
+PASS resource-only-index-results-bytes exit=103 sha256=98c33f968cf30d80b3cb4f5f084fc4ae0a9c3886f40394be74800dda7b75a60b
+PASS rejected invalid IR: left-uninitialized
+PASS rejected invalid IR: right-uninitialized
+PASS rejected invalid IR: skipped-invalid-operand
+PASS rejected invalid IR: 129-depth
+PASS rejected invalid IR: invalid-unused-function
+PASS malformed sequence guarded: null-pointer
+PASS malformed sequence guarded: code-pointer
+PASS malformed sequence guarded: after-image
+PASS malformed sequence guarded: pointer-add-overflow
+PASS malformed sequence guarded: cross-image-end
+PASS malformed sequence guarded: length-over-budget
+PASS malformed sequence guarded: invalid-tag
+PASS malformed UTF-8 scalars are rejected before out-of-span reads
+PASS index object spans and normalized positions are guarded
+PASS 72 native index checks; 2107 independent scalar/byte outputs; target=Linux x86_64; artifact timeout=5s; artifacts=<workspace>\target\index-native-OqFGzy

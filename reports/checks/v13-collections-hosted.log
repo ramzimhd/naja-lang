@@ -1,0 +1,19 @@
+Recorded command: node scripts/test-hosted.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS lossless-literals exit=0 sha256=d14c0e70b7c322a7cbd9290b1a1d6379cdb6d2758663d925f5c7fceca072384e
+PASS arithmetic-and-metamorphic exit=0 sha256=4bae7f9c910acee5e4eb9bd7e275664ca515405bdb9cbe1df938b2b856f63792
+PASS all-signed-comparisons exit=0 sha256=e87e102e31c53b648ea703ccdf9671e0edef1e0b7e6a11d6f94c5e6255f16096
+PASS immutable-aliases exit=0 sha256=354376635b9f9598757dac2783ccca8d3821316109ef79cbf3e5000f4af7965f
+PASS group-loop-control exit=0 sha256=edefe57312e59f1135aed246b7dc6ecefdf6ff6f18abf571085a544a764b3774
+PASS arena-resource-exhaustion exit=103 sha256=4f626d23e12a03cf9adbbd7de3214d36f66340f150758f119bf09a746e18c91f
+PASS output failure exit=102
+PASS rejected uninitialized-local before output creation
+PASS rejected invalid-literal before output creation
+PASS rejected out-of-frame before output creation
+PASS rejected deep-expression before output creation
+PASS identical unsigned ELF bytes across repeated emission
+PASS runtime multiplication changes with an injected literal mutant; incorrect baseline expectation is detected
+PASS incorrect carry-threshold mutant is detected by the BigInt expectation
+14 hosted native/IR checks passed; 394 arithmetic/metamorphic and 150 comparison outputs matched Node BigInt.
+Limits: development IR adapter; Linux x86-64 via declared WSL/native target; 64 MiB arena; no complete hosted runtime, frontend, FC1, performance or self-hosting claim.

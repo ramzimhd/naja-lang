@@ -26,3 +26,13 @@ No source requirement, resource budget, timeout or tolerance was relaxed. The
 full current harnesses must execute again at their new source identity before
 new passing results are claimed. The original tuple preparation/run narratives
 remain historical; current script behavior follows the additive migration.
+
+The first combined collection run at `aba7307` also exposed an unprefixed list
+rejection in the older explicit-i64 native harness. Its actual exit1 remains in
+`reports/checks/v13-collections-native.json` and the paired sanitized raw log;
+the other 25 combined commands passed at that source. The original fixture
+`x = [1, 2, 3]` now correctly compiles in the ordinary value domain. The current
+fixed-domain rejection instead explicitly imports i64 and constructs a list of
+i64 values for an i64 binding. That preserves the domain-separation check;
+ordinary lists execute in the separately frozen source harness. No product
+validation or budget was relaxed, and the failed run is not relabeled.
