@@ -6,7 +6,7 @@
   "host": "win32-x64",
   "node": "v24.11.0",
   "target": "x86_64-unknown-linux-gnu",
-  "harness_sha256": "18aff2f3f569a414fd3cbc4ef1807906fba426db8eca7b042c6cfe1ee603418a",
+  "harness_sha256": "d810c69954dc5c67aaad24ffc82c942050fc7a5c5ad543c8e7cd13e46a283e69",
   "contract_sha256": "792c5a72d8e2d3c93a33386667469f6777cae4b52e05f9dab3568cd04fb031f5",
   "budgets": {
     "native_seconds": 5,

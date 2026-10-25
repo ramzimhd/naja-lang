@@ -308,7 +308,13 @@ process.on('uncaughtExceptionMonitor', error => {
 if (prepareOnly) console.log(`${cases.length} exact-literal outcomes prepared, all not_run. Artifacts: ${portable(relative(root, directory))}`);
 else {
   const frozen = JSON.parse(readFileSync(join(fixtureRoot, 'PREPARATION.json'), 'utf8'));
-  assert.deepEqual(frozen, plan, 'frozen independent sources, model, expectations, budgets and identities');
+  // The preparation host is evidence metadata; the execution host is recorded
+  // separately. Every semantic identity, budget and pinned tool version stays frozen.
+  const { host: preparationHost, ...frozenContract } = frozen;
+  const { host: executionHost, ...executionContract } = plan;
+  assert.equal(typeof preparationHost, 'string');
+  assert.equal(executionHost, process.platform + '-' + process.arch);
+  assert.deepEqual(frozenContract, executionContract, 'frozen independent sources, model, expectations, budgets and identities');
   assert.equal(command('git', ['diff', '--exit-code', 'HEAD', '--', 'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', 'bootstrap', 'backends']).status, 0, 'compiler sources changed');
   assert.equal(command('git', ['ls-files', '--others', '--exclude-standard', '--', 'bootstrap', 'backends']).stdout.length, 0, 'untracked compiler source');
   const built = command('cargo', ['+1.97.1', 'build', '--workspace', '--locked', '--offline'], { timeout: budgets.compiler_build_ms }); assert.equal(built.status, 0, built.stderr.toString());

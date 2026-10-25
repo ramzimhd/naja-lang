@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source_commit": "3cb7bd540ef58dec91f9d97322f31c35e4b10842",
+  "run_id": 40243893202,
+  "url": "https://github.com/ramzimhd/naja-lang/actions/runs/40243893202",
+  "result": "failed",
+  "ubuntu_job": 121321313826,
+  "failed_step": "Execute hosted native arithmetic and source programs",
+  "observation_method": "Decoded GitHub job log and exact host-difference assertion excerpt",
+  "observations": [
+    "The unchanged Rational220 suite passed immediately before the new exact-literal harness assertion.",
+    "At scripts/test-exact-literals-language.mjs:311 the frozen Windows preparation host win32-x64 differed from actual Linux host linux-x64.",
+    "The exact202 suite stopped before its compiler build or native cases on Ubuntu; these outcomes are not_run, not failures of native semantics.",
+    "macOS completed successfully when observed; no claim about a later host/job conclusion is inferred."
+  ],
+  "correction": "Compare every frozen contract field except the observational host. Keep the preparation host in the preparation and the actual execution host in the execution record. Preserve all202 source/oracle identities, work traces, budgets and pinned versions.",
+  "verification": [
+    "Node syntax and prepare-only passed on Windows after the correction.",
+    "Only the harness hash changes in the retained preparation; all original fields and the original preparation bytes remain retained separately.",
+    "A later exact-SHA CI run must verify Linux execution; this original run remains failed."
+  ]
+}
