@@ -1,0 +1,26 @@
+Recorded command: node scripts/test-check-json.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS empty-path-valid-check-does-not-execute-or-create-artifacts
+PASS original-utf16-py-0
+PASS original-utf16-py-1
+PASS original-utf16-py-2
+PASS original-utf16-naja-0
+PASS original-utf16-naja-1
+PASS original-utf16-naja-2
+PASS original-suite-brace
+PASS original-suite-depth
+PASS original-suite-named
+PASS alias-preserves-original-utf16-range
+PASS diagnostic-cap-and-explicit-omission-count
+PASS changed-source-invalidates-error-expectation
+PASS duplicate-json
+PASS duplicate-root
+PASS missing-root-value
+PASS missing-source
+PASS wrong-extension
+PASS invalid-utf8
+PASS directory-input
+PASS invalid-project
+Structured source checks: 21 passed; 0 failed.
+Artifacts: target/check-json-OQLBNB
