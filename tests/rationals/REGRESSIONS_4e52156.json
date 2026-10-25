@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "source_commit": "4e52156f8d2127d25c9f7fd51a243da2a8501608",
+  "authorized_source_commit": "255d2a2294b6906edbcc45d0387b5b4969602356",
+  "backend_identical_to": "0138734316bf0cd85d4860541f0ec69643e6da2f",
+  "workspace_rust_passed": 276,
+  "workspace_fmt_exit": 0,
+  "workspace_clippy_exit": 0,
+  "workspace_all_targets_build_exit": 0,
+  "checks": [
+    {
+      "command": "node scripts/test-native.mjs",
+      "exit": 0,
+      "checks": 36,
+      "independent_outputs": null,
+      "harness_sha256": "fbb8f1e6a9ad650b38f4f6559ba323bdac15bc8c1eb795926655b0650ebacfc8",
+      "log_path": "target/rationals-regression-native.log",
+      "log_sha256": "f214c59bfcc36fbbb0cc95a93bfc4e64455dbdf45657091e78d4d47840d24052"
+    },
+    {
+      "command": "node scripts/test-hosted.mjs",
+      "exit": 0,
+      "checks": 14,
+      "independent_outputs": 544,
+      "harness_sha256": "06b14a3993cbe79f3bc7cb497e90a1c6e91cd4ece03c53ba0fd5c8c9ac2f4743",
+      "log_path": "target/rationals-regression-hosted.log",
+      "log_sha256": "57ab3a06c4c3710b102bdf89dc8cde9f8565bbb0d91d3124230baba948a43a45"
+    },
+    {
+      "command": "node scripts/test-dynamic.mjs",
+      "exit": 0,
+      "checks": 85,
+      "independent_outputs": 8194,
+      "harness_sha256": "397403dfbb029f07eda56fc902338fbffaed1be07a7c6ba4a0054082970f8c91",
+      "log_path": "target/rationals-regression-dynamic.log",
+      "log_sha256": "fb2bfa7298a9b86fe21a760794f6d7efd2b57b1bb1701fa267f778bc749a310b"
+    },
+    {
+      "command": "node scripts/test-functions.mjs",
+      "exit": 0,
+      "checks": 43,
+      "independent_outputs": 294,
+      "harness_sha256": "6878a7c7d46c4c62c9e02225f67c5831981488e32ea64fd01fb86a4dc284eb18",
+      "log_path": "target/rationals-regression-functions.log",
+      "log_sha256": "c5430c67fc30be57e5e10dacf3abd868e87518f45f1e488cfe738c3ae9be4aa2"
+    },
+    {
+      "command": "node scripts/test-index.mjs",
+      "exit": 0,
+      "checks": 72,
+      "independent_outputs": 2107,
+      "harness_sha256": "eae97e85755e5b115dbdc2d16e584cdbc323e39464646af01b0e7a0bf095581a",
+      "log_path": "target/rationals-regression-index.log",
+      "log_sha256": "93f488cc3225cf59503b1a74383301d8e4f3ad49045ff5137fe50d85db14999b"
+    },
+    {
+      "command": "node scripts/test-tuples.mjs",
+      "exit": 0,
+      "checks": 76,
+      "independent_outputs": 259,
+      "harness_sha256": "a20071e4b189649ea1c347a33a6282a211091f5a907e3bc1e42f5dcbb4f53e90",
+      "log_path": "target/rationals-regression-tuples.log",
+      "log_sha256": "3cbcdfd8570432b1539c98cc58b0a13ae6b9257d3003d4d500d23fe1f3c6eabd"
+    },
+    {
+      "command": "node scripts/test-lists.mjs",
+      "exit": 0,
+      "checks": 97,
+      "independent_outputs": 385,
+      "harness_sha256": "7fa7a64a3dd1ce05fed3fef02539ab552a537359bca787e1b42ef865f1a9271c",
+      "log_path": "target/rationals-regression-lists.log",
+      "log_sha256": "251a7aa00b23db04da0871e632c6ca1040992d0704eb941e6c0390972a49f698"
+    },
+    {
+      "command": "node scripts/test-files.mjs",
+      "exit": 0,
+      "checks": 70,
+      "independent_outputs": 48,
+      "harness_sha256": "e5ded1ce99acfad05cee072c2059be4a06b83cdb65b268392e015eabc234ffdf",
+      "log_path": "target/rationals-regression-files.log",
+      "log_sha256": "d12289cb3a760def8c9f6a5f15c9054d05330d25367a46cb7f578ccf9baf1959"
+    },
+    {
+      "command": "node scripts/test-objects.mjs",
+      "exit": 0,
+      "checks": 74,
+      "independent_outputs": 78,
+      "harness_sha256": "ae9c23cd8f09c8b3e0f8b8debbf482a98825f75f8326ddac85492dd084a1f665",
+      "log_path": "target/rationals-regression-objects.log",
+      "log_sha256": "421db9a3efd2707b17a28d15adeed1bf8d5512b555196fc969657f63a58d986f"
+    },
+    {
+      "command": "node scripts/test-mappings.mjs",
+      "exit": 0,
+      "checks": 87,
+      "independent_outputs": 964,
+      "harness_sha256": "cd6584c9850d5af67f73d7889cf48614c58c8fce058a860ea4869f278615e1a9",
+      "log_path": "target/rationals-regression-mappings.log",
+      "log_sha256": "f5c39643917dd0be88fdab8b52d974a09dfcb77a23c06d841b426f9b384dd945"
+    }
+  ]
+}
