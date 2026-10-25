@@ -60,6 +60,7 @@ jobs:
           node scripts/test-files.mjs
           node scripts/test-objects.mjs
           node scripts/test-mappings.mjs
+          node scripts/test-rationals.mjs --expect-source ${{ github.sha }}
           node scripts/test-values-language.mjs
           node scripts/test-functions-language.mjs
           node scripts/test-index-language.mjs
@@ -69,6 +70,7 @@ jobs:
           node scripts/test-objects-language.mjs --expect-source ${{ github.sha }}
           node scripts/test-mappings-language.mjs --expect-source ${{ github.sha }}
           node scripts/test-typed-literals-language.mjs --expect-source ${{ github.sha }}
+          node scripts/test-rationals-language.mjs --expect-source ${{ github.sha }}
           node scripts/test-cli.mjs
       - name: Check bounded distribution packager controls
         run: node --test tests/distribution/package.test.mjs

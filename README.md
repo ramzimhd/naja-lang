@@ -50,6 +50,13 @@ first slice; quantity algebra, scale/affine relations and general protocols rema
 open. The [150-case source proof](tests/typed-literals-source/EXECUTION_936865c.md)
 retains its exact compiler source and limits.
 
+Explicit `naja.numeric` imports provide bounded exact `rational`, `divide_exact`,
+`numerator` and `denominator` operations. Fractions use native arbitrary integers,
+positive denominators and reduced results. Mixed Int/Bool arithmetic and exact
+comparisons are supported; ordinary `/`, Rational printing, full hashing and
+general numeric protocols remain open. [ADR-007](docs/decisions/0007-exact-rational-foundation.md)
+and the [native contract](tests/rationals/CONTRACT.md) define the limits.
+
 With the pinned Rust seed, a working platform linker/SDK and the locked packages
 available locally (one-time development preparation: `cargo fetch --locked`):
 
