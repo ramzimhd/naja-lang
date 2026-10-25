@@ -4,6 +4,43 @@ Revision 1.3; NAJA edition 2026.1; sole integrator /root. FC1 and HATCH remain
 incomplete. All 19 inherited gates and all L/C/FC1 contracts remain open.
 The 147 inherited requirements and 38 tasks retain their identifiers/history.
 
+Current retained compiler source is a51c2808bae4b57596f7f957ce53530004a504f8.
+Sixteen reports/checks/v13-files-*.json records passed:253 Rust tests,
+formatting/Clippy,70 native file/UTF-8 checks with48 conversion outputs,
+fixed-i64 source36, integer source23, values/functions/index/tuple/list source
+108/76/83/137/167, CLI43, project23, compiler boundaries25, structured JSON21,
+and editor12 unit tests/nine real-compiler groups. The emitted target is Linux
+x86-64 through explicit local WSL; the seed host is Windows x64.
+
+The separately frozen file-source suite passed all121 cases at that source:
+96 real ELF executions,25 check/build rejections,zero not_run. Check/build left
+all private fixture inventories unchanged; native output files matched independent
+hashes. Exact16 MiB/4095-byte limits, conversion views beyond the file cap,
+strict UTF-8, imports/Unicode aliases, path-then-data effects, exclusive foreign-file
+preservation and two changed-file controls passed. See tests/files-source/
+RUN_2026-10-25.md and RESULTS_2026-10-25.json. Independent FILES_V13 review passed
+350 cases, including 312 UTF-8 inputs, low-FD reads and depth/call boundaries;
+its original reserved-print alias assumption failure remains failed.
+
+The native API uses direct Linux syscalls and strict conversions. Reads require
+regular opened handles, writes exclusively create new files, known preflight
+failures create no output and later OS errors may retain partial output. Source
+imports are explicit static naja.io/naja.text bindings, rather than an ambient
+module loader. File operation attempts/EINTR, arena, stack and source budgets
+remain fixed. Tests/files/CONTRACT.md records the exact limits. Full IO/modules,
+recoverable exceptions and filesystem confinement remain open.
+
+Private integrity audit/checkpoint 14 advanced retained source to a51c280 and
+assessed ready at clean HEAD1c7e4c4 before later metadata edits. The public
+observation is historical; an ordinary private checkpoint follows publication.
+Account-shared quota was observed59%used/41%remaining at2026-10-25T21:25:48Z,
+reset 2026-11-01T08:14:13Z. Context/rate/deadline/spend telemetry remain unknown.
+Public 4a9fe89 passed all three CI hosts at run 40234704254; the next publication
+needs its own exact-SHA observation. Classes/objects and compiler distribution
+are active separately and have no result borrowed from these file checks.
+
+Historical collection/editor evidence follows, with original pins preserved.
+
 Exact compiler source 91d94d15ec273e5c71ec6c8d95e5baa824861148 passed 26 retained
 command records in reports/checks/v13-collections-integrated-*.json and paired
 sanitized raw logs:
@@ -26,8 +63,8 @@ Windows x64 built the temporary Rust seed; actual emitted programs ran on local
 Linux x86-64 WSL. Compile-only modes do not claim Windows/macOS emitted-target
 execution. The 126 Node planning/recovery/recorder cases separately passed at
 aba7307; they were not relabeled or needlessly repeated after fixture-only work.
-Public a65dddf passed all three CI hosts at run40232200667. This new publication
-needs its own exact-SHA CI observation.
+Public a65dddf passed all three CI hosts at run40232200667; later4a9fe89
+also passed at run 40234704254. These are historical source-specific results.
 
 Private integrity audit/checkpoint 12 advanced retained compiler source to
 91d94d1 under actual fence 2 and assessed ready before these metadata edits.
@@ -86,12 +123,22 @@ stack assumptions; and one million limb pairs for general division. No runtime
 loop quota, catchable exception system, sandbox, hostile filesystem confinement
 or process-tree cancellation guarantee is claimed.
 
-Next: publish reviewed evidence and verify new CI, then integrate the released
-native file/UTF-8 core and explicit source APIs. The backend and independent source
-harness are active in separate assigned worktrees; no file-API result is borrowed
-from these collection checks. Classes, floats, full modules/functions/libraries,
+Next: publish reviewed file evidence and verify exact CI, then integrate the
+released object core with source classes and execute the independently frozen
+source cases. Object backend/source preparation and distribution groundwork
+remain in separate assigned worktrees. Classes, floats, full modules/functions/libraries,
 B1–B3 and the NAJA reference closure, native cells, platform products and real
 human productivity sessions remain required. The historical independence
 inventory needs expanded-closure revalidation. Continue after checkpoints while
 authorized work and execution capacity remain; no unattended provider runner or
 paid fallback exists.
+
+The first file-publication metadata validation failed because a detailed source
+result and Markdown review were incorrectly added where formal command-record
+JSON was required. Those artifacts remain retained and linked; task evidence
+now names the actual command records. Both validators then passed unchanged.
+The original tool output and these pre-fix reproduction logs remain, with exit1:
+
+- target/files-metadata-planning-before-correction.log: SHA-256 1deee6319cea5e1d6c6bc9ac7f77af17e78661d4596d04ae7a28a73227a2c464
+
+- target/files-metadata-foundations-before-correction.log: SHA-256 d0cebc573e4216679ef4a32fdeb754cc18b6d0d6c86e97c0e99c41f9ed0149ad

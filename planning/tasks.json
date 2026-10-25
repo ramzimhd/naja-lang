@@ -213,9 +213,25 @@
         "reports/checks/v13-collections-integrated-rust.json",
         "reports/checks/v13-collections-integrated-tuples-language.json",
         "reports/checks/v13-collections-integrated-tuples.json",
-        "reports/checks/v13-editor-integrated.json"
+        "reports/checks/v13-editor-integrated.json",
+        "reports/checks/v13-files-clippy.json",
+        "reports/checks/v13-files-editor.json",
+        "reports/checks/v13-files-fmt.json",
+        "reports/checks/v13-files-json.json",
+        "reports/checks/v13-files-native.json",
+        "reports/checks/v13-files-regression-cli.json",
+        "reports/checks/v13-files-regression-compiler-boundaries.json",
+        "reports/checks/v13-files-regression-functions-language.json",
+        "reports/checks/v13-files-regression-hosted-language.json",
+        "reports/checks/v13-files-regression-index-language.json",
+        "reports/checks/v13-files-regression-lists-language.json",
+        "reports/checks/v13-files-regression-native.json",
+        "reports/checks/v13-files-regression-project-cli.json",
+        "reports/checks/v13-files-regression-tuples-language.json",
+        "reports/checks/v13-files-regression-values-language.json",
+        "reports/checks/v13-files-rust.json"
       ],
-      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
+      "note": "Incremental revision1.3 file/UTF8 source/native work and retained independent evidence. Ordinary object work and compiler packaging are preparatory; full task acceptance and all release gates remain open."
     },
     {
       "id": "T09",
@@ -249,9 +265,25 @@
         "reports/checks/v13-collections-integrated-rust.json",
         "reports/checks/v13-collections-integrated-tuples-language.json",
         "reports/checks/v13-collections-integrated-tuples.json",
-        "reports/checks/v13-editor-integrated.json"
+        "reports/checks/v13-editor-integrated.json",
+        "reports/checks/v13-files-clippy.json",
+        "reports/checks/v13-files-editor.json",
+        "reports/checks/v13-files-fmt.json",
+        "reports/checks/v13-files-json.json",
+        "reports/checks/v13-files-native.json",
+        "reports/checks/v13-files-regression-cli.json",
+        "reports/checks/v13-files-regression-compiler-boundaries.json",
+        "reports/checks/v13-files-regression-functions-language.json",
+        "reports/checks/v13-files-regression-hosted-language.json",
+        "reports/checks/v13-files-regression-index-language.json",
+        "reports/checks/v13-files-regression-lists-language.json",
+        "reports/checks/v13-files-regression-native.json",
+        "reports/checks/v13-files-regression-project-cli.json",
+        "reports/checks/v13-files-regression-tuples-language.json",
+        "reports/checks/v13-files-regression-values-language.json",
+        "reports/checks/v13-files-rust.json"
       ],
-      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
+      "note": "Incremental revision1.3 file/UTF8 source/native work and retained independent evidence. Ordinary object work and compiler packaging are preparatory; full task acceptance and all release gates remain open."
     },
     {
       "id": "T10",
@@ -302,9 +334,25 @@
         "reports/checks/v13-collections-integrated-rust.json",
         "reports/checks/v13-collections-integrated-tuples-language.json",
         "reports/checks/v13-collections-integrated-tuples.json",
-        "reports/checks/v13-editor-integrated.json"
+        "reports/checks/v13-editor-integrated.json",
+        "reports/checks/v13-files-clippy.json",
+        "reports/checks/v13-files-editor.json",
+        "reports/checks/v13-files-fmt.json",
+        "reports/checks/v13-files-json.json",
+        "reports/checks/v13-files-native.json",
+        "reports/checks/v13-files-regression-cli.json",
+        "reports/checks/v13-files-regression-compiler-boundaries.json",
+        "reports/checks/v13-files-regression-functions-language.json",
+        "reports/checks/v13-files-regression-hosted-language.json",
+        "reports/checks/v13-files-regression-index-language.json",
+        "reports/checks/v13-files-regression-lists-language.json",
+        "reports/checks/v13-files-regression-native.json",
+        "reports/checks/v13-files-regression-project-cli.json",
+        "reports/checks/v13-files-regression-tuples-language.json",
+        "reports/checks/v13-files-regression-values-language.json",
+        "reports/checks/v13-files-rust.json"
       ],
-      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
+      "note": "Incremental revision1.3 file/UTF8 source/native work and retained independent evidence. Ordinary object work and compiler packaging are preparatory; full task acceptance and all release gates remain open."
     },
     {
       "id": "T12",
@@ -340,9 +388,25 @@
         "reports/checks/v13-collections-integrated-rust.json",
         "reports/checks/v13-collections-integrated-tuples-language.json",
         "reports/checks/v13-collections-integrated-tuples.json",
-        "reports/checks/v13-editor-integrated.json"
+        "reports/checks/v13-editor-integrated.json",
+        "reports/checks/v13-files-clippy.json",
+        "reports/checks/v13-files-editor.json",
+        "reports/checks/v13-files-fmt.json",
+        "reports/checks/v13-files-json.json",
+        "reports/checks/v13-files-native.json",
+        "reports/checks/v13-files-regression-cli.json",
+        "reports/checks/v13-files-regression-compiler-boundaries.json",
+        "reports/checks/v13-files-regression-functions-language.json",
+        "reports/checks/v13-files-regression-hosted-language.json",
+        "reports/checks/v13-files-regression-index-language.json",
+        "reports/checks/v13-files-regression-lists-language.json",
+        "reports/checks/v13-files-regression-native.json",
+        "reports/checks/v13-files-regression-project-cli.json",
+        "reports/checks/v13-files-regression-tuples-language.json",
+        "reports/checks/v13-files-regression-values-language.json",
+        "reports/checks/v13-files-rust.json"
       ],
-      "note": "Incremental revision 1.3 foundation work only. Exact-source collection checks, original-range diagnostics and CLI-preview adapter evidence do not establish complete task acceptance or any release gate."
+      "note": "Incremental revision1.3 file/UTF8 source/native work and retained independent evidence. Ordinary object work and compiler packaging are preparatory; full task acceptance and all release gates remain open."
     },
     {
       "id": "T13",

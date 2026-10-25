@@ -1,26 +1,29 @@
-Resume the existing NAJA HATCH repository in C:/naja; continue FC1 and then HATCH.
+Resume existing NAJA HATCH in C:/naja; continue FC1 and then HATCH.
 
-Read AGENTS.md, launch/HANDOFF.md, reports/progress.md, current planning/state,
-assignments and continuity, plus actual Git/worktree/reservation state. Keep all
-IDs, source pins, evidence and failures. Do not extract credentials, bypass
-security, reclaim by age/PID, overwrite collaborators, reset or force-push.
+Read AGENTS.md, launch/HANDOFF.md, reports/progress.md, planning state/assignments/
+continuity and actual Git/worktree/private reservation. Preserve every ID, source
+pin, failed/not_run result and collaborator change. No reset, force-push,
+credential extraction, age/PID reclaim, security bypass or paid fallback.
 
-Last retained compiler source is 91d94d15ec273e5c71ec6c8d95e5baa824861148 with 26
-passed integrated records. The 126 Node cases are separately pinned to aba7307; editor 12 units/
-nine compiler groups are pinned 7c8248c. Private audit/checkpoint 12 advanced the
-compiler source under fence 2 before metadata edits. Reconcile later ordinary
-checkpoints and actual state rather than trusting this text as current authority.
-All 19 inherited gates and all L/C/FC1 contracts remain open; no self-hosting,
-full VSIX/LSP/DAP/cells, platform-product or human timing completion is established.
+Last retained compiler source a51c2808bae4b57596f7f957ce53530004a504f8 passed 16
+retained commands:253 Rust tests,70 native file checks and old source/CLI/editor
+regressions. Frozen 121 file-source cases and350 independent review cases passed
+at that source; a separate reviewer assumption failure remains failed. Private
+audit/checkpoint 14 advanced source under fence 2 before metadata/publication edits.
+Reconcile later ordinary checkpoints and actual state; public observations are
+historical. All 19 gates and all L/C/FC1 contracts remain open.
 
-Finish reviewed publication and exact CI, then confirm the seed file/UTF8 worktree
-has released its complete commits. Root integrates its core/height/final proof,
-adds ordinary explicit naja.io/naja.text source imports, supplies exact source to
-the prepared files-source harness, executes/reviews/records results and continues.
-The unsigned CLI-preview VSIX exists locally; its isolated install proof does not
-establish actual editor workflows. Read full HANDOFF for exact branches/paths,
-limits, candidate commit IDs and commands. Do not invent other agent activity.
+Finish reviewed file publication and exact CI, then integrate released object
+backend/source work. Seed agent/native-objects-v13 owns backend/new IR harness;
+contract 845fbdc and core 1f1382b are prepared but proof/path release pending. Root
+owns source classes; frontend owns new frozen objects-source harness and must
+receive exact integrated source before execution. Planner distribution-preview
+branch owns only new distribution paths and is preparing unsigned native compiler
+packaging/install/rootfs proof from a51c280. No installation result is assumed.
+Read full HANDOFF for source syntax, method evaluation order, bounds and ownership.
 
-Continue through supported context compaction while authorized capacity remains.
-A passing checkpoint is not a stopping condition. Unknown budget telemetry stays
-unknown; no paid fallback or unattended provider requests are authorized.
+Unsigned CLI-preview VSIX exists locally; isolated install does not establish
+actual IDE workflows. No self-hosting, native cells, full modules/classes/libraries,
+platform-product or human timing completion is established. Continue through
+supported compaction; passing a checkpoint is not a stopping condition. After
+actual exit, manual relaunch is required; no unattended provider runner exists.

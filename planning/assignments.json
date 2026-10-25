@@ -256,7 +256,11 @@
         "editor/vscode/",
         "tests/vscode/",
         "reports/governance/",
-        "reports/migrations/"
+        "reports/migrations/",
+        "scripts/test-files.mjs",
+        "tests/files/",
+        "scripts/test-files-language.mjs",
+        "tests/files-source/"
       ],
       "status": "active",
       "history": [
@@ -357,29 +361,28 @@
         "scripts/test-files.mjs",
         "tests/files/"
       ],
-      "status": "active",
-      "deliverable": "Frozen bounded native file IO/UTF8 core; native execution and source integration pending.",
+      "status": "completed",
+      "deliverable": "Bounded native file and strict UTF8 core, frozen contract and70-check native proof; all assigned paths explicitly released.",
       "acceptance_commands": [
         [
           "cargo",
           "test",
-          "-p",
-          "naja-seed",
+          "--workspace",
           "--locked",
           "--offline"
         ],
         [
           "node",
-          "scripts/test-cli.mjs"
+          "scripts/test-files.mjs"
         ]
       ],
       "forbidden_paths": [
-        "bootstrap/driver/src/lib.rs",
-        "backends/",
-        "Cargo.lock",
-        "planning/"
+        "bootstrap/driver/",
+        "bootstrap/frontend/",
+        "planning/",
+        "Cargo.lock"
       ],
-      "handoff": "Scoped commit/report to sole integrator.",
+      "handoff": "Root integrated complete scoped commits; source121 and independent350 cases passed separately at a51c280.",
       "history": [
         {
           "task_id": "T12",
@@ -423,7 +426,9 @@
         "bootstrap/driver/src/values.rs"
       ],
       "published_core_commit": "39c4b3fbd20e4fcabd4b00c8faa23d2b3189edd2",
-      "published_height_commit": "ea1dbdf4bad17e96c9cec21539431759beecf965"
+      "published_height_commit": "ea1dbdf4bad17e96c9cec21539431759beecf965",
+      "integrated_commit": "571c8b0/a98cdc6/09675a8/a51c280",
+      "published_final_commit": "8f44980b619780cf1164768a1722b17dcd652c80"
     },
     {
       "task_id": "T04",
@@ -495,27 +500,28 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/native-lists-v13",
-      "base_commit": "4e7f0c19e7dc927dcfb425ddc43d9a5411401e08",
+      "branch": "agent/native-objects-v13",
+      "base_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
         "backends/native/",
-        "scripts/test-lists.mjs",
-        "tests/lists/"
+        "scripts/test-objects.mjs",
+        "tests/objects/"
       ],
-      "status": "completed",
-      "deliverable": "Bounded native lists, fixed-count shared mutation, cycles and frozen native proof; remaining semantics stay open.",
+      "status": "active",
+      "deliverable": "Frozen ordinary object backend contract845fbdc and core1f1382b; native proof and source integration pending.",
       "acceptance_commands": [
-        [
-          "node",
-          "scripts/test-index.mjs"
-        ],
         [
           "cargo",
           "test",
-          "--workspace",
+          "-p",
+          "naja-native",
           "--locked",
           "--offline"
+        ],
+        [
+          "node",
+          "scripts/test-objects.mjs"
         ]
       ],
       "forbidden_paths": [
@@ -523,7 +529,7 @@
         "planning/",
         "Cargo.lock"
       ],
-      "handoff": "Backend and height paths explicitly released; root owns source integration.",
+      "handoff": "Backend remains contributor-owned until final proof/corrections and explicit release.",
       "history": [
         {
           "branch": "agent/dynamic-values-v13",
@@ -611,29 +617,61 @@
             "Cargo.lock"
           ],
           "handoff": "Backend and height paths explicitly released; root owns source integration."
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/seed_setup",
+          "branch": "agent/native-lists-v13",
+          "base_commit": "4e7f0c19e7dc927dcfb425ddc43d9a5411401e08",
+          "worktree": "../naja-worktrees/seed-setup",
+          "paths": [
+            "backends/native/",
+            "scripts/test-lists.mjs",
+            "tests/lists/"
+          ],
+          "status": "completed",
+          "deliverable": "Bounded native lists, fixed-count shared mutation, cycles and frozen native proof; remaining semantics stay open.",
+          "acceptance_commands": [
+            [
+              "node",
+              "scripts/test-index.mjs"
+            ],
+            [
+              "cargo",
+              "test",
+              "--workspace",
+              "--locked",
+              "--offline"
+            ]
+          ],
+          "forbidden_paths": [
+            "bootstrap/driver/",
+            "planning/",
+            "Cargo.lock"
+          ],
+          "handoff": "Backend and height paths explicitly released; root owns source integration.",
+          "integrated_commit": "ac26eff/2dbe10d/2a382d4"
         }
-      ],
-      "integrated_commit": "ac26eff/2dbe10d/2a382d4"
+      ]
     },
     {
       "task_id": "T12",
       "owner": "/root/recovery_review",
-      "branch": "agent/dynamic-source-tests-v13",
-      "base_commit": "5c555bc6e3ff51c9f2f945b069654aa287bc446b",
+      "branch": "agent/files-review-v13",
+      "base_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
       "worktree": "../naja-worktrees/recovery-review",
       "paths": [
-        "scripts/test-values-language.mjs",
-        "tests/values/"
+        "reports/reviews/FILES_V13.md"
       ],
       "status": "completed",
-      "deliverable": "Independent ordinary-source native value/alias/annotation/chained-comparison execution harness.",
+      "deliverable": "Independent350-case source/UTF8 review and70-check native regression found no actionable defect; failed reserved-alias assumption retained.",
       "acceptance_commands": [
         [
           "node",
           "scripts/test-cli.mjs"
         ]
       ],
-      "handoff": "Preparation5cfc9c3; actual source run84cases passed at merge9ef3c38; finalscoped report pending.",
+      "handoff": "Report502c3e5 integrated; checkout and report path released.",
       "history": [
         {
           "branch": "agent/cli-review-v13",
@@ -643,8 +681,29 @@
             "reports/reviews/CLI_EXECUTION_V13.md"
           ],
           "status": "completed"
+        },
+        {
+          "task_id": "T12",
+          "owner": "/root/recovery_review",
+          "branch": "agent/dynamic-source-tests-v13",
+          "base_commit": "5c555bc6e3ff51c9f2f945b069654aa287bc446b",
+          "worktree": "../naja-worktrees/recovery-review",
+          "paths": [
+            "scripts/test-values-language.mjs",
+            "tests/values/"
+          ],
+          "status": "completed",
+          "deliverable": "Independent ordinary-source native value/alias/annotation/chained-comparison execution harness.",
+          "acceptance_commands": [
+            [
+              "node",
+              "scripts/test-cli.mjs"
+            ]
+          ],
+          "handoff": "Preparation5cfc9c3; actual source run84cases passed at merge9ef3c38; finalscoped report pending."
         }
-      ]
+      ],
+      "integrated_commit": "be85eba"
     },
     {
       "task_id": "T07",
@@ -702,15 +761,15 @@
     {
       "task_id": "T11",
       "owner": "/root/frontend",
-      "branch": "agent/lists-source-harness-v13",
-      "base_commit": "662bcdcff3a5742d9271b5f449becaa724503d78",
+      "branch": "agent/objects-source-harness-v13",
+      "base_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
-        "scripts/test-lists-language.mjs",
-        "tests/lists-source/"
+        "scripts/test-objects-language.mjs",
+        "tests/objects-source/"
       ],
-      "status": "completed",
-      "deliverable": "Frozen 167-case actual list source harness and executed pinned report; all passed.",
+      "status": "active",
+      "deliverable": "Prepare independent frozen actual-source class cases against845fbdc; no native execution before exact root source.",
       "acceptance_commands": [
         [
           "cargo",
@@ -721,7 +780,7 @@
           "--offline"
         ]
       ],
-      "handoff": "Report only; root integrates findings.",
+      "handoff": "Preparation only; root supplies integrated source before execution.",
       "history": [
         {
           "branch": "agent/dynamic-source-fixes-v13",
@@ -783,32 +842,54 @@
             ]
           ],
           "handoff": "Report only; root integrates findings."
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/frontend",
+          "branch": "agent/lists-source-harness-v13",
+          "base_commit": "662bcdcff3a5742d9271b5f449becaa724503d78",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "scripts/test-lists-language.mjs",
+            "tests/lists-source/"
+          ],
+          "status": "completed",
+          "deliverable": "Frozen 167-case actual list source harness and executed pinned report; all passed.",
+          "acceptance_commands": [
+            [
+              "cargo",
+              "test",
+              "-p",
+              "naja-seed",
+              "--locked",
+              "--offline"
+            ]
+          ],
+          "handoff": "Report only; root integrates findings.",
+          "integrated_commit": "c30f0e9/7f139c7"
         }
-      ],
-      "integrated_commit": "c30f0e9/7f139c7"
+      ]
     },
     {
       "task_id": "T12",
       "owner": "/root/planning_validation",
-      "branch": "agent/project-scaffold-v13",
-      "base_commit": "b9d884dbd3577d104c92593469e894de88062400",
+      "branch": "agent/distribution-preview-v13",
+      "base_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
       "worktree": "../naja-worktrees/planning-validation",
       "paths": [
-        "bootstrap/driver/src/scaffold.rs",
-        "bootstrap/driver/tests/scaffold.rs",
-        "tests/project/INIT.md"
+        "tools/distribution/",
+        "tests/distribution/"
       ],
-      "status": "completed",
-      "deliverable": "Exclusive new-directory scaffold with validated manifest/source and nonoverwriting files; no execution/downloads.",
+      "status": "active",
+      "deliverable": "Prepare unsigned native compiler package and scoped install/rootfs proof under T12/FC1-01; no HATCH publication.",
       "forbidden_paths": [
-        "bootstrap/driver/src/lib.rs",
-        "bootstrap/driver/src/main.rs",
-        "bootstrap/driver/src/project.rs",
-        "bootstrap/driver/src/manifest.rs",
+        "bootstrap/",
+        "backends/",
+        "editor/",
         "Cargo.lock",
         "planning/"
       ],
-      "handoff": "Module/test/doc commit only; root wires CLI.",
+      "handoff": "Official isolated user-scoped Linux seed preparation authorized; preserve dependency provenance and separate clean-userland limits.",
       "history": [
         {
           "branch": "agent/project-manifest-v13",
@@ -831,9 +912,32 @@
           ],
           "status": "completed",
           "integrated_commit": "701ae41"
+        },
+        {
+          "task_id": "T12",
+          "owner": "/root/planning_validation",
+          "branch": "agent/project-scaffold-v13",
+          "base_commit": "b9d884dbd3577d104c92593469e894de88062400",
+          "worktree": "../naja-worktrees/planning-validation",
+          "paths": [
+            "bootstrap/driver/src/scaffold.rs",
+            "bootstrap/driver/tests/scaffold.rs",
+            "tests/project/INIT.md"
+          ],
+          "status": "completed",
+          "deliverable": "Exclusive new-directory scaffold with validated manifest/source and nonoverwriting files; no execution/downloads.",
+          "forbidden_paths": [
+            "bootstrap/driver/src/lib.rs",
+            "bootstrap/driver/src/main.rs",
+            "bootstrap/driver/src/project.rs",
+            "bootstrap/driver/src/manifest.rs",
+            "Cargo.lock",
+            "planning/"
+          ],
+          "handoff": "Module/test/doc commit only; root wires CLI.",
+          "integrated_commit": "b404618"
         }
-      ],
-      "integrated_commit": "b404618"
+      ]
     },
     {
       "task_id": "T11",
@@ -902,15 +1006,18 @@
     {
       "task_id": "T12",
       "owner": "/root/frontend",
-      "branch": "agent/files-source-harness-v13",
+      "branch": "agent/files-source-execution-v13",
       "base_commit": "91d94d15ec273e5c71ec6c8d95e5baa824861148",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
         "scripts/test-files-language.mjs",
         "tests/files-source/"
       ],
-      "status": "active",
-      "deliverable": "Prepare frozen actual file/conversion source cases; no native execution until root supplies integrated source."
+      "status": "completed",
+      "deliverable": "Frozen121 source cases executed at a51c280; all passed,96 actual ELFs,25 compile refusals,zero not_run.",
+      "integrated_commit": "feb2115/21f316a",
+      "execution_report_commit": "688e51c60dbf5c3ecd29feeabeab3e4b343f054b",
+      "handoff": "All file source harness/report paths explicitly released to root."
     },
     {
       "task_id": "T18",

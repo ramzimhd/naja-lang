@@ -5,7 +5,7 @@
   "development_started": true,
   "current_gate": "H0",
   "repository_url": "https://github.com/ramzimhd/naja-lang",
-  "last_verified_commit": "91d94d15ec273e5c71ec6c8d95e5baa824861148",
+  "last_verified_commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
   "active_tasks": [
     "T02",
     "T04",
@@ -20,8 +20,8 @@
     "T35"
   ],
   "blockers": [],
-  "last_checkpoint": "2026-10-25T21:11:27.346Z",
-  "note": "All 19 inherited gates and all L/C/FC1 contracts remain open. Twenty-six exact-source records passed at 91d94d1 and advanced retained compiler source through private audit/checkpoint 12. 126 Node cases remain separately pinned to aba7307; 12 editor unit tests and nine groups passed at 7c8248c. Tuple/list partial semantics, UTF16 diagnostics and an unsigned installable CLI-preview VSIX are implemented. Earlier obsolete fixture failures remain failed. No self-hosting, cells, native LSP/DAP, full VSIX workflow, clean-host or human timing proof exists.",
+  "last_checkpoint": "2026-10-25T21:29:33.605Z",
+  "note": "All19 inherited gates and all L/C/FC1 contracts remain open. Sixteen exact-source records passed at a51c280, including253 Rust tests,70 native file checks and prior source/CLI/editor regressions; private audit/checkpoint14 advanced retained compiler source. Frozen121 file source cases and350 independent review cases passed at that source. Older Node126 and VSIX install observations retain their separate pins. Object runtime/source preparation and distribution groundwork continue in separate worktrees; no new class/installation/self-hosting/cell/human timing completion claim.",
   "official_language": "en",
   "package_revision": "1.2",
   "continuation_revision": "1.3",

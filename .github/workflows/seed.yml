@@ -55,11 +55,13 @@ jobs:
           node scripts/test-index.mjs
           node scripts/test-tuples.mjs
           node scripts/test-lists.mjs
+          node scripts/test-files.mjs
           node scripts/test-values-language.mjs
           node scripts/test-functions-language.mjs
           node scripts/test-index-language.mjs
           node scripts/test-tuples-language.mjs
           node scripts/test-lists-language.mjs
+          node scripts/test-files-language.mjs --expect-source ${{ github.sha }}
           node scripts/test-cli.mjs
       - name: Check planning and evidence integrity
         run: node scripts/validation/check-planning.mjs
