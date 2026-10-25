@@ -270,6 +270,7 @@ for (const [name, body] of [
   ['annotation-reassignment-guard', 'x: int = 0\nx = "bad"\nprint(999)'],
   ['annotation-none-guard', 'x: int = None\nprint(999)'],
   ['tuple-display-guard', 'print((1, 2))'],
+  ['list-display-guard', 'print([1, 2])'],
 ]) run(name, body + '\n', '', typeFailure);
 for (const [index, value] of ['False', 'None', '0', '""', 'b""'].entries()) {
   run('false-truth-assertion-' + index, 'assert ' + value + '\nprint(999)\n', '', { exit: 104, stderr: 'NJA204: assertion failed\n' });
@@ -280,7 +281,7 @@ const duplicate = fixture('chain-once-arena.naja').replace('assert s < s + s > s
 run('duplicate-middle-resource-control', duplicate, '', { exit: 103, stderr: 'NJA203: native value arena exhausted\n' });
 for (const [name, body, code] of [
   ['float', 'print(1.25)', /NJA1\d\d/], ['function-default', 'def f(x=1):\n    return x', /NJA1\d\d/],
-  ['list', 'print([1, 2])', /NJA1\d\d/], ['dictionary', 'print({"a": 1})', /NJA1\d\d/],
+  ['list-comprehension', 'print([value for value in [1, 2]])', /NJA1\d\d/], ['dictionary', 'print({"a": 1})', /NJA1\d\d/],
   ['tuple-unpacking', 'a, b = (1, 2)', /NJA1\d\d/], ['set', 'print({1, 2})', /NJA1\d\d/],
   ['method', 'print("x".Repeat(2))', /NJA1\d\d/], ['formatted-string', 'print(f"{1}")', /F0011/],
   ['named-escape', String.raw`print("\N{SNAKE}")`, /F0034/], ['surrogate-escape', String.raw`print("\ud800")`, /F0035/],

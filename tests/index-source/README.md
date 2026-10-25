@@ -68,3 +68,11 @@ The first actual run is retained in
 [RUN_2026-10-25.md](RUN_2026-10-25.md) and
 [RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). Its results apply to the exact
 source/compiler identities recorded there.
+
+With tuple/list source support, those values used as indices now reach type105
+at runtime; Text indexed assignment does likewise. The original source-index
+run remains historical. The actual obsolete-expectation failure and focused
+pre-migration observations are retained in `tests/tuples-source/` and
+`reports/migrations/COLLECTION_BASELINES_2026-10-25.md`. Current harnesses require
+the runtime guards rather than the former compile rejections, with unchanged
+budgets and no new claim of mutable Text or collection display semantics.

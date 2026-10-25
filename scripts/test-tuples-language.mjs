@@ -115,20 +115,20 @@ runtime('nested-bounds-before-later-index', mark + 'print(((),)[0][0][mark("unre
 runtime('tuple-comparison-right-error-order', 'print((1,) == 1 // 0)\n', '', zeroFailure);
 runtime('tuple-arithmetic-right-error-order', 'print((1,) + 1 // 0)\n', '', zeroFailure);
 runtime('tuple-false-assertion', 'assert ()\n', '', { exit: 104, stderr: 'NJA204: assertion failed\n' });
+runtime('list-literal-supported', 'value = [1, 2]\nprint(value[0])\n', '1\n');
+runtime('immutable-element-assignment-type-guard', 'value = (1,)\nvalue[0] = 2\n', '', typeFailure);
 
 for (const [name, source, diagnostic] of [
   ['empty-index', 'print((1,)[])\n', 'NJA101:'],
   ['slice', 'print((1, 2)[0:1])\n', 'slices and multidimensional indices'],
   ['full-slice', 'print((1, 2)[:])\n', 'NJA101:'],
   ['multidimensional', 'print((1, 2)[0, 1])\n', 'slices and multidimensional indices'],
-  ['list', 'value = [1, 2]\nprint(value[0])\n', 'NJA101:'],
   ['unpacking', 'a, b = (1, 2)\n', 'NJA101:'],
   ['bare-comma', 'value = 1, 2\n', 'NJA101:'],
   ['bare-comma-return', 'def value():\n    return 1, 2\nprint(value())\n', 'NJA101:'],
   ['iteration', 'for value in (1, 2):\n    print(value)\n', 'NJA101:'],
   ['tuple-constructor', 'print(len(tuple()))\n', 'NJA101:'],
   ['starred-element', 'value = (*(1, 2),)\n', 'NJA101:'],
-  ['mutable-element-assignment', 'value = (1,)\nvalue[0] = 2\n', 'NJA101:'],
   ['call-comma-remains-arity', 'def one(value): return value\nprint(one(1, 2))\n', 'requires 1 positional arguments; received 2'],
   ['empty-call-remains-zero-args', 'def one(value): return value\nprint(one())\n', 'requires 1 positional arguments; received 0'],
   ['empty-tuple-is-one-argument', 'def none(): pass\nprint(none(()))\n', 'requires 0 positional arguments; received 1'],

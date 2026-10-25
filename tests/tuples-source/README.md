@@ -68,6 +68,14 @@ compatibility, memory reclamation, other emitted targets, self-hosting, FC1 or
 HATCH completion. Official narratives remain English; multilingual identifiers
 and string contents are intentional user data.
 
+After native lists and generic subscript targets were integrated, the current
+harness migrated two obsolete compile rejections: list construction now executes
+and tuple mutation reaches the explicit native type guard. The original frozen
+137-case results retain their source pin and hashes. Focused pre-migration proof
+and the retained old index failure are described in
+`reports/migrations/COLLECTION_BASELINES_2026-10-25.md`; no budget or founder
+requirement changed. New command records identify the migrated execution.
+
 The pinned actual run is recorded in
 [RUN_2026-10-25.md](RUN_2026-10-25.md), with all tuple outcomes in
 [RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). The unchanged older index

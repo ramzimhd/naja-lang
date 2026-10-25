@@ -121,10 +121,10 @@ for (const [name, expression, diagnostic] of [
   ['unclosed-index', '"abc"[0', 'F0003:'],
   ['unknown-unicode-index', '"é"[未定義]', ':2:11: NJA101:'],
 ]) reject(name, '# café\nprint(' + expression + ')\n', diagnostic);
-reject('index-assignment-unsupported', 'sequence = "abc"\nsequence[0] = "x"\n', 'NJA101:');
+runtime('immutable-index-assignment-type-guard', 'sequence = "abc"\nsequence[0] = "x"\n', '', typeFailure);
 reject('float-index-unsupported', 'print("abc"[1.0])\n', 'NJA101:');
-reject('index-list-unsupported', 'print("abc"[[0]])\n', 'NJA101:');
-reject('index-tuple-unsupported', 'print("abc"[(0, 1)])\n', 'NJA101:');
+runtime('index-list-type-guard', 'print("abc"[[0]])\n', '', typeFailure);
+runtime('index-tuple-type-guard', 'print("abc"[(0, 1)])\n', '', typeFailure);
 reject('aliases-no-ambient-activation', fixture('project/main.naja'), 'NJA101:');
 cases.push({ ...cases.find(test => test.name === 'scalars-py'), name: 'wrong-scalar-index-control', source: fixture('scalars.py').replace('print(text[1])', 'print(text[2])'), control: true });
 cases.push({ ...cases.find(test => test.name === 'precedence-py'), name: 'wrong-byte-index-control', source: fixture('precedence.py').replace('print(-b"\\x03\\x04"[1])', 'print(-b"\\x03\\x04"[0])'), control: true });

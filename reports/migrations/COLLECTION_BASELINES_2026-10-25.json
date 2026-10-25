@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "source_commit": "a956839e43c78dba6404060c03223a22a7de59cf",
+  "scope": "Focused executions of unchanged obsolete compile-rejection cases; not full-suite results.",
+  "host": "win32 x64",
+  "target": "Linux x86-64 native via explicit WSL",
+  "budgets": {
+    "suite_ms": 120000,
+    "command_ms": 30000,
+    "native_ms": 2000,
+    "capture_bytes": 1048576
+  },
+  "results": [
+    {
+      "name": "index-tuple-kind",
+      "harness": "scripts/test-index-language.mjs",
+      "harness_sha256": "bb6528ab52b75bbdeaa471fd74398d9ee48a62330ffb4f9dc699ebcf24881ebf",
+      "source": "print(\"abc\"[(0, 1)])\n",
+      "source_sha256": "c84e59c2c36189ef911b8c52ef6ab193f6fd9899398cc2643b80ef05c8162034",
+      "old_expectation": "compile_rejection",
+      "check_exit": 0,
+      "build_exit": 0,
+      "elf_sha256": "8c275859af8e1d1dd40f4897330dfb755fe34b62c6461facec95843ae9648f15",
+      "run_exit": 105,
+      "run_stdout": "",
+      "run_stderr": "NJA205: native value type mismatch\n",
+      "classification": "obsolete harness expectation; migration required"
+    },
+    {
+      "name": "index-list-kind",
+      "harness": "scripts/test-index-language.mjs",
+      "harness_sha256": "bb6528ab52b75bbdeaa471fd74398d9ee48a62330ffb4f9dc699ebcf24881ebf",
+      "source": "print(\"abc\"[[0]])\n",
+      "source_sha256": "ae641d30d7f0000740d4ec5d27b8f810983d58ce4810e8242d547a4392da87a5",
+      "old_expectation": "compile_rejection",
+      "check_exit": 0,
+      "build_exit": 0,
+      "elf_sha256": "43c5fd400853ec7ff12e02d1b8c7ff9b301acc1fe0caf9f55c85f2f2c069e5ca",
+      "run_exit": 105,
+      "run_stdout": "",
+      "run_stderr": "NJA205: native value type mismatch\n",
+      "classification": "obsolete harness expectation; migration required"
+    },
+    {
+      "name": "immutable-index-assignment",
+      "harness": "scripts/test-index-language.mjs",
+      "harness_sha256": "bb6528ab52b75bbdeaa471fd74398d9ee48a62330ffb4f9dc699ebcf24881ebf",
+      "source": "sequence = \"abc\"\nsequence[0] = \"x\"\n",
+      "source_sha256": "38a49bcebc1663feb0b1a31852c07e76ccadc8664fe6fdbbbcbc8896606faf18",
+      "old_expectation": "compile_rejection",
+      "check_exit": 0,
+      "build_exit": 0,
+      "elf_sha256": "2bb31489e9f61023ead2bd2f3e0056dadf5e9c2397ed846861fe71c6cb9bd4c5",
+      "run_exit": 105,
+      "run_stdout": "",
+      "run_stderr": "NJA205: native value type mismatch\n",
+      "classification": "obsolete harness expectation; migration required"
+    },
+    {
+      "name": "list-display",
+      "harness": "scripts/test-values-language.mjs",
+      "harness_sha256": "92cb7b9fb77322132ee4425ff180282ac1af224c9403255984da82d4db6d4562",
+      "source": "print([1, 2])\n",
+      "source_sha256": "05522591e8d62cc8afb4e8c673e38454738c2697f9f5ce5064469e4909d89a04",
+      "old_expectation": "compile_rejection",
+      "check_exit": 0,
+      "build_exit": 0,
+      "elf_sha256": "5995933aebc20ba472880357977d697b26fc3409c0bea4a17177df463ebe5b07",
+      "run_exit": 105,
+      "run_stdout": "",
+      "run_stderr": "NJA205: native value type mismatch\n",
+      "classification": "obsolete harness expectation; migration required"
+    },
+    {
+      "name": "tuple-suite-list-literal",
+      "harness": "scripts/test-tuples-language.mjs",
+      "harness_sha256": "f21bcbb3e928ba6c82106861ba4089addc12d357a579f0fff16eed1a9c1bc49f",
+      "source": "value = [1, 2]\nprint(value[0])\n",
+      "source_sha256": "4e589fa13e0a477d44f41595ef144aad4da513d9a300193c74686100c57b9338",
+      "old_expectation": "compile_rejection",
+      "check_exit": 0,
+      "build_exit": 0,
+      "elf_sha256": "5307866d07e87051b514c9751444b13e83fcabafdeb7c8268623f055dc3801b0",
+      "run_exit": 0,
+      "run_stdout": "1\n",
+      "run_stderr": "",
+      "classification": "obsolete harness expectation; migration required"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "df09b0210a51601d618b9fdbad2557ff07c7e51561d27952a43f2ce50b8df750"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "76413a043546339ce6fa896ad41afcf5f1a9e7dd6bf98a9443f21af3b2e59e86",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "check",
+        "<workspace>\\target\\collection-migration-bl3144\\index-tuple-kind.naja"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "ce316de9afa998506535044a0ef90b4c40a39a0cb19e8cb5cd6908031eb521f9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "build",
+        "<workspace>\\target\\collection-migration-bl3144\\index-tuple-kind.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "<workspace>\\target\\collection-migration-bl3144\\index-tuple-kind.elf"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "4dbeb92440800645bd9406e2fd70d663d07f5a5542a3fc01e763c9639937f0b0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "run",
+        "<workspace>\\target\\collection-migration-bl3144\\index-tuple-kind.naja",
+        "--runner",
+        "wsl",
+        "--timeout-ms",
+        "2000"
+      ],
+      "exit_code": 105,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "6661600f4927dcbdb40e38f4bbe36f71738113cfd88a847ad55bcd7033a45fd7"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "check",
+        "<workspace>\\target\\collection-migration-bl3144\\index-list-kind.naja"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "7d64f2b6d54e8683e6e8c64a9d9a4810cf8facb4e0a9019cdcb92e05dfae75a7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "build",
+        "<workspace>\\target\\collection-migration-bl3144\\index-list-kind.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "<workspace>\\target\\collection-migration-bl3144\\index-list-kind.elf"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "6b58e7b40c98d02e663b3b1d0eb51b45b7ca16253759936c377b49b3b44f00fd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "run",
+        "<workspace>\\target\\collection-migration-bl3144\\index-list-kind.naja",
+        "--runner",
+        "wsl",
+        "--timeout-ms",
+        "2000"
+      ],
+      "exit_code": 105,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "6661600f4927dcbdb40e38f4bbe36f71738113cfd88a847ad55bcd7033a45fd7"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "check",
+        "<workspace>\\target\\collection-migration-bl3144\\immutable-index-assignment.naja"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "80350aa3aceb9585cc4274a7aa569f4ed978c0fe76bf82990480bae7259b80c8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "build",
+        "<workspace>\\target\\collection-migration-bl3144\\immutable-index-assignment.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "<workspace>\\target\\collection-migration-bl3144\\immutable-index-assignment.elf"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "0fd580acdafb38b46581821fcda07de49425ef3e429248cbf5652b78039579e0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "run",
+        "<workspace>\\target\\collection-migration-bl3144\\immutable-index-assignment.naja",
+        "--runner",
+        "wsl",
+        "--timeout-ms",
+        "2000"
+      ],
+      "exit_code": 105,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "6661600f4927dcbdb40e38f4bbe36f71738113cfd88a847ad55bcd7033a45fd7"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "check",
+        "<workspace>\\target\\collection-migration-bl3144\\list-display.naja"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "36ea3cee17369974b8d73d070d8223c705714d4884495bb07dd6d00033faaec2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "build",
+        "<workspace>\\target\\collection-migration-bl3144\\list-display.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "<workspace>\\target\\collection-migration-bl3144\\list-display.elf"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "8d4cee843871cb9234a3071302e29f9ed0b000b7c14d54b48eaa6fe62e7ae3db",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "run",
+        "<workspace>\\target\\collection-migration-bl3144\\list-display.naja",
+        "--runner",
+        "wsl",
+        "--timeout-ms",
+        "2000"
+      ],
+      "exit_code": 105,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "6661600f4927dcbdb40e38f4bbe36f71738113cfd88a847ad55bcd7033a45fd7"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "check",
+        "<workspace>\\target\\collection-migration-bl3144\\tuple-suite-list-literal.naja"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "66345d7bc92db186dc1a064a232db808304eecdac0e5e1a7123ca825ac7f02ec",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "build",
+        "<workspace>\\target\\collection-migration-bl3144\\tuple-suite-list-literal.naja",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--output",
+        "<workspace>\\target\\collection-migration-bl3144\\tuple-suite-list-literal.elf"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "13937224519a5f26ac32fe7f78eee433b37a726ce0637c084fa9d378c06918b6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<workspace>\\target\\debug\\naja.exe",
+        "run",
+        "<workspace>\\target\\collection-migration-bl3144\\tuple-suite-list-literal.naja",
+        "--runner",
+        "wsl",
+        "--timeout-ms",
+        "2000"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "stdout_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limitations": [
+    "Full earlier tuple/index results retain their original source pins and outcomes.",
+    "The recorded build artifact and run route compile the same source separately; no identity between those two temporary artifacts is asserted.",
+    "No expectation, resource limit or product requirement changed during this probe."
+  ]
+}
