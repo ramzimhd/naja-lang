@@ -1,0 +1,12 @@
+# Independently supplied input, not embedded in the compiler or package.
+def triangular(n):
+    total = 0
+    while n > 0:
+        total = total + n
+        n = n - 1
+    return total
+assert triangular(8) == 36
+values = [1, 2, 3]
+values[1] = 7
+assert values[1] == 7
+print(triangular(8) + values[1])
