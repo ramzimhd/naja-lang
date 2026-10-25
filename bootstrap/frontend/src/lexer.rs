@@ -14,7 +14,98 @@ struct BraceSuite {
     start: usize,
     /// The first element is the physical header baseline, not an emitted indent.
     indentation: Vec<Indentation>,
-    pending_header: Option<Indentation>,
+    pending_header: Option<PendingHeader>,
+}
+
+struct PendingHeader {
+    indentation: Indentation,
+    /// :(x) remains a same-line expression without a following indent.
+    optional: bool,
+}
+
+#[derive(Clone, Copy, Default)]
+enum HeaderHead {
+    #[default]
+    Empty,
+    Async,
+    Suite,
+    Other,
+}
+
+/// Fixed incremental storage; queries never walk emitted token history.
+#[derive(Default)]
+struct HeaderContext {
+    head: HeaderHead,
+    tail: [Option<TokenKind>; 4],
+    #[cfg(test)]
+    observed_tokens: usize,
+}
+
+impl HeaderContext {
+    fn observe(&mut self, kind: TokenKind, text: &str) {
+        if matches!(kind, TokenKind::Newline | TokenKind::SuiteClose) {
+            self.head = HeaderHead::Empty;
+            self.tail = [None; 4];
+            return;
+        }
+        if kind.is_trivia() || matches!(kind, TokenKind::Indent | TokenKind::Dedent) {
+            return;
+        }
+        #[cfg(test)]
+        {
+            self.observed_tokens += 1;
+        }
+        self.head = match self.head {
+            HeaderHead::Empty if kind == TokenKind::Identifier && text == "async" => {
+                HeaderHead::Async
+            }
+            HeaderHead::Empty
+                if kind == TokenKind::Identifier
+                    && matches!(
+                        text,
+                        "if" | "elif"
+                            | "else"
+                            | "while"
+                            | "for"
+                            | "def"
+                            | "class"
+                            | "try"
+                            | "except"
+                            | "finally"
+                            | "with"
+                            | "match"
+                            | "case"
+                    ) =>
+            {
+                HeaderHead::Suite
+            }
+            HeaderHead::Empty => HeaderHead::Other,
+            HeaderHead::Async
+                if kind == TokenKind::Identifier && matches!(text, "def" | "for" | "with") =>
+            {
+                HeaderHead::Suite
+            }
+            HeaderHead::Async => HeaderHead::Other,
+            head => head,
+        };
+        self.tail.rotate_left(1);
+        self.tail[3] = Some(kind);
+    }
+
+    fn ends_depth_marker(&self) -> bool {
+        self.tail
+            == [
+                Some(TokenKind::Symbol(Symbol::Colon)),
+                Some(TokenKind::Symbol(Symbol::LeftParen)),
+                Some(TokenKind::Integer),
+                Some(TokenKind::Symbol(Symbol::RightParen)),
+            ]
+    }
+
+    fn ends_indented_suite(&self) -> bool {
+        matches!(self.head, HeaderHead::Suite)
+            && (self.tail[3] == Some(TokenKind::Symbol(Symbol::Colon)) || self.ends_depth_marker())
+    }
 }
 
 struct Lexer<'a> {
@@ -29,7 +120,7 @@ struct Lexer<'a> {
     logical_content: bool,
     dialect: Dialect,
     suites: Vec<BraceSuite>,
-    logical_start: usize,
+    header: HeaderContext,
     line_indent: Indentation,
     header_indent: Indentation,
 }
@@ -76,7 +167,7 @@ pub fn lex_with_dialect(source: &str, dialect: Dialect) -> Lexed {
         logical_content: false,
         dialect,
         suites: Vec::new(),
-        logical_start: 0,
+        header: HeaderContext::default(),
         line_indent: Indentation {
             columns: 0,
             alternate: 0,
@@ -95,8 +186,8 @@ impl Lexer<'_> {
             kind,
             span: Span::new(start, end),
         });
-        if kind == TokenKind::Newline {
-            self.logical_start = self.tokens.len();
+        if self.dialect == Dialect::Naja2026 {
+            self.header.observe(kind, &self.source[start..end]);
         }
     }
 
@@ -169,10 +260,13 @@ impl Lexer<'_> {
                     self.offset += self.newline_length(self.offset);
                     let kind = if self.delimiters.is_empty() && self.logical_content {
                         if self.dialect == Dialect::Naja2026
-                            && self.header_ends_indented_suite()
+                            && self.header.ends_indented_suite()
                             && let Some(suite) = self.suites.last_mut()
                         {
-                            suite.pending_header = Some(self.header_indent);
+                            suite.pending_header = Some(PendingHeader {
+                                indentation: self.header_indent,
+                                optional: self.header.ends_depth_marker(),
+                            });
                         }
                         self.logical_content = false;
                         TokenKind::Newline
@@ -230,7 +324,7 @@ impl Lexer<'_> {
             self.push(TokenKind::Newline, self.offset, self.offset);
         }
         while let Some(suite) = self.suites.pop() {
-            if suite.pending_header.is_some() {
+            if suite.pending_header.is_some_and(|header| !header.optional) {
                 self.error(
                     "F0024",
                     "Expected an indented body before the end of the brace suite.",
@@ -324,72 +418,12 @@ impl Lexer<'_> {
         }
     }
 
-    fn header_tokens(&self) -> Vec<&Token> {
-        self.tokens[self.logical_start..]
-            .iter()
-            .filter(|token| {
-                !token.kind.is_trivia()
-                    && !matches!(token.kind, TokenKind::Indent | TokenKind::Dedent)
-            })
-            .collect()
-    }
-
-    fn header_ends_indented_suite(&self) -> bool {
-        let tokens = self.header_tokens();
-        let Some(first) = tokens.first() else {
-            return false;
-        };
-        if first.kind != TokenKind::Identifier {
-            return false;
-        }
-        let first_text = &self.source[first.span.start..first.span.end];
-        let header = matches!(
-            first_text,
-            "if" | "elif"
-                | "else"
-                | "while"
-                | "for"
-                | "def"
-                | "class"
-                | "try"
-                | "except"
-                | "finally"
-                | "with"
-                | "match"
-                | "case"
-        ) || (first_text == "async"
-            && tokens.get(1).is_some_and(|token| {
-                matches!(
-                    &self.source[token.span.start..token.span.end],
-                    "def" | "for" | "with"
-                )
-            }));
-        header
-            && (tokens
-                .last()
-                .is_some_and(|token| token.kind == TokenKind::Symbol(Symbol::Colon))
-                || Self::ends_depth_marker(&tokens))
-    }
-
-    fn ends_depth_marker(tokens: &[&Token]) -> bool {
-        tokens.len() >= 4
-            && tokens[tokens.len() - 4..]
-                .iter()
-                .map(|token| token.kind)
-                .eq([
-                    TokenKind::Symbol(Symbol::Colon),
-                    TokenKind::Symbol(Symbol::LeftParen),
-                    TokenKind::Integer,
-                    TokenKind::Symbol(Symbol::RightParen),
-                ])
-    }
-
     fn is_brace_suite_open(&self) -> bool {
         self.dialect == Dialect::Naja2026
             && self.delimiters.is_empty()
             && ((!self.logical_content
                 && self.source.as_bytes().get(self.offset + 1) == Some(&b'#'))
-                || self.header_ends_indented_suite())
+                || self.header.ends_indented_suite())
     }
 
     fn opening_whitespace(&mut self) {
@@ -416,7 +450,7 @@ impl Lexer<'_> {
             self.logical_content = true;
             return;
         }
-        if Self::ends_depth_marker(&self.header_tokens()) {
+        if self.header.ends_depth_marker() {
             self.error(
                 "F0026",
                 "A depth marker and brace delimiter cannot decorate the same suite.",
@@ -517,7 +551,7 @@ impl Lexer<'_> {
             self.push(TokenKind::Newline, start, start);
         }
         let suite = self.suites.pop().unwrap();
-        if suite.pending_header.is_some() {
+        if suite.pending_header.is_some_and(|header| !header.optional) {
             self.error(
                 "F0024",
                 "Expected an indented body before closing the brace suite.",
@@ -534,7 +568,6 @@ impl Lexer<'_> {
         self.offset += 1;
         self.push(TokenKind::SuiteClose, start, self.offset);
         self.logical_content = true;
-        self.logical_start = self.tokens.len();
         self.header_indent = self.line_indent;
         let following = self.source[self.offset..].trim_start_matches([' ', '\t', '\u{c}']);
         // Only a second close on this physical line consults the parent. An
@@ -562,14 +595,18 @@ impl Lexer<'_> {
         let index = self.suites.len() - 1;
         let pending = self.suites[index].pending_header.take();
         let mut levels = std::mem::take(&mut self.suites[index].indentation);
-        if let Some(header) = pending {
+        let mut entered = false;
+        if let Some(pending) = pending {
+            let header = pending.indentation;
             if current.columns <= header.columns || self.byte() == Some(b'}') {
-                self.error(
-                    "F0024",
-                    "Expected an indented body deeper than this header's physical indentation.",
-                    start,
-                    self.offset,
-                );
+                if !pending.optional {
+                    self.error(
+                        "F0024",
+                        "Expected an indented body deeper than this header's physical indentation.",
+                        start,
+                        self.offset,
+                    );
+                }
             } else {
                 if current.alternate <= header.alternate {
                     self.indentation_error(start);
@@ -579,8 +616,10 @@ impl Lexer<'_> {
                 }
                 levels.push(current);
                 self.push(TokenKind::Indent, self.offset, self.offset);
+                entered = true;
             }
-        } else if let Some(previous) = levels.last().copied() {
+        }
+        if !entered && let Some(previous) = levels.last().copied() {
             if current.columns > previous.columns {
                 if current.alternate <= previous.alternate {
                     self.indentation_error(start);
@@ -964,3 +1003,53 @@ const SYMBOLS: &[(&str, Symbol)] = &[
     (">", Symbol::Greater),
     ("=", Symbol::Equal),
 ];
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn header_cache_observes_each_token_once_with_fixed_history_storage() {
+        for count in [500, 5_000, 50_000] {
+            let mut context = HeaderContext::default();
+            context.observe(TokenKind::Identifier, "data");
+            for _ in 0..count {
+                context.observe(TokenKind::Symbol(Symbol::LeftBrace), "{");
+                assert!(!context.ends_indented_suite());
+                context.observe(TokenKind::Symbol(Symbol::RightBrace), "}");
+                context.observe(TokenKind::Symbol(Symbol::Semicolon), ";");
+            }
+            assert_eq!(context.observed_tokens, 1 + count * 3);
+            assert_eq!(context.tail.len(), 4);
+            for _ in 0..count {
+                assert!(!context.ends_indented_suite());
+            }
+            assert_eq!(context.observed_tokens, 1 + count * 3);
+        }
+    }
+
+    #[test]
+    fn header_cache_preserves_async_markers_and_companion_resets() {
+        let mut context = HeaderContext::default();
+        context.observe(TokenKind::Identifier, "async");
+        context.observe(TokenKind::Whitespace, " ");
+        context.observe(TokenKind::Identifier, "def");
+        context.observe(TokenKind::Identifier, "work");
+        context.observe(TokenKind::Symbol(Symbol::LeftParen), "(");
+        context.observe(TokenKind::Symbol(Symbol::RightParen), ")");
+        context.observe(TokenKind::Symbol(Symbol::Colon), ":");
+        assert!(context.ends_indented_suite());
+        context.observe(TokenKind::Symbol(Symbol::LeftParen), "(");
+        context.observe(TokenKind::Integer, "0");
+        context.observe(TokenKind::Symbol(Symbol::RightParen), ")");
+        assert!(context.ends_depth_marker());
+        assert!(context.ends_indented_suite());
+        context.observe(TokenKind::SuiteClose, "}");
+        assert!(!context.ends_indented_suite());
+        context.observe(TokenKind::Identifier, "else");
+        context.observe(TokenKind::Symbol(Symbol::Colon), ":");
+        assert!(context.ends_indented_suite());
+        context.observe(TokenKind::Newline, "\n");
+        assert!(!context.ends_indented_suite());
+    }
+}

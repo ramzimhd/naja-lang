@@ -95,6 +95,18 @@ newline before `SuiteClose`. A physical closing-line newline is also retained.
 Depth-marker tokens are unchanged. Combined marker/brace decorations reject;
 the driver must validate marker depths and clause ownership.
 
+The inherited ambiguity rule also applies inside a brace: `if enabled:(0)`
+without a deeper following content line retains an ordinary parenthesized
+same-line expression. It does not create a pending indentation obligation. A
+deeper following line selects an indentation suite; the parser then validates
+marker depth. Comments and blank lines do not decide this distinction.
+
+Header detection maintains a fixed first-keyword state and four trailing token
+kinds. It updates once per significant token and never scans earlier tokens to
+decide whether a new expression brace is a suite. Tests inspect fixed-cache
+observation counts and exercise long expression-brace vectors without flaky
+wall-clock thresholds. This is not a bound on every future frontend operation.
+
 `Cst::suites` supplies shared folding/source metadata: `SuiteKind::Control` or
 `NamedSection`, full brace span, original open/optional close/optional label
 spans. Missing closes remain `None` with diagnostics. Expression dictionaries,

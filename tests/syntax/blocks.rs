@@ -485,3 +485,81 @@ fn generated_naja_delimiter_and_label_fragments_terminate_losslessly() {
         }
     }
 }
+
+#[test]
+fn same_line_parenthesized_suite_does_not_require_an_indented_body() {
+    for source in [
+        "{# section #\nif enabled:(0)\nnext()\n}\n",
+        "if outer: {\n    if enabled:(1)\nnext()\n}\n",
+        "{# section #\nif enabled:(0)\n# ordinary comment\n\nnext()\n}\n",
+        "{# section #\nif enabled:(0)\n}\n",
+    ] {
+        assert!(indentation(source).is_empty());
+        let lexed = valid(source);
+        let marker = lexed
+            .tokens
+            .iter()
+            .find(|token| token.kind == TokenKind::Integer)
+            .unwrap();
+        assert!(matches!(lexed.text(marker), "0" | "1"));
+    }
+    let unterminated = naja("{# section #\nif enabled:(0)");
+    assert!(
+        unterminated
+            .diagnostics
+            .iter()
+            .any(|diagnostic| diagnostic.code == "F0020")
+    );
+    assert!(
+        !unterminated
+            .diagnostics
+            .iter()
+            .any(|diagnostic| diagnostic.code == "F0024")
+    );
+}
+
+#[test]
+fn optional_marker_candidate_preserves_active_parent_indentation() {
+    let source =
+        "{# section #\n    if outer:\n        if enabled:(1)\n        next()\n    after()\n}\n";
+    assert_eq!(
+        indentation(source),
+        vec![TokenKind::Indent, TokenKind::Dedent]
+    );
+    let lexed = valid(source);
+    let dedent = lexed
+        .tokens
+        .iter()
+        .find(|token| token.kind == TokenKind::Dedent)
+        .unwrap();
+    assert_eq!(dedent.span.start, source.find("after()").unwrap());
+    let marked = "{# section #\n    if enabled:(0)\n        nested()\n    after()\n}\n";
+    assert_eq!(
+        indentation(marked),
+        vec![TokenKind::Indent, TokenKind::Dedent]
+    );
+}
+
+#[test]
+fn long_expression_brace_vectors_keep_context_and_losslessness() {
+    // No elapsed-time assertion: the header cache has fixed storage and bounded
+    // updates, independently inspected by the internal observation-count test.
+    for count in [500, 5_000, 20_000] {
+        let source = format!("{}{}\n", "\\\n".repeat(500), "{};".repeat(count));
+        let lexed = valid(&source);
+        assert_eq!(
+            lexed
+                .tokens
+                .iter()
+                .filter(|token| token.kind == TokenKind::Symbol(Symbol::LeftBrace))
+                .count(),
+            count
+        );
+        assert!(
+            !lexed
+                .tokens
+                .iter()
+                .any(|token| token.kind == TokenKind::SuiteOpen)
+        );
+    }
+}
