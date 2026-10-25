@@ -46,6 +46,8 @@ with an explicit-constructor suggestion instead of splitting them opportunistica
 Ordinary exponent literals remain Float tokens even though this source backend
 does not yet execute them. `.py` number suffix rejection remains unchanged.
 Malformed numbers never become valid by separating a convenient suffix.
+An underscore-leading type is ambiguous with numeric separators in this slice;
+use its ordinary constructor rather than splitting a trailing/double underscore.
 
 Postfix access follows normal expression precedence. Unary signs operate on the
 constructed value: `-10Parcel` constructs positive ten then attempts object

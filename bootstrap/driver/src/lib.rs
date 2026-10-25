@@ -1,7 +1,7 @@
 //! Shared bounded executable parser with distinct checked-i64 and hosted domains.
 use naja_frontend::{
     AliasContext, AliasTable, AliasTarget, BuiltinAlias, Diagnostic, Dialect, Lexed, Span, Symbol,
-    Token, TokenKind, canonical_identifier, decode_string, lex_with_dialect,
+    Token, TokenKind, canonical_identifier, decode_string, lex_with_dialect, typed_integer_spans,
 };
 use naja_native::{Binary, Comparison, MAX_LOCALS, Statement, dynamic, hosted};
 use std::collections::{BTreeMap, BTreeSet};
@@ -216,6 +216,7 @@ fn parse_lexed<V: Values>(
         parameter_counts: Vec::new(),
         classes: Vec::new(),
         class_names: BTreeMap::new(),
+        literal_classes: BTreeSet::new(),
         class_body: None,
         constructor_calls: Vec::new(),
         in_function: false,
@@ -251,6 +252,7 @@ struct Parser<V: Values> {
     parameter_counts: Vec<usize>,
     classes: Vec<dynamic::Class>,
     class_names: BTreeMap<String, usize>,
+    literal_classes: BTreeSet<usize>,
     class_body: Option<usize>,
     constructor_calls: Vec<(usize, usize, Span)>,
     in_function: bool,
@@ -269,6 +271,7 @@ enum ImportedApi {
     EncodeUtf8,
     DecodeUtf8,
     KeysSnapshot,
+    IntegerLiteral,
 }
 
 impl ImportedApi {
@@ -318,21 +321,25 @@ impl<V: Values> Parser<V> {
         }
     }
     fn canonical_name(&self) -> Parsed<String> {
-        let name = canonical_identifier(self.text()).map_err(|error| Diagnostic {
+        self.canonical_spelling(self.text(), self.token().span)
+    }
+    fn canonical_spelling(&self, text: &str, span: Span) -> Parsed<String> {
+        let name = canonical_identifier(text).map_err(|error| Diagnostic {
             code: "NJA105",
             message: "invalid Unicode identifier".into(),
-            span: Span::new(
-                self.token().span.start + error.span.start,
-                self.token().span.start + error.span.end,
-            ),
+            span: Span::new(span.start + error.span.start, span.start + error.span.end),
         })?;
         // Private spelling applies throughout the textual class scope, including
         // method parameters and bodies. Until contextual mangling is implemented,
         // diagnose it rather than binding a different public runtime name.
         if self.class_body.is_some() && name.starts_with("__") && !name.ends_with("__") {
-            return Err(self.error(
-                "class-context private names require name mangling, which is not implemented",
-            ));
+            return Err(Diagnostic {
+                code: "NJA101",
+                message:
+                    "class-context private names require name mangling, which is not implemented"
+                        .into(),
+                span,
+            });
         }
         Ok(name)
     }
@@ -465,12 +472,29 @@ impl<V: Values> Parser<V> {
                 self.advance();
                 continue;
             }
-            if self.text() == "def" {
+            if self.take("@") {
+                header = false;
+                let name = self.canonical_name()?;
+                if self.token().kind != TokenKind::Identifier
+                    || !matches!(self.imports.get(&name), Some(ImportedApi::IntegerLiteral))
+                {
+                    return Err(self.error("only an explicitly imported integer literal capability is supported as a decorator"));
+                }
+                self.advance();
+                self.newline()?;
+                while self.token().kind == TokenKind::Newline {
+                    self.advance();
+                }
+                if self.text() != "class" {
+                    return Err(self.error("integer literal capability requires an immediately following top-level class"));
+                }
+                self.class_definition(true)?;
+            } else if self.text() == "def" {
                 header = false;
                 self.function_definition(0)?;
             } else if self.text() == "class" {
                 header = false;
-                self.class_definition()?;
+                self.class_definition(false)?;
             } else if self.text() == "from" {
                 if V::DYNAMIC {
                     if !header {
@@ -547,14 +571,14 @@ impl<V: Values> Parser<V> {
         self.expect_binding("naja")?;
         self.expect(".")?;
         if self.token().kind != TokenKind::Identifier {
-            return Err(
-                self.error("expected an explicit naja.io, naja.text or naja.collections module")
-            );
+            return Err(self.error(
+                "expected an explicit naja.io, naja.text, naja.collections or naja.literal module",
+            ));
         }
         let module = self.canonical_name()?;
-        if !matches!(module.as_str(), "io" | "text" | "collections") {
+        if !matches!(module.as_str(), "io" | "text" | "collections" | "literal") {
             return Err(self.error(
-                "only explicit naja.io, naja.text and naja.collections API imports are implemented",
+                "only explicit naja.io, naja.text, naja.collections and naja.literal API imports are implemented",
             ));
         }
         self.advance();
@@ -571,6 +595,7 @@ impl<V: Values> Parser<V> {
                 ("text", "encode_utf8") => ImportedApi::EncodeUtf8,
                 ("text", "decode_utf8") => ImportedApi::DecodeUtf8,
                 ("collections", "keys_snapshot") => ImportedApi::KeysSnapshot,
+                ("literal", "integer_literal") => ImportedApi::IntegerLiteral,
                 _ => return Err(self.error("unknown API in this explicit native module")),
             };
             self.advance();
@@ -618,7 +643,7 @@ impl<V: Values> Parser<V> {
         }
         Ok(name)
     }
-    fn class_definition(&mut self) -> Parsed<()> {
+    fn class_definition(&mut self, literal: bool) -> Parsed<()> {
         if !V::DYNAMIC || self.in_function || self.class_body.is_some() {
             return Err(self.error("only top-level ordinary class definitions are implemented"));
         }
@@ -628,6 +653,7 @@ impl<V: Values> Parser<V> {
             return Err(self.error("expected an unreserved class name"));
         }
         let name = self.canonical_name()?;
+        let name_span = self.token().span;
         if self.class_names.contains_key(&name)
             || self.function_signatures.contains_key(&name)
             || self.imports.contains_key(&name)
@@ -643,6 +669,9 @@ impl<V: Values> Parser<V> {
         self.advance();
         let index = self.classes.len();
         self.class_names.insert(name, index);
+        if literal {
+            self.literal_classes.insert(index);
+        }
         self.classes.push(dynamic::Class {
             methods: Vec::new(),
         });
@@ -650,6 +679,13 @@ impl<V: Values> Parser<V> {
         let result = self.suite(1);
         self.class_body = None;
         result?;
+        if literal
+            && !self.classes[index].methods.iter().any(|method| {
+                method.name == "__init__" && self.parameter_counts[method.function] == 2
+            })
+        {
+            return Err(Diagnostic { code: "NJA101", message: "integer literal capability requires an initializer with exactly one value parameter".into(), span: name_span });
+        }
         Ok(())
     }
     fn function_definition(&mut self, depth: usize) -> Parsed<()> {
@@ -1210,6 +1246,37 @@ impl<V: Values> Parser<V> {
             let value = self.expression(0, depth + 1)?;
             self.expect(")")?;
             V::length(value).map_err(|message| self.error(message))?
+        } else if V::DYNAMIC && self.token().kind == TokenKind::TypedInteger {
+            let (number, suffix) = typed_integer_spans(&self.lexed.source, self.token())
+                .ok_or_else(|| self.error("invalid typed integer token"))?;
+            let name =
+                self.canonical_spelling(&self.lexed.source[suffix.start..suffix.end], suffix)?;
+            if self.locals.contains_key(&name)
+                || self.in_function && self.module_bindings.contains(&name)
+            {
+                return Err(Diagnostic {
+                    code: "NJA101",
+                    message: "typed literal type is shadowed by a value binding".into(),
+                    span: suffix,
+                });
+            }
+            let index = self
+                .class_names
+                .get(&name)
+                .copied()
+                .filter(|index| self.literal_classes.contains(index))
+                .ok_or_else(|| Diagnostic {
+                    code: "NJA101",
+                    message: "typed literal suffix requires an earlier explicitly eligible class"
+                        .into(),
+                    span: suffix,
+                })?;
+            let value = V::integer(self.lexed.source[number.start..number.end].replace('_', ""))
+                .map_err(|message| self.error(message))?;
+            self.account_expression()?;
+            self.constructor_calls.push((index, 1, suffix));
+            self.advance();
+            V::construct(index, vec![value]).map_err(|message| self.error(message))?
         } else if self.token().kind == TokenKind::Integer {
             if !V::HOSTED {
                 return Err(self.error("hosted integer expressions require the hosted path; use explicit i64(decimal_literal) in this fixed-width slice"));
@@ -1405,6 +1472,9 @@ impl<V: Values> Parser<V> {
             return V::construct(index, arguments).map_err(|message| self.error(message));
         }
         let api = self.imports.get(name).copied();
+        if matches!(api, Some(ImportedApi::IntegerLiteral)) {
+            return Err(self.error("integer literal capability is only valid as a class decorator"));
+        }
         if name == "set"
             && api.is_none()
             && !self.function_signatures.contains_key(name)
@@ -1446,6 +1516,9 @@ impl<V: Values> Parser<V> {
                 ImportedApi::EncodeUtf8 => V::encode_utf8(first),
                 ImportedApi::DecodeUtf8 => V::decode_utf8(first),
                 ImportedApi::KeysSnapshot => V::keys_snapshot(first),
+                ImportedApi::IntegerLiteral => {
+                    unreachable!("literal marker calls reject before arguments")
+                }
             }
         } else {
             V::call(index, arguments)
@@ -2209,6 +2282,45 @@ mod tests {
             "from naja.collections import keys_snapshot as set\nset()\n",
         ] {
             assert!(compile(source).is_err(), "{source}");
+        }
+    }
+    #[test]
+    fn explicit_literal_eligibility_preserves_construction_and_suffix_spans() {
+        let prefix = "from naja.literal import integer_literal as numeric\n@numeric\n# logical adjacency\nclass Parcel:\n    def __init__(self, value): self.value = value\n";
+        let typed = format!("{prefix}print(123456789012345678901234567890Parcel.value)\n");
+        let ordinary = format!("{prefix}print(Parcel(123456789012345678901234567890).value)\n");
+        assert_eq!(
+            compile_with_dialect(&typed, Dialect::Naja2026).unwrap(),
+            compile_with_dialect(&ordinary, Dialect::Naja2026).unwrap()
+        );
+        assert!(compile(&ordinary).is_ok());
+        let unknown = format!("{prefix}print(10未定義.value)\n");
+        let error = check_with_dialect(&unknown, Dialect::Naja2026)
+            .unwrap_err()
+            .remove(0);
+        assert_eq!(&unknown[error.span.start..error.span.end], "未定義");
+        assert!(error.message.contains("explicitly eligible class"));
+        let shadowed = format!("{prefix}def f(Parcel): return 10Parcel\n");
+        let error = check_with_dialect(&shadowed, Dialect::Naja2026)
+            .unwrap_err()
+            .remove(0);
+        assert_eq!(&shadowed[error.span.start..error.span.end], "Parcel");
+        assert!(error.message.contains("shadowed"));
+    }
+    #[test]
+    fn literal_marker_rejects_implicit_eligibility_bad_initializers_and_execution() {
+        for source in [
+            "class Parcel:\n    def __init__(self, value): pass\n10Parcel\n",
+            "from naja.literal import integer_literal\n@integer_literal\nclass Parcel: pass\n",
+            "from naja.literal import integer_literal\n@integer_literal\nclass Parcel:\n    def __init__(self): pass\n",
+            "from naja.literal import integer_literal\n@integer_literal\ndef f(): return 1\n",
+            "from naja.literal import integer_literal\ninteger_literal(1)\n",
+            "from naja.literal import integer_literal\nx = integer_literal\n",
+        ] {
+            assert!(
+                compile_with_dialect(source, Dialect::Naja2026).is_err(),
+                "{source}"
+            );
         }
     }
 }

@@ -288,3 +288,22 @@ Read tests/mappings/CONTRACT.md for exact validation, debit sequence and errors.
 Existing arena/stack/source/literal/node/function/call limits are unchanged.
 The independent202-case source preparation is frozen; execution must retain its
 actual integrated source SHA and results rather than borrowing backend proof.
+
+## Explicit integer literal capability
+
+ADR006 adds a narrow general construction interface: an explicit static import
+from naja.literal import integer_literal, used as a bare class decorator, opts a
+same-module class into .naja decimal-integer suffix construction. The ordinary
+initializer must take receiver plus one value; arbitrary class names and native
+constructor effects are preserved. Imported aliases follow existing binding and
+128-entry import limits. Marker/ordinary constructor declarations also work in
+.py, whose suffix syntax remains rejected.
+
+Suffix values use exact native integers, shared source spans and existing class
+construction. Unknown/ineligible or value-shadowed types diagnose at the original
+suffix. Unary signs apply after construction. Float/base/ambiguous suffix forms,
+general imported types, arbitrary decorators and capability values/calls remain
+unsupported. All existing resource limits remain unchanged. This first slice
+adds no scale/affine algebra, Rational/Decimal promotion, full protocols, quantity
+operator dispatch or FC1-05 acceptance. Independent source preparation must run
+at its exact later compiler SHA; current unit checks do not establish that result.
