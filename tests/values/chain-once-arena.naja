@@ -1,0 +1,10 @@
+# With the declared noncollecting 64 MiB arena, this middle operand fits once.
+s = "a"
+i = 0
+while i < 23:
+    s = s + s
+    i = i + 1
+retained = s + s
+assert s < s + s > s
+print(len(s))
+print(len(retained))

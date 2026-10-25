@@ -1,0 +1,10 @@
+x: int = 12345678901234567890123456789012345678901234567890
+print(x)
+x = True
+print(x)
+x = x + 1
+print(x)
+y: int = False
+print(y)
+print(+y)
+print(-True)

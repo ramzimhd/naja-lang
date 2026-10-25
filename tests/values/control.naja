@@ -1,0 +1,29 @@
+if "nonempty":
+    print("text")
+if b"\x00":
+    print("bytes")
+if None:
+    print("unreachable")
+else:
+    print("none is false")
+if b"":
+    print("unreachable")
+else:
+    print("empty bytes are false")
+n = 3
+total = 0
+while n:
+    total = total + n
+    n = n - 1
+print(total)
+flag = "one iteration"
+while flag:
+    flag = ""
+    print("text loop")
+assert True
+assert "truth"
+assert b"\x00"
+assert not None
+assert not 0
+assert not ""
+print("control complete")

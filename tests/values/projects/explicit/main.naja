@@ -1,0 +1,17 @@
+display(length("é𝄞"))
+display(1 equalTo True)
+display(1 notEqualTo 2)
+display(1 lessThan 2 lessThanOrEqualTo 2)
+display(3 greaterThan 2 greaterThanOrEqualTo 2)
+print(len(b"abc"))
+print(2 == 2)
+{# equalTo display length #
+print("equalTo display length")
+}
+equalTo = 7
+display(equalTo)
+display = "bound display"
+length = 99
+print(display)
+print(length)
+print(1 equalTo 1)

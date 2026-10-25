@@ -1,0 +1,3 @@
+# Explicit ownership marker; the seed does not claim full manifest semantics.
+[project]
+name = "value-alias-source-tests"

@@ -1,0 +1,13 @@
+schema = 1
+
+[operators]
+"==" = "equalTo"
+"!=" = "notEqualTo"
+"<" = "lessThan"
+"<=" = "lessThanOrEqualTo"
+">" = "greaterThan"
+">=" = "greaterThanOrEqualTo"
+
+[builtins]
+"print" = "display"
+"len" = "length"
