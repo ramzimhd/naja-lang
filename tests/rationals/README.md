@@ -56,3 +56,12 @@ All richer Rational/Decimal display, source true-division policy, quantity and
 scale/affine algebra, generic protocols, coherent hashing, full semantics,
 self-hosting, productivity, FC1 and HATCH gates remain open. Local target
 execution under ordinary OS rights is not a sandbox or clean-host proof.
+
+The first unchanged frozen native run at`0138734` passed101 checks:95 emitted
+ELF executions,6 IR refusals and366 expected output lines. After the authorized
+integrator source commit, worker source`4e52156` passed276 workspace Rust tests,
+formatting/Clippy and all10 unchanged legacy native harnesses. No native repair,
+budget/expectation change or old mutation-selector adjustment was needed.
+[Execution evidence](EXECUTION.md) preserves the distinct full source pins,
+raw results/log identities, earlier Rust authoring failures and actual limits;
+the original preparation stays all-`not_run`.

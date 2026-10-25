@@ -120,3 +120,12 @@ frontend parser, functions, strings, collections, general objects, modules or
 another emitted OS. The separate dynamic and first-order function checks
 establish only their documented backend slices.
 Machine encoding references: [Intel instruction manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html).
+
+## Exact Rational foundation
+
+The additive dynamic Rational IR uses immutable normalized arbitrary integer
+numerator/denominator values and native gcd/division kernels, with a cumulative
+work cap and allocation-free generic structural checks. The scoped API,
+unsupported operations and native evidence are documented in
+[the Rational contract and proof](../../tests/rationals/EXECUTION.md).
+Full display, hashing, decimal/quantity protocols and HATCH remain open.
