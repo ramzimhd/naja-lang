@@ -310,13 +310,22 @@ impl Values for Dynamic {
         use dynamic::Expression::*;
         match value {
             Integer(_) | Text(_) | Bytes(_) | Boolean(_) | None | Local(_) => 1,
-            Negate(value) | Positive(value) | RequireInteger(value) | Len(value) | Not(value) => {
-                1 + Self::height(value)
-            }
+            Negate(value)
+            | Positive(value)
+            | RequireInteger(value)
+            | Len(value)
+            | Not(value)
+            | ReadFile(value)
+            | EncodeUtf8(value)
+            | DecodeUtf8(value) => 1 + Self::height(value),
             Binary(_, left, right)
             | FloorDivide(left, right)
             | Modulo(left, right)
             | Index(left, right)
+            | WriteFile {
+                path: left,
+                data: right,
+            }
             | Compare(_, left, right)
             | And(left, right)
             | Or(left, right) => 1 + Self::height(left).max(Self::height(right)),
