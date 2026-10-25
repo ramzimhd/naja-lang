@@ -21,6 +21,11 @@ truthiness and exact indexing. Tuple display, comparison and arithmetic remain
 explicit type errors. See [native tuples](../../tests/tuples/README.md) for the
 private array layout, limits and verification scope.
 
+`dynamic::Expression::List` and `Statement::SetIndex` add fixed-capacity mutable
+lists with shared references, exact indexing and value-first indexed assignment.
+See [native lists](../../tests/lists/README.md) for the frozen test contract and
+bounded alias/cycle behavior. Resizing and full list semantics remain open.
+
 The original `naja_native::emit_elf` keeps the explicit checked-i64 IR and overflow
 policy. `naja_native::hosted::emit_elf` accepts a separate hosted-integer IR with
 `Integer(String)`, locals, negation, addition/subtraction/multiplication, signed

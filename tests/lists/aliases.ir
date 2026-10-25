@@ -1,0 +1,25 @@
+# List aliases/parameters share stores; immutable elements retain their tags.
+set 0 1 list:1
+set 1 %0
+set 2 %0 call:0:1
+print %1 0 index
+print %2 0 index
+set 3 t:6f726967696e616c
+store %3 | %0 | 0
+set 3 t:6368616e676564
+print %1 0 index
+store t:c3a9f09d849e -1 index | %0 | 0
+print %2 0 index
+store true | %0 | 0
+print %1 0 index require_int
+store none | %0 | 0
+print %2 0 index
+store b:00ff -1 index | %0 | 0
+print %1 0 index
+set 4 %0 tuple:1
+store 99 | %4 0 index | 0
+print %1 0 index
+function 1
+store 77 | %0 | 0
+return %0
+end

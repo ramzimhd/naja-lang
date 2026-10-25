@@ -1,4 +1,4 @@
-//! Bounded immutable sequence views and exact integer index normalization.
+//! Bounded sequence reads/stores and exact integer index normalization.
 use super::*;
 
 impl Runtime {
