@@ -272,11 +272,15 @@ enum ImportedApi {
     DecodeUtf8,
     KeysSnapshot,
     IntegerLiteral,
+    Rational,
+    DivideExact,
+    Numerator,
+    Denominator,
 }
 
 impl ImportedApi {
     fn arity(self) -> usize {
-        if matches!(self, Self::WriteBytes) {
+        if matches!(self, Self::WriteBytes | Self::Rational | Self::DivideExact) {
             2
         } else {
             1
@@ -572,13 +576,16 @@ impl<V: Values> Parser<V> {
         self.expect(".")?;
         if self.token().kind != TokenKind::Identifier {
             return Err(self.error(
-                "expected an explicit naja.io, naja.text, naja.collections or naja.literal module",
+                "expected an explicit naja.io, naja.text, naja.collections, naja.literal or naja.numeric module",
             ));
         }
         let module = self.canonical_name()?;
-        if !matches!(module.as_str(), "io" | "text" | "collections" | "literal") {
+        if !matches!(
+            module.as_str(),
+            "io" | "text" | "collections" | "literal" | "numeric"
+        ) {
             return Err(self.error(
-                "only explicit naja.io, naja.text, naja.collections and naja.literal API imports are implemented",
+                "only explicit naja.io, naja.text, naja.collections, naja.literal and naja.numeric API imports are implemented",
             ));
         }
         self.advance();
@@ -596,6 +603,10 @@ impl<V: Values> Parser<V> {
                 ("text", "decode_utf8") => ImportedApi::DecodeUtf8,
                 ("collections", "keys_snapshot") => ImportedApi::KeysSnapshot,
                 ("literal", "integer_literal") => ImportedApi::IntegerLiteral,
+                ("numeric", "rational") => ImportedApi::Rational,
+                ("numeric", "divide_exact") => ImportedApi::DivideExact,
+                ("numeric", "numerator") => ImportedApi::Numerator,
+                ("numeric", "denominator") => ImportedApi::Denominator,
                 _ => return Err(self.error("unknown API in this explicit native module")),
             };
             self.advance();
@@ -1516,6 +1527,15 @@ impl<V: Values> Parser<V> {
                 ImportedApi::EncodeUtf8 => V::encode_utf8(first),
                 ImportedApi::DecodeUtf8 => V::decode_utf8(first),
                 ImportedApi::KeysSnapshot => V::keys_snapshot(first),
+                ImportedApi::Rational => {
+                    V::rational(first, arguments.next().expect("checked Rational arity"))
+                }
+                ImportedApi::DivideExact => V::divide_exact(
+                    first,
+                    arguments.next().expect("checked exact division arity"),
+                ),
+                ImportedApi::Numerator => V::numerator(first),
+                ImportedApi::Denominator => V::denominator(first),
                 ImportedApi::IntegerLiteral => {
                     unreachable!("literal marker calls reject before arguments")
                 }
@@ -2306,6 +2326,45 @@ mod tests {
             .remove(0);
         assert_eq!(&shadowed[error.span.start..error.span.end], "Parcel");
         assert!(error.message.contains("shadowed"));
+    }
+    #[test]
+    fn exact_numeric_imports_preserve_canonical_bindings_and_argument_structure() {
+        let ordinary = "from naja.numeric import rational, divide_exact, numerator, denominator\nvalue = rational(10, 20) + divide_exact(1, 3)\nprint(numerator(value))\nprint(denominator(value))\n";
+        let aliased = "from ｎａｊａ.ｎｕｍｅｒｉｃ import (rational as ratio, divide_exact as divide, numerator as 分子, denominator as 分母,)\nvalue = ratio(10, 20) + divide(1, 3)\nprint(分子(value))\nprint(分母(value))\n";
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            assert_eq!(
+                compile_with_dialect(ordinary, dialect).unwrap(),
+                compile_with_dialect(aliased, dialect).unwrap()
+            );
+        }
+        assert!(compile("from naja.numeric import rational as a, rational as b, numerator\nprint(numerator(a(1, 2) + b(1, 3)))\n").is_ok());
+    }
+    #[test]
+    fn exact_numeric_api_arity_scope_and_original_errors_remain_static() {
+        let header = "from naja.numeric import rational, divide_exact, numerator, denominator\n";
+        for body in [
+            "rational(1)\n",
+            "divide_exact(1, 2, 3)\n",
+            "numerator()\n",
+            "denominator(1, 2)\n",
+            "rational = 7\n",
+            "def f(rational): return rational(1, 2)\n",
+            "print(1 / 2)\n",
+        ] {
+            assert!(compile(&format!("{header}{body}")).is_err(), "{body}");
+        }
+        let source = format!("{header}# é🙂\nvalue = rational(未定義, 1)\n");
+        let error = check(&source).unwrap_err().remove(0);
+        assert_eq!(&source[error.span.start..error.span.end], "未定義");
+        assert!(
+            compile("from naja.numeric import rational as Key, divide_exact as Key\n").is_err()
+        );
+        assert!(
+            compile(
+                "from naja.core import i64\nfrom naja.numeric import rational\nprint(i64(1))\n"
+            )
+            .is_err()
+        );
     }
     #[test]
     fn literal_marker_rejects_implicit_eligibility_bad_initializers_and_execution() {
