@@ -1,0 +1,14 @@
+from naja.literal import integer_literal
+from naja.numeric import rational, numerator, denominator
+
+@integer_literal
+class Portion:
+    def __init__(self, value):
+        self.value = rational(value, 100)
+
+value = 25Portion
+print(numerator(value.value))
+print(denominator(value.value))
+value = Portion(-50)
+print(numerator(value.value))
+print(denominator(value.value))

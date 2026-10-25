@@ -45,7 +45,7 @@ fn arena_span(c: &mut Code, pointer: crate::hosted::x64::R, bytes: i32, error: u
     c.cmp(R11, R15);
     c.j(0x87, error);
 }
-fn readable_span(c: &mut Code, label: usize, error: usize, zero: usize, end: usize) {
+pub(super) fn readable_span(c: &mut Code, label: usize, error: usize, zero: usize, end: usize) {
     c.bind(label);
     c.mov(R11, R8);
     c.add(R11, R9);

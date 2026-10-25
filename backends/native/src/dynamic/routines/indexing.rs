@@ -24,6 +24,8 @@ impl Runtime {
         c.j(0x84, self.dict_get);
         c.immediate(7, R10, 9);
         c.j(0x84, self.type_error);
+        c.immediate(7, R10, 10);
+        c.j(0x84, self.type_error);
         c.zero(R10);
         c.jump(enter);
         c.bind(self.set_index);

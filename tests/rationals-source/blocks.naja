@@ -1,0 +1,22 @@
+from naja.numeric import rational as 比, numerator as 分子, denominator as 分母
+
+def choose(value): {
+if value: {# Rational control #
+{# Transparent return #
+return value + 比(1, 6)
+}
+} else: {
+return 比(0, -9)
+}
+}
+
+if choose(比(1, 3)):(0)
+    value = choose(比(1, 3))
+    print(分子(value))
+    print(分母(value))
+
+{# Standalone section #
+value = choose(比(0, 1))
+print(分子(value))
+print(分母(value))
+}

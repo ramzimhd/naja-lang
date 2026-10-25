@@ -36,6 +36,24 @@ pub(crate) trait Values {
     fn keys_snapshot(_value: Self::Expression) -> Result<Self::Expression, String> {
         Err("mapping APIs are unsupported in this explicit integer domain".into())
     }
+    fn rational(
+        _numerator: Self::Expression,
+        _denominator: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Err("Rational APIs are unsupported in this explicit integer domain".into())
+    }
+    fn divide_exact(
+        _left: Self::Expression,
+        _right: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Err("Rational APIs are unsupported in this explicit integer domain".into())
+    }
+    fn numerator(_value: Self::Expression) -> Result<Self::Expression, String> {
+        Err("Rational APIs are unsupported in this explicit integer domain".into())
+    }
+    fn denominator(_value: Self::Expression) -> Result<Self::Expression, String> {
+        Err("Rational APIs are unsupported in this explicit integer domain".into())
+    }
     fn read_file(_path: Self::Expression) -> Result<Self::Expression, String> {
         Err("file APIs are unsupported in this explicit integer domain".into())
     }
@@ -279,6 +297,30 @@ impl Values for Dynamic {
     fn keys_snapshot(value: Self::Expression) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::DictKeys(Box::new(value)))
     }
+    fn rational(
+        numerator: Self::Expression,
+        denominator: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Rational(
+            Box::new(numerator),
+            Box::new(denominator),
+        ))
+    }
+    fn divide_exact(
+        left: Self::Expression,
+        right: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::DivideExact(
+            Box::new(left),
+            Box::new(right),
+        ))
+    }
+    fn numerator(value: Self::Expression) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Numerator(Box::new(value)))
+    }
+    fn denominator(value: Self::Expression) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::Denominator(Box::new(value)))
+    }
     fn read_file(path: Self::Expression) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::ReadFile(Box::new(path)))
     }
@@ -423,12 +465,16 @@ impl Values for Dynamic {
             | EncodeUtf8(value)
             | DecodeUtf8(value)
             | DictKeys(value)
+            | Numerator(value)
+            | Denominator(value)
             | GetAttribute(value, _) => 1 + Self::height(value),
             Binary(_, left, right)
             | FloorDivide(left, right)
             | Modulo(left, right)
             | Index(left, right)
             | Contains(left, right)
+            | Rational(left, right)
+            | DivideExact(left, right)
             | WriteFile {
                 path: left,
                 data: right,

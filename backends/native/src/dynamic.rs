@@ -30,6 +30,7 @@ pub const MAX_ATTRIBUTE_NAMES: usize = 1024;
 pub const MAX_ATTRIBUTE_NAME_BYTES: usize = 256;
 pub const MAX_MAPPING_ENTRIES: usize = 128;
 pub const MAX_MAPPING_KEY_WORK: usize = 1_000_000;
+pub const MAX_RATIONAL_WORK: usize = 1_000_000;
 // The shared native array constructor has one defensive capacity check.
 const _: () = assert!(MAX_LIST_ELEMENTS == MAX_TUPLE_ELEMENTS);
 const HELPER_STACK_RESERVE: i32 = 4096;
@@ -111,6 +112,10 @@ pub enum Expression {
     Contains(Box<Self>, Box<Self>),
     DictKeys(Box<Self>),
     RelationChain(Box<Self>, Vec<(Relation, Self)>),
+    Rational(Box<Self>, Box<Self>),
+    DivideExact(Box<Self>, Box<Self>),
+    Numerator(Box<Self>),
+    Denominator(Box<Self>),
 }
 
 #[derive(Clone, Debug)]
@@ -308,6 +313,10 @@ impl Validator<'_> {
                 self.expression(value, initialized, depth + 1)?;
                 0
             }
+            Expression::Numerator(value) | Expression::Denominator(value) => {
+                self.expression(value, initialized, depth + 1)?;
+                0
+            }
             Expression::ReadFile(value)
             | Expression::EncodeUtf8(value)
             | Expression::DecodeUtf8(value) => {
@@ -340,6 +349,8 @@ impl Validator<'_> {
             | Expression::Modulo(left, right)
             | Expression::Index(left, right)
             | Expression::Contains(left, right)
+            | Expression::Rational(left, right)
+            | Expression::DivideExact(left, right)
             | Expression::Compare(_, left, right)
             | Expression::And(left, right)
             | Expression::Or(left, right) => {
@@ -699,6 +710,24 @@ impl Emitter {
             Expression::Negate(value) => {
                 self.expression(value)?;
                 self.code.call(self.runtime.negate);
+            }
+            Expression::Rational(left, right) | Expression::DivideExact(left, right) => {
+                self.operands(left, right)?;
+                self.code
+                    .call(if matches!(expression, Expression::Rational(..)) {
+                        self.runtime.rational
+                    } else {
+                        self.runtime.divide_exact
+                    });
+            }
+            Expression::Numerator(value) | Expression::Denominator(value) => {
+                self.expression(value)?;
+                self.code
+                    .call(if matches!(expression, Expression::Numerator(_)) {
+                        self.runtime.numerator
+                    } else {
+                        self.runtime.denominator
+                    });
             }
             Expression::Positive(value)
             | Expression::Len(value)

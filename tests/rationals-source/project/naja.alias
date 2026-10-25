@@ -1,0 +1,5 @@
+[operators]
+"==" = "equalTo"
+"<" = "lessThan"
+[builtins]
+"print" = "表示"

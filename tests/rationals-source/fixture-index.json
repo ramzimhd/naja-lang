@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "blocks.naja",
+      "sha256": "35aeb0a70dd1c927eef16c68e0f273bf6d0a9810dabbf758ec906541fc2cf27e"
+    },
+    {
+      "path": "file-input.py",
+      "sha256": "4a24fa8c3963264d18f19dcbf81e0fabb298ec12d84d9e3157053b6427da4dcd"
+    },
+    {
+      "path": "forms.py",
+      "sha256": "46a7c3d64f47d1f889180f6c0c2fb525f62ed21259016f840fb5cfa40e952fd1"
+    },
+    {
+      "path": "inputs/operands.bin",
+      "sha256": "1a815599f88c9f8c5727ec1c5c9993c3a4cecff7259a465f9e54589c48fbfef1"
+    },
+    {
+      "path": "order.py",
+      "sha256": "e1462809af3bc18b34ddba1cb54bfecdeecdd9e6eb8c407dadfb11f69c84cf56"
+    },
+    {
+      "path": "project/main.naja",
+      "sha256": "596d35e91be7298a3fcff09e34c8fd268b23eb9bd7c8bb6a1c39f440fced6bc9"
+    },
+    {
+      "path": "project/naja.alias",
+      "sha256": "d52b47da9891538a135a0bcf4b7924b638d14a63fd04f6b0b7792c01f8672c4d"
+    },
+    {
+      "path": "project/naja.toml",
+      "sha256": "bf3e68213173a4edd1a912617aba96951f5669258c408614737976895517e481"
+    },
+    {
+      "path": "typed.naja",
+      "sha256": "fa9e56442f713f384819b978303bf144b4d6cee019b55070538ea15d420cd872"
+    },
+    {
+      "path": "values.py",
+      "sha256": "9af2b9e4c53668c2a664a89b5532920fe81d2fdd296620e03f05f9e3dbc979b0"
+    }
+  ],
+  "native": [
+    {
+      "name": "forms",
+      "path": "forms.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "-3\n4\n0\n1\n1\n1\n7\n3\n2\n3\n7\n12\nTrue\nFalse\nTrue\nTrue\nTrue\nTrue\n"
+    },
+    {
+      "name": "order",
+      "path": "order.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "numerator\ndenominator\n3\n4\nleft\nright\n1\n3\nmiddle\nlast\nTrue\nfalse middle\nFalse\nFalse\nTrue\nadd left\nadd right\n1\n2\n"
+    },
+    {
+      "name": "values",
+      "path": "values.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "3\n4\n1\n3\n3\n4\n3\n4\n-4\n"
+    },
+    {
+      "name": "blocks",
+      "path": "blocks.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "1\n2\n0\n1\n"
+    },
+    {
+      "name": "typed",
+      "path": "typed.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "1\n4\n-1\n2\n"
+    }
+  ]
+}
