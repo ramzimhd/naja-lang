@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "a51c2808bae4b57596f7f957ce53530004a504f8",
+  "target": "Windows x64 compiler; Linux x86-64 execution via explicit local WSL where applicable",
+  "command": [
+    "node",
+    "scripts/test-compiler-boundaries.mjs"
+  ],
+  "tool_versions": {
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0",
+    "powershell": "7.6.4",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "git": "git version 2.51.0.windows.1"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T21:29:08.5944387+00:00",
+  "log_path": "reports/checks/v13-files-regression-compiler-boundaries.log",
+  "log_sha256": "dd1c96d6c19db59dab50f871c8654ce3db705c56d0972f1a46370d3e7cc7bb6f",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}
