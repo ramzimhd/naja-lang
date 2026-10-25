@@ -90,8 +90,13 @@ async function rejectStream(source, connectionCount) {
   if (process.platform === 'win32' || (process.platform === 'linux' && process.arch === 'x64')) {
     const runner = process.platform === 'win32' ? ['--runner', 'wsl'] : [];
     for (const operation of ['run', 'test']) {
-      await expect([operation, source, ...runner], 1, /NJA004/);
-      await expect([operation, source, ...runner, '--project-root', project], 1, /NJA004|NJA030/);
+      // Windows namespace preflight rejects a named pipe before discovery.
+      // Unix test discovery owns regular-file/FIFO validation (NJA014),
+      // whereas run and lex/check/build use the source reader (NJA004).
+      const diagnostic = operation === 'test' && process.platform !== 'win32' ? /NJA014/ : /NJA004/;
+      await expect([operation, source, ...runner], 1, diagnostic);
+      const ownedDiagnostic = operation === 'test' ? diagnostic : /NJA030/;
+      await expect([operation, source, ...runner, '--project-root', project], 1, ownedDiagnostic);
     }
   }
   if (connectionCount) assert.equal(connectionCount(), 0, 'CLI must never connect to the source pipe');

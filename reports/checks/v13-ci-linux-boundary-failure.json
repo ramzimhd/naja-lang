@@ -1,0 +1,23 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "dea427a1963d6f9cf8d6f5e63070de1df8da5655",
+  "target": "GitHub hosted Ubuntu24.04 x86-64",
+  "command": [
+    "node",
+    "scripts/test-compiler-boundaries.mjs"
+  ],
+  "tool_versions": {
+    "node": "v24.11.0; observed in failed step"
+  },
+  "exit_code": 1,
+  "result": "failed",
+  "timestamp": "2026-10-25T20:04:08.216Z",
+  "log_path": "reports/checks/v13-ci-linux-boundary-failure.log",
+  "log_sha256": "9ebffd14656e46dfb75d452b12f8a69c89b812089ccd421760c6b6fc409d2615",
+  "limitations": [
+    "Actual failed step from run40228847379/job121276029259; CI workspace paths sanitized.",
+    "The Unix test command correctly rejected a FIFO with discovery diagnosticNJA014; the harness incorrectly expected source-reader diagnosticNJA004. No blocking read occurred.",
+    "The command-specific assertion is corrected separately; a new execution must verify it. No product limit or expected acceptance outcome is changed."
+  ]
+}

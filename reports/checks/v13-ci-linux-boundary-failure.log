@@ -1,0 +1,49 @@
+2026-10-25T20:02:33.4403080Z ##[group]Run node scripts/test-compiler-boundaries.mjs
+2026-10-25T20:02:33.4403513Z [36;1mnode scripts/test-compiler-boundaries.mjs[0m
+2026-10-25T20:02:33.4465326Z shell: /usr/bin/bash -e {0}
+2026-10-25T20:02:33.4465582Z ##[endgroup]
+2026-10-25T20:02:33.4971885Z PASS actual CLI plus depth 127; unchanged advertised bound
+2026-10-25T20:02:33.5040640Z PASS actual CLI plus depth 128; unchanged advertised bound
+2026-10-25T20:02:33.5114184Z PASS actual CLI not depth 127; unchanged advertised bound
+2026-10-25T20:02:33.5166143Z PASS actual CLI not depth 128; unchanged advertised bound
+2026-10-25T20:02:33.5229680Z PASS actual CLI parentheses depth 128; unchanged advertised bound
+2026-10-25T20:02:33.5290062Z PASS actual CLI parentheses depth 129; unchanged advertised bound
+2026-10-25T20:02:33.5332803Z PASS combined 64 suites and 128 expression nodes in actual CLI
+2026-10-25T20:02:33.5582919Z node:internal/modules/run_main:107
+2026-10-25T20:02:33.5583595Z     triggerUncaughtException(
+2026-10-25T20:02:33.5584135Z     ^
+2026-10-25T20:02:33.5584384Z 
+2026-10-25T20:02:33.5584916Z AssertionError [ERR_ASSERTION]: The input did not match the regular expression /NJA004/. Input:
+2026-10-25T20:02:33.5585352Z 
+2026-10-25T20:02:33.5585603Z 'NJA014: test path must be a regular file or directory\n'
+2026-10-25T20:02:33.5585876Z 
+2026-10-25T20:02:33.5586292Z     at expect (file://<ci-workspace>/scripts/test-compiler-boundaries.mjs:44:26)
+2026-10-25T20:02:33.5587086Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-10-25T20:02:33.5588409Z     at async rejectStream (file://<ci-workspace>/scripts/test-compiler-boundaries.mjs:93:7)
+2026-10-25T20:02:33.5589331Z     at async file://<ci-workspace>/scripts/test-compiler-boundaries.mjs:117:3 {
+2026-10-25T20:02:33.5589820Z   generatedMessage: true,
+2026-10-25T20:02:33.5590180Z   code: 'ERR_ASSERTION',
+2026-10-25T20:02:33.5590762Z   actual: 'NJA014: test path must be a regular file or directory\n',
+2026-10-25T20:02:33.5591326Z   expected: /NJA004/,
+2026-10-25T20:02:33.5591674Z   operator: 'match',
+2026-10-25T20:02:33.5592007Z   diff: 'simple'
+2026-10-25T20:02:33.5592339Z }
+2026-10-25T20:02:33.5592502Z 
+2026-10-25T20:02:33.5592647Z Node.js v24.11.0
+2026-10-25T20:02:33.5626046Z ##[error]Process completed with exit code 1.
+2026-10-25T20:02:33.5805469Z Post job cleanup.
+2026-10-25T20:02:33.6685843Z [command]/usr/bin/git version
+2026-10-25T20:02:33.6756402Z git version 2.55.0
+2026-10-25T20:02:33.6796757Z Temporarily overriding HOME='/home/runner/work/_temp/929c57ff-9d79-421b-a152-05ab9afb33d1' before making global git config changes
+2026-10-25T20:02:33.6798830Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-25T20:02:33.6802161Z [command]/usr/bin/git config --global --add safe.directory <ci-workspace>
+2026-10-25T20:02:33.6832771Z Removing SSH command configuration
+2026-10-25T20:02:33.6839975Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-25T20:02:33.6873192Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-25T20:02:33.7091950Z Removing HTTP extra header
+2026-10-25T20:02:33.7098126Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-25T20:02:33.7132936Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-25T20:02:33.7350711Z Removing includeIf entries pointing to credentials config files
+2026-10-25T20:02:33.7358548Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-25T20:02:33.7389578Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-25T20:02:33.7781295Z Cleaning up orphan processes
