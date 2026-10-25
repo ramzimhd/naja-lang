@@ -1,0 +1,3 @@
+Recorded command: cargo fmt --all --check
+Recorded exit code: 0
+--- captured output ---
