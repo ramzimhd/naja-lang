@@ -63,3 +63,8 @@ These tests do not implement or verify slices, general containers, arbitrary
 object indexing, complete Python compatibility, memory reclamation, other
 emitted targets, self-hosting, FC1 or HATCH completion. Multilingual identifiers
 and string values are intentional user data; official narratives are English.
+
+The first actual run is retained in
+[RUN_2026-10-25.md](RUN_2026-10-25.md) and
+[RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). Its results apply to the exact
+source/compiler identities recorded there.
