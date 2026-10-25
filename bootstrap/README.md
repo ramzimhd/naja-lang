@@ -100,6 +100,23 @@ implemented. Tuple display, comparisons and numeric operations explicitly report
 type exit105; they remain required semantic work, not permanent exclusions.
 See [native tuples](../tests/tuples/README.md) for lifetime and guard boundaries.
 
+List literals use `[]` or `[a, b, ...]`, with an optional trailing comma and a
+128-element bound. Lists support `len`, truth/not/and/or, exact signed indexing
+and replacement of an existing element. Their count is fixed in this initial
+slice. Assigning `sequence[index] = value` evaluates the value first, followed
+by the sequence and index, each once. Nested and function-returned subscript
+targets work. Aliases and function parameters share mutations; stored values
+retain their original kinds. Tuple/Text/Bytes mutation reports type exit105,
+and list index bounds report exit107 before a store. Ordinary value expression
+statements evaluate and discard their result through the same native emitter.
+
+Self/indirect list cycles are possible and shallow operations remain bounded;
+the temporary arena does not reclaim them. Display, comparisons and arithmetic
+involving lists explicitly report type exit105. Resizing, append, slices,
+augmented subscript assignment, unpacking, comprehensions and iteration remain
+required work. These partial operations do not establish full container
+semantics, a memory manager, FC1 or HATCH acceptance.
+
 An initial `from naja.core import i64` instead imports the compiler-provided checked
 signed 64-bit primitive. This is not a general module resolver or delivered
 standard library. Top-level declarations require `name: i64 = expression`.

@@ -22,6 +22,15 @@ pub(crate) trait Values {
     fn tuple(_elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Err("tuples are unsupported in this explicit integer domain".into())
     }
+    fn list(_elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
+        Err("lists are unsupported in this explicit integer domain".into())
+    }
+    fn set_index(
+        _target: Self::Expression,
+        _value: Self::Expression,
+    ) -> Result<Self::Statement, String> {
+        Err("indexed assignment is unsupported in this explicit integer domain".into())
+    }
     fn local(slot: usize) -> Self::Expression;
     fn call(_index: usize, _arguments: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Err("function calls are unsupported in this explicit integer domain".into())
@@ -207,6 +216,22 @@ impl Values for Dynamic {
     }
     fn tuple(elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::Tuple(elements))
+    }
+    fn list(elements: Vec<Self::Expression>) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::List(elements))
+    }
+    fn set_index(
+        target: Self::Expression,
+        value: Self::Expression,
+    ) -> Result<Self::Statement, String> {
+        let dynamic::Expression::Index(sequence, index) = target else {
+            return Err("this assignment requires a single subscript target; unpacking and other targets are not implemented".into());
+        };
+        Ok(dynamic::Statement::SetIndex {
+            sequence: *sequence,
+            index: *index,
+            value,
+        })
     }
     fn local(slot: usize) -> Self::Expression {
         dynamic::Expression::Local(slot)

@@ -705,16 +705,23 @@ impl<V: Values> Parser<V> {
             self.newline()?;
             return Ok(V::print(value));
         }
-        if V::DYNAMIC
-            && self.token().kind == TokenKind::Identifier
+        let plain_binding = self.token().kind == TokenKind::Identifier
+            && !self.reserved_name()
             && self
                 .tokens
                 .get(self.cursor + 1)
-                .is_some_and(|t| self.lexed.text(t) == "(")
-        {
-            let value = self.expression(0, 0)?;
+                .is_some_and(|token| matches!(self.lexed.text(token), "=" | ":"));
+        if V::DYNAMIC && !plain_binding {
+            let target = self.expression(0, 0)?;
+            if self.take("=") {
+                let value = self.expression(0, 0)?;
+                self.newline()?;
+                // The native SetIndex operation evaluates the value before
+                // either target operand, independently of parse order.
+                return V::set_index(target, value).map_err(|message| self.error(message));
+            }
             self.newline()?;
-            return V::evaluate(value).map_err(|message| self.error(message));
+            return V::evaluate(target).map_err(|message| self.error(message));
         }
         if self.token().kind != TokenKind::Identifier || self.reserved_name() {
             return Err(self.error("unsupported statement in the experimental executable subset"));
@@ -817,6 +824,19 @@ impl<V: Values> Parser<V> {
             V::negate(self.expression(7, depth + 1)?)
         } else if self.take("+") {
             V::positive(self.expression(7, depth + 1)?)
+        } else if self.take("[") {
+            let mut elements = Vec::new();
+            while self.text() != "]" {
+                if elements.len() >= dynamic::MAX_LIST_ELEMENTS {
+                    return Err(self.error("experimental list element limit of 128 exceeded"));
+                }
+                elements.push(self.expression(0, depth + 1)?);
+                if !self.take(",") {
+                    break;
+                }
+            }
+            self.expect("]")?;
+            V::list(elements).map_err(|message| self.error(message))?
         } else if self.take("(") {
             if self.take(")") {
                 V::tuple(Vec::new()).map_err(|message| self.error(message))?
@@ -1522,5 +1542,49 @@ mod tests {
                 .contains("128")
         );
         assert!(compile("values = (0, missing)\n").is_err());
+    }
+    #[test]
+    fn lists_and_single_subscript_targets_share_scopes_and_frontend() {
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            for source in [
+                "empty = []\nassert not empty\nprint(len(empty))\n",
+                "values = [True, ['é', b'\\xff'],]\nvalues[False] = None\nprint(values[1][-1])\n",
+                "def identity(value): return value\nvalues = [[0]]\nidentity(values)[0][-1] = 7\nprint(values[0][0])\n",
+                "values = [None]\nalias = values\nvalues[0] = alias\nprint(len(alias[0][0]))\n",
+                "value = [0]\n(value[0]) = 1\nprint(value[0])\n",
+                "[1, 2]\n(1,)\n7\n", // Ordinary expressions evaluate and discard their result.
+                "value = 'immutable'\nvalue[0] = 'x'\n", // Native type error, not a parse rejection.
+            ] {
+                assert!(compile_with_dialect(source, dialect).is_ok(), "{source}");
+            }
+            for source in [
+                "values = [0]\nvalues[:] = []\n",
+                "values = [0]\nvalues[0, 1] = 2\n",
+                "values = [0]\nvalues[0] += 1\n",
+                "values = [item for item in []]\n",
+                "values = [*[]]\n",
+                "values = [,]\n",
+                "values = [0]\n(a, b) = values\n",
+                "values = [0]\nvalues[0] = missing\n",
+                "missing[0] = 7\n",
+                "(1 + 2) = 3\n",
+            ] {
+                assert!(compile_with_dialect(source, dialect).is_err(), "{source}");
+            }
+        }
+        assert!(compile(&format!("{IMPORT}value: i64 = [i64(1)]\n")).is_err());
+        for (count, accepted) in [(128, true), (129, false)] {
+            assert_eq!(
+                compile(&format!("values = [{}]\n", "0,".repeat(count))).is_ok(),
+                accepted
+            );
+        }
+        let nested = |layers| format!("value = {}0{}\n", "[".repeat(layers), "]".repeat(layers));
+        assert!(compile(&nested(127)).is_ok());
+        assert!(
+            compile(&nested(128)).unwrap_err()[0]
+                .message
+                .contains("128")
+        );
     }
 }
