@@ -42,6 +42,7 @@ pub struct Condition {
 pub enum Statement {
     /// Transparent source grouping; emits only its body in the same local frame.
     Group(Vec<Statement>),
+    Assert(Condition),
     Assign(usize, Expression),
     Print(Expression),
     If(Condition, Vec<Statement>, Vec<Statement>),
@@ -86,6 +87,7 @@ struct Generator {
     asm: Assembler,
     overflow: usize,
     io_failure: usize,
+    assertion_failure: usize,
     print: usize,
 }
 
@@ -159,6 +161,9 @@ impl Generator {
         for statement in statements {
             match statement {
                 Statement::Group(body) => self.statements(body, depth + 1)?,
+                Statement::Assert(condition) => {
+                    self.condition_false(condition, self.assertion_failure)?
+                }
                 Statement::Assign(slot, expression) => {
                     self.validate_slot(*slot)?;
                     self.expression(expression, 0)?;
@@ -258,11 +263,13 @@ pub fn emit_elf(statements: &[Statement]) -> Result<Vec<u8>, String> {
     let mut asm = Assembler::default();
     let overflow = asm.label();
     let io_failure = asm.label();
+    let assertion_failure = asm.label();
     let print = asm.label();
     let mut generator = Generator {
         asm,
         overflow,
         io_failure,
+        assertion_failure,
         print,
     };
     generator
@@ -274,6 +281,8 @@ pub fn emit_elf(statements: &[Statement]) -> Result<Vec<u8>, String> {
     generator.runtime_error(b"NJA201: checked i64 overflow\n", 101);
     generator.asm.bind(io_failure);
     generator.runtime_error(b"NJA202: native stdout write failed\n", 102);
+    generator.asm.bind(assertion_failure);
+    generator.runtime_error(b"NJA204: assertion failed\n", 104);
     generator.print_routine();
     let code = generator.asm.finish()?;
     elf_image(code)

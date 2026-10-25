@@ -19,6 +19,7 @@ pub(crate) trait Values {
     fn assign(slot: usize, value: Self::Expression) -> Self::Statement;
     fn print(value: Self::Expression) -> Self::Statement;
     fn group(body: Vec<Self::Statement>) -> Self::Statement;
+    fn assertion(condition: Self::Condition) -> Self::Statement;
     fn conditional(
         condition: Self::Condition,
         yes: Vec<Self::Statement>,
@@ -81,6 +82,9 @@ macro_rules! domain {
             }
             fn group(body: Vec<Self::Statement>) -> Self::Statement {
                 $module::Statement::Group(body)
+            }
+            fn assertion(condition: Self::Condition) -> Self::Statement {
+                $module::Statement::Assert(condition)
             }
             fn conditional(
                 condition: Self::Condition,

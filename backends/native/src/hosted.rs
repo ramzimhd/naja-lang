@@ -25,6 +25,7 @@ pub struct Condition {
 
 #[derive(Clone, Debug)]
 pub enum Statement {
+    Assert(Condition),
     Assign(usize, Expression),
     Print(Expression),
     If(Condition, Vec<Statement>, Vec<Statement>),
@@ -133,6 +134,7 @@ impl Validator {
                     initialized[*slot] = true;
                 }
                 Statement::Print(value) => self.expression(value, initialized, 0)?,
+                Statement::Assert(condition) => self.condition(condition, initialized)?,
                 Statement::Group(body) => self.statements(body, initialized, depth + 1)?,
                 Statement::If(condition, yes, no) => {
                     self.condition(condition, initialized)?;
@@ -237,6 +239,9 @@ impl Emitter {
                     self.code.call(self.runtime.print);
                 }
                 Statement::Group(body) => self.statements(body)?,
+                Statement::Assert(condition) => {
+                    self.condition_false(condition, self.runtime.assertion)?
+                }
                 Statement::If(condition, yes, no) => {
                     let otherwise = self.code.label();
                     let end = self.code.label();

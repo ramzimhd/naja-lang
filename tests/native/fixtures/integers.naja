@@ -1,0 +1,9 @@
+{# Initial state #
+amount = 123456789012345678901234567890
+step = 0
+}
+while step < 3: {# Accumulate #
+amount = amount + 1
+step = step + 1
+}
+print(amount)

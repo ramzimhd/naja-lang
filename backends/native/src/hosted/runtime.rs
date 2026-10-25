@@ -15,6 +15,7 @@ pub(super) struct Runtime {
     pub compare: usize,
     pub print: usize,
     pub zero: usize,
+    pub assertion: usize,
     resource: usize,
     io: usize,
     clone_sign: usize,
@@ -34,6 +35,7 @@ impl Runtime {
             compare: c.label(),
             print: c.label(),
             zero: c.label(),
+            assertion: c.label(),
             resource: c.label(),
             io: c.label(),
             clone_sign: c.label(),
@@ -95,6 +97,7 @@ impl Runtime {
             103,
         );
         self.error(c, self.io, b"NJA202: native stdout write failed\n", 102);
+        self.error(c, self.assertion, b"NJA204: assertion failed\n", 104);
         c.align();
         c.bind(self.zero);
         c.a.bytes(&[0; 16]);

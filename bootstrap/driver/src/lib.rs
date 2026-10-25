@@ -1,5 +1,7 @@
 //! Shared bounded executable parser with distinct checked-i64 and hosted domains.
-use naja_frontend::{Diagnostic, Dialect, Lexed, Span, Token, TokenKind, lex_with_dialect};
+use naja_frontend::{
+    Diagnostic, Dialect, Lexed, Span, Token, TokenKind, canonical_identifier, lex_with_dialect,
+};
 use naja_native::{Binary, Comparison, MAX_LOCALS, Statement, hosted};
 use std::collections::{BTreeMap, BTreeSet};
 use std::marker::PhantomData;
@@ -168,6 +170,42 @@ impl<V: Values> Parser<V> {
             )))
         }
     }
+    fn canonical_name(&self) -> Parsed<String> {
+        canonical_identifier(self.text()).map_err(|error| Diagnostic {
+            code: "NJA105",
+            message: "invalid Unicode identifier".into(),
+            span: Span::new(
+                self.token().span.start + error.span.start,
+                self.token().span.start + error.span.end,
+            ),
+        })
+    }
+    fn take_binding(&mut self, value: &str) -> bool {
+        if self.token().kind == TokenKind::Identifier
+            && canonical_identifier(self.text()).is_ok_and(|name| name == value)
+        {
+            self.advance();
+            true
+        } else {
+            false
+        }
+    }
+    fn expect_binding(&mut self, value: &str) -> Parsed<()> {
+        if self.take_binding(value) {
+            Ok(())
+        } else {
+            Err(self.error(format!(
+                "expected binding '{value}' in this executable slice"
+            )))
+        }
+    }
+    fn reserved_name(&self) -> bool {
+        // Hard keywords are recognized from raw spellings. Compiler-provided
+        // bindings use canonical keys and cannot yet be shadowed in this slice.
+        reserved(self.text())
+            || canonical_identifier(self.text())
+                .is_ok_and(|name| matches!(name.as_str(), "print" | "i64"))
+    }
     fn newline(&mut self) -> Parsed<()> {
         if self.token().kind == TokenKind::Newline {
             self.advance();
@@ -192,9 +230,12 @@ impl<V: Values> Parser<V> {
                         "the experimental i64 import must appear once before executable statements",
                     ));
                 }
-                for word in ["from", "naja", ".", "core", "import", "i64"] {
-                    self.expect(word)?;
-                }
+                self.expect("from")?;
+                self.expect_binding("naja")?;
+                self.expect(".")?;
+                self.expect_binding("core")?;
+                self.expect("import")?;
+                self.expect_binding("i64")?;
                 self.newline()?;
                 self.imported_i64 = true;
             } else {
@@ -227,6 +268,11 @@ impl<V: Values> Parser<V> {
     fn statement_after_accounting(&mut self, depth: usize) -> Parsed<V::Statement> {
         if self.token().kind == TokenKind::SuiteOpen {
             return self.brace_suite(depth, true).map(V::group);
+        }
+        if self.take("assert") {
+            let condition = self.condition()?;
+            self.newline()?;
+            return Ok(V::assertion(condition));
         }
         if self.take("while") {
             let condition = self.condition()?;
@@ -372,17 +418,18 @@ impl<V: Values> Parser<V> {
         Ok(body)
     }
     fn simple(&mut self, depth: usize) -> Parsed<V::Statement> {
-        if self.take("print") {
+        if self.take_binding("print") {
             self.expect("(")?;
             let value = self.expression(0, 0)?;
             self.expect(")")?;
             self.newline()?;
             return Ok(V::print(value));
         }
-        if self.token().kind != TokenKind::Identifier || reserved(self.text()) {
+        if self.token().kind != TokenKind::Identifier || self.reserved_name() {
             return Err(self.error("unsupported statement in the experimental executable subset"));
         }
-        let name = self.text().to_owned();
+        let name_span = self.token().span;
+        let name = self.canonical_name()?;
         self.advance();
         let declared = self.take(":");
         let creates = declared || (V::HOSTED && !self.locals.contains_key(&name));
@@ -391,10 +438,14 @@ impl<V: Values> Parser<V> {
                 return Err(self.error("this native spike requires local declarations at top level for definite initialization"));
             }
             if declared {
-                self.expect(if V::HOSTED { "int" } else { "i64" })?;
+                self.expect_binding(if V::HOSTED { "int" } else { "i64" })?;
             }
             if self.locals.contains_key(&name) {
-                return Err(self.error("duplicate declaration in this value slice"));
+                return Err(Diagnostic {
+                    code: "NJA101",
+                    message: "duplicate declaration under its canonical Unicode spelling".into(),
+                    span: name_span,
+                });
             }
             if self.locals.len() >= MAX_LOCALS {
                 return Err(self.error("experimental local limit of 128 exceeded"));
@@ -443,7 +494,7 @@ impl<V: Values> Parser<V> {
             let value = self.expression(0, depth + 1)?;
             self.expect(")")?;
             value
-        } else if self.take("i64") {
+        } else if self.take_binding("i64") {
             if V::HOSTED {
                 return Err(self.error(
                     "explicit i64 and hosted integers cannot yet be mixed in this executable slice",
@@ -484,8 +535,9 @@ impl<V: Values> Parser<V> {
             let value = V::integer(text).map_err(|message| self.error(message))?;
             self.advance();
             value
-        } else if self.token().kind == TokenKind::Identifier && !reserved(self.text()) {
-            let slot = *self.locals.get(self.text()).ok_or_else(|| {
+        } else if self.token().kind == TokenKind::Identifier && !self.reserved_name() {
+            let name = self.canonical_name()?;
+            let slot = *self.locals.get(&name).ok_or_else(|| {
                 self.error("undefined or uninitialized name in the experimental executable subset")
             })?;
             if !self.initialized.contains(&slot) {
@@ -776,5 +828,30 @@ mod tests {
         assert_eq!(error.code, "NJA101");
         assert_eq!(&source[error.span.start..error.span.end], "x");
         assert_eq!(error.span.start, source.rfind('x').unwrap());
+    }
+    #[test]
+    fn unicode_symbols_use_nfkc_keys_and_preserve_raw_keyword_rules() {
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            let unicode =
+                "变量 = 123456789012345678901234567890\nＫ = 变量\nK = K + 1\nｐｒｉｎｔ(Ｋ)\n";
+            let ascii = "value = 123456789012345678901234567890\nother = value\nother = other + 1\nprint(other)\n";
+            assert_eq!(
+                compile_with_dialect(unicode, dialect).unwrap(),
+                compile_with_dialect(ascii, dialect).unwrap()
+            );
+            assert_eq!(
+                compile_with_dialect("ｉｆ = 7\nprint(ｉｆ)\n", dialect).unwrap(),
+                compile_with_dialect("x = 7\nprint(x)\n", dialect).unwrap()
+            );
+            let fixed = "from ｎａｊａ.ｃｏｒｅ import ｉ６４\n变量: ｉ６４ = ｉ６４(7)\nｐｒｉｎｔ(变量)\n";
+            assert_eq!(
+                compile_with_dialect(fixed, dialect).unwrap(),
+                compile(&format!("{IMPORT}x: i64 = i64(7)\nprint(x)\n")).unwrap()
+            );
+        }
+        let collision = "from naja.core import i64\nＫ: i64 = i64(1)\nK: i64 = i64(2)\n";
+        let error = &check(collision).unwrap_err()[0];
+        assert!(error.message.contains("canonical Unicode"));
+        assert_eq!(&collision[error.span.start..error.span.end], "K");
     }
 }
