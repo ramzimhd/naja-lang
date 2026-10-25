@@ -1,7 +1,7 @@
 //! Shared bounded executable parser with distinct checked-i64 and hosted domains.
 use naja_frontend::{Diagnostic, Dialect, Lexed, Span, Token, TokenKind, lex_with_dialect};
 use naja_native::{Binary, Comparison, MAX_LOCALS, Statement, hosted};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::marker::PhantomData;
 mod values;
 use values::{Fixed, Hosted, Values};
@@ -107,6 +107,7 @@ fn parse_lexed<V: Values>(
         tokens,
         cursor: 0,
         locals: BTreeMap::new(),
+        initialized: BTreeSet::new(),
         imported_i64: false,
         nodes: 0,
         dialect,
@@ -121,6 +122,7 @@ struct Parser<V: Values> {
     tokens: Vec<Token>,
     cursor: usize,
     locals: BTreeMap<String, usize>,
+    initialized: BTreeSet<usize>,
     imported_i64: bool,
     nodes: usize,
     dialect: Dialect,
@@ -228,7 +230,11 @@ impl<V: Values> Parser<V> {
         }
         if self.take("while") {
             let condition = self.condition()?;
+            let initialized = self.initialized.clone();
             let body = self.suite(depth + 1)?;
+            // A loop may execute zero times. New symbols retain their slots,
+            // while only values initialized on entry are definite afterward.
+            self.initialized = initialized;
             if self.text() == "else" {
                 return Err(self.error("while-else is not implemented in this native spike"));
             }
@@ -236,12 +242,19 @@ impl<V: Values> Parser<V> {
         }
         if self.take("if") {
             let condition = self.condition()?;
+            let initialized = self.initialized.clone();
             let yes = self.suite(depth + 1)?;
+            let yes_initialized = self.initialized.clone();
+            self.initialized = initialized;
             let no = if self.take("else") {
                 self.suite(depth + 1)?
             } else {
                 Vec::new()
             };
+            self.initialized = yes_initialized
+                .intersection(&self.initialized)
+                .copied()
+                .collect();
             if self.text() == "elif" {
                 return Err(self.error(
                     "elif is not implemented in this native spike; full grammar remains open",
@@ -396,6 +409,7 @@ impl<V: Values> Parser<V> {
         if creates {
             self.locals.insert(name, slot);
         }
+        self.initialized.insert(slot);
         Ok(V::assign(slot, value))
     }
     fn condition(&mut self) -> Parsed<V::Condition> {
@@ -472,8 +486,13 @@ impl<V: Values> Parser<V> {
             value
         } else if self.token().kind == TokenKind::Identifier && !reserved(self.text()) {
             let slot = *self.locals.get(self.text()).ok_or_else(|| {
-                self.error("undefined or uninitialized name in the experimental i64 subset")
+                self.error("undefined or uninitialized name in the experimental executable subset")
             })?;
+            if !self.initialized.contains(&slot) {
+                return Err(self.error(
+                    "name is not definitely initialized on every path in this executable slice",
+                ));
+            }
             self.advance();
             V::local(slot)
         } else {
@@ -752,5 +771,10 @@ mod tests {
             )
             .is_ok()
         );
+        let source = "if 1 == 2:\n    x = 3\nprint(x)\n";
+        let error = &check_hosted(source, Dialect::Python).unwrap_err()[0];
+        assert_eq!(error.code, "NJA101");
+        assert_eq!(&source[error.span.start..error.span.end], "x");
+        assert_eq!(error.span.start, source.rfind('x').unwrap());
     }
 }

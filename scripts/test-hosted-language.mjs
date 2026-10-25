@@ -58,8 +58,8 @@ for(const [name,source] of [
 }
 run('ordinary-resource-bound','x = 0\nwhile 0 == 0:\n    x = x + 1\n','',{status:103,stderr:'NJA203: hosted integer arena exhausted\n'});
 for(const [name,source,extension,code] of [
-  ['conditional-uninitialized','if 1 == 2:\n    x = 1\nprint(x)\n','py','NJA104'],
-  ['loop-uninitialized','while 1 == 2:\n    x = 1\nprint(x)\n','naja','NJA104'],
+  ['conditional-uninitialized','if 1 == 2:\n    x = 1\nprint(x)\n','py','NJA101'],
+  ['loop-uninitialized','while 1 == 2:\n    x = 1\nprint(x)\n','naja','NJA101'],
   ['self-uninitialized','x = x + 1\n','naja','NJA101'],
   ['mixed-domains','from naja.core import i64\nx: i64 = 1\n','naja','NJA101'],
   ['unsupported-float','x = 1.5\n','py','NJA101'],
