@@ -6,7 +6,7 @@ use std::{
     process::ExitCode,
 };
 
-const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja lex SOURCE\n  naja check SOURCE\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE\n\nThis seed supports a bounded explicit checked-i64 subset only.\n.naja selects edition 2026.1 with brace suites, named sections and indentation depth markers.\n.py keeps the separate compatibility dialect.\nFull grammar, hosted int, aliases and self-hosting remain unimplemented.\nBuild never runs user code and refuses to overwrite an existing output.\n";
+const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja lex SOURCE\n  naja check SOURCE\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE\n\nThis seed supports native decimal hosted integers with +, -, *, comparisons, assignment, if/else, while and print.\nThe hosted arena is limited to 64 MiB; exhaustion reports NJA203 and exits 103.\nExplicit from naja.core import i64 selects the separate checked-i64 slice; mixed domains remain unsupported.\n.naja selects edition 2026.1 with brace suites, named sections and indentation depth markers.\n.py keeps the separate compatibility dialect.\nFull grammar, other hosted values, aliases and self-hosting remain unimplemented.\nBuild never runs user code and refuses to overwrite an existing output.\n";
 
 fn main() -> ExitCode {
     match run() {
@@ -109,7 +109,7 @@ fn run() -> Result<(), String> {
     if operation == "check" {
         naja_seed::check_with_dialect(&source, dialect)
             .map_err(|errors| diagnostics(path, &source, &errors))?;
-        println!("Checked experimental i64 subset: {}", path.display());
+        println!("Checked experimental integer subset: {}", path.display());
         return Ok(());
     }
     let binary = naja_seed::compile_with_dialect(&source, dialect)

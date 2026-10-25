@@ -12,8 +12,11 @@ pub fn compile(source: &str) -> Result<Vec<u8>, Vec<Diagnostic>> {
 }
 
 pub fn compile_with_dialect(source: &str, dialect: Dialect) -> Result<Vec<u8>, Vec<Diagnostic>> {
-    let statements = check_with_dialect(source, dialect)?;
-    naja_native::emit_elf(&statements).map_err(|message| {
+    let result = match check_with_dialect(source, dialect)? {
+        CheckedProgram::FixedI64(statements) => naja_native::emit_elf(&statements),
+        CheckedProgram::HostedIntegers(statements) => hosted::emit_elf(&statements),
+    };
+    result.map_err(|message| {
         vec![Diagnostic {
             code: "NJA200",
             message,
@@ -22,37 +25,64 @@ pub fn compile_with_dialect(source: &str, dialect: Dialect) -> Result<Vec<u8>, V
     })
 }
 
-pub fn check(source: &str) -> Result<Vec<Statement>, Vec<Diagnostic>> {
+#[derive(Debug)]
+pub enum CheckedProgram {
+    FixedI64(Vec<Statement>),
+    HostedIntegers(Vec<hosted::Statement>),
+}
+
+pub fn check(source: &str) -> Result<CheckedProgram, Vec<Diagnostic>> {
     check_with_dialect(source, Dialect::Python)
 }
 
 pub fn check_with_dialect(
     source: &str,
     dialect: Dialect,
-) -> Result<Vec<Statement>, Vec<Diagnostic>> {
-    parse_values::<Fixed>(source, dialect)
+) -> Result<CheckedProgram, Vec<Diagnostic>> {
+    let lexed = checked_lex(source, dialect)?;
+    // The temporary checked-i64 slice retains its explicit initial import.
+    // No import or annotation narrows an ordinary hosted literal to i64.
+    if lexed
+        .significant_tokens()
+        .next()
+        .is_some_and(|token| lexed.text(token) == "from")
+    {
+        parse_lexed::<Fixed>(lexed, dialect).map(CheckedProgram::FixedI64)
+    } else {
+        let statements = parse_lexed::<Hosted>(lexed, dialect)?;
+        validate_hosted(&statements)?;
+        Ok(CheckedProgram::HostedIntegers(statements))
+    }
 }
 
-/// Hosted integer syntax checking; native execution is integrated separately.
+/// Check the hosted integer domain explicitly through the shared parser.
 pub fn check_hosted(
     source: &str,
     dialect: Dialect,
 ) -> Result<Vec<hosted::Statement>, Vec<Diagnostic>> {
     let statements = parse_values::<Hosted>(source, dialect)?;
-    hosted::validate(&statements).map_err(|message| {
+    validate_hosted(&statements)?;
+    Ok(statements)
+}
+
+fn validate_hosted(statements: &[hosted::Statement]) -> Result<(), Vec<Diagnostic>> {
+    hosted::validate(statements).map_err(|message| {
         vec![Diagnostic {
             code: "NJA104",
             message,
             span: Span::new(0, 0),
         }]
-    })?;
-    Ok(statements)
+    })
 }
 
 fn parse_values<V: Values>(
     source: &str,
     dialect: Dialect,
 ) -> Result<Vec<V::Statement>, Vec<Diagnostic>> {
+    parse_lexed::<V>(checked_lex(source, dialect)?, dialect)
+}
+
+fn checked_lex(source: &str, dialect: Dialect) -> Result<Lexed, Vec<Diagnostic>> {
     if source.len() > 1_048_576 {
         return Err(vec![Diagnostic {
             code: "NJA100",
@@ -64,6 +94,13 @@ fn parse_values<V: Values>(
     if !lexed.diagnostics.is_empty() {
         return Err(lexed.diagnostics);
     }
+    Ok(lexed)
+}
+
+fn parse_lexed<V: Values>(
+    lexed: Lexed,
+    dialect: Dialect,
+) -> Result<Vec<V::Statement>, Vec<Diagnostic>> {
     let tokens = lexed.significant_tokens().cloned().collect();
     let mut parser = Parser::<V> {
         lexed,
@@ -552,7 +589,7 @@ mod tests {
         ] {
             assert!(compile(&format!("{IMPORT}{body}")).is_err(), "{body}");
         }
-        assert!(compile("print(123456789012345678901234567890)\n").is_err());
+        assert!(compile("print(True)\n").is_err());
     }
     #[test]
     fn accept_minimum_integer_and_standard_same_line_suite() {

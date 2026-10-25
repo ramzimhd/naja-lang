@@ -109,7 +109,7 @@ console.log('PASS output failure exit=102');
 passed++;
 
 for(const [name,source,code] of [
-  ['hosted-int','x = 123456789012345678901234567890\n','NJA101'],
+  ['unsupported-string','x = "hosted strings remain unimplemented"\n','NJA101'],
   ['unsupported-import','import os\n','NJA101'],
   ['uninitialized','from naja.core import i64\nx: i64 = x + i64(1)\n','NJA101'],
   ['bare-int-after-import',prefix+'print(9223372036854775807 + 1)\n','NJA101'],
