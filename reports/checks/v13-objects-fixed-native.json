@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "b0e54cb2db1a2aea20b6056c05f92ea5e6b62560",
+  "target": "Windows x64 compiler; Linux x86-64 execution via explicit local WSL where applicable",
+  "command": [
+    "node",
+    "scripts/test-native.mjs"
+  ],
+  "tool_versions": {
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0",
+    "powershell": "7.6.4",
+    "git": "git version 2.51.0.windows.1",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T21:47:30.5646962+00:00",
+  "log_path": "reports/checks/v13-objects-fixed-native.log",
+  "log_sha256": "3e303fb69e5368f02535afcf763644828bc611a5eb3abcf16f649e5f3c240db7",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

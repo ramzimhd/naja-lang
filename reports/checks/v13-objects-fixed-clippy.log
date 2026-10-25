@@ -1,0 +1,4 @@
+Recorded command: cargo +1.97.1 clippy --workspace --all-targets --locked --offline -- -D warnings
+Recorded exit code: 0
+--- captured output ---
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.25s

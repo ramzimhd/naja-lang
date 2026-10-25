@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+  "target": "Windows x64 editor adapter and actual compiler; no user execution",
+  "command": [
+    "node",
+    "scripts/test-vscode.mjs"
+  ],
+  "tool_versions": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "git": "git version 2.51.0.windows.1",
+    "powershell": "7.6.4",
+    "node": "v24.11.0"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T21:40:23.2562737+00:00",
+  "log_path": "reports/checks/v13-objects-editor.log",
+  "log_sha256": "fe856bdbe173c021e6a86b793519951bca829abb771290cdc0bab3c0b6ef8231",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

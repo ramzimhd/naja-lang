@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "564461b8066e7b6cd328ff2b362bdabfc33bda0f",
+  "target": "Windows x64 compiler; Linux x86-64 execution via explicit local WSL where applicable",
+  "command": [
+    "node",
+    "scripts/test-values-language.mjs"
+  ],
+  "tool_versions": {
+    "git": "git version 2.51.0.windows.1",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "powershell": "7.6.4"
+  },
+  "exit_code": 1,
+  "result": "failed",
+  "timestamp": "2026-10-25T21:41:35.3167406+00:00",
+  "log_path": "reports/checks/v13-objects-regression-values-language.log",
+  "log_sha256": "8170f3f36fa90adb12115202aa5a5c68bde583f0c183ba7660b30e56bfff4389",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

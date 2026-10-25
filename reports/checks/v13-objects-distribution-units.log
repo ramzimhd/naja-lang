@@ -1,0 +1,19 @@
+Recorded command: node --test tests/distribution/package.test.mjs
+Recorded exit code: 0
+--- captured output ---
+✔ frozen source and bounds identify a seed artifact rather than full release (1.0325ms)
+✔ ELF header mutations reject wrong architecture, format, endian and size (0.4657ms)
+✔ dependency reports require a bounded explicit loader and OS library closure (2.7321ms)
+✔ the already-declared GNU loader is accepted when also explicitly NEEDED (0.3977ms)
+✔ synthetic staging preserves checksums/notices and refuses an existing output (1998.3465ms)
+✔ invalid inputs fail before creating output, including missing/empty license and wrong ELF (672.6683ms)
+✔ installer has no downloader/eval/Python path and shell files retain LF (12.4998ms)
+✔ explicit retained preparation rejects mismatched source, failed steps, path escapes and tampering (101.6885ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2939.0945

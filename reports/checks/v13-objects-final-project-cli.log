@@ -1,0 +1,28 @@
+Recorded command: node scripts/test-project-cli.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS doctor-help
+PASS init-help
+PASS doctor-with-empty-path-ignores-ambient-project-files
+PASS doctor-readable-default
+PASS doctor-unknown
+PASS doctor-duplicate-json
+PASS doctor-missing-runner
+PASS doctor-unknown-runner
+PASS doctor-duplicate-runner
+PASS doctor-unsupported-runner
+PASS init-with-empty-path-creates-only-declared-files
+PASS existing-project-is-preserved
+PASS existing-file-is-preserved
+PASS missing-parent-does-not-create-directories
+PASS init-extra-option-before-writes
+PASS init-missing-directory
+PASS init-parent-traversal
+PASS init-invalid-name-before-writes
+PASS generated-project-check-without-path-tools
+PASS generated-project-build-without-path-tools
+PASS explicit-local-runner-preparation
+PASS initialized-main-executes-native-code
+PASS initialized-program-file-smoke-runs
+Project CLI checks: 23 passed; 0 not run; artifacts=target/project-cli-rmBlGT
+Limits: empty-PATH checks do not establish a clean host; runner preparation is separate from user-program execution; no self-hosting, complete CLI or HATCH claim.
