@@ -1,0 +1,29 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "7c8248c0fa76547d8b3a822bf99f57b471ee7fc7",
+  "target": "Windows x64 compiler and VS Code adapter transport; no user program or editor UI execution",
+  "command": [
+    "node",
+    "scripts/test-vscode.mjs",
+    "--compiler-source",
+    "7c8248c0fa76547d8b3a822bf99f57b471ee7fc7"
+  ],
+  "tool_versions": {
+    "powershell": "7.6.4",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "git": "git version 2.51.0.windows.1",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T21:09:33.7102429+00:00",
+  "log_path": "reports/checks/v13-editor-integrated.log",
+  "log_sha256": "df42dcd1ee7b8015e918aec1c0c33d6bde7046248e420b0a9863cae1030684db",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

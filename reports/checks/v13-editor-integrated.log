@@ -1,0 +1,14 @@
+Recorded command: node scripts/test-vscode.mjs --compiler-source 7c8248c0fa76547d8b3a822bf99f57b471ee7fc7
+Recorded exit code: 0
+--- captured output ---
+PASS adapter-unit-suite
+PASS locked-offline-pinned-compiler-build
+PASS valid-no-execution-é & inert
+PASS original-utf16-0
+PASS original-utf16-1
+PASS original-utf16-2
+PASS real-project-alias-original-range
+PASS input-error-is-not-semantic-pass
+PASS omission-is-explicit
+Compiler pinned 7c8248c0fa76547d8b3a822bf99f57b471ee7fc7; adapter tree 7c8248c0fa76547d8b3a822bf99f57b471ee7fc7; 9 groups passed.
+Retained result: editor/vscode/artifacts/checks-9bq3MU/result.json
