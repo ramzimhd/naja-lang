@@ -5,10 +5,10 @@
   "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
   "owner": "/root",
   "status": "running",
-  "checkpoint_generation": 7,
-  "head": "935d397b0329cbcc98977faa4107b2e381c5053a",
+  "checkpoint_generation": 10,
+  "head": "3a8a0379cee4f7c5df48444e725b5b3b5e6176b4",
   "branch": "agent/integrator-H0",
-  "last_verified_source": "b9d884dbd3577d104c92593469e894de88062400",
+  "last_verified_source": "797dda666fa41bb4924c8011a37603e84c1b0662",
   "dirty_paths": [
     "launch/HANDOFF.md",
     "launch/RESUME_PROMPT.md",
@@ -16,40 +16,48 @@
     "planning/continuity.json",
     "planning/state.json",
     "planning/tasks.json",
-    "reports/checks/v13-integrated-build.json",
-    "reports/checks/v13-integrated-build.log",
-    "reports/checks/v13-integrated-cli.json",
-    "reports/checks/v13-integrated-cli.log",
-    "reports/checks/v13-integrated-clippy.json",
-    "reports/checks/v13-integrated-clippy.log",
-    "reports/checks/v13-integrated-compiler-boundaries.json",
-    "reports/checks/v13-integrated-compiler-boundaries.log",
-    "reports/checks/v13-integrated-continuity.json",
-    "reports/checks/v13-integrated-continuity.log",
-    "reports/checks/v13-integrated-dynamic.json",
-    "reports/checks/v13-integrated-dynamic.log",
-    "reports/checks/v13-integrated-fmt.json",
-    "reports/checks/v13-integrated-fmt.log",
-    "reports/checks/v13-integrated-foundations.json",
-    "reports/checks/v13-integrated-foundations.log",
-    "reports/checks/v13-integrated-functions-language.json",
-    "reports/checks/v13-integrated-functions-language.log",
-    "reports/checks/v13-integrated-functions.json",
-    "reports/checks/v13-integrated-functions.log",
-    "reports/checks/v13-integrated-hosted-language.json",
-    "reports/checks/v13-integrated-hosted-language.log",
-    "reports/checks/v13-integrated-hosted.json",
-    "reports/checks/v13-integrated-hosted.log",
-    "reports/checks/v13-integrated-native.json",
-    "reports/checks/v13-integrated-native.log",
-    "reports/checks/v13-integrated-planning.json",
-    "reports/checks/v13-integrated-planning.log",
-    "reports/checks/v13-integrated-rust.json",
-    "reports/checks/v13-integrated-rust.log",
-    "reports/checks/v13-integrated-values-language.json",
-    "reports/checks/v13-integrated-values-language.log",
-    "reports/checks/v13-integrated-whitespace.json",
-    "reports/checks/v13-integrated-whitespace.log",
+    "reports/checks/v13-index-project-build.json",
+    "reports/checks/v13-index-project-build.log",
+    "reports/checks/v13-index-project-cli.json",
+    "reports/checks/v13-index-project-cli.log",
+    "reports/checks/v13-index-project-clippy.json",
+    "reports/checks/v13-index-project-clippy.log",
+    "reports/checks/v13-index-project-compiler-boundaries.json",
+    "reports/checks/v13-index-project-compiler-boundaries.log",
+    "reports/checks/v13-index-project-continuity.json",
+    "reports/checks/v13-index-project-continuity.log",
+    "reports/checks/v13-index-project-dynamic.json",
+    "reports/checks/v13-index-project-dynamic.log",
+    "reports/checks/v13-index-project-fmt.json",
+    "reports/checks/v13-index-project-fmt.log",
+    "reports/checks/v13-index-project-foundations.json",
+    "reports/checks/v13-index-project-foundations.log",
+    "reports/checks/v13-index-project-functions-language.json",
+    "reports/checks/v13-index-project-functions-language.log",
+    "reports/checks/v13-index-project-functions.json",
+    "reports/checks/v13-index-project-functions.log",
+    "reports/checks/v13-index-project-hosted-language.json",
+    "reports/checks/v13-index-project-hosted-language.log",
+    "reports/checks/v13-index-project-hosted.json",
+    "reports/checks/v13-index-project-hosted.log",
+    "reports/checks/v13-index-project-index-language.json",
+    "reports/checks/v13-index-project-index-language.log",
+    "reports/checks/v13-index-project-index.json",
+    "reports/checks/v13-index-project-index.log",
+    "reports/checks/v13-index-project-native.json",
+    "reports/checks/v13-index-project-native.log",
+    "reports/checks/v13-index-project-planning.json",
+    "reports/checks/v13-index-project-planning.log",
+    "reports/checks/v13-index-project-project-cli.json",
+    "reports/checks/v13-index-project-project-cli.log",
+    "reports/checks/v13-index-project-project-compile-only.json",
+    "reports/checks/v13-index-project-project-compile-only.log",
+    "reports/checks/v13-index-project-rust.json",
+    "reports/checks/v13-index-project-rust.log",
+    "reports/checks/v13-index-project-values-language.json",
+    "reports/checks/v13-index-project-values-language.log",
+    "reports/checks/v13-index-project-whitespace.json",
+    "reports/checks/v13-index-project-whitespace.log",
     "reports/progress.md"
   ],
   "task": "T05/T06/T07/T09/T11/T12",
@@ -70,7 +78,11 @@
     "Native signed floor division/remainder and first-order source functions now execute without a foreign runtime; exact binding, flow and resource limitations remain explicit.",
     "Schema1 bounded manifests validate before aliases; unavailable capabilities reject and exact rawmanifest context replaces bounded alias identity without increasing policy limits.",
     "Seventeen sourceb9d884d records passed:216 Rust, native36/14/23/85/43, value106/function76 source, CLI43/boundary25; Node126 remains separately pinned432ee9d. Earlier failed fixture record retained.",
-    "Private integrity audit/checkpoint7 advanced retained sourceb9d884d under fence2; independent pinned div/rem and source-function reviews found no actionable defect."
+    "Private integrity audit/checkpoint7 advanced retained sourceb9d884d under fence2; independent pinned div/rem and source-function reviews found no actionable defect.",
+    "Native Text/Bytes exact signed indexing and source postfix grammar integrated; independent83-case source harness and77-case review retain their original pins.",
+    "Exclusive init and capability doctor are integrated;235 Rust tests and21 command records passed at797dda6. Full project workflow23 passed; compile-only20 passed with3 native cases explicitly not_run.",
+    "Independent doctor/init review found no actionable defect, including an observed exclusive-create collision with retained partial output. Probe authoring failures remain failed.",
+    "Private audit/checkpoint10 advanced retained source797dda6 under fence2. Publicd065460 CI passed Linux/Windows/macOS at run40230539152."
   ],
   "checks": [
     {
@@ -83,9 +95,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-build.log",
-      "log_sha256": "76fb33e0c416c4b1699570ff6bc014f75da7aa6e926fb324c61a2fc53f811bc6",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-build.log",
+      "log_sha256": "42c8e42c4d792d33de2d0f1728571fa5dc8d811770d86bf7b91ced63101be046",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -99,8 +111,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-cli.log",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-cli.log",
       "log_sha256": "b77486fb7315b18a18224e7e1c28f5926e4da4483504bb8d37ad4e9a2729aec5",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -122,9 +134,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-clippy.log",
-      "log_sha256": "ae824cd39187d64e7078a2881b61a9cadfc02107958923c312c12ea8522a5348",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-clippy.log",
+      "log_sha256": "121e42e88c57139f3d9d11d84894aee6ea425b6a1310032b80f244bc4433cbcb",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -138,8 +150,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-compiler-boundaries.log",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-compiler-boundaries.log",
       "log_sha256": "dd1c96d6c19db59dab50f871c8654ce3db705c56d0972f1a46370d3e7cc7bb6f",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -154,8 +166,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-continuity.log",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-continuity.log",
       "log_sha256": "4fcd5cdf45ad73ea1b50a922f22f80711a8a7dd16fe71fc2a825d9f3974f3218",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -170,9 +182,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-dynamic.log",
-      "log_sha256": "489263867032ba4f7631c7debec91aa48504d2ee9ebebc6dded75e2188395ad7",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-dynamic.log",
+      "log_sha256": "df071b35af93af6fc1836ece1ff4041e39394732634f101457cc398a53ca426e",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -189,8 +201,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-fmt.log",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-fmt.log",
       "log_sha256": "a5bda159cfd82b8914fb9460a8fa4d543b5e00e65af5b64a12127f49dcdd343b",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -205,9 +217,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-foundations.log",
-      "log_sha256": "a66d513d596a1be42fe882a54ee2b9f8b6dde72556c8853f900e5630379f6061",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-foundations.log",
+      "log_sha256": "516dc385820553fb7a9fe97a54d95051c735731f5d1a854c4e12ace604bb2b3b",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -221,9 +233,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-functions-language.log",
-      "log_sha256": "988b4da60db40c8fee9bc09a9d73f775b75c43697bd5b6befa034530c26c6dcd",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-functions-language.log",
+      "log_sha256": "8118c32ff30b1025ef53ce0dc0021748ed091dcf2c242f599ed3fe8f1244e90c",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -237,9 +249,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-functions.log",
-      "log_sha256": "48ff39d8fcb489121cd0ceb964e897d0cfad856b6e33534b8993bf75c7287a7b",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-functions.log",
+      "log_sha256": "bde2950ac29c6a337dad76f7bc82d5826bea29eef5a57cb26d77e245d7878589",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -253,9 +265,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-hosted-language.log",
-      "log_sha256": "c33553fa1cd36fc459b24341ef072f3e058ad4659732c6753eb6814db21a02bb",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-hosted-language.log",
+      "log_sha256": "ec049af3bdc5b4447f48b9a0627d8908fcf2d84c997eb5cd31d6b35bb541faab",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -269,9 +281,41 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-hosted.log",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-hosted.log",
       "log_sha256": "c1bc4f77cf08d29eb7c0a8f3a6af07aa9a70900a76bd6dffe6433f35d3bfc7f0",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-index-language.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-index-language.log",
+      "log_sha256": "78290804d8d7a4cd9f8f909a9f5f6ff2059bf48a77094bd3cf4d460fe0f99ab2",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-index.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-index.log",
+      "log_sha256": "2c651b515f1eadf99f6a358a3492ebacf9efd19685a07c48849e9ae8cada0449",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -285,8 +329,8 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-native.log",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-native.log",
       "log_sha256": "96281b526e6fb1fbe659f7e46c4b348580948b483c37b668f85472b18393317a",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
@@ -301,9 +345,42 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-planning.log",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-planning.log",
       "log_sha256": "1677065a0df775d0f424b1f804905d2f993cd144f1b5bec2286e8c20c9227b8e",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-project-cli.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-project-cli.log",
+      "log_sha256": "a1794c002929c919becc5094e82a044762d0de1d736ed0a7759ce00267a11e6b",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-project-cli.mjs",
+        "--compile-only"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-project-compile-only.log",
+      "log_sha256": "0a5923d0a5772f5efe1f5464e78a60aef91781ba10db8f2da7bfbaf60a243d14",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -320,9 +397,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-rust.log",
-      "log_sha256": "9d8ea2ff8e6a1fe54af658996ce0e630b3301ad218ea4ed548b1c7ff3dc527b1",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-rust.log",
+      "log_sha256": "1af531db10570131eb4a6faa15bfe3772d7b4dd71d003ee1329a94cbabc5d8a5",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -336,9 +413,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-values-language.log",
-      "log_sha256": "b828e79e0cd9a9c914e2bf19ef6236ed40489125334dd2f7ab9bd6bd421a83e3",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-values-language.log",
+      "log_sha256": "9a95a13a2c814561505233d35e2b9984804f1fb950663bb96e6572496c7ef40f",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -350,7 +427,7 @@
         "git",
         "diff",
         "--check",
-        "dea427a1963d6f9cf8d6f5e63070de1df8da5655",
+        "d065460383e19c853c516b06c1b1723ac101a389",
         "HEAD",
         "--",
         ".",
@@ -359,9 +436,9 @@
       ],
       "result": "passed",
       "exit_code": 0,
-      "source": "b9d884dbd3577d104c92593469e894de88062400",
-      "log_path": "reports/checks/v13-integrated-whitespace.log",
-      "log_sha256": "0b7dcb8dff1fe0be4322456b4ecffff8a8ce091268b40c8277bd9ba1e0d40b5a",
+      "source": "797dda666fa41bb4924c8011a37603e84c1b0662",
+      "log_path": "reports/checks/v13-index-project-whitespace.log",
+      "log_sha256": "59649c48fda83d1496360aefc75893f33d59aaf5028fb3d4c6304f5d35f83e83",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -391,174 +468,214 @@
   ],
   "artifacts": [
     {
-      "path": "reports/checks/v13-integrated-build.json",
-      "bytes": 1180,
-      "sha256": "fb67504185f1d7a30cd6ec3d4170820d2ef107fe84746430bfc51e3d75759085"
+      "path": "reports/checks/v13-index-project-build.json",
+      "bytes": 1183,
+      "sha256": "747a88348b84ac2b2481a10271c3e50d8fe0e663e007d763d18afb3737fa8f85"
     },
     {
-      "path": "reports/checks/v13-integrated-build.log",
+      "path": "reports/checks/v13-index-project-build.log",
       "bytes": 180,
-      "sha256": "76fb33e0c416c4b1699570ff6bc014f75da7aa6e926fb324c61a2fc53f811bc6"
+      "sha256": "42c8e42c4d792d33de2d0f1728571fa5dc8d811770d86bf7b91ced63101be046"
     },
     {
-      "path": "reports/checks/v13-integrated-cli.json",
-      "bytes": 1140,
-      "sha256": "9ee4a6d05baad29ebadd15bb12a96722aad2b898dfad156b7604e4c7d6049462"
+      "path": "reports/checks/v13-index-project-cli.json",
+      "bytes": 1143,
+      "sha256": "6bec09365d5ea2cbaf661850aa57f000c310e24b7f6a75739dd9ce8e51d0144c"
     },
     {
-      "path": "reports/checks/v13-integrated-cli.log",
+      "path": "reports/checks/v13-index-project-cli.log",
       "bytes": 2410,
       "sha256": "b77486fb7315b18a18224e7e1c28f5926e4da4483504bb8d37ad4e9a2729aec5"
     },
     {
-      "path": "reports/checks/v13-integrated-clippy.json",
-      "bytes": 1239,
-      "sha256": "7b202f779b4f7f8a9743a0537e043d2c3442f20799cd07413e7f70f70459a264"
+      "path": "reports/checks/v13-index-project-clippy.json",
+      "bytes": 1242,
+      "sha256": "01ecf9406074a34e8dc6aa95e849ddce1d250113a9b6e7ace360a4d6d746de54"
     },
     {
-      "path": "reports/checks/v13-integrated-clippy.log",
+      "path": "reports/checks/v13-index-project-clippy.log",
       "bytes": 210,
-      "sha256": "ae824cd39187d64e7078a2881b61a9cadfc02107958923c312c12ea8522a5348"
+      "sha256": "121e42e88c57139f3d9d11d84894aee6ea425b6a1310032b80f244bc4433cbcb"
     },
     {
-      "path": "reports/checks/v13-integrated-compiler-boundaries.json",
-      "bytes": 1172,
-      "sha256": "6b7fc084e38b02ff2c73469cfa5720252dee188839b34f0b73e19dde62b9dcdf"
+      "path": "reports/checks/v13-index-project-compiler-boundaries.json",
+      "bytes": 1175,
+      "sha256": "91a7b33bf26cbb582f9ad4a201653b44ea67859a960309e1fe1ca4ffbaf05990"
     },
     {
-      "path": "reports/checks/v13-integrated-compiler-boundaries.log",
+      "path": "reports/checks/v13-index-project-compiler-boundaries.log",
       "bytes": 958,
       "sha256": "dd1c96d6c19db59dab50f871c8654ce3db705c56d0972f1a46370d3e7cc7bb6f"
     },
     {
-      "path": "reports/checks/v13-integrated-continuity.json",
-      "bytes": 1166,
-      "sha256": "2483280a20d9f5aec4387b2a163a2f12ef378e9648f7be15b98542f16f27a55f"
+      "path": "reports/checks/v13-index-project-continuity.json",
+      "bytes": 1169,
+      "sha256": "badb4c3966264bab9741f590a4e6f91938d92660a716e915f59e0d90132d9fa5"
     },
     {
-      "path": "reports/checks/v13-integrated-continuity.log",
+      "path": "reports/checks/v13-index-project-continuity.log",
       "bytes": 255,
       "sha256": "4fcd5cdf45ad73ea1b50a922f22f80711a8a7dd16fe71fc2a825d9f3974f3218"
     },
     {
-      "path": "reports/checks/v13-integrated-dynamic.json",
-      "bytes": 1148,
-      "sha256": "34b84ea6937b7632dde3a8872b451e2a535c51281433f5f2e6d8d278ea16e91e"
+      "path": "reports/checks/v13-index-project-dynamic.json",
+      "bytes": 1151,
+      "sha256": "8a814a7334195de7cd4f0ed063fe3eb9e5add6e0988e14b4b3b97c04e6e0d104"
     },
     {
-      "path": "reports/checks/v13-integrated-dynamic.log",
+      "path": "reports/checks/v13-index-project-dynamic.log",
       "bytes": 9509,
-      "sha256": "489263867032ba4f7631c7debec91aa48504d2ee9ebebc6dded75e2188395ad7"
+      "sha256": "df071b35af93af6fc1836ece1ff4041e39394732634f101457cc398a53ca426e"
     },
     {
-      "path": "reports/checks/v13-integrated-fmt.json",
-      "bytes": 1162,
-      "sha256": "7366c7b8098cc36c5d328253cc18b7c215fe0fcc41d37d9ec75a751cbddb729f"
+      "path": "reports/checks/v13-index-project-fmt.json",
+      "bytes": 1165,
+      "sha256": "4ad2207a444384614ea3556129a0e9c7d8140bcbb69b7512df6b92388b289019"
     },
     {
-      "path": "reports/checks/v13-integrated-fmt.log",
+      "path": "reports/checks/v13-index-project-fmt.log",
       "bytes": 91,
       "sha256": "a5bda159cfd82b8914fb9460a8fa4d543b5e00e65af5b64a12127f49dcdd343b"
     },
     {
-      "path": "reports/checks/v13-integrated-foundations.json",
-      "bytes": 1168,
-      "sha256": "dec0bbd01ea7a51c86da664300a00e4fa2d447e65a089a1b8355138069d6f1eb"
+      "path": "reports/checks/v13-index-project-foundations.json",
+      "bytes": 1171,
+      "sha256": "373625df4c1a229d273a0a06f9f6b2bc07dff36f0c63648750089b655fc98804"
     },
     {
-      "path": "reports/checks/v13-integrated-foundations.log",
+      "path": "reports/checks/v13-index-project-foundations.log",
       "bytes": 531,
-      "sha256": "a66d513d596a1be42fe882a54ee2b9f8b6dde72556c8853f900e5630379f6061"
+      "sha256": "516dc385820553fb7a9fe97a54d95051c735731f5d1a854c4e12ace604bb2b3b"
     },
     {
-      "path": "reports/checks/v13-integrated-functions-language.json",
-      "bytes": 1170,
-      "sha256": "791e258c64e5845c3d8d28b6ddd60ea4d8cb7b6b1846c4cc8368a17801bf0ba7"
+      "path": "reports/checks/v13-index-project-functions-language.json",
+      "bytes": 1173,
+      "sha256": "e018cf00c101578d012fb244393f0ccf68fc98373f3fc46989c9977c704e7376"
     },
     {
-      "path": "reports/checks/v13-integrated-functions-language.log",
+      "path": "reports/checks/v13-index-project-functions-language.log",
       "bytes": 2442,
-      "sha256": "988b4da60db40c8fee9bc09a9d73f775b75c43697bd5b6befa034530c26c6dcd"
+      "sha256": "8118c32ff30b1025ef53ce0dc0021748ed091dcf2c242f599ed3fe8f1244e90c"
     },
     {
-      "path": "reports/checks/v13-integrated-functions.json",
-      "bytes": 1152,
-      "sha256": "1dfcceda9f901cebf938824392523c1008d158a5157360ac4724c0d6888481aa"
+      "path": "reports/checks/v13-index-project-functions.json",
+      "bytes": 1155,
+      "sha256": "2bba93b18a37a04d82dd26599c07fe536069166c5fb2ae478bab9556f68ac5dc"
     },
     {
-      "path": "reports/checks/v13-integrated-functions.log",
+      "path": "reports/checks/v13-index-project-functions.log",
       "bytes": 4632,
-      "sha256": "48ff39d8fcb489121cd0ceb964e897d0cfad856b6e33534b8993bf75c7287a7b"
+      "sha256": "bde2950ac29c6a337dad76f7bc82d5826bea29eef5a57cb26d77e245d7878589"
     },
     {
-      "path": "reports/checks/v13-integrated-hosted-language.json",
-      "bytes": 1164,
-      "sha256": "92df02c5bece7e256b51ab2062b061c0690459fd90cb5ddda1489444a12f9190"
+      "path": "reports/checks/v13-index-project-hosted-language.json",
+      "bytes": 1167,
+      "sha256": "95bf7d074769effb2c334e82bcdfe9810369a35b3629f2ea0fd4ac34a387bde7"
     },
     {
-      "path": "reports/checks/v13-integrated-hosted-language.log",
+      "path": "reports/checks/v13-index-project-hosted-language.log",
       "bytes": 2362,
-      "sha256": "c33553fa1cd36fc459b24341ef072f3e058ad4659732c6753eb6814db21a02bb"
+      "sha256": "ec049af3bdc5b4447f48b9a0627d8908fcf2d84c997eb5cd31d6b35bb541faab"
     },
     {
-      "path": "reports/checks/v13-integrated-hosted.json",
-      "bytes": 1146,
-      "sha256": "44c93b44260cc9d6a8e25f859f5ad8bc2606a5f73de7945ad29feb987fa54a62"
+      "path": "reports/checks/v13-index-project-hosted.json",
+      "bytes": 1149,
+      "sha256": "921194d001c0a8f64e6bf1f4915dd2d81df865fec281ca91e629c536de4d2db0"
     },
     {
-      "path": "reports/checks/v13-integrated-hosted.log",
+      "path": "reports/checks/v13-index-project-hosted.log",
       "bytes": 1514,
       "sha256": "c1bc4f77cf08d29eb7c0a8f3a6af07aa9a70900a76bd6dffe6433f35d3bfc7f0"
     },
     {
-      "path": "reports/checks/v13-integrated-native.json",
-      "bytes": 1146,
-      "sha256": "e878c6f0594ba97cb047916a7e00481e4dd6e3d088fac52fee272bed71e4cf4b"
+      "path": "reports/checks/v13-index-project-index-language.json",
+      "bytes": 1165,
+      "sha256": "a8296da5a3d8e8d3cd6b0d1d8c39f9780c28cf5bf0a35871dce45f5f226e53d0"
     },
     {
-      "path": "reports/checks/v13-integrated-native.log",
+      "path": "reports/checks/v13-index-project-index-language.log",
+      "bytes": 2712,
+      "sha256": "78290804d8d7a4cd9f8f909a9f5f6ff2059bf48a77094bd3cf4d460fe0f99ab2"
+    },
+    {
+      "path": "reports/checks/v13-index-project-index.json",
+      "bytes": 1147,
+      "sha256": "fcdb5e24ad9beace3339595c7738563315d4e6c7d55bc7cc1a3b0a00392649dd"
+    },
+    {
+      "path": "reports/checks/v13-index-project-index.log",
+      "bytes": 5575,
+      "sha256": "2c651b515f1eadf99f6a358a3492ebacf9efd19685a07c48849e9ae8cada0449"
+    },
+    {
+      "path": "reports/checks/v13-index-project-native.json",
+      "bytes": 1149,
+      "sha256": "832b21c9def5692af36a831501214cb66ec0b37a9bdf1dc461e33472fbd89a10"
+    },
+    {
+      "path": "reports/checks/v13-index-project-native.log",
       "bytes": 3194,
       "sha256": "96281b526e6fb1fbe659f7e46c4b348580948b483c37b668f85472b18393317a"
     },
     {
-      "path": "reports/checks/v13-integrated-planning.json",
-      "bytes": 1162,
-      "sha256": "b919e87e634cdf37d111b35d08f8397b38af4bfc7cd35cb232719b338f49af57"
+      "path": "reports/checks/v13-index-project-planning.json",
+      "bytes": 1165,
+      "sha256": "115b3357c45d5a39dda3b2ef326abc3275b8d7f85eabe0ce879413e63361e700"
     },
     {
-      "path": "reports/checks/v13-integrated-planning.log",
+      "path": "reports/checks/v13-index-project-planning.log",
       "bytes": 338,
       "sha256": "1677065a0df775d0f424b1f804905d2f993cd144f1b5bec2286e8c20c9227b8e"
     },
     {
-      "path": "reports/checks/v13-integrated-rust.json",
-      "bytes": 1178,
-      "sha256": "332236ed58c28c6c15f60d0ec477652c9fc1850d2e34a774ee994c8939e328dc"
+      "path": "reports/checks/v13-index-project-project-cli.json",
+      "bytes": 1159,
+      "sha256": "76eac4d2361acd42241433da3d55581d95dcd43aefadb92b4d70f74276c1e515"
     },
     {
-      "path": "reports/checks/v13-integrated-rust.log",
-      "bytes": 19329,
-      "sha256": "9d8ea2ff8e6a1fe54af658996ce0e630b3301ad218ea4ed548b1c7ff3dc527b1"
+      "path": "reports/checks/v13-index-project-project-cli.log",
+      "bytes": 1161,
+      "sha256": "a1794c002929c919becc5094e82a044762d0de1d736ed0a7759ce00267a11e6b"
     },
     {
-      "path": "reports/checks/v13-integrated-values-language.json",
-      "bytes": 1164,
-      "sha256": "2ca0560249776b7fab4bab02308ce9ef96ed54c84c73c0e8d7033c9e794eb9a7"
+      "path": "reports/checks/v13-index-project-project-compile-only.json",
+      "bytes": 1206,
+      "sha256": "ba5b89738372d88450508cfaca94fbbe40680b884da1828d7e7535957dfef3ad"
     },
     {
-      "path": "reports/checks/v13-integrated-values-language.log",
+      "path": "reports/checks/v13-index-project-project-compile-only.log",
+      "bytes": 1050,
+      "sha256": "0a5923d0a5772f5efe1f5464e78a60aef91781ba10db8f2da7bfbaf60a243d14"
+    },
+    {
+      "path": "reports/checks/v13-index-project-rust.json",
+      "bytes": 1181,
+      "sha256": "6967db0f56a1085d3d0b35d4883cbef81b4ea0c92b52830c8b826cd6063e1def"
+    },
+    {
+      "path": "reports/checks/v13-index-project-rust.log",
+      "bytes": 21318,
+      "sha256": "1af531db10570131eb4a6faa15bfe3772d7b4dd71d003ee1329a94cbabc5d8a5"
+    },
+    {
+      "path": "reports/checks/v13-index-project-values-language.json",
+      "bytes": 1167,
+      "sha256": "a43ca1421c04d9721217f79d59543bfe8ffd1b680922dbbe199397cc2f599256"
+    },
+    {
+      "path": "reports/checks/v13-index-project-values-language.log",
       "bytes": 4189,
-      "sha256": "b828e79e0cd9a9c914e2bf19ef6236ed40489125334dd2f7ab9bd6bd421a83e3"
+      "sha256": "9a95a13a2c814561505233d35e2b9984804f1fb950663bb96e6572496c7ef40f"
     },
     {
-      "path": "reports/checks/v13-integrated-whitespace.json",
-      "bytes": 1297,
-      "sha256": "41cc23cbed313668a9d37808251c00a5f05778b4df3449207691600027e36a81"
+      "path": "reports/checks/v13-index-project-whitespace.json",
+      "bytes": 1300,
+      "sha256": "3ca66c7ac4148e47ffd32dc9bd1cc0b1dca9247a83d2fb379e8e6724343aeadb"
     },
     {
-      "path": "reports/checks/v13-integrated-whitespace.log",
+      "path": "reports/checks/v13-index-project-whitespace.log",
       "bytes": 191,
-      "sha256": "0b7dcb8dff1fe0be4322456b4ecffff8a8ce091268b40c8277bd9ba1e0d40b5a"
+      "sha256": "59649c48fda83d1496360aefc75893f33d59aaf5028fb3d4c6304f5d35f83e83"
     },
     {
       "path": "reports/checks/v13-functions-node.json",
@@ -571,34 +688,25 @@
       "sha256": "fd5c7277c1b641b9305eeb9e8cbc982e809213fcaeb01e5e21909e8613a9ac31"
     },
     {
-      "path": "reports/reviews/NATIVE_DIVREM_V13.md",
-      "bytes": 10765,
-      "sha256": "bdba7c6ecbc438cb226fd9fec548e96ff64d71739a47bcedd186a5b7dc6eb152"
+      "path": "reports/reviews/INDEX_SOURCE_V13.md",
+      "bytes": 14972,
+      "sha256": "2cea77db13dad4367aa60530244589579465717bec263a54637eb1bc7f4dbd1b"
     },
     {
-      "path": "reports/reviews/FUNCTION_SOURCE_V13.md",
-      "bytes": 14622,
-      "sha256": "7aeab26070bf588e46703ad3d9a75b1f44745743ef58ff0c67a1cbb853f70220"
-    },
-    {
-      "path": "reports/checks/v13-functions-values-language.json",
-      "bytes": 1163,
-      "sha256": "d8d9810112fbceaf3a37fad1d0179f1147afab35f4ddf6ee0469e2cccd6c8b2e"
-    },
-    {
-      "path": "reports/checks/v13-functions-values-language.log",
-      "bytes": 3835,
-      "sha256": "af11033527deb1859bc2b79bb5c5e6dd21456af9daf79d59a50f86e45aed06b3"
+      "path": "reports/reviews/PROJECT_CLI_V13.md",
+      "bytes": 12952,
+      "sha256": "a79f3ab91a1f603954310246f5f1e71fee31fc38007bd92a9a70730a9fc4fa13"
     }
   ],
   "blockers": [],
   "unsafe_intermediate_states": [
-    "Retained sourceb9d884d precedes later review/evidence/metadata commits; checks are not relabeled to newer HEAD.",
-    "PublicCI atdea427a passedWindows/macOS but failed an incorrect Linux FIFO-discovery diagnostic expectation; corrected harness needs a newCIrun.",
-    "A separate review retained one WSL control deadline failure; direct execution of that exact ELF passed. No broader run-adapter reliability clearance follows.",
-    "Native64MiB arena has no reclamation/runtime loop quota; execution is not a sandbox."
+    "Source797dda6 checks precede later review/evidence/metadata commits; no relabeling to newer HEAD.",
+    "Compile-only project mode explicitly leaves3 native workflow cases not_run; no generated Windows/macOS execution claim.",
+    "Current publicCI evidence is d065460; the new publication needs its own CI.",
+    "Tuple backend/source integration is next and is not covered by the797dda6 checks.",
+    "Native arena has no reclamation/loop quota; filesystem checks assume stable paths; process execution is not a sandbox."
   ],
-  "next_action": "Publish reviewed source/evidence, verify new hostedCI, refresh private checkpoint, then integrate Text/Bytes indexing and new-project initialization.",
+  "next_action": "Publish reviewed indexing/project CLI evidence, verify newCI, refresh ordinary checkpoint, then integrate immutable tuples and continue collections.",
   "next_commands": [
     [
       "git",
@@ -621,7 +729,7 @@
     "reservation": "<git-common-dir>/naja-integration.lock",
     "fencing_generation": 2,
     "status": "held",
-    "observed_at": "2026-10-25T20:21:35.226Z",
+    "observed_at": "2026-10-25T20:40:45.454Z",
     "reclaim": "explicit verified release only"
   },
   "budget": {
@@ -634,11 +742,11 @@
     "provider_quota": {
       "status": "observed",
       "account_shared": true,
-      "used_percent": 34,
-      "remaining_percent": 66,
+      "used_percent": 42,
+      "remaining_percent": 58,
       "window_minutes": 10080,
       "resets_at": "2026-11-01T08:14:13.000Z",
-      "observed_at": "2026-10-25T20:14:05.880Z",
+      "observed_at": "2026-10-25T20:36:38.381Z",
       "source": "Codex app get_usage_limits observation; primary subscription window shared across the account."
     },
     "rate_limit": {
@@ -674,5 +782,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-25T20:21:35.226Z"
+  "updated_at": "2026-10-25T20:40:45.454Z"
 }

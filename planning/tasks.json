@@ -104,7 +104,10 @@
         "reports/checks/v13-boundaries-compiler-boundaries.json",
         "reports/checks/v13-integrated-rust.json",
         "reports/checks/v13-integrated-values-language.json",
-        "reports/checks/v13-integrated-functions-language.json"
+        "reports/checks/v13-integrated-functions-language.json",
+        "reports/checks/v13-index-project-rust.json",
+        "reports/checks/v13-index-project-index-language.json",
+        "reports/checks/v13-index-project-project-cli.json"
       ]
     },
     {
@@ -129,7 +132,10 @@
         "reports/checks/v13-boundaries-compiler-boundaries.json",
         "reports/checks/v13-integrated-rust.json",
         "reports/checks/v13-integrated-values-language.json",
-        "reports/checks/v13-integrated-functions-language.json"
+        "reports/checks/v13-integrated-functions-language.json",
+        "reports/checks/v13-index-project-rust.json",
+        "reports/checks/v13-index-project-index-language.json",
+        "reports/checks/v13-index-project-project-cli.json"
       ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
@@ -155,7 +161,10 @@
         "reports/checks/v13-boundaries-compiler-boundaries.json",
         "reports/checks/v13-integrated-rust.json",
         "reports/checks/v13-integrated-values-language.json",
-        "reports/checks/v13-integrated-functions-language.json"
+        "reports/checks/v13-integrated-functions-language.json",
+        "reports/checks/v13-index-project-rust.json",
+        "reports/checks/v13-index-project-index-language.json",
+        "reports/checks/v13-index-project-project-cli.json"
       ]
     },
     {
@@ -198,7 +207,10 @@
         "reports/checks/v13-boundaries-compiler-boundaries.json",
         "reports/checks/v13-integrated-rust.json",
         "reports/checks/v13-integrated-values-language.json",
-        "reports/checks/v13-integrated-functions-language.json"
+        "reports/checks/v13-integrated-functions-language.json",
+        "reports/checks/v13-index-project-rust.json",
+        "reports/checks/v13-index-project-index-language.json",
+        "reports/checks/v13-index-project-project-cli.json"
       ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
@@ -241,7 +253,10 @@
         "reports/checks/v13-boundaries-compiler-boundaries.json",
         "reports/checks/v13-integrated-rust.json",
         "reports/checks/v13-integrated-values-language.json",
-        "reports/checks/v13-integrated-functions-language.json"
+        "reports/checks/v13-integrated-functions-language.json",
+        "reports/checks/v13-index-project-rust.json",
+        "reports/checks/v13-index-project-index-language.json",
+        "reports/checks/v13-index-project-project-cli.json"
       ],
       "note": "Incremental revision1.3 foundation work; dependencies/full acceptance remain unverified. Not task completion."
     },
@@ -269,7 +284,10 @@
         "reports/checks/v13-boundaries-compiler-boundaries.json",
         "reports/checks/v13-integrated-rust.json",
         "reports/checks/v13-integrated-values-language.json",
-        "reports/checks/v13-integrated-functions-language.json"
+        "reports/checks/v13-integrated-functions-language.json",
+        "reports/checks/v13-index-project-rust.json",
+        "reports/checks/v13-index-project-index-language.json",
+        "reports/checks/v13-index-project-project-cli.json"
       ],
       "note": "Basic native run/test CLI slice is in progress; libraries/module/full CLI obligations remain open."
     },

@@ -239,7 +239,11 @@
         "tests/compiler/",
         "bootstrap/driver/src/manifest.rs",
         "bootstrap/driver/tests/manifest.rs",
-        "bootstrap/driver/tests/project.rs"
+        "bootstrap/driver/tests/project.rs",
+        "bootstrap/driver/src/doctor.rs",
+        "bootstrap/driver/src/scaffold.rs",
+        "bootstrap/driver/tests/scaffold.rs",
+        "scripts/test-project-cli.mjs"
       ],
       "status": "active",
       "history": [
@@ -436,16 +440,16 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/native-index-v13",
-      "base_commit": "0168f4605a5208d71138233887ef8ca25039929a",
+      "branch": "agent/native-tuples-v13",
+      "base_commit": "834014bf178471958fee0d7cefa2e9621dfce634",
       "worktree": "../naja-worktrees/seed-setup",
       "paths": [
         "backends/native/",
-        "scripts/test-index.mjs",
-        "tests/index/"
+        "scripts/test-tuples.mjs",
+        "tests/tuples/"
       ],
-      "status": "active",
-      "deliverable": "Native scalar Text/Bytes indexing, exact signed integer indices and explicit bounds/span guards; no slicing or containers.",
+      "status": "completed",
+      "deliverable": "Immutable Tuple backend with len/truth/exact index; unsupported print/comparison/arithmetic explicitly reject. Core7b84d3b + separate height7ab20ff + proof38e3b13 await root integration.",
       "acceptance_commands": [
         [
           "node",
@@ -464,7 +468,7 @@
         "planning/",
         "Cargo.lock"
       ],
-      "handoff": "Core0763a9a and separately authorized height arm ee8203d await integration; values.rs ownership already returned.",
+      "handoff": "Backend and height paths explicitly released; root owns source integration.",
       "history": [
         {
           "branch": "agent/dynamic-values-v13",
@@ -508,6 +512,17 @@
           ],
           "status": "completed",
           "integrated_commit": "5193e9f/92d529c"
+        },
+        {
+          "branch": "agent/native-index-v13",
+          "base_commit": "0168f4605a5208d71138233887ef8ca25039929a",
+          "paths": [
+            "backends/native/",
+            "scripts/test-index.mjs",
+            "tests/index/"
+          ],
+          "status": "completed",
+          "integrated_commit": "bc52279/bf46638/36ea3cd"
         }
       ]
     },
@@ -598,15 +613,15 @@
     {
       "task_id": "T11",
       "owner": "/root/frontend",
-      "branch": "agent/functions-source-harness-v13",
-      "base_commit": "92d529c272dcbf34f6394b9cffe8616e8b347ab8",
+      "branch": "agent/tuples-source-harness-v13",
+      "base_commit": "797dda666fa41bb4924c8011a37603e84c1b0662",
       "worktree": "../naja-worktrees/frontend",
       "paths": [
-        "scripts/test-functions-language.mjs",
-        "tests/functions-source/"
+        "scripts/test-tuples-language.mjs",
+        "tests/tuples-source/"
       ],
-      "status": "completed",
-      "deliverable": "Bounded actual-source/native function cases with independent oracles, original spans and mutated-source controls; final report pending.",
+      "status": "active",
+      "deliverable": "Frozen actual-source tuple cases; preparation only until root supplies integrated source.",
       "acceptance_commands": [
         [
           "cargo",
@@ -635,9 +650,28 @@
             "reports/reviews/DYNAMIC_SOURCE_V13.md"
           ],
           "status": "completed"
+        },
+        {
+          "branch": "agent/functions-source-harness-v13",
+          "base_commit": "92d529c272dcbf34f6394b9cffe8616e8b347ab8",
+          "paths": [
+            "scripts/test-functions-language.mjs",
+            "tests/functions-source/"
+          ],
+          "status": "completed",
+          "integrated_commit": "bb7acce/1c35fda"
+        },
+        {
+          "branch": "agent/index-source-harness-v13",
+          "base_commit": "834014bf178471958fee0d7cefa2e9621dfce634",
+          "paths": [
+            "scripts/test-index-language.mjs",
+            "tests/index-source/"
+          ],
+          "status": "completed",
+          "integrated_commit": "c55c484/0a746e1"
         }
-      ],
-      "integrated_commit": "bb7acce/1c35fda"
+      ]
     },
     {
       "task_id": "T12",
@@ -650,7 +684,7 @@
         "bootstrap/driver/tests/scaffold.rs",
         "tests/project/INIT.md"
       ],
-      "status": "active",
+      "status": "completed",
       "deliverable": "Exclusive new-directory scaffold with validated manifest/source and nonoverwriting files; no execution/downloads.",
       "forbidden_paths": [
         "bootstrap/driver/src/lib.rs",
@@ -684,19 +718,20 @@
           "status": "completed",
           "integrated_commit": "701ae41"
         }
-      ]
+      ],
+      "integrated_commit": "b404618"
     },
     {
       "task_id": "T11",
       "owner": "/root/recovery_review",
-      "branch": "agent/function-source-review-v13",
-      "base_commit": "0168f4605a5208d71138233887ef8ca25039929a",
+      "branch": "agent/project-cli-review-v13",
+      "base_commit": "797dda666fa41bb4924c8011a37603e84c1b0662",
       "worktree": "../naja-worktrees/recovery-review",
       "paths": [
-        "reports/reviews/FUNCTION_SOURCE_V13.md"
+        "reports/reviews/PROJECT_CLI_V13.md"
       ],
       "status": "completed",
-      "deliverable": "Independent read-only actual function source/native semantic and stack-bound review; report only.",
+      "deliverable": "Independent doctor/init path, empty-PATH, native workflow and partial-output collision review; authoring failures retained.",
       "history": [
         {
           "branch": "agent/divrem-review-v13",
@@ -706,9 +741,27 @@
           ],
           "status": "completed",
           "integrated_commit": "9fd3be0"
+        },
+        {
+          "branch": "agent/function-source-review-v13",
+          "base_commit": "0168f4605a5208d71138233887ef8ca25039929a",
+          "paths": [
+            "reports/reviews/FUNCTION_SOURCE_V13.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "935d397"
+        },
+        {
+          "branch": "agent/index-source-review-v13",
+          "base_commit": "834014bf178471958fee0d7cefa2e9621dfce634",
+          "paths": [
+            "reports/reviews/INDEX_SOURCE_V13.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "f8127f6"
         }
       ],
-      "integrated_commit": "935d397"
+      "integrated_commit": "3a8a037"
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."
