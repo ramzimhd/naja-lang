@@ -7,7 +7,7 @@
   "prepared_at": "2026-10-25",
   "native_target": "x86_64-unknown-linux-gnu",
   "harness_path": "scripts/test-rationals-language.mjs",
-  "harness_sha256": "e1006441297c00f592d73c2d6be4c92a7b7f4456ba4d1891a827fa2b50803dc5",
+  "harness_sha256": "27ba96c217d30e2a285cae6cd5c01818767868f37783e96a32ae8244a1931e5f",
   "fixture_index_sha256": "c1ecb856a751837fe86df003cdca88f8f045cc72b332f22c0ac2047a6f9041e2",
   "static_fixture_files": 10,
   "case_count": 220,
@@ -1304,8 +1304,8 @@
     },
     {
       "name": "discarded-ratio-and-return",
-      "source_bytes": 197,
-      "source_sha256": "9ec65064118df7c2a0f80c2f31d4422b9b3ab3d5a68a629a743e7650110fa6d5",
+      "source_bytes": 207,
+      "source_sha256": "5f088c3398a7245c1dce88215070ea08741d7a77d793002374d23a3a6e1d902b",
       "extension": "naja",
       "project": false,
       "input_bytes": null,
@@ -4293,6 +4293,66 @@
       "expected_stdout_sha256": "d0d729a093ba914dd4924b65f6012cbf992aaa930f3fbfc0e5b3b6981836bb8f",
       "expected_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "result": "not_run"
+    }
+  ],
+  "corrections": [
+    {
+      "kind": "authorized_preparation_source_repair_after_retained_failed_run",
+      "failure_report_commit": "17522596d6fbd551b8edf88b3eafa708cf9c7ec4",
+      "failed_source_commit": "5ee64ec1fb02968964a81b0f07c086ae0578c684",
+      "retained_failure_path": "tests/rationals-source/FIRST_RUN_FAILURE.json",
+      "retained_failure_sha256": "8177b5f7c9032f0d17450b59ab96430ef61b00d1256c3aa36d2d9f061a0ec5f7",
+      "original_preparation_sha256": "14a957613189efd8f370768c53ad01a1702acdb2f42e7265698ff9806cb64254",
+      "original_harness_sha256": "e1006441297c00f592d73c2d6be4c92a7b7f4456ba4d1891a827fa2b50803dc5",
+      "observed_original_outcomes": {
+        "passed": 33,
+        "failed": 1,
+        "not_run": 186
+      },
+      "authorization": "Integrator authorized only fixture function value to make_ratio and its call; no compiler change, observer/result change, expectation/budget change, or second native execution.",
+      "reason": "The original fixture assigned value = value(), correctly rejected as prohibited static function-name rebinding. Renaming the fixture function preserves its discarded construction, returned Ratio, effect order and expected stdout.",
+      "changed_case": {
+        "index": 33,
+        "old": {
+          "name": "discarded-ratio-and-return",
+          "source_bytes": 197,
+          "source_sha256": "9ec65064118df7c2a0f80c2f31d4422b9b3ab3d5a68a629a743e7650110fa6d5",
+          "extension": "naja",
+          "project": false,
+          "input_bytes": null,
+          "input_sha256": null,
+          "control_kind": null,
+          "expectation": "native_execution",
+          "expected_exit": 0,
+          "expected_diagnostic": null,
+          "expected_stdout_sha256": "3d16ce325b5f76ba4cd3b4f67d1bfd6c900d76a48026a8ccb405caf20d9ddd26",
+          "expected_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "revised": {
+          "name": "discarded-ratio-and-return",
+          "source_bytes": 207,
+          "source_sha256": "5f088c3398a7245c1dce88215070ea08741d7a77d793002374d23a3a6e1d902b",
+          "extension": "naja",
+          "project": false,
+          "input_bytes": null,
+          "input_sha256": null,
+          "control_kind": null,
+          "expectation": "native_execution",
+          "expected_exit": 0,
+          "expected_diagnostic": null,
+          "expected_stdout_sha256": "3d16ce325b5f76ba4cd3b4f67d1bfd6c900d76a48026a8ccb405caf20d9ddd26",
+          "expected_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "unchanged_case_identity_count": 219,
+      "unchanged_fixture_index_sha256": "c1ecb856a751837fe86df003cdca88f8f045cc72b332f22c0ac2047a6f9041e2",
+      "corrected_preparation_source_commit": "17522596d6fbd551b8edf88b3eafa708cf9c7ec4",
+      "corrected_local_preparation_artifacts": {
+        "directory": "target/rationals-language-jtpiid",
+        "plan_sha256": "f2970a84ec2419136c1af9a3962d49d64a6461a35dea7ed6afad9c9b5119cee0",
+        "summary_sha256": "f8bbed6c0461e05bc4fbff4b70f49342d725c2f1d4269a64b3d1d03a91309393"
+      },
+      "corrected_native_outcomes": "All 220 are not_run until a new exact integrated source pin is supplied."
     }
   ]
 }

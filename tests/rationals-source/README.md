@@ -149,3 +149,31 @@ dependency is used. No filesystem sandbox or general OS I/O deadline is claimed.
 The inherited untracked `bootstrap/frontend/Cargo.lock` is preserved and is not
 part of this task. Preparation is not implementation verification, complete
 Python compatibility, self-hosting, FC1, a release gate or HATCH acceptance.
+
+## First run retained; one authorized preparation correction
+
+The unchanged first run at
+`5ee64ec1fb02968964a81b0f07c086ae0578c684` stopped at 33 passed, 1 failed and
+186 `not_run`. Its source, original identities, commands, outputs and failure
+are preserved in `FIRST_RUN.md`, byte-identical `FIRST_RUN_FAILURE.json` and
+`FIRST_RUN_ARTIFACTS.json`, committed separately as
+`17522596d6fbd551b8edf88b3eafa708cf9c7ec4` before any repair.
+
+The authored `discarded-ratio-and-return` case defined `value()` and then emitted
+`value = value()`, correctly refused by the existing static function-name rule.
+The integrator authorized only renaming that fixture function to `make_ratio`
+and updating its call. The observation assignment remains `value = ...`; the
+discarded construction, returned Ratio, expected bytes, limits and all other
+219 source identities remain unchanged. No compiler code or acceptance rule
+changed.
+
+The corrected case has 207 bytes and SHA-256
+`5f088c3398a7245c1dce88215070ea08741d7a77d793002374d23a3a6e1d902b`.
+The corrected harness SHA-256 is
+`27ba96c217d30e2a285cae6cd5c01818767868f37783e96a32ae8244a1931e5f`.
+`PREPARATION.json` retains the original case and preparation/harness identities,
+all 220 failed-run states through the original failure record, and the exact
+single-case comparison. Node-only preparation rechecked all ten fixture hashes,
+all costs and all case identities under `target/rationals-language-jtpiid`.
+All corrected 220 native outcomes are `not_run`; no second native run is allowed
+until the integrator supplies a new exact integrated source pin.
