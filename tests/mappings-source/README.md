@@ -164,3 +164,9 @@ descriptor/alignment overhead. Work-boundary cases remain far below the existing
 64 MiB arena and no resource allowance is increased. All 202 revision-3 native
 outcomes remain `not_run` pending a new exact integrated source pin; sequence
 repetition support is not claimed.
+
+The exact-source run of revision 3 passed all 202 revised cases at
+`50970ba8a46f000cb6a57e5cb454228f952aeef1`. Its scoped observations are retained
+in [RUN_2026-10-25.md](RUN_2026-10-25.md) and
+[RESULTS_2026-10-25.json](RESULTS_2026-10-25.json). The original two failed runs
+remain failed and unchanged; no gate promotion follows from this source report.
