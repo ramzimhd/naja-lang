@@ -76,6 +76,11 @@ exited 0, then `releaseReservation` returned `released: true`, generation 2.
 Inspection confirmed no reservation held. All disposable writes stopped at that
 release. A subsequent read-only assessment exited 0 and remained ready.
 
+These readiness observations apply to the exact pre-fix helper digest listed
+above. A later change to the helper's index/fingerprint representation requires
+revalidation; the old checkpoint records were retained and were not
+automatically upgraded. No checkpoint rewrite was attempted after release.
+
 `last_verified_source` remained `null` throughout; checkpointing did not invent
 or advance retained verification. Context, provider quota, rate limit, execution
 deadline and spend telemetry all remained `null`. The checkpoint's `complete`
