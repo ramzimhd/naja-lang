@@ -1,0 +1,17 @@
+# Development fixture: independent locals, nested return, and None fallthrough.
+set 0 t:6d61696e2d6c6f63616c
+print 20 22 call:0:2
+print %0
+print 6 call:1:1
+print call:2:0
+function 2
+set 2 %0 %1 +
+return %2
+end
+function 1
+set 1 %0 2 *
+return %1 0 call:0:2
+end
+function 0
+set 0 999
+end

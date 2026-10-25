@@ -5,6 +5,12 @@ descriptors with shared integer kernels, truthiness, short-circuit operands and
 typed operation failures. Its supported semantics, private layout, temporary
 arena limits and native tests are documented in [dynamic values](../../tests/dynamic/README.md).
 
+`dynamic::emit_program` adds direct first-order native calls with independent
+128-slot frames, positional arguments, return and None fallthrough. The private
+ABI, separate call/stack budgets and executed tests are documented in
+[native functions](../../tests/functions/README.md). Existing slice-based
+`dynamic::emit_elf` remains functionless and rejects calls/returns.
+
 The original `naja_native::emit_elf` keeps the explicit checked-i64 IR and overflow
 policy. `naja_native::hosted::emit_elf` accepts a separate hosted-integer IR with
 `Integer(String)`, locals, negation, addition/subtraction/multiplication, signed
@@ -80,6 +86,8 @@ I/O failure, deterministic output and injected literal/carry mutants. Mutants mu
 be detected; they are test artifacts, never accepted project behavior.
 
 Retain exact commit, host/target, commands, versions, exits, logs and hashes when
-recording integrated evidence. The IR tests do not certify a frontend parser,
-functions, strings, collections, general objects, modules or another emitted OS.
+recording integrated evidence. The hosted-integer IR tests do not certify a
+frontend parser, functions, strings, collections, general objects, modules or
+another emitted OS. The separate dynamic and first-order function checks
+establish only their documented backend slices.
 Machine encoding references: [Intel instruction manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html).
