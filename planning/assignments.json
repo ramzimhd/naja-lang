@@ -35,14 +35,13 @@
     {
       "task_id": "T05",
       "owner": "/root/frontend",
-      "branch": "agent/frontend-literals-v13",
-      "worktree": "../naja-worktrees/frontend",
+      "branch": "agent/exact-literal-frontend-v13",
+      "worktree": "../naja-worktrees/exact-literal-frontend",
       "paths": [
         "bootstrap/frontend/",
-        "tests/syntax/",
-        "compatibility/literals/"
+        "tests/syntax/"
       ],
-      "status": "completed",
+      "status": "active",
       "history": [
         {
           "branch": "agent/frontend-T05",
@@ -75,12 +74,45 @@
           ],
           "status": "completed",
           "integrated_commit": "0ef8dc1f904fd5efbd2948357dbb7ab20c36ebfb"
+        },
+        {
+          "task_id": "T05",
+          "owner": "/root/frontend",
+          "branch": "agent/frontend-literals-v13",
+          "worktree": "../naja-worktrees/frontend",
+          "paths": [
+            "bootstrap/frontend/",
+            "tests/syntax/",
+            "compatibility/literals/"
+          ],
+          "status": "completed",
+          "base_commit": "0ef8dc1f904fd5efbd2948357dbb7ab20c36ebfb",
+          "acceptance": "Dialect-aware lossless brace/named block lexer/CST; original Python tests plus mixed/negative/source-span fixtures.",
+          "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp.",
+          "deliverable": "Shared specification-derived text/bytes literal decoding with exact source spans; no Python oracle.",
+          "acceptance_commands": [
+            [
+              "cargo",
+              "test",
+              "-p",
+              "naja-frontend",
+              "--locked",
+              "--offline"
+            ]
+          ],
+          "forbidden_paths": [
+            "Cargo.lock",
+            "bootstrap/driver/",
+            "planning/"
+          ],
+          "handoff": "Scoped commit/report to sole integrator.",
+          "integrated_commit": "4d0e07f"
         }
       ],
-      "base_commit": "0ef8dc1f904fd5efbd2948357dbb7ab20c36ebfb",
+      "base_commit": "546f8e366bba182263afd5be1cb4068c15356ea7",
       "acceptance": "Dialect-aware lossless brace/named block lexer/CST; original Python tests plus mixed/negative/source-span fixtures.",
       "recovery": "Inspect branch/worktree and atomic integrator reservation before resuming; never reclaim by timestamp.",
-      "deliverable": "Shared specification-derived text/bytes literal decoding with exact source spans; no Python oracle.",
+      "deliverable": "Shared TypedDecimal tokens/original spans and frozen maximal numeric grammar. No native proof yet.",
       "acceptance_commands": [
         [
           "cargo",
@@ -96,8 +128,9 @@
         "bootstrap/driver/",
         "planning/"
       ],
-      "handoff": "Scoped commit/report to sole integrator.",
-      "integrated_commit": "4d0e07f"
+      "handoff": "Only frontend and syntax paths; root owns source lowering and old source-harness migrations.",
+      "integrated_commit": "4d0e07f",
+      "contract_commit": "3fa7e09ceb82365948dd2f9793cdbf44dc5dc12f"
     },
     {
       "task_id": "T04",
@@ -267,8 +300,6 @@
         "tests/objects-source/",
         "tools/distribution/",
         "tests/distribution/",
-        "bootstrap/frontend/",
-        "tests/syntax/",
         "docs/decisions/0006-explicit-integer-literal-capability.md",
         "scripts/test-mappings.mjs",
         "tests/mappings/",
@@ -281,7 +312,8 @@
         "scripts/test-rationals.mjs",
         "tests/rationals/",
         "scripts/test-rationals-language.mjs",
-        "tests/rationals-source/"
+        "tests/rationals-source/",
+        "docs/decisions/0008-exact-decimal-literal-capability.md"
       ],
       "status": "active",
       "history": [
@@ -314,7 +346,7 @@
       ],
       "base_commit": "a75364aa3b7989117c1c1c631ba507ca9bfdafbb",
       "acceptance": "Integrate reviewed scoped commits; execute native block equivalence; retain evidence against committed source and contract 1.3.",
-      "recovery": "Sole integrator holds actual fence2. Private checkpoint22 retained source29be1ef on clean469dda5 before metadata. Released Rational worktrees/branches and all source pins remain preserved. Exact decimal suffix follow-up is read-only contract review; no contributor compiler edits yet."
+      "recovery": "Sole integrator fence2. Exact literal driver/ledger work is isolated in ../naja-worktrees/exact-literal-integration branch agent/exact-literal-integration-v13. Frontend and new source harness remain contributor-owned in separate worktrees; no overlap. Retained verified source29be1ef, published487901d."
     },
     {
       "task_id": "T35",
@@ -521,16 +553,15 @@
     {
       "task_id": "T11",
       "owner": "/root/seed_setup",
-      "branch": "agent/native-rationals-v13",
-      "base_commit": "936865c7ef4dd566b4e4523089b1e6bad09534fe",
-      "worktree": "../naja-worktrees/native-rationals",
+      "branch": "agent/exact-literal-source-v13",
+      "base_commit": "546f8e366bba182263afd5be1cb4068c15356ea7",
+      "worktree": "../naja-worktrees/exact-literal-source",
       "paths": [
-        "backends/native/",
-        "scripts/test-rationals.mjs",
-        "tests/rationals/"
+        "scripts/test-exact-literals-language.mjs",
+        "tests/exact-literals-source/"
       ],
-      "status": "completed",
-      "deliverable": "Exact normalized native Rational core and frozen first-run101 proof; Rust276 and ten unchanged native regressions passed at separately recorded pins.",
+      "status": "active",
+      "deliverable": "Independent exact-decimal BigInt/ledger/source proof preparation, all outcomes not_run until root supplies exact integrated source.",
       "acceptance_commands": [
         [
           "cargo",
@@ -546,11 +577,12 @@
         ]
       ],
       "forbidden_paths": [
-        "bootstrap/driver/",
+        "bootstrap/",
+        "backends/",
         "planning/",
         "Cargo.lock"
       ],
-      "handoff": "All assigned paths explicitly released. Complete display, hashing, Decimal, algebra and acceptance remain open.",
+      "handoff": "Preparation only; no compiler/native execution before assigned source pin.",
       "history": [
         {
           "branch": "agent/dynamic-values-v13",
@@ -712,9 +744,45 @@
           ],
           "status": "completed",
           "integrated_commit": "9666ecf"
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/seed_setup",
+          "branch": "agent/native-rationals-v13",
+          "base_commit": "936865c7ef4dd566b4e4523089b1e6bad09534fe",
+          "worktree": "../naja-worktrees/native-rationals",
+          "paths": [
+            "backends/native/",
+            "scripts/test-rationals.mjs",
+            "tests/rationals/"
+          ],
+          "status": "completed",
+          "deliverable": "Exact normalized native Rational core and frozen first-run101 proof; Rust276 and ten unchanged native regressions passed at separately recorded pins.",
+          "acceptance_commands": [
+            [
+              "cargo",
+              "test",
+              "-p",
+              "naja-native",
+              "--locked",
+              "--offline"
+            ],
+            [
+              "node",
+              "scripts/test-objects.mjs"
+            ]
+          ],
+          "forbidden_paths": [
+            "bootstrap/driver/",
+            "planning/",
+            "Cargo.lock"
+          ],
+          "handoff": "All assigned paths explicitly released. Complete display, hashing, Decimal, algebra and acceptance remain open.",
+          "integrated_commit": "ae4cf0cd653934fccbd25666ff4bb5bdf5607e1e"
         }
       ],
-      "integrated_commit": "ae4cf0cd653934fccbd25666ff4bb5bdf5607e1e"
+      "integrated_commit": "ae4cf0cd653934fccbd25666ff4bb5bdf5607e1e",
+      "contract_commit": "3fa7e09ceb82365948dd2f9793cdbf44dc5dc12f"
     },
     {
       "task_id": "T12",
@@ -1165,14 +1233,14 @@
     {
       "task_id": "T11",
       "owner": "/root/class_evidence",
-      "branch": "agent/rationals-review-v13",
-      "worktree": "../naja-worktrees/rationals-review",
+      "branch": "agent/exact-literal-review-v13",
+      "worktree": "../naja-worktrees/exact-literal-review",
       "paths": [
-        "reports/reviews/RATIONALS_V13.md"
+        "reports/reviews/EXACT_LITERALS_V13.md"
       ],
-      "status": "completed",
+      "status": "active",
       "integrated_commit": "ae4cf0cd653934fccbd25666ff4bb5bdf5607e1e",
-      "deliverable": "Independent61 native outcomes passed:31 source,22 exact-work and8 structural/full-validation controls.",
+      "deliverable": "Independent expansion/accounting/semantic review and frozen probes; no native execution before root source pin.",
       "history": [
         {
           "branch": "agent/class-fix-evidence-v13",
@@ -1213,10 +1281,26 @@
           "status": "completed",
           "integrated_commit": "5518320",
           "deliverable": "Independent47 typed integer literal outcomes passed; no fullprotocol/quantity/gate promotion."
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root/class_evidence",
+          "branch": "agent/rationals-review-v13",
+          "worktree": "../naja-worktrees/rationals-review",
+          "paths": [
+            "reports/reviews/RATIONALS_V13.md"
+          ],
+          "status": "completed",
+          "integrated_commit": "ae4cf0cd653934fccbd25666ff4bb5bdf5607e1e",
+          "deliverable": "Independent61 native outcomes passed:31 source,22 exact-work and8 structural/full-validation controls.",
+          "execution_source": "5ee64ec1fb02968964a81b0f07c086ae0578c684",
+          "handoff": "Only scoped report changed; paths released."
         }
       ],
       "execution_source": "5ee64ec1fb02968964a81b0f07c086ae0578c684",
-      "handoff": "Only scoped report changed; paths released."
+      "handoff": "Only scoped review report may be tracked; no compiler/source-harness edits.",
+      "base_commit": "546f8e366bba182263afd5be1cb4068c15356ea7",
+      "contract_commit": "3fa7e09ceb82365948dd2f9793cdbf44dc5dc12f"
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."
