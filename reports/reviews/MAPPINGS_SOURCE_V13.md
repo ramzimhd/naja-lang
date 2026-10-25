@@ -10,7 +10,7 @@ The separate clean branch `agent/mappings-source-review-v13` started at that
 source. Only this report is committed. The review read AGENTS, the mapping
 contract, frozen 202-case preparation and relevant shared parser/value/runtime
 paths. It did not run the separate 202-case suite, alter its fixtures, or run
-the full Rust test suite. No 266-test result is claimed here.
+the full Rust test suite; no full Rust-suite result is claimed here.
 
 ## Scope and actual observations
 
