@@ -2,6 +2,7 @@ mod doctor;
 mod execution;
 mod project;
 mod scaffold;
+mod source_reports;
 
 use execution::{Outcome, Runner};
 use std::{
@@ -13,7 +14,7 @@ use std::{
     time::Duration,
 };
 
-const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja doctor [--json] [--runner direct|wsl]\n  naja init NEW_DIRECTORY\n  naja lex SOURCE\n  naja check SOURCE [--project-root PATH]\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE [--project-root PATH]\n  naja run SOURCE [--runner wsl] [--timeout-ms N] [--project-root PATH] [-- ARGS...]\n  naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N] [--project-root PATH]\n\nUse naja COMMAND --help for command options and limits.\nThis seed supports native arbitrary-precision decimal integers, text, bytes, booleans and None; +, -, *, //, %, comparisons/chains, not/and/or, assignment, truthy if/else/while, assertions, print, len(text/bytes/tuple) and Text/Bytes/Tuple[index].\nNegative indices count from the end; text indexing returns one Unicode scalar and bytes indexing returns Int. Bounds report NJA207 and exit 107; slices remain unsupported.\nParenthesized tuples support up to 128 elements, len, truth and indexing; (value) remains grouping and (value,) is a singleton. Tuple display/comparison/numeric operations report type exit 105.\nThe hosted arena is limited to 64 MiB; exhaustion reports NJA203 and exits 103.\nGeneral division work is bounded to 1000000 numerator/divisor limb pairs; exceeding it exits 103. Division by zero reports NJA206 and exits 106.\nExplicit from naja.core import i64 selects the separate checked-i64 slice; mixed domains remain unsupported.\n.naja selects edition 2026.1; .py keeps its separate compatibility dialect.\n--project-root PATH explicitly activates the owning .naja project alias table; no ambient discovery or .py alias activation.\nFirst-order top-level functions support plain positional parameters, self/earlier calls, return/fallthrough None and isolated local frames. Calls are bounded to depth 256 and 2 MiB source stack (4 KiB helper reserve); ordinary OS stack availability is required.\nGlobals/closures/defaults/kwargs/function values, floats, mutable collections, classes, complete modules/types, full grammar and self-hosting remain unimplemented.\n";
+const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja doctor [--json] [--runner direct|wsl]\n  naja init NEW_DIRECTORY\n  naja lex SOURCE\n  naja check SOURCE [--json] [--project-root PATH]\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE [--project-root PATH]\n  naja run SOURCE [--runner wsl] [--timeout-ms N] [--project-root PATH] [-- ARGS...]\n  naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N] [--project-root PATH]\n\nUse naja COMMAND --help for command options and limits.\nThis seed supports native arbitrary-precision decimal integers, text, bytes, booleans and None; +, -, *, //, %, comparisons/chains, not/and/or, assignment, truthy if/else/while, assertions, print, len(text/bytes/tuple) and Text/Bytes/Tuple[index].\nNegative indices count from the end; text indexing returns one Unicode scalar and bytes indexing returns Int. Bounds report NJA207 and exit 107; slices remain unsupported.\nParenthesized tuples support up to 128 elements, len, truth and indexing; (value) remains grouping and (value,) is a singleton. Tuple display/comparison/numeric operations report type exit 105.\nThe hosted arena is limited to 64 MiB; exhaustion reports NJA203 and exits 103.\nGeneral division work is bounded to 1000000 numerator/divisor limb pairs; exceeding it exits 103. Division by zero reports NJA206 and exits 106.\nExplicit from naja.core import i64 selects the separate checked-i64 slice; mixed domains remain unsupported.\n.naja selects edition 2026.1; .py keeps its separate compatibility dialect.\n--project-root PATH explicitly activates the owning .naja project alias table; no ambient discovery or .py alias activation.\nFirst-order top-level functions support plain positional parameters, self/earlier calls, return/fallthrough None and isolated local frames. Calls are bounded to depth 256 and 2 MiB source stack (4 KiB helper reserve); ordinary OS stack availability is required.\nGlobals/closures/defaults/kwargs/function values, floats, mutable collections, classes, complete modules/types, full grammar and self-hosting remain unimplemented.\n";
 const RUN_HELP: &str = "Usage: naja run SOURCE [--runner wsl] [--timeout-ms N] [--project-root PATH] [-- ARGS...]\n\nCompile to a new temporary Linux x86-64 ELF and execute with literal argument boundaries.\nLinux x86-64 runs directly. Windows requires explicit --runner wsl and a Linux x86-64 WSL distribution with /usr/bin/{uname,wslpath,chmod,timeout}.\nThe default program deadline is 5000 ms; --timeout-ms accepts 1..60000. Temporary ELF size is limited to 16 MiB.\nChild stdin/stdout/stderr are inherited. Numeric child exits are preserved; a directly observed signal returns 128+signal and is reported on stderr.\nWSL exposes translated statuses, not an exact child signal. Its target-side timeout returns 124, which cannot be distinguished from a child exit 124; a forced timeout may return 137.\n--project-root PATH activates only the owning .naja aliases; SOURCE remains relative to the current directory.\nTemporary files are removed after execution. Execution uses ordinary OS rights and is not a sandbox.\n";
 const TEST_HELP: &str = "Usage: naja test DIRECTORY|SOURCE [--runner wsl] [--filter TEXT] [--json] [--timeout-ms N] [--project-root PATH]\n\nA program-file test passes when compilation succeeds and native execution exits zero. This is not a test-function framework.\nDirectory discovery recursively selects test_*.naja and test_*.py; explicit SOURCE accepts either extension. Names sort by Unicode UTF-8 relative path; --filter is a case-sensitive substring.\nSymlinks are skipped (an explicit symlink is rejected); limits are 256 files, 4096 entries and depth 16, applied before filtering. No selected tests is an error.\nEach program has null stdin, a default 5000 ms deadline (1..60000 via --timeout-ms), and at most 65536 retained bytes per output stream. Exceeding the output limit fails the case.\n--json emits one schema-version-1 report on stdout, including compile/runtime failures, exact observed exits/signals, UTF-8 display validity flags and lossless stdout_hex/stderr_hex output bytes. Operational/argument errors use stderr.\n--project-root PATH is checked for each owning .naja module; .py cases fail explicitly when activation is requested.\nTests run sequentially under ordinary OS rights, not in a sandbox. Windows requires --runner wsl; WSL signal information is unavailable and status 124 means timeout-or-child-exit-124.\n";
 
@@ -35,7 +36,7 @@ fn command_help(operation: &str) -> String {
         "init" => "Usage: naja init NEW_DIRECTORY\n\nCreate a new leaf project under an existing ordinary local parent, with a validated manifest, main.naja and test_smoke.naja.\nExisting directories, files and links are refused. Parent traversal, links/reparse points and device/network paths are unsupported.\nSource is checked before writing and never executed automatically. Partial IO failures preserve created output for inspection.\nNames support Unicode and spaces within a 128-byte portable filename limit. No tools, dependencies or network services are installed.\n".into(),
         "run" => RUN_HELP.into(), "test" => TEST_HELP.into(),
         "build" => "Usage: naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE [--project-root PATH]\n\nCompile the experimental native value subset to Linux x86-64 ELF without execution. Refuses to overwrite any existing output. Source is UTF-8 .py or .naja, at most 1 MiB.\n".into(),
-        "check" => "Usage: naja check SOURCE [--project-root PATH]\n\nCheck the experimental native value subset without executing user code or creating a native artifact. Source is UTF-8 .py or .naja, at most 1 MiB.\n".into(),
+        "check" => "Usage: naja check SOURCE [--json] [--project-root PATH]\n\nCheck the experimental native value subset without executing user code or creating a native artifact. Source is UTF-8 .py or .naja, at most 1 MiB.\n--json reports schema 1 original-source ranges as zero-based UTF-16 positions, at most 32 diagnostics and an omitted count. Exit 0 means passed; semantic failure returns JSON and exit 1. Input/project/usage errors remain stderr and exit 1 without JSON.\n".into(),
         "lex" => "Usage: naja lex SOURCE\n\nPrint original token spans for UTF-8 .py or .naja source, at most 1 MiB. Does not execute user code.\n".into(),
         _ => HELP.into(),
     }
@@ -129,16 +130,17 @@ fn run() -> Result<i32, String> {
         }
         return Ok(outcome.code());
     }
-    let (output, project_root) = if operation == "build" {
+    let (output, project_root, check_json) = if operation == "build" {
         let build = parse_build_options(&arguments[2..])?;
-        (Some(build.output), build.project_root)
+        (Some(build.output), build.project_root, false)
     } else if operation == "check" {
-        (None, parse_project_option(&arguments[2..])?)
+        let check = parse_check_options(&arguments[2..])?;
+        (None, check.project_root, check.json)
     } else {
         if arguments.len() != 2 {
             return Err("NJA001: unexpected arguments".into());
         }
-        (None, None)
+        (None, None, false)
     };
     let dialect = source_dialect(path)?;
     let aliases = module_aliases(path, dialect, project_root.as_deref())?;
@@ -160,8 +162,14 @@ fn run() -> Result<i32, String> {
         return Ok(0);
     }
     if operation == "check" {
-        naja_seed::check_with_aliases(&source, dialect, aliases.as_ref())
-            .map_err(|errors| diagnostics(path, &source, &errors))?;
+        let result = naja_seed::check_with_aliases(&source, dialect, aliases.as_ref());
+        if check_json {
+            let passed = result.is_ok();
+            let errors = result.err().unwrap_or_default();
+            println!("{}", source_reports::json(path, &source, passed, &errors));
+            return Ok(if passed { 0 } else { 1 });
+        }
+        result.map_err(|errors| diagnostics(path, &source, &errors))?;
         println!("Checked experimental native subset: {}", path.display());
         return Ok(0);
     }
@@ -206,12 +214,33 @@ fn project_value(value: &OsString) -> Result<PathBuf, String> {
     Ok(PathBuf::from(value))
 }
 
-fn parse_project_option(arguments: &[OsString]) -> Result<Option<PathBuf>, String> {
-    match arguments {
-        [] => Ok(None),
-        [option, value] if option == "--project-root" => project_value(value).map(Some),
-        _ => Err("NJA001: expected unique --project-root PATH after the source".into()),
+struct CheckOptions {
+    project_root: Option<PathBuf>,
+    json: bool,
+}
+
+fn parse_check_options(arguments: &[OsString]) -> Result<CheckOptions, String> {
+    let mut result = CheckOptions {
+        project_root: None,
+        json: false,
+    };
+    let mut index = 0;
+    while index < arguments.len() {
+        if arguments[index] == "--json" && !result.json {
+            result.json = true;
+        } else if arguments[index] == "--project-root" && result.project_root.is_none() {
+            index += 1;
+            result.project_root = Some(project_value(
+                arguments
+                    .get(index)
+                    .ok_or("NJA001: --project-root requires a path")?,
+            )?);
+        } else {
+            return Err("NJA001: invalid or duplicate check option; use naja check --help".into());
+        }
+        index += 1;
     }
+    Ok(result)
 }
 
 fn parse_build_options(arguments: &[OsString]) -> Result<BuildOptions, String> {
@@ -531,48 +560,7 @@ fn test_json(
 }
 
 fn diagnostics(path: &Path, source: &str, errors: &[naja_frontend::Diagnostic]) -> String {
-    // Index the original source once and cap output for malicious invalid input.
-    let mut starts = vec![0];
-    let bytes = source.as_bytes();
-    let mut index = 0;
-    while index < bytes.len() {
-        if bytes[index] == b'\r' {
-            if bytes.get(index + 1) == Some(&b'\n') {
-                index += 1;
-            }
-            starts.push(index + 1);
-        } else if bytes[index] == b'\n' {
-            starts.push(index + 1);
-        }
-        index += 1;
-    }
-    let mut output = errors
-        .iter()
-        .take(32)
-        .map(|diagnostic| {
-            let offset = diagnostic.span.start.min(source.len());
-            let line = starts
-                .partition_point(|start| *start <= offset)
-                .saturating_sub(1);
-            let column = source[starts[line]..offset].chars().count() + 1;
-            format!(
-                "{}:{}:{}: {}: {}",
-                path.display(),
-                line + 1,
-                column,
-                diagnostic.code,
-                diagnostic.message
-            )
-        })
-        .collect::<Vec<_>>()
-        .join("\n");
-    if errors.len() > 32 {
-        output.push_str(&format!(
-            "\nNJA007: {} additional diagnostics omitted",
-            errors.len() - 32
-        ));
-    }
-    output
+    source_reports::human(path, source, errors)
 }
 
 #[cfg(test)]
@@ -671,13 +659,48 @@ mod tests {
     #[test]
     fn project_options_are_explicit_unique_and_preserve_argument_boundaries() {
         let root = PathBuf::from("project é");
-        assert_eq!(parse_project_option(&[]).unwrap(), None);
+        assert_eq!(parse_check_options(&[]).unwrap().project_root, None);
+        assert!(!parse_check_options(&[]).unwrap().json);
         assert_eq!(
-            parse_project_option(&["--project-root".into(), root.as_os_str().into()]).unwrap(),
+            parse_check_options(&["--project-root".into(), root.as_os_str().into()])
+                .unwrap()
+                .project_root,
             Some(root.clone())
         );
-        assert!(parse_project_option(&["--project-root".into()]).is_err());
-        assert!(parse_project_option(&["--project-root".into(), "".into()]).is_err());
+        assert!(parse_check_options(&["--project-root".into()]).is_err());
+        assert!(parse_check_options(&["--project-root".into(), "".into()]).is_err());
+        for arguments in [
+            vec!["--json"],
+            vec!["--json", "--project-root", "project é"],
+            vec!["--project-root", "project é", "--json"],
+        ] {
+            assert!(
+                parse_check_options(
+                    &arguments
+                        .into_iter()
+                        .map(OsString::from)
+                        .collect::<Vec<_>>()
+                )
+                .unwrap()
+                .json
+            );
+        }
+        for arguments in [
+            vec!["--json", "--json"],
+            vec!["--project-root", "a", "--project-root", "b"],
+            vec!["--json", "unknown"],
+            vec!["--json", "--project-root"],
+        ] {
+            assert!(
+                parse_check_options(
+                    &arguments
+                        .into_iter()
+                        .map(OsString::from)
+                        .collect::<Vec<_>>()
+                )
+                .is_err()
+            );
+        }
         let parsed = options(
             "run",
             &[

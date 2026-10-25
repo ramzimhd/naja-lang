@@ -32,6 +32,8 @@ jobs:
         run: cargo build --workspace --locked --offline
       - name: Exercise actual CLI stack and source-input boundaries
         run: node scripts/test-compiler-boundaries.mjs
+      - name: Check original-source editor diagnostics
+        run: node scripts/test-check-json.mjs
       - name: Check project initialization and standalone compilation
         if: runner.os != 'Linux'
         run: node scripts/test-project-cli.mjs --compile-only
@@ -49,9 +51,11 @@ jobs:
           node scripts/test-dynamic.mjs
           node scripts/test-functions.mjs
           node scripts/test-index.mjs
+          node scripts/test-tuples.mjs
           node scripts/test-values-language.mjs
           node scripts/test-functions-language.mjs
           node scripts/test-index-language.mjs
+          node scripts/test-tuples-language.mjs
           node scripts/test-cli.mjs
       - name: Check planning and evidence integrity
         run: node scripts/validation/check-planning.mjs
