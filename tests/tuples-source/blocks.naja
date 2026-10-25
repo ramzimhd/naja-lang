@@ -1,0 +1,18 @@
+def pick(sequence, index): {# Tuple function #
+{# Transparent tuple group #
+if index < 0: {
+return sequence[index]
+} else: {
+return sequence[index]
+}
+}
+}
+
+def marked(value):(0)
+    if value:(1)
+        return (True, value)
+    return (False, None)
+
+print(pick(("é", "𝄞"), -1))
+print(marked(7)[0])
+print(marked(0)[1])

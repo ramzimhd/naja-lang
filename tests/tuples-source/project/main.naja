@@ -1,0 +1,8 @@
+def 組(first, second): {
+return (first, second)
+}
+
+表示(長さ(組("é", "𝄞")))
+表示(組(True, False)[0])
+表示(組("表示 equalTo 長さ", 7)[False])
+表示(組(1, 2)[True] equalTo 2)

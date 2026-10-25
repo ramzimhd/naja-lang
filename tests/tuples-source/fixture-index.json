@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "blocks.naja",
+      "sha256": "50cc498ad4dfa25d07a83ae915ec2f21d2fd9f38bc8f8e898a87b318a3a6441d"
+    },
+    {
+      "path": "forms.py",
+      "sha256": "2fdfa16b3b919f582888db5fd633b7446e3073e34a686000c3f0717c6650264e"
+    },
+    {
+      "path": "order.py",
+      "sha256": "6f9b4ab046c2e6ee8efe112d7f5347fb8a4c8142fdbc51617f7b17c9a0b53c2e"
+    },
+    {
+      "path": "project/main.naja",
+      "sha256": "ae995cca8b09465818fc3bf80bec2cb86cc1f1a82afc6075e5663229019d3d3f"
+    },
+    {
+      "path": "project/naja.alias",
+      "sha256": "83a34d67f874f8e9e91506f57a34ecb41264e35ea13185dec2ff2cf5db7101f8"
+    },
+    {
+      "path": "project/naja.toml",
+      "sha256": "8e62fa511a0fba0049ac29b91395f44c784f60398446d4b37066b5390b7a9c82"
+    },
+    {
+      "path": "returns.py",
+      "sha256": "f0e303d96816ad3d7816d695f28a0672eb0aa21337fb0f6d003f2ff384f629ef"
+    },
+    {
+      "path": "skipped.py",
+      "sha256": "d06350403afd2fc3da1fbcfb7f5dbd158b2187008cc31a5068f9cf6a8b667f1a"
+    },
+    {
+      "path": "truth.py",
+      "sha256": "f73d58083dc0732e2cd60245299b5fbcb56daa27cc4fb1ede70c02ced874404d"
+    }
+  ],
+  "native": [
+    {
+      "name": "forms",
+      "path": "forms.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "2\n1\né𝄞\n0\nTrue\nFalse\nTrue\nFalse\nNone\n1234567890123456789012345678901234567890\n255\n𝄞\n1\n"
+    },
+    {
+      "name": "returns",
+      "path": "returns.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "old\nTrue\n255\n8\n7\n2\nTrue\n0\nNone\n"
+    },
+    {
+      "name": "order",
+      "path": "order.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "first\nnested\nsecond\nthird\n11\nTrue\n33\n2\n1\n0\nindex\n𝄞\nsequence\nindex argument\n1\n"
+    },
+    {
+      "name": "truth",
+      "path": "truth.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "True\nFalse\n2\n0\nnonempty tuple is true\n1\n"
+    },
+    {
+      "name": "skipped",
+      "path": "skipped.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "False\nTrue\nFalse\n0\n1\nempty is false\nnonempty is true\n"
+    },
+    {
+      "name": "blocks",
+      "path": "blocks.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "𝄞\nTrue\nNone\n"
+    }
+  ]
+}

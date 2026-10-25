@@ -1,0 +1,6 @@
+print(not ())
+print(not (None,))
+print(len(() or (1, 2)))
+print(len(() and (1, 2)))
+print((False,) and "nonempty tuple is true")
+print(len((0,) or len(1)))
