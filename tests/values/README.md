@@ -129,3 +129,21 @@ modules, complete alias/editor behavior, native cells, self-hosting, productive
 domain APIs, clean-host installation and remaining FC1/HATCH requirements stay
 open. A passing result only verifies the supplied source/native cases on its
 recorded source and target.
+
+## Signed division source extension
+
+The harness now additionally compiles ordinary `.py` and `.naja` `//`/`%` source.
+The additional cases cover all operand signs and Bool numeric behavior,
+precedence/left associativity, 1200/120-digit arithmetic, immutable operand
+aliases, reconstruction identities, skipped short-circuit branches and actual
+failure order. Node BigInt truncates toward zero; the independent oracle adjusts
+nonzero opposite-sign remainders to floor semantics and checks reconstruction
+and divisor-signed range. No Python process is executed.
+
+Runtime zero cases require exact NJA206/exit106, type cases NJA205/105, and a
+1001-by-1000-limb operation requires the preregistered NJA203 work error/103.
+The general one-million-limb-pair budget, arena, deadlines and earlier expected
+outcomes are unchanged. Fixed-i64 division remains rejected and `/` remains
+unsupported. The original 84-case historical execution above remains pinned to
+its original source; later retained command records identify the expanded
+harness execution separately.

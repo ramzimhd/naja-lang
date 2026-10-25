@@ -780,6 +780,20 @@ impl<V: Values> Parser<V> {
                     continue;
                 }
             }
+            if V::DYNAMIC && matches!(self.text(), "//" | "%") {
+                if 6 < minimum {
+                    break;
+                }
+                let remainder = self.text() == "%";
+                self.advance();
+                let right = self.expression(7, depth + 1)?;
+                left = V::divrem(remainder, left, right).map_err(|message| self.error(message))?;
+                if V::height(&left) > 128 {
+                    return Err(self.error("experimental expression tree depth exceeds 128"));
+                }
+                self.account_expression()?;
+                continue;
+            }
             let (precedence, operator) = match self.text() {
                 "+" => (5, Binary::Add),
                 "-" => (5, Binary::Subtract),
@@ -1136,5 +1150,17 @@ mod tests {
                 .contains("shadows")
         );
         assert!(compile("int = 7\nx: int = 'informational'\nprint(x)\n").is_ok());
+    }
+    #[test]
+    fn ordinary_divrem_is_shared_and_fixed_domain_stays_explicit() {
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            assert!(compile_with_dialect("print(-7 // 3 % 2 * 4 + 1)\n", dialect).is_ok());
+            assert!(compile_with_dialect("print(1 / 2)\n", dialect).is_err());
+            assert!(compile_with_dialect("print(1 // not True)\n", dialect).is_err());
+            for op in ["//", "%"] {
+                let source = format!("from naja.core import i64\nprint(i64(7) {op} i64(3))\n");
+                assert!(compile_with_dialect(&source, dialect).is_err());
+            }
+        }
     }
 }

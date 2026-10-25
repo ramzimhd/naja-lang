@@ -22,7 +22,7 @@ compatibility dialect. Both use the same frontend implementation.
 Without an initial core import, ordinary decimal integer literals and inferred
 assignments use native immutable multi-limb values. Text, bytes, booleans and None
 also execute through the shared parser and native tagged-value emitter. Unary
-`+`/`-`, binary `+`/`-`/`*`, comparisons/chains, not/and/or, truthy `if`/`else`,
+`+`/`-`, binary `+`/`-`/`*`/`//`/`%`, comparisons/chains, not/and/or, truthy `if`/`else`,
 `while`, `print` and text/bytes `len` are supported. `assert` accepts a truthy
 expression, always executes when reached and reports `NJA204`/exit 104 on failure.
 It is not an assumed optimizer contract or recoverable exception implementation.
@@ -43,6 +43,17 @@ The hosted runtime initially uses a 64 MiB arena for values and output buffers,
 with no reclamation. Exhaustion/mapping failure reports `NJA203` and exits 103.
 This preserves integer values within the explicit resource budget and is not the
 final memory manager. See [the native backend](../backends/native/README.md).
+
+Ordinary Int/Bool floor division and remainder use exact multi-limb native
+arithmetic: the quotient rounds toward negative infinity and a nonzero remainder
+has the divisor's sign. Operands evaluate left to right and remain immutable.
+The three multiplicative operators share precedence and associate left to right.
+Zero division reports `NJA206`/exit106; unsupported operands report type exit105.
+General division is bounded to one million normalized numerator/divisor limb
+pairs per operation; exceeding it reports a distinct `NJA203` work error/exit103.
+Single-limb division is linear and arena-bounded. These failures are process
+diagnostics, not catchable language exceptions. `/` and fixed-i64 division remain
+explicitly unsupported; no truncation or float substitution is performed.
 
 An initial `from naja.core import i64` instead imports the compiler-provided checked
 signed 64-bit primitive. This is not a general module resolver or delivered

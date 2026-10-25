@@ -49,6 +49,13 @@ pub(crate) trait Values {
         Err("this explicit integer domain requires a comparison condition".into())
     }
     fn binary(op: Binary, left: Self::Expression, right: Self::Expression) -> Self::Expression;
+    fn divrem(
+        _remainder: bool,
+        _left: Self::Expression,
+        _right: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Err("floor division and remainder are unsupported in this explicit integer domain".into())
+    }
     fn height(value: &Self::Expression) -> usize;
     fn condition(
         left: Self::Expression,
@@ -215,6 +222,17 @@ impl Values for Dynamic {
     fn binary(op: Binary, left: Self::Expression, right: Self::Expression) -> Self::Expression {
         dynamic::Expression::Binary(op, Box::new(left), Box::new(right))
     }
+    fn divrem(
+        remainder: bool,
+        left: Self::Expression,
+        right: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Ok(if remainder {
+            dynamic::Expression::Modulo(Box::new(left), Box::new(right))
+        } else {
+            dynamic::Expression::FloorDivide(Box::new(left), Box::new(right))
+        })
+    }
     fn height(value: &Self::Expression) -> usize {
         use dynamic::Expression::*;
         match value {
@@ -223,6 +241,8 @@ impl Values for Dynamic {
                 1 + Self::height(value)
             }
             Binary(_, left, right)
+            | FloorDivide(left, right)
+            | Modulo(left, right)
             | Compare(_, left, right)
             | And(left, right)
             | Or(left, right) => 1 + Self::height(left).max(Self::height(right)),

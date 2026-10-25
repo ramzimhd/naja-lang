@@ -94,3 +94,14 @@ Work-unit tests and real WSL execution demonstrate the implemented slices only.
 New retained records must name the actual committed source and preserve failures.
 The earlier 14-record proof set remains pinned to source4f93a39 and does not
 silently certify this later foundation or satisfy whole-feature acceptance.
+
+The next ordinary-source slice exposes the native signed floor-division and
+remainder kernel through `//` and `%`, with the usual multiplicative precedence
+and left associativity. It preserves Int/Bool numeric behavior, exact values and
+left-to-right operand evaluation. Zero division exits106/NJA206; invalid kinds
+exit105. The preregistered general work budget is one million normalized limb
+pairs, checked without multiplying overflowing counts; the single-limb kernel
+is linear and uses the same bounded arena. Work exhaustion exits103 with a
+distinct diagnostic. Fixed-i64/development hosted-integer APIs and `/` retain
+their explicit unsupported status. Real source tests use an independent Node
+BigInt oracle with explicit floor correction, not Python execution.

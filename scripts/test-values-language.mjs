@@ -215,6 +215,41 @@ for (const left of values.filter(isNumeric)) {
   }
 }
 run('numeric-bool-arithmetic', source, expected);
+// BigInt truncates toward zero; explicitly derive floor division and its
+// divisor-signed remainder. No Python implementation is used as an oracle.
+const floorDivrem = (a, b) => {
+  let q = a / b, r = a % b;
+  if (r !== 0n && (a < 0n) !== (b < 0n)) { q -= 1n; r += b; }
+  assert.equal(a, q * b + r);
+  assert.ok(r === 0n || (r < 0n) === (b < 0n));
+  return [q, r];
+};
+const numerators = ['0', '1', '-1', '7', '-7', 'True', 'False', '999999999999999999999999999', '-1000000000000000000000000001'];
+const divisors = ['1', '-1', '3', '-3', 'True', '1000000001', '-1000000001'];
+for (const extension of ['naja', 'py']) {
+  source = ''; expected = '';
+  for (const a of numerators) for (const b of divisors) {
+    const number = value => value === 'True' ? 1n : value === 'False' ? 0n : BigInt(value);
+    const answers = floorDivrem(number(a), number(b));
+    for (const [index, operator] of ['//', '%'].entries()) {
+      source += `print(${a} ${operator} ${b})\n`;
+      expected += answers[index] + '\n';
+    }
+  }
+  run('signed-divrem-matrix-' + extension, source, expected, { extension });
+}
+const giant = BigInt('9'.repeat(1200)), large = BigInt('7'.repeat(120));
+const [giantQ, giantR] = floorDivrem(-giant, large);
+run('divrem-large-immutable-alias', `a = -${giant}\nb = ${large}\ncopy = a\nprint(a // b)\nprint(a % b)\nprint(a == copy)\nprint(a // a)\nprint(a % a)\nassert a == (a // b) * b + a % b\n`, `${giantQ}\n${giantR}\nTrue\n1\n0\n`);
+run('divrem-precedence-associativity', 'print(20 // 3 // 2)\nprint(20 % 6 * 3)\nprint(20 * 3 // 4 % 7)\nprint(-7 // 3)\nprint(-7 % -3)\nprint(1 + 20 // 3 * 2)\nprint(7 // -3 == -3 and 7 % -3 == -2)\n', '3\n6\n1\n-3\n-1\n13\nTrue\n');
+run('divrem-short-circuit', 'print(False and 1 // 0)\nprint(True or 1 % 0)\nprint(3 < 2 < 1 // 0)\n', 'False\nTrue\nFalse\n');
+for (const [name, operator, zero] of [['floor-zero', '//', '0'], ['modulo-computed-zero', '%', '(7 - 7)'], ['floor-false', '//', 'False']]) {
+  run(name, `print(17)\nprint(7 ${operator} ${zero})\nprint(999)\n`, '17\n', { exit: 106, stderr: 'NJA206: integer division by zero\n' });
+}
+run('divrem-left-error-order', 'print(len(1) // (1 // 0))\n', '', { exit: 105, stderr: 'NJA205: native value type mismatch\n' });
+run('divrem-right-before-operand-guard', 'print("x" // (1 // 0))\n', '', { exit: 106, stderr: 'NJA206: integer division by zero\n' });
+run('divrem-work-limit', `print(${ '1' + '0'.repeat(9000) } // ${ '1' + '0'.repeat(8991) })\n`, '', { exit: 103, stderr: 'NJA203: native division work limit exceeded\n' });
+for (const operator of ['//', '%']) reject('divrem-fixed-domain-' + (operator === '//' ? 'floor' : 'modulo'), `from naja.core import i64\nprint(i64(7) ${operator} i64(3))\n`, { code: /NJA1\d\d/ });
 const allBytes = Array.from({ length: 256 }, (_, index) => index);
 source = [allBytes, [39], [34], [39, 34, 92], [9, 10, 13, 0, 127, 255]].map(value => 'print(' + bytesLiteral(value) + ')').join('\n') + '\n';
 expected = [allBytes, [39], [34], [39, 34, 92], [9, 10, 13, 0, 127, 255]].map(bytesRepr).join('\n') + '\n';
@@ -226,6 +261,7 @@ for (const [name, body] of [
   ['text-subtraction', 'print("text" - "other")'], ['mixed-concatenation', 'print(b"x" + "x")'],
   ['numeric-text-addition', 'print(True + "x")'], ['text-negation', 'print(-"x")'],
   ['text-positive', 'print(+"x")'], ['numeric-len', 'print(len(1))'], ['bool-len', 'print(len(True))'],
+  ['text-floor-division', 'print("7" // 3)'], ['bytes-modulo', 'print(b"7" % 3)'],
   ['none-ordering', 'print(None < None)'], ['unrelated-ordering', 'print("x" < 1)'],
   ['byte-text-ordering', 'print(b"x" < "x")'], ['runtime-text-repetition', 's = "nonnumeric"\nprint(s * 2)'],
   ['byte-repetition', 's = b"x"\nprint(s * 2)'], ['chain-live-type-error', 'print(3 > 2 < len(1))'],
