@@ -33,7 +33,7 @@ fn expression(text: &str) -> Result<E, String> {
         let unary = matches!(token, "neg" | "not" | "pos" | "len" | "require_int");
         let binary = matches!(
             token,
-            "+" | "-" | "*" | "==" | "!=" | "<" | "<=" | ">" | ">=" | "and" | "or"
+            "+" | "-" | "*" | "//" | "%" | "==" | "!=" | "<" | "<=" | ">" | ">=" | "and" | "or"
         );
         if unary {
             let (value, depth) = stack.pop().ok_or("fixture stack underflow")?;
@@ -87,6 +87,8 @@ fn expression(text: &str) -> Result<E, String> {
                 "+" => E::Binary(Binary::Add, left, right),
                 "-" => E::Binary(Binary::Subtract, left, right),
                 "*" => E::Binary(Binary::Multiply, left, right),
+                "//" => E::FloorDivide(left, right),
+                "%" => E::Modulo(left, right),
                 "and" => E::And(left, right),
                 "or" => E::Or(left, right),
                 _ => E::Compare(comparison(token)?, left, right),

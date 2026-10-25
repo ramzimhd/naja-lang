@@ -22,7 +22,7 @@ pub(crate) struct Runtime {
     mag_add: usize,
     mag_sub: usize,
     mag_compare: usize,
-    normalize: usize,
+    pub normalize: usize,
 }
 impl Runtime {
     pub fn new(c: &mut Code) -> Self {

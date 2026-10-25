@@ -6,12 +6,15 @@ use crate::hosted::{
     runtime,
     x64::{Code, R::*},
 };
+mod division;
 
 pub(super) struct Runtime {
     pub add: usize,
     pub subtract: usize,
     pub multiply: usize,
     pub negate: usize,
+    pub floor_divide: usize,
+    pub modulo: usize,
     pub positive: usize,
     pub len: usize,
     pub require_integer: usize,
@@ -43,6 +46,8 @@ impl Runtime {
             subtract: c.label(),
             multiply: c.label(),
             negate: c.label(),
+            floor_divide: c.label(),
+            modulo: c.label(),
             positive: c.label(),
             len: c.label(),
             require_integer: c.label(),
@@ -71,6 +76,7 @@ impl Runtime {
     pub fn emit(&self, c: &mut Code, integers: &runtime::Runtime) {
         self.check(c, integers);
         self.numeric(c, integers);
+        self.division(c, integers);
         self.length(c, integers);
         self.concatenation(c, integers);
         self.comparison(c, integers);

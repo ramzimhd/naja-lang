@@ -12,6 +12,7 @@ pub const ARENA_BYTES: usize = hosted::ARENA_BYTES;
 const MAX_LITERAL_BYTES: usize = 1_048_576;
 const MAX_NODES: usize = 10_000;
 pub const MAX_CHAIN_COMPARISONS: usize = 128;
+pub const MAX_DIVISION_LIMB_PRODUCT: usize = 1_000_000;
 
 #[derive(Clone, Debug)]
 pub enum Expression {
@@ -26,6 +27,8 @@ pub enum Expression {
     Len(Box<Self>),
     RequireInteger(Box<Self>),
     Binary(Binary, Box<Self>, Box<Self>),
+    FloorDivide(Box<Self>, Box<Self>),
+    Modulo(Box<Self>, Box<Self>),
     Compare(Comparison, Box<Self>, Box<Self>),
     CompareChain(Box<Self>, Vec<(Comparison, Self)>),
     Not(Box<Self>),
@@ -104,6 +107,8 @@ impl Validator {
                 0
             }
             Expression::Binary(_, left, right)
+            | Expression::FloorDivide(left, right)
+            | Expression::Modulo(left, right)
             | Expression::Compare(_, left, right)
             | Expression::And(left, right)
             | Expression::Or(left, right) => {
@@ -231,6 +236,15 @@ impl Emitter {
                     Binary::Subtract => self.runtime.subtract,
                     Binary::Multiply => self.runtime.multiply,
                 });
+            }
+            Expression::FloorDivide(left, right) | Expression::Modulo(left, right) => {
+                self.operands(left, right)?;
+                self.code
+                    .call(if matches!(expression, Expression::FloorDivide(..)) {
+                        self.runtime.floor_divide
+                    } else {
+                        self.runtime.modulo
+                    });
             }
             Expression::Compare(comparison, left, right) => {
                 self.operands(left, right)?;
@@ -618,6 +632,36 @@ mod tests {
                         Expression::Integer("1".into())
                     )));
                     4000
+                ])
+                .is_err()
+            );
+        }
+    }
+    #[test]
+    fn division_expressions_preserve_both_operand_validation_and_budgets() {
+        for constructor in [Expression::FloorDivide, Expression::Modulo] {
+            assert!(
+                validate(&[Statement::Print(constructor(
+                    Box::new(Expression::Integer("1".into())),
+                    Box::new(Expression::Local(0))
+                ))])
+                .is_err()
+            );
+            let mut expression = Expression::Integer("1".into());
+            for _ in 0..130 {
+                expression = constructor(
+                    Box::new(expression),
+                    Box::new(Expression::Integer("1".into())),
+                );
+            }
+            assert!(validate(&[Statement::Print(expression)]).is_err());
+            assert!(
+                validate(&vec![
+                    Statement::Print(constructor(
+                        Box::new(Expression::Integer("1".into())),
+                        Box::new(Expression::Integer("1".into()))
+                    ));
+                    3000
                 ])
                 .is_err()
             );
