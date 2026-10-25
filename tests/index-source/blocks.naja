@@ -1,0 +1,17 @@
+def pick(sequence, index): {# Index function #
+{# View #
+if index < 0: {
+return sequence[index]
+} else: {
+return sequence[index]
+}
+}
+}
+
+def marked(sequence, index):(0)
+    if index == 0:(1)
+        return sequence[index]
+    return sequence[index]
+
+print(pick("é𝄞", -1))
+print(marked(b"\xff", False))

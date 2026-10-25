@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "blocks.naja",
+      "sha256": "07b2f431d3d208c44925afdf677f7c5383fc860d22329f855a42f92662114d61"
+    },
+    {
+      "path": "order.py",
+      "sha256": "2b53ff11c6ac5f66de86df6cb0ab8454fd948585d482f2b42ed3db3aa5d0fb3f"
+    },
+    {
+      "path": "precedence.py",
+      "sha256": "289d0a7c0736dc3c69698e13ca9d8140db6f166f86d8a5e59d4d07d1b96a928d"
+    },
+    {
+      "path": "project/main.naja",
+      "sha256": "3ccee9b2a0c7c3781524508835793f9daafe0f929f0fe080e3edd6a21f15048a"
+    },
+    {
+      "path": "project/naja.alias",
+      "sha256": "83a34d67f874f8e9e91506f57a34ecb41264e35ea13185dec2ff2cf5db7101f8"
+    },
+    {
+      "path": "project/naja.toml",
+      "sha256": "34f02946b13ac27e60b7c9cee36b4e29fc1bc39e6e7ab9e19c295363cbf751ec"
+    },
+    {
+      "path": "scalars.py",
+      "sha256": "f78af46f0bd0871b8ca0dd61b4a0486facd12d03c83f4c4f6b5fed8554ad57ad"
+    },
+    {
+      "path": "skipped.py",
+      "sha256": "19cbde10b907fafff5d08e097c849a17b02f3555dd0cd04bcf981ccce7cb6b06"
+    },
+    {
+      "path": "views.py",
+      "sha256": "7f022ac5711071e2d06fb931bd5539b2ae83c6328c4df8f73cb0e23f612366db"
+    }
+  ],
+  "native": [
+    {
+      "name": "scalars",
+      "path": "scalars.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "7\nA\né\n中\n𝄞\ne\ń\n\u0000\n\u0000\nA\né\nA\n𝄞\n"
+    },
+    {
+      "name": "views",
+      "path": "views.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "A𝄞é\n𝄞\n𝄞\n𝄞\n𝄞\n255\n0\n"
+    },
+    {
+      "name": "order",
+      "path": "order.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "sequence\nindex\nb\n2\n1\n0\nindex call\né\nbyte sequence\nbyte index\n255\nchained sequence\nfirst index\nsecond index\n𝄞\n"
+    },
+    {
+      "name": "precedence",
+      "path": "precedence.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "-4\n3\n14\n4\n1\né\n𝄞\ny\ny\ny\nFalse\nTrue\n"
+    },
+    {
+      "name": "skipped",
+      "path": "skipped.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "False\nTrue\nFalse\nfirst\nmiddle\nlast\nTrue\nfailed first\nfailed middle\nFalse\n"
+    },
+    {
+      "name": "blocks",
+      "path": "blocks.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "𝄞\n255\n"
+    }
+  ]
+}

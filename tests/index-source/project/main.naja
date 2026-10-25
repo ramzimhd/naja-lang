@@ -1,0 +1,8 @@
+def 選ぶ(sequence, index): {
+return sequence[index]
+}
+
+表示(選ぶ("é𝄞", 長さ("x")))
+表示(b"\x00\xff"[True] equalTo 255)
+表示("表示 equalTo 長さ"[0])
+表示("café"[-1])

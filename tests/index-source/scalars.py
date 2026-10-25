@@ -1,0 +1,15 @@
+# UTF-8 widths, combining marks and NUL remain distinct Unicode scalar values.
+text = "Aé中𝄞e\u0301\0"
+print(len(text))
+print(text[0])
+print(text[1])
+print(text[2])
+print(text[3])
+print(text[4])
+print(text[5])
+print(text[6])
+print(text[-1])
+print(text[-7])
+print(text[True])
+print(text[False])
+print(text[3][0][-1])
