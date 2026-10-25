@@ -350,7 +350,8 @@ impl Values for Dynamic {
             | Not(value)
             | ReadFile(value)
             | EncodeUtf8(value)
-            | DecodeUtf8(value) => 1 + Self::height(value),
+            | DecodeUtf8(value)
+            | GetAttribute(value, _) => 1 + Self::height(value),
             Binary(_, left, right)
             | FloorDivide(left, right)
             | Modulo(left, right)
@@ -368,8 +369,14 @@ impl Values for Dynamic {
                     .map(|(_, value)| Self::height(value))
                     .fold(Self::height(first), usize::max)
             }
-            Call(_, arguments) | Tuple(arguments) | List(arguments) => {
+            Call(_, arguments) | Construct(_, arguments) | Tuple(arguments) | List(arguments) => {
                 1 + arguments.iter().map(Self::height).max().unwrap_or(0)
+            }
+            MethodCall(object, _, arguments) => {
+                1 + arguments
+                    .iter()
+                    .map(Self::height)
+                    .fold(Self::height(object), usize::max)
             }
         }
     }
