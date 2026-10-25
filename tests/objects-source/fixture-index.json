@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "blocks.naja",
+      "sha256": "f90f9344a64ef608594760651e9cd6a61a2e3f671c0596cebd8867f4d4d098d7"
+    },
+    {
+      "path": "counters.py",
+      "sha256": "01e96cc293de180c3a42f3c1d674cf3888c77ea18741710fa0b0eaa4d3c2c9de"
+    },
+    {
+      "path": "cycles.py",
+      "sha256": "1b882039247b577317b159b05e1c8a3aea4c6265ae422c492f889b64533d2d2e"
+    },
+    {
+      "path": "members.py",
+      "sha256": "bac6c696200a1d795209a2f26bb58ad653eca2362af4a962be201777bb485aaf"
+    },
+    {
+      "path": "order.py",
+      "sha256": "05ca92b9a05010981f05c7825f0438d04779545b12bf11776bc36d769267c878"
+    },
+    {
+      "path": "project/main.naja",
+      "sha256": "60ee4627e02247ee3707562d77bcf80fbb8ea1688f5ff032a28bd54d433fec94"
+    },
+    {
+      "path": "project/naja.alias",
+      "sha256": "83a34d67f874f8e9e91506f57a34ecb41264e35ea13185dec2ff2cf5db7101f8"
+    },
+    {
+      "path": "project/naja.toml",
+      "sha256": "cc20a191020e25bd3be49e66ed56d4b0a22aa0670d25912a62763509af1fe042"
+    },
+    {
+      "path": "selection.py",
+      "sha256": "d916a5229da86df1d9b33daad5fe9e55505a3eaefd499b926187c94467241d8e"
+    },
+    {
+      "path": "skipped.py",
+      "sha256": "f4ff3ad5b5c3d83510d985f26a267161e184c7f952aca2de555fd3ed2e7359ae"
+    }
+  ],
+  "native": [
+    {
+      "name": "counters",
+      "path": "counters.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "17\n17\n100\n12\né𝄞\nb'A\\xff'\n1234567890123456789012345678901234567891\n"
+    },
+    {
+      "name": "cycles",
+      "path": "cycles.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "True\nTrue\nFalse\nTrue\nFalse\n"
+    },
+    {
+      "name": "order",
+      "path": "order.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "first constructor argument\nsecond constructor argument\ninit\nassigned value\nobject\n7\nreceiver\nfirst method argument\nsecond method argument\n7\nnested value\nnested object\nTrue\n"
+    },
+    {
+      "name": "selection",
+      "path": "selection.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "8\n0\n6\n6\n99\n"
+    },
+    {
+      "name": "members",
+      "path": "members.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "13\n4\né𝄞\nnew\n7\nTrue\ncanonical\n"
+    },
+    {
+      "name": "skipped",
+      "path": "skipped.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "False\ntruthy\nTrue\nFalse\nTrue\nFalse\nempty instance is true\n"
+    },
+    {
+      "name": "blocks",
+      "path": "blocks.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "é𝄞\nTrue\nNone\n"
+    }
+  ]
+}

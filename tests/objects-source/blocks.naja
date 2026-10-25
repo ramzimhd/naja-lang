@@ -1,0 +1,22 @@
+class Box: {# Class label #
+def __init__(receiver, value): {
+receiver.value = value
+}
+def get(receiver): {
+{# Transparent method group #
+return receiver.value
+}
+}
+}
+
+class Marked:(0)
+    def __init__(self, value):(1)
+        self.value = value
+    def get(self):(1)
+        if self.value:(2)
+            return self.value
+        return None
+
+print(Box("é𝄞").get())
+print(Marked(True).get())
+print(Marked(False).get())

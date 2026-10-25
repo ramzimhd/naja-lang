@@ -1,0 +1,17 @@
+class Key:
+    def __init__(self, value):
+        self.値 = value
+    def 読む(self):
+        return self.値
+    def 長さ(self):
+        return 7
+    def equalTo(self):
+        return self.値
+
+value = Key("表示 equalTo 長さ")
+表示(value.読む())
+表示(value.長さ())
+表示(value.equalTo())
+表示(長さ(value.値) equalTo 13)
+value.値 = True
+表示(value.読む())
