@@ -4,7 +4,12 @@
 It is an implemented lexical/CST foundation for T05, not a complete parser or a
 claim of Python 3.15 grammar coverage. It invokes no Python interpreter or oracle.
 
-The public entry points are `lex(&str) -> Lexed` and `parse_cst(&str) -> Cst`.
+The compatibility entry points are `lex(&str) -> Lexed` and
+`parse_cst(&str) -> Cst`; both select `Dialect::Python` as before. Explicit
+`lex_with_dialect(source, Dialect::Naja2026)` and
+`parse_cst_with_dialect(source, Dialect::Naja2026)` select the founder-authorized
+2026.1 block syntax. Source extensions are selected by the caller, not guessed
+by this library or changed through ambient settings.
 `Lexed::significant_tokens()` is a borrowed iterator over non-trivia tokens;
 logical newlines, indentation, invalid tokens and EOF remain. `Lexed::text`
 returns original lexemes. Diagnostics must be rejected before execution.
@@ -42,6 +47,65 @@ suite. Keywords and contextual aliases remain identifiers. `:(0)` remains four
 structural tokens; deciding whether it is a depth marker or a same-line suite
 requires a future grammar/context pass. `# %%` remains a comment. No source text
 replacement or automatic cell processing occurs.
+
+## NAJA 2026.1 brace foundation
+
+The shared lexer emits significant `SuiteOpen`, `SuiteClose` and `BlockLabel`
+tokens for brace suites, with one-byte brace spans and an exact `# Label #`
+span. These differ from expression `Symbol::LeftBrace`/`RightBrace` tokens.
+Recognized ordinary suite-header forms end in `: {`; statements begin on the
+next physical line. A standalone named section begins with `{# Label #` at
+logical statement start. Bare standalone braces remain expressions. Names are
+display metadata, not variable bindings, scopes, cells or execution requests.
+The body parser still owns statement grammar and companion-clause association.
+
+Immediate `{#` always begins a label and requires a terminating `#` on that
+physical line. A header's `{ # ordinary comment` without another `#` is an
+ordinary comment; `{ # label #` is metadata. Only whitespace and an optional
+ordinary comment may follow the label before newline. Empty labels, embedded
+brace delimiters, missing terminators and trailing body code are diagnosed.
+Repeated display names and Unicode label data are allowed.
+
+Suite newlines remain significant. Each active brace frame suspends its parent's
+indentation state and ignores stylistic indentation only at its own root.
+A nested indentation header records its first physical line's indentation;
+the next non-comment statement must indent beyond that baseline. Subsequent
+dedents must match an active indentation level or return to/below that baseline.
+A closing brace cannot guess a dedent from deeper child indentation. Nested
+brace closures do not alter suspended parent indentation. This preserves both
+indentation-to-brace and brace-to-indentation combinations. For example:
+
+```naja
+if outer:
+    {# Transparent section #
+unindented()
+    }
+    after_section()
+
+if outer: {
+    if inner:
+        nested()
+    after_inner()
+}
+```
+
+Same-line `} else: {` and following-line companion forms retain source tokens;
+a body statement immediately followed by `}` receives an empty-span logical
+newline before `SuiteClose`. A physical closing-line newline is also retained.
+Depth-marker tokens are unchanged. Combined marker/brace decorations reject;
+the driver must validate marker depths and clause ownership.
+
+`Cst::suites` supplies shared folding/source metadata: `SuiteKind::Control` or
+`NamedSection`, full brace span, original open/optional close/optional label
+spans. Missing closes remain `None` with diagnostics. Expression dictionaries,
+sets, strings, raw pattern text, ordinary comments and `# %%` are not converted
+to block metadata. Formatted-string interpolation and complete pattern syntax
+remain unsupported as described above; no new semantic support is claimed.
+
+The dialect-aware NAJA entry point currently bounds source at 1 MiB, brace suite
+nesting at 128 and a label at 4096 UTF-8 bytes. `F0029` reports these limits;
+even rejected input reconstructs exactly. Existing Python-entry behavior is
+unchanged. These are initial lexical limits, not final HATCH resource proofs.
 
 Run the specification-derived positive, negative and metamorphic tests with:
 

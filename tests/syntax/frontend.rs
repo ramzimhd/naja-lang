@@ -1,5 +1,7 @@
 use naja_frontend::{Span, Symbol, TokenKind, lex, parse_cst};
 
+mod blocks;
+
 fn significant(source: &str) -> Vec<(TokenKind, String)> {
     let lexed = lex(source);
     assert!(lexed.diagnostics.is_empty(), "{:?}", lexed.diagnostics);

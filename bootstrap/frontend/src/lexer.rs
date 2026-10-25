@@ -1,9 +1,20 @@
-use crate::{Diagnostic, Lexed, Span, Symbol, Token, TokenKind};
+use crate::{Diagnostic, Dialect, Lexed, Span, Symbol, Token, TokenKind};
+
+const MAX_NAJA_SOURCE_BYTES: usize = 1_048_576;
+const MAX_BRACE_SUITES: usize = 128;
+const MAX_LABEL_BYTES: usize = 4096;
 
 #[derive(Clone, Copy)]
 struct Indentation {
     columns: usize,
     alternate: usize,
+}
+
+struct BraceSuite {
+    start: usize,
+    /// The first element is the physical header baseline, not an emitted indent.
+    indentation: Vec<Indentation>,
+    pending_header: Option<Indentation>,
 }
 
 struct Lexer<'a> {
@@ -16,10 +27,40 @@ struct Lexer<'a> {
     at_line_start: bool,
     continued: bool,
     logical_content: bool,
+    dialect: Dialect,
+    suites: Vec<BraceSuite>,
+    logical_start: usize,
+    line_indent: Indentation,
+    header_indent: Indentation,
 }
 
 /// Tokenize UTF-8 source without interpreting expressions or changing lexemes.
 pub fn lex(source: &str) -> Lexed {
+    lex_with_dialect(source, Dialect::Python)
+}
+
+/// Use the same tokenization/source model with explicitly selected extensions.
+pub fn lex_with_dialect(source: &str, dialect: Dialect) -> Lexed {
+    if dialect == Dialect::Naja2026 && source.len() > MAX_NAJA_SOURCE_BYTES {
+        return Lexed {
+            source: source.to_owned(),
+            tokens: vec![
+                Token {
+                    kind: TokenKind::Invalid,
+                    span: Span::new(0, source.len()),
+                },
+                Token {
+                    kind: TokenKind::EndOfFile,
+                    span: Span::new(source.len(), source.len()),
+                },
+            ],
+            diagnostics: vec![Diagnostic {
+                code: "F0029",
+                message: "NAJA source exceeds the initial frontend limit of 1 MiB.".into(),
+                span: Span::new(0, 0),
+            }],
+        };
+    }
     Lexer {
         source,
         offset: 0,
@@ -33,6 +74,17 @@ pub fn lex(source: &str) -> Lexed {
         at_line_start: true,
         continued: false,
         logical_content: false,
+        dialect,
+        suites: Vec::new(),
+        logical_start: 0,
+        line_indent: Indentation {
+            columns: 0,
+            alternate: 0,
+        },
+        header_indent: Indentation {
+            columns: 0,
+            alternate: 0,
+        },
     }
     .run()
 }
@@ -43,6 +95,9 @@ impl Lexer<'_> {
             kind,
             span: Span::new(start, end),
         });
+        if kind == TokenKind::Newline {
+            self.logical_start = self.tokens.len();
+        }
     }
 
     fn error(&mut self, code: &'static str, message: impl Into<String>, start: usize, end: usize) {
@@ -90,6 +145,9 @@ impl Lexer<'_> {
             }
             let start = self.offset;
             let ch = self.byte().expect("offset is before EOF");
+            if !self.logical_content && !matches!(ch, b' ' | b'\t' | 0x0c | b'#' | b'\r' | b'\n') {
+                self.header_indent = self.line_indent;
+            }
             match ch {
                 b' ' | b'\t' | 0x0c => {
                     while matches!(self.byte(), Some(b' ' | b'\t' | 0x0c)) {
@@ -110,6 +168,12 @@ impl Lexer<'_> {
                 b'\r' | b'\n' => {
                     self.offset += self.newline_length(self.offset);
                     let kind = if self.delimiters.is_empty() && self.logical_content {
+                        if self.dialect == Dialect::Naja2026
+                            && self.header_ends_indented_suite()
+                            && let Some(suite) = self.suites.last_mut()
+                        {
+                            suite.pending_header = Some(self.header_indent);
+                        }
                         self.logical_content = false;
                         TokenKind::Newline
                     } else {
@@ -143,6 +207,13 @@ impl Lexer<'_> {
                     self.number();
                 }
                 b'a'..=b'z' | b'A'..=b'Z' | b'_' => self.identifier_or_string(),
+                b'{' if self.is_brace_suite_open() => self.open_suite(),
+                b'}' if self.dialect == Dialect::Naja2026
+                    && self.delimiters.is_empty()
+                    && !self.suites.is_empty() =>
+                {
+                    self.close_suite()
+                }
                 _ if !ch.is_ascii() => self.unsupported_identifier(),
                 _ => self.symbol_or_invalid(),
             }
@@ -157,6 +228,25 @@ impl Lexer<'_> {
         }
         if self.logical_content {
             self.push(TokenKind::Newline, self.offset, self.offset);
+        }
+        while let Some(suite) = self.suites.pop() {
+            if suite.pending_header.is_some() {
+                self.error(
+                    "F0024",
+                    "Expected an indented body before the end of the brace suite.",
+                    self.offset,
+                    self.offset,
+                );
+            }
+            for _ in 1..suite.indentation.len() {
+                self.push(TokenKind::Dedent, self.offset, self.offset);
+            }
+            self.error(
+                "F0020",
+                "Unclosed brace suite; expected '}'.",
+                suite.start,
+                suite.start + 1,
+            );
         }
         while self.indentation.len() > 1 {
             self.indentation.pop();
@@ -195,12 +285,17 @@ impl Lexer<'_> {
         if self.offset > start {
             self.push(TokenKind::Whitespace, start, self.offset);
         }
+        self.line_indent = Indentation { columns, alternate };
         self.at_line_start = false;
         let continued = std::mem::take(&mut self.continued);
         if continued
             || !self.delimiters.is_empty()
             || matches!(self.byte(), None | Some(b'#' | b'\r' | b'\n'))
         {
+            return;
+        }
+        if !self.suites.is_empty() {
+            self.brace_indentation(start, Indentation { columns, alternate });
             return;
         }
         let previous = *self.indentation.last().unwrap();
@@ -227,6 +322,290 @@ impl Lexer<'_> {
                 self.indentation_error(start);
             }
         }
+    }
+
+    fn header_tokens(&self) -> Vec<&Token> {
+        self.tokens[self.logical_start..]
+            .iter()
+            .filter(|token| {
+                !token.kind.is_trivia()
+                    && !matches!(token.kind, TokenKind::Indent | TokenKind::Dedent)
+            })
+            .collect()
+    }
+
+    fn header_ends_indented_suite(&self) -> bool {
+        let tokens = self.header_tokens();
+        let Some(first) = tokens.first() else {
+            return false;
+        };
+        if first.kind != TokenKind::Identifier {
+            return false;
+        }
+        let first_text = &self.source[first.span.start..first.span.end];
+        let header = matches!(
+            first_text,
+            "if" | "elif"
+                | "else"
+                | "while"
+                | "for"
+                | "def"
+                | "class"
+                | "try"
+                | "except"
+                | "finally"
+                | "with"
+                | "match"
+                | "case"
+        ) || (first_text == "async"
+            && tokens.get(1).is_some_and(|token| {
+                matches!(
+                    &self.source[token.span.start..token.span.end],
+                    "def" | "for" | "with"
+                )
+            }));
+        header
+            && (tokens
+                .last()
+                .is_some_and(|token| token.kind == TokenKind::Symbol(Symbol::Colon))
+                || Self::ends_depth_marker(&tokens))
+    }
+
+    fn ends_depth_marker(tokens: &[&Token]) -> bool {
+        tokens.len() >= 4
+            && tokens[tokens.len() - 4..]
+                .iter()
+                .map(|token| token.kind)
+                .eq([
+                    TokenKind::Symbol(Symbol::Colon),
+                    TokenKind::Symbol(Symbol::LeftParen),
+                    TokenKind::Integer,
+                    TokenKind::Symbol(Symbol::RightParen),
+                ])
+    }
+
+    fn is_brace_suite_open(&self) -> bool {
+        self.dialect == Dialect::Naja2026
+            && self.delimiters.is_empty()
+            && ((!self.logical_content
+                && self.source.as_bytes().get(self.offset + 1) == Some(&b'#'))
+                || self.header_ends_indented_suite())
+    }
+
+    fn opening_whitespace(&mut self) {
+        let start = self.offset;
+        while matches!(self.byte(), Some(b' ' | b'\t' | 0x0c)) {
+            self.offset += 1;
+        }
+        if self.offset > start {
+            self.push(TokenKind::Whitespace, start, self.offset);
+        }
+    }
+
+    fn open_suite(&mut self) {
+        let start = self.offset;
+        if self.suites.len() >= MAX_BRACE_SUITES {
+            self.error(
+                "F0029",
+                "Brace suite nesting exceeds the initial frontend limit of 128.",
+                start,
+                start + 1,
+            );
+            self.offset = self.source.len();
+            self.push(TokenKind::Invalid, start, self.offset);
+            self.logical_content = true;
+            return;
+        }
+        if Self::ends_depth_marker(&self.header_tokens()) {
+            self.error(
+                "F0026",
+                "A depth marker and brace delimiter cannot decorate the same suite.",
+                start,
+                start + 1,
+            );
+        }
+        self.offset += 1;
+        self.push(TokenKind::SuiteOpen, start, self.offset);
+        self.logical_content = true;
+        self.suites.push(BraceSuite {
+            start,
+            indentation: Vec::new(),
+            pending_header: None,
+        });
+        let immediate_label = self.byte() == Some(b'#');
+        self.opening_whitespace();
+        let end = self.source[self.offset..]
+            .find(['\r', '\n'])
+            .map_or(self.source.len(), |length| self.offset + length);
+        if self.byte() == Some(b'#') {
+            let label_start = self.offset;
+            let terminator = self.source[self.offset + 1..end]
+                .find('#')
+                .map(|length| self.offset + 1 + length);
+            if immediate_label || terminator.is_some() {
+                let Some(terminator) = terminator else {
+                    self.error(
+                        "F0021",
+                        "Block label is missing its terminating '#' before the newline.",
+                        label_start,
+                        end,
+                    );
+                    self.offset = end;
+                    self.push(TokenKind::BlockLabel, label_start, end);
+                    return;
+                };
+                let label = &self.source[label_start + 1..terminator];
+                if label.trim().is_empty() {
+                    self.error(
+                        "F0022",
+                        "A block label must contain a non-whitespace display name.",
+                        label_start,
+                        terminator + 1,
+                    );
+                }
+                if label.contains(['{', '}']) {
+                    self.error(
+                        "F0023",
+                        "Nested brace or label delimiters are not allowed inside a block label.",
+                        label_start,
+                        terminator + 1,
+                    );
+                }
+                if terminator + 1 - label_start > MAX_LABEL_BYTES {
+                    self.error(
+                        "F0029",
+                        "Block label exceeds the initial frontend limit of 4096 UTF-8 bytes.",
+                        label_start,
+                        terminator + 1,
+                    );
+                }
+                self.offset = terminator + 1;
+                self.push(TokenKind::BlockLabel, label_start, self.offset);
+                self.opening_whitespace();
+            }
+            if self.byte() == Some(b'#') {
+                let comment_start = self.offset;
+                self.offset = end;
+                self.push(TokenKind::Comment, comment_start, end);
+            }
+        }
+        if self.offset < end {
+            self.error("F0021", "A brace suite opening or label must end its logical line; body statements begin on the next line.", self.offset, end);
+            let invalid_start = self.offset;
+            self.offset = end;
+            self.push(TokenKind::Invalid, invalid_start, end);
+        }
+        if end == self.source.len() {
+            self.error(
+                "F0021",
+                "A brace suite opening must be followed by a physical newline.",
+                start,
+                end,
+            );
+        }
+    }
+
+    fn close_suite(&mut self) {
+        let start = self.offset;
+        let previous = self
+            .tokens
+            .iter()
+            .rev()
+            .find(|token| !token.kind.is_trivia())
+            .map(|token| token.kind);
+        if self.logical_content && previous != Some(TokenKind::SuiteClose) {
+            self.push(TokenKind::Newline, start, start);
+        }
+        let suite = self.suites.pop().unwrap();
+        if suite.pending_header.is_some() {
+            self.error(
+                "F0024",
+                "Expected an indented body before closing the brace suite.",
+                start,
+                start + 1,
+            );
+        }
+        if !suite.indentation.is_empty() {
+            self.error("F0024", "A nested indentation suite must dedent to its header baseline before the containing brace closes.", start, start + 1);
+            for _ in 1..suite.indentation.len() {
+                self.push(TokenKind::Dedent, start, start);
+            }
+        }
+        self.offset += 1;
+        self.push(TokenKind::SuiteClose, start, self.offset);
+        self.logical_content = true;
+        self.logical_start = self.tokens.len();
+        self.header_indent = self.line_indent;
+        let following = self.source[self.offset..].trim_start_matches([' ', '\t', '\u{c}']);
+        // Only a second close on this physical line consults the parent. An
+        // inner brace's stylistic close cannot dedent its suspended parent.
+        if following.starts_with('}') && !self.suites.is_empty() {
+            self.brace_indentation(start, self.line_indent);
+        }
+        let companion = ["else", "elif", "except", "finally"].iter().any(|word| {
+            following.strip_prefix(word).is_some_and(|tail| {
+                !tail
+                    .chars()
+                    .next()
+                    .is_some_and(|ch| ch.is_alphanumeric() || ch == '_')
+            })
+        });
+        if !following.is_empty() && !following.starts_with(['\r', '\n', '#', '}']) && !companion {
+            let end = self.source[self.offset..]
+                .find(['\r', '\n'])
+                .map_or(self.source.len(), |length| self.offset + length);
+            self.error("F0025", "Only a closing brace, comment or companion clause may follow a suite close on the same line.", self.offset, end);
+        }
+    }
+
+    fn brace_indentation(&mut self, start: usize, current: Indentation) {
+        let index = self.suites.len() - 1;
+        let pending = self.suites[index].pending_header.take();
+        let mut levels = std::mem::take(&mut self.suites[index].indentation);
+        if let Some(header) = pending {
+            if current.columns <= header.columns || self.byte() == Some(b'}') {
+                self.error(
+                    "F0024",
+                    "Expected an indented body deeper than this header's physical indentation.",
+                    start,
+                    self.offset,
+                );
+            } else {
+                if current.alternate <= header.alternate {
+                    self.indentation_error(start);
+                }
+                if levels.is_empty() {
+                    levels.push(header);
+                }
+                levels.push(current);
+                self.push(TokenKind::Indent, self.offset, self.offset);
+            }
+        } else if let Some(previous) = levels.last().copied() {
+            if current.columns > previous.columns {
+                if current.alternate <= previous.alternate {
+                    self.indentation_error(start);
+                }
+                levels.push(current);
+                self.push(TokenKind::Indent, self.offset, self.offset);
+            } else {
+                while levels.len() > 1 && current.columns < levels.last().unwrap().columns {
+                    levels.pop();
+                    self.push(TokenKind::Dedent, self.offset, self.offset);
+                }
+                let level = *levels.last().unwrap();
+                if levels.len() == 1 && current.columns <= level.columns {
+                    if current.columns == level.columns && current.alternate != level.alternate {
+                        self.indentation_error(start);
+                    }
+                    levels.clear();
+                } else if current.columns != level.columns {
+                    self.error("F0002", "Dedent does not match an active indentation level or its brace-local header baseline.", start, self.offset);
+                } else if current.alternate != level.alternate {
+                    self.indentation_error(start);
+                }
+            }
+        }
+        self.suites[index].indentation = levels;
     }
 
     fn indentation_error(&mut self, start: usize) {

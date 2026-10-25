@@ -5,7 +5,15 @@
 
 mod lexer;
 
-pub use lexer::lex;
+pub use lexer::{lex, lex_with_dialect};
+
+/// Source syntax is selected explicitly, never by ambient machine settings.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum Dialect {
+    #[default]
+    Python,
+    Naja2026,
+}
 
 /// Half-open UTF-8 byte range in the unmodified input.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -78,6 +86,11 @@ pub enum TokenKind {
     Float,
     String,
     Symbol(Symbol),
+    /// NAJA 2026.1 suite delimiters, distinct from dictionary/set braces.
+    SuiteOpen,
+    SuiteClose,
+    /// Exact source bytes from the opening # through the terminating #.
+    BlockLabel,
     Whitespace,
     Comment,
     /// A physical line ending that terminates a logical line. Can be synthetic
@@ -195,12 +208,34 @@ pub struct LogicalLine {
 pub struct Cst {
     pub lexed: Lexed,
     pub lines: Vec<LogicalLine>,
+    pub suites: Vec<Suite>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum SuiteKind {
+    Control,
+    NamedSection,
+}
+
+/// Shared brace-folding/source metadata. A missing close remains None on an
+/// invalid source; labels are metadata and do not establish symbol bindings.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Suite {
+    pub kind: SuiteKind,
+    pub span: Span,
+    pub open: Span,
+    pub close: Option<Span>,
+    pub label: Option<Span>,
 }
 
 /// Build a lossless logical-line CST. This function does not validate grammar;
 /// in particular it does not decide whether `:(0)` is a depth marker or suite.
 pub fn parse_cst(source: &str) -> Cst {
-    let lexed = lex(source);
+    parse_cst_with_dialect(source, Dialect::Python)
+}
+
+pub fn parse_cst_with_dialect(source: &str, dialect: Dialect) -> Cst {
+    let lexed = lex_with_dialect(source, dialect);
     let mut lines = Vec::new();
     let mut first = 0;
     let mut depth = 0usize;
@@ -230,5 +265,45 @@ pub fn parse_cst(source: &str) -> Cst {
             line_depth = depth;
         }
     }
-    Cst { lexed, lines }
+    let mut suites: Vec<Suite> = Vec::new();
+    let mut active = Vec::new();
+    let mut previous = None;
+    for token in &lexed.tokens {
+        match token.kind {
+            TokenKind::SuiteOpen => {
+                active.push(suites.len());
+                suites.push(Suite {
+                    kind: if previous == Some(TokenKind::Symbol(Symbol::Colon)) {
+                        SuiteKind::Control
+                    } else {
+                        SuiteKind::NamedSection
+                    },
+                    span: Span::new(token.span.start, source.len()),
+                    open: token.span,
+                    close: None,
+                    label: None,
+                });
+            }
+            TokenKind::BlockLabel => {
+                if let Some(index) = active.last() {
+                    suites[*index].label = Some(token.span);
+                }
+            }
+            TokenKind::SuiteClose => {
+                if let Some(index) = active.pop() {
+                    suites[index].close = Some(token.span);
+                    suites[index].span.end = token.span.end;
+                }
+            }
+            _ => {}
+        }
+        if !token.kind.is_trivia() {
+            previous = Some(token.kind);
+        }
+    }
+    Cst {
+        lexed,
+        lines,
+        suites,
+    }
 }
