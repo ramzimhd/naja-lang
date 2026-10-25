@@ -55,6 +55,7 @@ pub enum Expression {
     And(Box<Self>, Box<Self>),
     Or(Box<Self>, Box<Self>),
     Call(usize, Vec<Self>),
+    Index(Box<Self>, Box<Self>),
 }
 
 #[derive(Clone, Debug)]
@@ -147,6 +148,7 @@ impl Validator<'_> {
             Expression::Binary(_, left, right)
             | Expression::FloorDivide(left, right)
             | Expression::Modulo(left, right)
+            | Expression::Index(left, right)
             | Expression::Compare(_, left, right)
             | Expression::And(left, right)
             | Expression::Or(left, right) => {
@@ -351,6 +353,10 @@ impl Emitter {
                     } else {
                         self.runtime.modulo
                     });
+            }
+            Expression::Index(value, index) => {
+                self.operands(value, index)?;
+                self.code.call(self.runtime.index);
             }
             Expression::Compare(comparison, left, right) => {
                 self.operands(left, right)?;
@@ -688,6 +694,7 @@ fn emit_parts(statements: &[Statement], functions: &[Function]) -> Result<Vec<u8
             }
         }
     }
+    emitter.code.bind(emitter.runtime.sequence_data_end);
     for (offset, label) in patches {
         let target = emitter.code.a.labels[label].ok_or("unbound native value data")?;
         let address = super::BASE + super::HEADER_SIZE as u64 + target as u64;

@@ -7,6 +7,7 @@ use crate::hosted::{
     x64::{Code, R::*},
 };
 mod division;
+mod indexing;
 
 pub(super) struct Runtime {
     pub add: usize,
@@ -18,6 +19,8 @@ pub(super) struct Runtime {
     pub positive: usize,
     pub len: usize,
     pub require_integer: usize,
+    pub index: usize,
+    pub sequence_data_end: usize,
     pub compare: usize,
     pub truth: usize,
     pub print: usize,
@@ -51,6 +54,8 @@ impl Runtime {
             positive: c.label(),
             len: c.label(),
             require_integer: c.label(),
+            index: c.label(),
+            sequence_data_end: c.label(),
             compare: c.label(),
             truth: c.label(),
             print: c.label(),
@@ -78,6 +83,7 @@ impl Runtime {
         self.numeric(c, integers);
         self.division(c, integers);
         self.length(c, integers);
+        self.indexing(c, integers);
         self.concatenation(c, integers);
         self.comparison(c, integers);
         self.truthiness(c);
