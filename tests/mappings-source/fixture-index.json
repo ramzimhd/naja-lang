@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "blocks.naja",
+      "sha256": "b4cfbcd39151302da5346dc3925c3f62bc589fe70b4c9b19c8de50662c6711ad"
+    },
+    {
+      "path": "chains.py",
+      "sha256": "852e3aa411a337c46adde7c4152b5f7b8507030ba80ec714e966616575165e75"
+    },
+    {
+      "path": "cycles.py",
+      "sha256": "0c789a536cea3917fa901fd98f12ca5fa9fff9937d8bd5681cf2fb9883d4d162"
+    },
+    {
+      "path": "file-key.py",
+      "sha256": "795d3557fc0bd42640c101a7a511780e339d84d69804c79cec5c1421a5f1ac10"
+    },
+    {
+      "path": "forms.py",
+      "sha256": "e316d98ab2cc6ca79a00ef9ea25a40d65c629210d15c3cd7e346e7fcde4903d2"
+    },
+    {
+      "path": "inputs/key.txt",
+      "sha256": "b810e5beca5358b8baa344a5a4a9cefa5afbc48f4850b5cbcee32e08b2092dd8"
+    },
+    {
+      "path": "order.py",
+      "sha256": "671f88c6d3748cb582eb687cc7169471d0d6792e2279d69cd5af849c851278e9"
+    },
+    {
+      "path": "project/main.naja",
+      "sha256": "55ed6282c3ca6611dfb19200d5ba09b3da246ba20fea06b59a9c9801ee161bd8"
+    },
+    {
+      "path": "project/naja.alias",
+      "sha256": "005db0c79b2d85f61ea0c20d984abf671e444c6baff930eee9ed981daa09f691"
+    },
+    {
+      "path": "project/naja.toml",
+      "sha256": "1a66cb6da3f1a57a6615558f85e20f8f73a9dc9ff6a9d8a5258ab6e6ff9b8493"
+    },
+    {
+      "path": "snapshots.py",
+      "sha256": "2501c8d4f0b6f17a2af8f6b50ba69ba956bf3301a8d625528f9b89841f2c910d"
+    }
+  ],
+  "native": [
+    {
+      "name": "forms",
+      "path": "forms.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "0\nTrue\n0\nTrue\n4\nupdated\nupdated\ntext\nbytes\nnone\nTrue\né\nb'\\xc3\\xa9'\nNone\n4\nTrue\nTrue\nTrue\nTrue\n"
+    },
+    {
+      "name": "snapshots",
+      "path": "snapshots.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "5\n6\nTrue\nTrue\nK\nK\né\né\nlater\nnew\nTrue\nFalse\nFalse\n"
+    },
+    {
+      "name": "order",
+      "path": "order.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "first key\nfirst value\nsecond key\nsecond value\nread container\nread key\n7\nstored value\nstore container\nstore key\nTrue\nelement\nmembership container\nTrue\nsnapshot container\n2\nset first\nset duplicate\nset last\n2\nnew\nTrue\n"
+    },
+    {
+      "name": "cycles",
+      "path": "cycles.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "True\nFalse\nTrue\n2\n"
+    },
+    {
+      "name": "chains",
+      "path": "chains.py",
+      "extensions": [
+        "py",
+        "naja"
+      ],
+      "stdout": "middle None\nNone container\nTrue\nmiddle integer\ninteger container\nTrue\nmiddle text\nTrue\nnonempty middle\nFalse\nfalse middle\nFalse\nFalse\nFalse\nTrue\nTrue\nTrue\nTrue\n"
+    },
+    {
+      "name": "blocks",
+      "path": "blocks.naja",
+      "extensions": [
+        "naja"
+      ],
+      "stdout": "2\né\n2\n"
+    }
+  ]
+}

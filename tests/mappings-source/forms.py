@@ -1,0 +1,23 @@
+from naja.collections import keys_snapshot
+
+print(len({}))
+print(not {})
+print(len(set()))
+print(not set())
+value = {True: "first", 1: "updated", "é": "text", b"\xc3\xa9": "bytes", None: "none",}
+print(len(value))
+print(value[True])
+print(value[1])
+print(value["é"])
+print(value[b"\xc3\xa9"])
+print(value[None])
+snapshot = keys_snapshot(value)
+print(snapshot[0])
+print(snapshot[1])
+print(snapshot[2])
+print(snapshot[3])
+print(len({True, 1, None, "é", b"\xc3\xa9",}))
+print(1 in {True})
+print(False in {0})
+print(None not in {})
+print(not 1 in {})

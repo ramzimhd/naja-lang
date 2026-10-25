@@ -1,0 +1,23 @@
+from naja.collections import keys_snapshot
+
+def choose(value): {
+if value in {"é", "𝄞"}: {# Membership control #
+{# Transparent group #
+return {value: {None, True}}
+}
+} else: {
+return {}
+}
+}
+
+if "é" in {"é": None}:(0)
+    value = choose("é")
+    print(len(value["é"]))
+    print(keys_snapshot(value)[0])
+
+{# Standalone section #
+print(len({
+    "brace-looking {# label #}": {},
+    "marker :(999)": {1, 2},
+}))
+}
