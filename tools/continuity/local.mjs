@@ -1,8 +1,8 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { closeSync, existsSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, readdirSync, readlinkSync, realpathSync, renameSync, rmdirSync, unlinkSync, writeFileSync } from 'node:fs';
+import { closeSync, existsSync, fstatSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, readdirSync, readlinkSync, realpathSync, renameSync, rmdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { budgetSchema, checkpointSchema, counterSchema, pointerSchema, reservationSchema, validate } from './schemas.mjs';
+import { auditableEvidenceSchema, budgetSchema, checkpointSchema, counterSchema, pointerSchema, reservationSchema, validate, verificationAdvanceSchema, verificationAuditInputSchema, verificationAuditReferenceSchema, verificationAuditSchema } from './schemas.mjs';
 
 const MAX_FILE = 64 * 1024 * 1024;
 const MAX_TOTAL = 128 * 1024 * 1024;
@@ -159,12 +159,140 @@ function latest(c) {
   if (privateRead(path.join(c.base, 'checkpoint-sequence.json'), counterSchema).value !== record.checkpoint_generation) stop('STALE_CHECKPOINT', 'Checkpoint pointer is older than the durable generation counter');
   return { record, directory };
 }
+function checkpointPointer(c) {
+  // latest also verifies the immutable checkpoint and durable counter.
+  latest(c);
+  return privateRead(path.join(c.base, 'latest.json'), pointerSchema);
+}
+function samePointer(a, b) { return ['id', 'checkpoint_generation', 'sha256'].every(key => a[key] === b[key]); }
+function fullCommit(repo, source) {
+  if (typeof source !== 'string' || !/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/.test(source)) stop('INVALID_SOURCE', 'An exact full commit object ID is required');
+  if (gitText(repo, ['cat-file', '-t', source]) !== 'commit') stop('INVALID_SOURCE', 'Verification source must be a commit object');
+}
+function ancestor(repo, older, newer) {
+  const result = git(repo, ['merge-base', '--is-ancestor', older, newer], true);
+  if (result.error || ![0, 1].includes(result.status)) stop('GIT_FAILED', 'Git ancestry inspection failed');
+  if (result.status !== 0) stop('INVALID_SOURCE', 'Verification must advance along existing ancestry to the observed HEAD');
+}
+function evidenceFile(c, relative, limit) {
+  if (typeof relative !== 'string' || !relative.startsWith('reports/checks/') || /[\\:\u0000-\u001f\u007f]/.test(relative) || relative.split('/').some(part => !part || /[. ]$/.test(part) || ['.', '..', '.git'].includes(part.toLowerCase()) || /^(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(part))) stop('UNSAFE_EVIDENCE_PATH', 'Evidence must use an ordinary repository-relative reports/checks path');
+  const inspect = () => {
+    let current = c.worktree;
+    const parts = relative.split('/');
+    for (let index = 0; index < parts.length; index++) {
+      current = path.join(current, parts[index]);
+      const info = lstatSync(current);
+      if (info.isSymbolicLink() || (index < parts.length - 1 && !info.isDirectory()) || (index === parts.length - 1 && !info.isFile())) stop('UNSAFE_EVIDENCE_PATH', 'Evidence cannot traverse symlinks or special files');
+    }
+    const resolved = realpathSync(current), within = path.relative(c.worktree, resolved);
+    if (within === '' || path.isAbsolute(within) || within.split(path.sep).includes('..')) stop('UNSAFE_EVIDENCE_PATH', 'Evidence resolves outside the repository');
+    return { full: current, info: lstatSync(current) };
+  };
+  const before = inspect();
+  if (before.info.size < 1 || before.info.size > limit) stop('EVIDENCE_LIMIT', 'Retained evidence is empty or exceeds the bounded read budget');
+  const fd = openSync(before.full, 'r');
+  let bytes;
+  try {
+    const opened = fstatSync(fd);
+    if (!opened.isFile() || opened.dev !== before.info.dev || opened.ino !== before.info.ino || opened.size !== before.info.size) stop('EVIDENCE_CHANGED', 'Evidence identity changed before reading');
+    bytes = readFileSync(fd);
+    const after = fstatSync(fd);
+    if (after.size !== opened.size || after.mtimeMs !== opened.mtimeMs || after.ctimeMs !== opened.ctimeMs || bytes.length !== opened.size) stop('EVIDENCE_CHANGED', 'Evidence changed while reading');
+  } finally { closeSync(fd); }
+  const after = inspect();
+  if (after.info.dev !== before.info.dev || after.info.ino !== before.info.ino || after.info.size !== before.info.size || after.info.mtimeMs !== before.info.mtimeMs || after.info.ctimeMs !== before.info.ctimeMs) stop('EVIDENCE_CHANGED', 'Evidence identity changed after reading');
+  return bytes;
+}
+function auditRecords(c, records, source) {
+  if (new Set(records).size !== records.length) stop('INVALID_EVIDENCE', 'Duplicate evidence record paths do not add evidence');
+  let total = 0;
+  const reportPaths = new Set(records);
+  return records.map(filename => {
+    if (!filename.endsWith('.json')) stop('INVALID_EVIDENCE', 'Explicit check records must be JSON files');
+    const raw = evidenceFile(c, filename, 1024 * 1024);
+    const report = validate(JSON.parse(raw.toString('utf8')), auditableEvidenceSchema);
+    if (report.commit !== source) stop('EVIDENCE_SOURCE_MISMATCH', 'Every passed report must name the exact audited source');
+    if (!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)$/.test(report.timestamp) || !Number.isFinite(Date.parse(report.timestamp))) stop('INVALID_EVIDENCE', 'A recorded report timestamp is required');
+    if (reportPaths.has(report.log_path)) stop('INVALID_EVIDENCE', 'Raw logs must be separate from selected JSON records');
+    const log = evidenceFile(c, report.log_path, MAX_FILE);
+    total += raw.length + log.length;
+    if (total > MAX_TOTAL) stop('EVIDENCE_LIMIT', 'The selected evidence set exceeds 128 MiB');
+    if (sha(log) !== report.log_sha256) stop('EVIDENCE_HASH_MISMATCH', 'Retained raw log bytes do not match their recorded SHA-256');
+    return { path: filename, sha256: sha(raw), report, log_bytes: log.length };
+  });
+}
+function auditableSnapshot(repo, observed, records) {
+  const allowed = new Set(records.flatMap(item => [item.path, item.report.log_path]));
+  if (observed.dirty.some(entry => !allowed.has(entry.path.replaceAll('\\', '/')) || entry.kind !== 'file' || entry.status.includes('U') || ['AA', 'DD'].includes(entry.status))) stop('SOURCE_UNVERIFIED', 'Current source edits require a separate tested source commit before verification can advance');
+  // Status can hide edits behind these flags. Fail closed instead of treating
+  // an apparently clean status as a complete source inspection.
+  const entries = git(repo, ['ls-files', '--stage', '-v', '-z']).stdout.toString('utf8').split('\0').filter(Boolean);
+  if (entries.some(entry => /^[a-zS]/.test(entry) || !/^\S \d+ [0-9a-f]+ 0\t/.test(entry))) stop('SOURCE_UNVERIFIED', 'Hidden index entries or unresolved stages require manual review before auditing');
+}
+function auditUnchanged(repo, c, token, before, pointer, expectedRecords, source) {
+  assertFence(c, token);
+  if (!samePointer(checkpointPointer(c), pointer)) stop('STALE_AUDIT', 'The baseline checkpoint changed');
+  const records = auditRecords(c, expectedRecords.map(item => item.path), source);
+  if (JSON.stringify(records) !== JSON.stringify(expectedRecords)) stop('STALE_AUDIT', 'Selected evidence changed after the audit observation');
+  const after = snapshot(repo);
+  auditableSnapshot(repo, after, records);
+  if (after.fingerprint !== before.fingerprint) stop('STALE_AUDIT', 'Source or repository metadata changed after the audit observation');
+}
+/** Audits retained report integrity only; never executes a reported command. */
+export function recordVerificationAudit(repo, token, input) {
+  return ownedOperation(repo, token, c => {
+    validate(input, verificationAuditInputSchema);
+    if (!existsSync(path.join(c.base, 'latest.json'))) stop('AUDIT_BASELINE_REQUIRED', 'Create a retained-history checkpoint before auditing an advancement');
+    const baseline = checkpointPointer(c), previous = latest(c).record;
+    const before = snapshot(repo);
+    fullCommit(repo, input.source_commit); ancestor(repo, input.source_commit, before.head);
+    if (previous.last_verified_source !== null) ancestor(repo, previous.last_verified_source, input.source_commit);
+    const records = auditRecords(c, input.records, input.source_commit);
+    auditableSnapshot(repo, before, records);
+    const id = randomUUID();
+    const record = { schema_version: 1, id, contract_revision: '1.3', scope: 'retained-report-integrity-only', created_at: new Date().toISOString(), reservation: token, snapshot: before, source_commit: input.source_commit, baseline_checkpoint: baseline, baseline_last_verified_source: previous.last_verified_source, records, commands_executed: false, automatic_status_changes: false };
+    validate(record, verificationAuditSchema);
+    auditUnchanged(repo, c, token, before, baseline, records, input.source_commit);
+    safeDirectory(path.join(c.base, 'verification-audits'));
+    const directory = path.join(c.base, 'verification-audits', id);
+    mkdirSync(directory, { mode: 0o700 }); // Exclusive immutable audit identity.
+    const filename = path.join(directory, 'audit.json');
+    atomicJSON(filename, record, verificationAuditSchema);
+    // No pointer is published on a failed final observation. Any orphan record
+    // remains private and its embedded snapshot/fence must still match on use.
+    auditUnchanged(repo, c, token, before, baseline, records, input.source_commit);
+    const reference = { id, sha256: sha(readFileSync(filename)) };
+    atomicJSON(path.join(directory, 'complete.json'), reference, verificationAuditReferenceSchema);
+    return reference;
+  });
+}
+function authorizeVerificationAdvance(repo, c, token, reference, previous, before, source) {
+  validate(reference, verificationAuditReferenceSchema);
+  const parent = path.join(c.base, 'verification-audits'), directory = path.join(parent, reference.id);
+  if (lstatSync(parent).isSymbolicLink() || lstatSync(directory).isSymbolicLink() || !lstatSync(directory).isDirectory()) stop('INVALID_AUDIT', 'Audit storage must be an ordinary private directory');
+  const filename = path.join(directory, 'audit.json'), record = privateRead(filename, verificationAuditSchema);
+  if (sha(readFileSync(filename)) !== reference.sha256 || record.id !== reference.id) stop('INVALID_AUDIT', 'Immutable audit identity or hash mismatch');
+  const complete = privateRead(path.join(directory, 'complete.json'), verificationAuditReferenceSchema);
+  if (complete.id !== reference.id || complete.sha256 !== reference.sha256) stop('INVALID_AUDIT', 'Incomplete or mismatched audit publication');
+  if (!sameFence(record.reservation, token)) stop('STALE_AUDIT', 'A verification audit cannot cross reservation identities or fencing generations');
+  if (record.source_commit !== source || record.baseline_last_verified_source !== previous.last_verified_source || !samePointer(checkpointPointer(c), record.baseline_checkpoint)) stop('STALE_AUDIT', 'Audit source or checkpoint baseline no longer matches');
+  if (record.snapshot.fingerprint !== before.fingerprint || record.snapshot.worktree !== before.worktree) stop('STALE_AUDIT', 'The audit observed a different source/index/HEAD/worktree snapshot');
+  fullCommit(repo, source); ancestor(repo, source, before.head);
+  if (previous.last_verified_source !== null) ancestor(repo, previous.last_verified_source, source);
+  auditUnchanged(repo, c, token, before, record.baseline_checkpoint, record.records, source);
+  return record;
+}
 export function writeCheckpoint(repo, token, details) {
   return ownedOperation(repo, token, c => {
     const previous = existsSync(path.join(c.base, 'latest.json')) ? latest(c).record : null;
     const before = snapshot(repo);
     const lastVerified = details.last_verified_source ?? previous?.last_verified_source ?? null;
-    if (previous && lastVerified !== previous.last_verified_source) stop('VERIFICATION_CHANGE', 'Checkpointing cannot advance last_verified_source; retained verification must be audited separately');
+    const advancing = previous && lastVerified !== previous.last_verified_source;
+    let audit;
+    if (advancing) {
+      if (!details.verification_audit) stop('VERIFICATION_CHANGE', 'Advancing retained verification requires an explicit matching private evidence audit');
+      audit = authorizeVerificationAdvance(repo, c, token, details.verification_audit, previous, before, lastVerified);
+    } else if (details.verification_audit !== undefined) stop('VERIFICATION_CHANGE', 'An audit reference is used only for an explicit source advancement');
     if (lastVerified !== null) gitText(repo, ['cat-file', '-e', `${lastVerified}^{commit}`]);
     const budget = details.budget ?? unknownBudget(); validate(budget, budgetSchema);
     const id = randomUUID();
@@ -189,10 +317,14 @@ export function writeCheckpoint(repo, token, details) {
     for (const check of record.checks) if (check.command.length === 0 || (check.result === 'passed' && check.exit_code !== 0)) stop('FALSE_PASS', 'Passed checks require a nonempty command and exit 0');
     if (record.next_commands.length === 0 || record.next_commands.some(command => command.length === 0)) stop('INVALID_CHECKPOINT', 'An exact nonempty resume command is required');
     if (snapshot(repo).fingerprint !== before.fingerprint) stop('SOURCE_CHANGED', 'Source changed before checkpoint publication; WIP and orphan recovery files remain intact');
+    // Recheck raw evidence and the held fence immediately before publication.
+    if (audit) auditUnchanged(repo, c, token, before, audit.baseline_checkpoint, audit.records, lastVerified);
     if (nextCounter(counter) !== generation) stop('GENERATION_CHANGED', 'Checkpoint generation changed while the mutation guard was held');
     atomicJSON(path.join(directory, 'checkpoint.json'), record, checkpointSchema);
     assertFence(c, token);
-    atomicJSON(path.join(c.base, 'latest.json'), { schema_version: 1, id, checkpoint_generation: generation, sha256: sha(readFileSync(path.join(directory, 'checkpoint.json'))) }, pointerSchema);
+    const pointer = { schema_version: 1, id, checkpoint_generation: generation, sha256: sha(readFileSync(path.join(directory, 'checkpoint.json'))) };
+    if (audit) atomicJSON(path.join(directory, 'verification-audit.json'), { schema_version: 1, checkpoint: pointer, audit: details.verification_audit, source_commit: lastVerified, previous_source: previous.last_verified_source }, verificationAdvanceSchema);
+    atomicJSON(path.join(c.base, 'latest.json'), pointer, pointerSchema);
     return record;
   });
 }

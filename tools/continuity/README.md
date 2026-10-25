@@ -10,7 +10,7 @@ identities. A fresh child process reads the checkpoint without chat history;
 this is a local process drill, not a completed handoff to another coding agent.
 
 `local.mjs` exports `acquireReservation`, `inspectReservation`,
-`releaseReservation`, `snapshot`, `writeCheckpoint`, `assessResume`,
+`releaseReservation`, `snapshot`, `recordVerificationAudit`, `writeCheckpoint`, `assessResume`,
 `classifyOutcome` and `unknownBudget`. `schemas.mjs` exports closed schema
 objects and their assertion validator. `node tools/continuity/cli.mjs schemas`
 prints them. Shared `planning/continuity.json` has a separate integrator-owned
@@ -82,8 +82,74 @@ verification, artifacts, blockers, unsafe intermediate states, exact next
 commands, separate budget categories and contract revision `1.3 / NAJA 2026.1`.
 Unknown telemetry is `null`. Nothing guesses percentages, remaining money or
 reset times. `last_verified_source` is caller-supplied retained history initially;
-subsequent checkpoints cannot change it. Establishing or advancing verification
-requires a separate evidence audit.
+subsequent checkpoints can advance it only through the explicit bounded evidence
+audit described below. That audit checks report integrity, not test coverage or
+product acceptance. Existing initial retained history is never relabeled as audited.
+
+### Explicit verification advancement
+
+Hold the existing reservation; do not acquire a second owner or modify live
+ownership to run an audit. First retain the real reports and raw logs. Then call:
+
+```javascript
+const reference = recordVerificationAudit(repo, token, {
+  source_commit: fullTestedCommit,
+  records: ['reports/checks/actual-check.json'],
+});
+const checkpoint = writeCheckpoint(repo, token, {
+  // Supply the ordinary task, checks, next_action and next_commands as before.
+  ...checkpointDetails,
+  last_verified_source: fullTestedCommit,
+  verification_audit: reference,
+});
+```
+
+The names in this example are placeholders, not evidence of an executed check.
+The audit requires an existing valid checkpoint baseline and returns exactly
+`{id, sha256}`. It writes a new private immutable identity at
+`naja-continuity/verification-audits/ID/audit.json`; the returned digest binds its
+exact bytes. A separately flushed `complete.json` reference is required after
+the final observation; interrupted audit directories without it cannot authorize
+advancement. An advancing checkpoint retains a separate `verification-audit.json`
+link in its checkpoint directory. The checkpoint JSON schema and old records
+remain unchanged. No audit updates the latest checkpoint, public continuity,
+requirements, features, task status or release gates.
+
+Explicitly select between 1 and 64 distinct report JSON paths under
+`reports/checks/`. Each must use the existing evidence fields with explicit
+contract revision `1.3`, the same full existing commit object ID, `passed`, exit
+0, a nonempty command and tool versions, a timestamp, target and limitations.
+Every report must name a nonempty raw log under `reports/checks/` with
+a matching SHA-256. The audit never executes the recorded command. Report reads
+are capped at 1 MiB, each log at 64 MiB, and all selected bytes at 128 MiB per pass.
+The private JSON limit remains 1 MiB. Older evidence without a revision retains
+its original scope and is preserved; it cannot satisfy this new audit.
+
+Paths must be ordinary repository-relative files. Traversal, private Git paths,
+symlinks/junctions, Windows alternate streams and ambiguous trailing dot/space
+names reject. File identities and hashes are rechecked. The audit rejects current
+Git-visible edits except its exact selected report/log paths, unresolved stages
+and hidden index flags. Unfinished WIP remains checkpointable with the old
+verification; it cannot become a newly audited source.
+
+The tested source must be an ancestor of observed HEAD and, when present, a
+descendant of the previously retained verified source. Observed HEAD may be a
+later metadata commit: the older source remains the only audited source. The
+helper does not assert that all intervening commits are metadata or that HEAD
+was tested. It binds a before/after workspace fingerprint, prior checkpoint
+identity/hash/generation and the exact owner/session/nonce/fencing generation.
+Any change after auditing, a superseding checkpoint, ownership transfer,
+tampered record/log or changed reference requires a fresh audit. Records are
+checked again before advancement publication. Interrupted private records remain
+for review; no stored command, patch or test is replayed.
+
+These checks establish consistency of caller-selected retained reports. They
+cannot establish that a log is honest, that the command actually ran, that its
+source label is truthful or that the selected tests cover a language feature.
+They provide no external audit, complete source closure, provider handoff,
+automatic runner or HATCH/FC1 acceptance claim. Uncooperative edits to private
+Git metadata and filesystem races outside the cooperative reservation boundary
+remain outside the guarantee.
 
 Private storage under `naja-continuity/checkpoints/ID` retains staged/unstaged
 binary patches and copies of dirty/untracked file bytes. Symlinks preserve link
@@ -125,7 +191,8 @@ node tools/continuity/cli.mjs assess
 ```
 
 Mutation commands require a private JSON input: `acquire` takes `{owner,session}`;
-`checkpoint` takes `{token,details}`; `release` takes `{token}`. `assess` optionally
+`audit-verification` takes `{token,details}` where details is the source/records
+object above; `checkpoint` takes `{token,details}`; `release` takes `{token}`. `assess` optionally
 takes `{token,acknowledge_dirty,expected_checkpoint}`. Pass it with
 `--input PRIVATE_JSON`; `--root DIRECTORY` selects the repository. Acquisition
 returns the token; keep it and all checkpoint/input/output data in private Git

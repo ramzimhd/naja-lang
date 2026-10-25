@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
-import { mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, symlinkSync, utimesSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
-import { acquireReservation, assessResume, classifyOutcome, inspectReservation, releaseReservation, snapshot, unknownBudget, writeCheckpoint } from '../../tools/continuity/local.mjs';
-import { checkpointSchema, counterSchema, reservationSchema, validate } from '../../tools/continuity/schemas.mjs';
+import { acquireReservation, assessResume, classifyOutcome, inspectReservation, recordVerificationAudit, releaseReservation, snapshot, unknownBudget, writeCheckpoint } from '../../tools/continuity/local.mjs';
+import { checkpointSchema, counterSchema, reservationSchema, validate, verificationAdvanceSchema, verificationAuditSchema } from '../../tools/continuity/schemas.mjs';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
 const moduleUrl = new URL('../../tools/continuity/local.mjs', import.meta.url).href;
@@ -36,6 +36,25 @@ function fixture(t) {
 function reserve(repo, owner = 'fixture-owner') { return acquireReservation(repo, { owner, session: randomUUID() }); }
 function details(head) { return { task: 'synthetic recovery fixture', last_verified_source: head, next_action: 'Inspect the preserved source and rerun its tests', next_commands: [['git', 'status', '--short']], checks: [{ command: ['synthetic-test'], result: 'not_run', exit_code: null }] }; }
 function checkpoint(f, token, more = {}) { return writeCheckpoint(f.repo, token, { ...details(f.head), ...more }); }
+function evidence(f, source, name = 'synthetic') {
+  const directory = path.join(f.repo, 'reports/checks'); mkdirSync(directory, { recursive: true });
+  const recordPath = `reports/checks/${name}.json`, logPath = `reports/checks/${name}.log`;
+  const bytes = Buffer.from('Synthetic integrity fixture; no NAJA test was run.\n');
+  const report = { contract_revision: '1.3', requirement_id: 'SYNTHETIC-ONLY', commit: source, target: 'disposable-repository-only', command: ['this-stored-command-must-never-be-executed'], tool_versions: { node: process.version }, exit_code: 0, result: 'passed', timestamp: new Date().toISOString(), log_path: logPath, log_sha256: hash(bytes), limitations: ['Synthetic report for continuity integrity tests; no product or provider claim.'] };
+  const save = () => writeFileSync(path.join(f.repo, recordPath), `${JSON.stringify(report, null, 2)}\n`);
+  writeFileSync(path.join(f.repo, logPath), bytes); save();
+  return { recordPath, logPath, bytes, report, save };
+}
+function advancing(t) {
+  const f = fixture(t), token = reserve(f.repo), previous = checkpoint(f, token);
+  writeFileSync(path.join(f.repo, 'source.txt'), 'synthetic new source commit\n');
+  git(f.repo, 'commit', '-am', 'Synthetic new source for integrity audit');
+  const source = git(f.repo, 'rev-parse', 'HEAD'), check = evidence(f, source);
+  return { ...f, token, previous, source, check };
+}
+function audit(f, token = f.token) { return recordVerificationAudit(f.repo, token, { source_commit: f.source, records: [f.check.recordPath] }); }
+function advance(f, reference, token = f.token) { return checkpoint(f, token, { last_verified_source: f.source, verification_audit: reference }); }
+function latestBytes(f) { return readFileSync(path.join(f.private, 'latest.json')); }
 function child(code, args = []) {
   return new Promise(resolve => {
     const process_ = spawn(process.execPath, ['--input-type=module', '-e', code, ...args], { stdio: ['ignore', 'pipe', 'pipe'] });
@@ -199,6 +218,7 @@ test('held mutation guards and incomplete atomic temporary files never authorize
   const f = fixture(t), token = reserve(f.repo), previous = checkpoint(f, token);
   mkdirSync(path.join(f.repo, '.git/naja-integration.lock/.operation'));
   assert.throws(() => checkpoint(f, token), { code: 'OPERATION_BUSY' });
+  assert.throws(() => recordVerificationAudit(f.repo, token, { source_commit: f.head, records: [] }), { code: 'OPERATION_BUSY' });
   assert.throws(() => releaseReservation(f.repo, token), { code: 'OPERATION_BUSY' });
   writeFileSync(path.join(f.private, 'latest.json.interrupted.tmp'), '{unfinished write');
   const result = assessResume(f.repo, { token });
@@ -243,4 +263,201 @@ test('conflict stages are fingerprinted and unmerged recovery always needs manua
   assert.ok(changed.reasons.includes('source_or_metadata_changed'));
   assert.equal(git(f.repo, 'rev-parse', 'HEAD'), f.head);
   assert.equal(readFileSync(path.join(f.repo, 'source.txt'), 'utf8'), 'original source\n');
+});
+
+test('audit requires a baseline and initial retained history stays explicitly unaudited', t => {
+  const f = fixture(t), token = reserve(f.repo), check = evidence(f, f.head);
+  assert.throws(() => recordVerificationAudit(f.repo, token, { source_commit: f.head, records: [check.recordPath] }), { code: 'AUDIT_BASELINE_REQUIRED' });
+  assert.equal(existsSync(path.join(f.private, 'latest.json')), false);
+  const initial = checkpoint(f, token);
+  assert.equal(initial.last_verified_source, f.head);
+  assert.equal(existsSync(path.join(f.private, 'checkpoints', initial.id, 'verification-audit.json')), false);
+});
+
+test('an explicit matching audit advances only its source, retaining history and later metadata HEAD', t => {
+  const f = advancing(t), retained = readFileSync(path.join(f.private, 'checkpoints', f.previous.id, 'checkpoint.json'));
+  const oldPointer = latestBytes(f);
+  assert.throws(() => checkpoint(f, f.token, { last_verified_source: f.source }), { code: 'VERIFICATION_CHANGE' });
+  assert.deepEqual(latestBytes(f), oldPointer);
+  git(f.repo, 'add', 'reports/checks'); git(f.repo, 'commit', '-m', 'Synthetic report metadata after tested source');
+  const metadataHead = git(f.repo, 'rev-parse', 'HEAD'); assert.notEqual(metadataHead, f.source);
+  const reference = audit(f);
+  assert.deepEqual(latestBytes(f), oldPointer); // Recording integrity is not checkpoint advancement.
+  const bytes = readFileSync(path.join(f.private, 'verification-audits', reference.id, 'audit.json'));
+  assert.equal(hash(bytes), reference.sha256);
+  const audited = validate(JSON.parse(bytes), verificationAuditSchema);
+  assert.equal(audited.scope, 'retained-report-integrity-only');
+  assert.equal(audited.commands_executed, false); assert.equal(audited.automatic_status_changes, false);
+  assert.equal(audited.snapshot.head, metadataHead); assert.equal(audited.source_commit, f.source);
+  const next = advance(f, reference);
+  assert.equal(next.last_verified_source, f.source); assert.equal(next.snapshot.head, metadataHead);
+  assert.equal(next.checkpoint_generation, f.previous.checkpoint_generation + 1);
+  const link = validate(JSON.parse(readFileSync(path.join(f.private, 'checkpoints', next.id, 'verification-audit.json'))), verificationAdvanceSchema);
+  assert.deepEqual(link.audit, reference); assert.equal(link.previous_source, f.head);
+  assert.deepEqual(readFileSync(path.join(f.private, 'checkpoints', f.previous.id, 'checkpoint.json')), retained);
+  assert.equal(assessResume(f.repo, { token: f.token }).ready, true);
+  assert.equal(git(f.repo, 'rev-parse', 'HEAD'), metadataHead);
+});
+
+test('report source, contract, result, command and retained raw log are all mandatory', t => {
+  const f = advancing(t), original = structuredClone(f.check.report), pointer = latestBytes(f);
+  const mutations = [
+    value => { value.commit = f.head; }, value => { value.contract_revision = '1.2'; },
+    value => { delete value.contract_revision; }, value => { value.result = 'failed'; },
+    value => { value.result = 'not_run'; value.exit_code = null; },
+    value => { value.result = 'blocked'; value.exit_code = null; }, value => { value.exit_code = 1; },
+    value => { value.command = []; }, value => { value.command = [' ']; },
+    value => { value.tool_versions = {}; }, value => { value.log_path = null; },
+    value => { delete value.log_sha256; }, value => { value.log_sha256 = '0'.repeat(64); },
+    value => { value.timestamp = 'not a timestamp'; }, value => { value.unrecognized = true; },
+  ];
+  for (const mutate of mutations) {
+    Object.keys(f.check.report).forEach(key => delete f.check.report[key]); Object.assign(f.check.report, structuredClone(original));
+    mutate(f.check.report); f.check.save();
+    assert.throws(() => audit(f)); assert.deepEqual(latestBytes(f), pointer);
+  }
+  Object.keys(f.check.report).forEach(key => delete f.check.report[key]); Object.assign(f.check.report, original); f.check.save();
+  writeFileSync(path.join(f.repo, f.check.logPath), Buffer.alloc(0));
+  f.check.report.log_sha256 = hash(Buffer.alloc(0)); f.check.save();
+  assert.throws(() => audit(f), { code: 'EVIDENCE_LIMIT' });
+  writeFileSync(path.join(f.repo, f.check.recordPath), Buffer.alloc(0));
+  assert.throws(() => audit(f), { code: 'EVIDENCE_LIMIT' });
+  assert.deepEqual(latestBytes(f), pointer);
+});
+
+test('every selected report must pass with a retained matching log at the same source', t => {
+  const f = advancing(t), second = evidence(f, f.source, 'second'), pointer = latestBytes(f);
+  const input = { source_commit: f.source, records: [f.check.recordPath, second.recordPath] };
+  second.report.commit = f.head; second.save();
+  assert.throws(() => recordVerificationAudit(f.repo, f.token, input), { code: 'EVIDENCE_SOURCE_MISMATCH' });
+  second.report.commit = f.source; second.report.result = 'failed'; second.save();
+  assert.throws(() => recordVerificationAudit(f.repo, f.token, input));
+  second.report.result = 'passed'; second.report.log_path = f.check.recordPath; second.save();
+  assert.throws(() => recordVerificationAudit(f.repo, f.token, input), { code: 'INVALID_EVIDENCE' });
+  second.report.log_path = f.check.logPath; second.save(); // Shared raw output does not imply additional coverage.
+  rmSync(path.join(f.repo, second.logPath)); // Remove the fixture's now-unselected extra log.
+  const reference = recordVerificationAudit(f.repo, f.token, input);
+  assert.deepEqual(latestBytes(f), pointer);
+  assert.equal(JSON.parse(readFileSync(path.join(f.private, 'verification-audits', reference.id, 'audit.json'))).records.length, 2);
+});
+
+test('audit inputs are finite and exact full existing commit ancestry is required', t => {
+  const f = advancing(t), pointer = latestBytes(f);
+  for (const source of ['HEAD', f.source.slice(0, 12), '0'.repeat(40)]) assert.throws(() => recordVerificationAudit(f.repo, f.token, { source_commit: source, records: [f.check.recordPath] }));
+  const tree = git(f.repo, 'rev-parse', 'HEAD^{tree}');
+  assert.throws(() => recordVerificationAudit(f.repo, f.token, { source_commit: tree, records: [f.check.recordPath] }), { code: 'INVALID_SOURCE' });
+  const unrelated = git(f.repo, 'commit-tree', tree, '-m', 'Synthetic unrelated history');
+  assert.throws(() => recordVerificationAudit(f.repo, f.token, { source_commit: unrelated, records: [f.check.recordPath] }), { code: 'INVALID_SOURCE' });
+  for (const records of [[], [f.check.recordPath, f.check.recordPath], Array(65).fill(f.check.recordPath)]) assert.throws(() => recordVerificationAudit(f.repo, f.token, { source_commit: f.source, records }));
+  assert.throws(() => recordVerificationAudit(f.repo, f.token, { source_commit: f.source, records: [f.check.recordPath], execute: true }));
+  assert.deepEqual(latestBytes(f), pointer);
+});
+
+test('repository path traversal, private paths, alternate streams and symlink escape reject', t => {
+  const f = advancing(t), pointer = latestBytes(f), original = f.check.report.log_path;
+  const paths = ['../outside.json', 'reports/checks/../outside.json', 'reports/checks/.. /outside.json', 'reports/checks/./synthetic.json', 'reports/checks//synthetic.json', 'reports/checks/.git/config', 'reports/checks/file:stream.json', 'reports/checks/CON.json', 'C:/outside.json', 'reports\\checks\\synthetic.json'];
+  for (const recordPath of paths) assert.throws(() => recordVerificationAudit(f.repo, f.token, { source_commit: f.source, records: [recordPath] }));
+  for (const logPath of ['reports/checks/../../source.txt', 'reports/checks/file:stream.log', '.git/config']) {
+    f.check.report.log_path = logPath; f.check.save(); assert.throws(() => audit(f));
+  }
+  const outside = path.join(f.base, 'outside'); mkdirSync(outside);
+  writeFileSync(path.join(outside, 'raw.log'), f.check.bytes);
+  symlinkSync(outside, path.join(f.repo, 'reports/checks/linked'), process.platform === 'win32' ? 'junction' : 'dir');
+  f.check.report.log_path = 'reports/checks/linked/raw.log'; f.check.save();
+  assert.throws(() => audit(f), error => ['UNSAFE_SOURCE_PATH', 'UNSAFE_EVIDENCE_PATH'].includes(error.code));
+  f.check.report.log_path = original; f.check.save();
+  assert.deepEqual(latestBytes(f), pointer);
+  assert.deepEqual(readFileSync(path.join(outside, 'raw.log')), f.check.bytes);
+});
+
+test('current source edits and hidden index flags fail closed without poisoning WIP or verification', t => {
+  const f = advancing(t), pointer = latestBytes(f);
+  writeFileSync(path.join(f.repo, 'source.txt'), 'unfinished source WIP must survive\n');
+  assert.throws(() => audit(f), { code: 'SOURCE_UNVERIFIED' });
+  assert.deepEqual(latestBytes(f), pointer);
+  assert.equal(readFileSync(path.join(f.repo, 'source.txt'), 'utf8'), 'unfinished source WIP must survive\n');
+  const preserved = checkpoint(f, f.token);
+  assert.equal(preserved.last_verified_source, f.head);
+  const entry = preserved.snapshot.dirty.find(item => item.path === 'source.txt'), index = preserved.snapshot.dirty.indexOf(entry);
+  assert.equal(readFileSync(path.join(f.private, 'checkpoints', preserved.id, 'files', String(index)), 'utf8'), 'unfinished source WIP must survive\n');
+  writeFileSync(path.join(f.repo, 'source.txt'), 'synthetic new source commit\n');
+  git(f.repo, 'update-index', '--assume-unchanged', 'source.txt');
+  assert.throws(() => audit(f), { code: 'SOURCE_UNVERIFIED' });
+  git(f.repo, 'update-index', '--no-assume-unchanged', 'source.txt');
+  git(f.repo, 'update-index', '--skip-worktree', 'source.txt');
+  assert.throws(() => audit(f), { code: 'SOURCE_UNVERIFIED' });
+  git(f.repo, 'update-index', '--no-skip-worktree', 'source.txt');
+  assert.equal(assessResume(f.repo, { token: f.token }).checkpoint.last_verified_source, f.head);
+});
+
+test('source, report or log changes after an audit make the explicit reference stale', t => {
+  const f = advancing(t), reference = audit(f), pointer = latestBytes(f);
+  writeFileSync(path.join(f.repo, 'source.txt'), 'new untested WIP after audit\n');
+  assert.throws(() => advance(f, reference), { code: 'STALE_AUDIT' });
+  assert.equal(readFileSync(path.join(f.repo, 'source.txt'), 'utf8'), 'new untested WIP after audit\n');
+  writeFileSync(path.join(f.repo, 'source.txt'), 'synthetic new source commit\n');
+  writeFileSync(path.join(f.repo, f.check.logPath), 'tampered retained log\n');
+  assert.throws(() => advance(f, reference), { code: 'STALE_AUDIT' });
+  writeFileSync(path.join(f.repo, f.check.logPath), f.check.bytes);
+  f.check.report.target = 'changed-report-target'; f.check.save();
+  assert.throws(() => advance(f, reference), { code: 'STALE_AUDIT' });
+  assert.deepEqual(latestBytes(f), pointer);
+  assert.equal(assessResume(f.repo, { token: f.token }).checkpoint.last_verified_source, f.head);
+});
+
+test('superseded checkpoints and later metadata commits require a fresh audit', t => {
+  const f = advancing(t), reference = audit(f);
+  const intermediate = checkpoint(f, f.token); // Deliberately retains old verification.
+  assert.throws(() => advance(f, reference), { code: 'STALE_AUDIT' });
+  assert.equal(intermediate.last_verified_source, f.head);
+  const fresh = audit(f);
+  git(f.repo, 'add', 'reports/checks'); git(f.repo, 'commit', '-m', 'Synthetic later metadata');
+  assert.throws(() => advance(f, fresh), { code: 'STALE_AUDIT' });
+  const newest = audit(f); assert.equal(advance(f, newest).last_verified_source, f.source);
+  assert.throws(() => advance(f, newest), { code: 'VERIFICATION_CHANGE' });
+  f.check.report.commit = f.head; f.check.save();
+  assert.throws(() => recordVerificationAudit(f.repo, f.token, { source_commit: f.head, records: [f.check.recordPath] }), { code: 'INVALID_SOURCE' });
+});
+
+test('stale tokens and a transferred fence cannot record or consume an old audit', t => {
+  const f = advancing(t), reference = audit(f), pointer = latestBytes(f);
+  releaseReservation(f.repo, f.token); const incoming = reserve(f.repo, 'synthetic-new-owner');
+  assert.throws(() => audit(f), { code: 'FENCE_REJECTED' });
+  assert.throws(() => advance(f, reference), { code: 'FENCE_REJECTED' });
+  assert.throws(() => advance(f, reference, incoming), { code: 'STALE_AUDIT' });
+  assert.deepEqual(latestBytes(f), pointer);
+  const fresh = audit(f, incoming); assert.equal(advance(f, fresh, incoming).last_verified_source, f.source);
+});
+
+test('audit tampering, hash mismatch and incompatible extra fields never publish a checkpoint', t => {
+  const f = advancing(t), reference = audit(f), pointer = latestBytes(f);
+  const filename = path.join(f.private, 'verification-audits', reference.id, 'audit.json'), original = readFileSync(filename);
+  const complete = path.join(path.dirname(filename), 'complete.json'), receipt = readFileSync(complete);
+  renameSync(complete, `${complete}.interrupted`);
+  assert.throws(() => advance(f, reference));
+  renameSync(`${complete}.interrupted`, complete);
+  writeFileSync(complete, JSON.stringify({ ...reference, sha256: '0'.repeat(64) }));
+  assert.throws(() => advance(f, reference), { code: 'INVALID_AUDIT' });
+  writeFileSync(complete, receipt);
+  assert.throws(() => advance(f, { ...reference, sha256: '0'.repeat(64) }), { code: 'INVALID_AUDIT' });
+  assert.throws(() => advance(f, { ...reference, unauthorized: true }));
+  const record = JSON.parse(original); record.unexpected = true; writeFileSync(filename, JSON.stringify(record));
+  assert.throws(() => advance(f, reference));
+  delete record.unexpected; record.scope = 'all-tests-verified'; writeFileSync(filename, JSON.stringify(record));
+  assert.throws(() => advance(f, reference));
+  writeFileSync(filename, original);
+  assert.deepEqual(latestBytes(f), pointer);
+  assert.equal(advance(f, reference).last_verified_source, f.source);
+});
+
+test('audit CLI is explicit and its stored commands are never executed', t => {
+  const f = advancing(t), marker = path.join(f.repo, 'must-not-exist');
+  f.check.report.command = [process.execPath, '-e', `require('node:fs').writeFileSync(${JSON.stringify(marker)}, 'unexpected execution')`]; f.check.save();
+  const input = path.join(f.private, 'synthetic-audit-input.json');
+  writeFileSync(input, JSON.stringify({ token: f.token, details: { source_commit: f.source, records: [f.check.recordPath] } }));
+  const cli = fileURLToPath(new URL('../../tools/continuity/cli.mjs', import.meta.url));
+  const result = spawnSync(process.execPath, [cli, 'audit-verification', '--root', f.repo, '--input', input], { encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr); assert.equal(existsSync(marker), false);
+  const reference = JSON.parse(result.stdout); assert.equal(advance(f, reference).last_verified_source, f.source);
+  assert.equal(existsSync(marker), false);
 });

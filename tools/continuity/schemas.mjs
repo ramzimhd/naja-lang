@@ -33,7 +33,32 @@ export const checkpointSchema = object({
 });
 export const pointerSchema = object({ schema_version: { const: 1 }, id: uuid, checkpoint_generation: generation, sha256: digest });
 export const counterSchema = object({ schema_version: { const: 1 }, value: integer });
-export const schemas = { reservation: reservationSchema, snapshot: snapshotSchema, checkpoint: checkpointSchema, pointer: pointerSchema, counter: counterSchema, budget: budgetSchema };
+const evidencePath = { type: 'string', pattern: '^reports/checks/[^\\\\:\\u0000-\\u001f\\u007f]+$' };
+export const verificationAuditInputSchema = object({ source_commit: hash, records: { ...list(evidencePath, 1), maxItems: 64 } });
+export const verificationAuditReferenceSchema = object({ id: uuid, sha256: digest });
+// This narrower view requires the new contract and retained logs. It does not
+// reinterpret historical 1.2 evidence or replace planning/evidence.schema.json.
+export const auditableEvidenceSchema = object({
+  contract_revision: { const: '1.3' }, requirement_id: text, commit: hash, target: text,
+  command: { ...list(text, 1), maxItems: 256 },
+  tool_versions: { type: 'object', required: [], properties: {}, additionalProperties: text, minProperties: 1, maxProperties: 64 },
+  exit_code: { const: 0 }, result: { const: 'passed' }, timestamp: text,
+  log_path: evidencePath, log_sha256: digest, limitations: { ...list(text), maxItems: 256 },
+});
+const auditedRecord = object({ path: evidencePath, sha256: digest, report: auditableEvidenceSchema, log_bytes: generation });
+export const verificationAuditSchema = object({
+  schema_version: { const: 1 }, id: uuid, contract_revision: { const: '1.3' },
+  scope: { const: 'retained-report-integrity-only' }, created_at: text,
+  reservation: reservationSchema, snapshot: snapshotSchema, source_commit: hash,
+  baseline_checkpoint: pointerSchema, baseline_last_verified_source: nullable(hash),
+  records: { ...list(auditedRecord, 1), maxItems: 64 },
+  commands_executed: { const: false }, automatic_status_changes: { const: false },
+});
+export const verificationAdvanceSchema = object({
+  schema_version: { const: 1 }, checkpoint: pointerSchema,
+  audit: verificationAuditReferenceSchema, source_commit: hash, previous_source: nullable(hash),
+});
+export const schemas = { reservation: reservationSchema, snapshot: snapshotSchema, checkpoint: checkpointSchema, pointer: pointerSchema, counter: counterSchema, budget: budgetSchema, verification_audit_input: verificationAuditInputSchema, verification_audit_reference: verificationAuditReferenceSchema, verification_audit: verificationAuditSchema, verification_advance: verificationAdvanceSchema, auditable_evidence: auditableEvidenceSchema };
 
 // Only the assertions above are used; the schema objects are exported for inspection.
 export function validate(value, schema, location = '$') {
@@ -49,13 +74,17 @@ export function validate(value, schema, location = '$') {
   if (typeof value === 'string' && ((schema.minLength && !value.trim()) || (schema.pattern && !new RegExp(schema.pattern).test(value)))) throw new Error(`${location}: invalid string`);
   if (Array.isArray(value)) {
     if (value.length < schema.minItems) throw new Error(`${location}: too few items`);
+    if (schema.maxItems !== undefined && value.length > schema.maxItems) throw new Error(`${location}: too many items`);
     value.forEach((child, index) => validate(child, schema.items, `${location}[${index}]`));
   }
   if (schema.type === 'object') {
+    if (schema.minProperties !== undefined && Object.keys(value).length < schema.minProperties) throw new Error(`${location}: too few properties`);
+    if (schema.maxProperties !== undefined && Object.keys(value).length > schema.maxProperties) throw new Error(`${location}: too many properties`);
     for (const name of schema.required) if (!Object.hasOwn(value, name)) throw new Error(`${location}: missing ${name}`);
     for (const name of Object.keys(value)) {
-      if (!Object.hasOwn(schema.properties, name)) throw new Error(`${location}: unexpected ${name}`);
-      validate(value[name], schema.properties[name], `${location}.${name}`);
+      if (Object.hasOwn(schema.properties, name)) validate(value[name], schema.properties[name], `${location}.${name}`);
+      else if (schema.additionalProperties && typeof schema.additionalProperties === 'object') validate(value[name], schema.additionalProperties, `${location}.${name}`);
+      else throw new Error(`${location}: unexpected ${name}`);
     }
   }
   return value;
