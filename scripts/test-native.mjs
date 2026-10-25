@@ -30,8 +30,8 @@ if (process.platform === 'win32') {
   target = directory;
 }
 let passed = 0;
-function build(name,source) {
-  const input = join(directory,name+'.py');
+function build(name,source,extension='py') {
+  const input = join(directory,name+'.'+extension);
   const output = join(directory,name+'.elf');
   writeFileSync(input,prefix+source);
   const result = command(executable,['build',input,'--target','x86_64-unknown-linux-gnu','--output',output]);
@@ -42,8 +42,8 @@ function build(name,source) {
   } else { chmodSync(output,0o700); }
   return {input,output,target:target+'/'+name+'.elf'};
 }
-function run(name,source,stdout,status=0,stderr='') {
-  const artifact = build(name,source);
+function run(name,source,stdout,status=0,stderr='',extension='py') {
+  const artifact = build(name,source,extension);
   const result = process.platform === 'win32'
     ? command('wsl.exe',['--exec','/usr/bin/timeout','5',artifact.target])
     : command('/usr/bin/timeout',['5',artifact.target]);
@@ -68,6 +68,23 @@ for (const [index,operator] of ['==','!=','<','<=','>','>='].entries()) {
   run('comparison-'+index,source,expected.join('\n')+'\n');
 }
 run('nested-control','x: i64 = i64(0)\ny: i64 = i64(0)\nwhile x < i64(3):\n    y = i64(0)\n    while y < i64(2):\n        if x != y:\n            print(x * i64(10) + y)\n        else:\n            print(i64(-1))\n        y = y + i64(1)\n    x = x + i64(1)\n','-1\n1\n10\n-1\n20\n21\n');
+const blockReference = run('block-reference','x: i64 = i64(0)\nwhile x < i64(3):\n    x = x + i64(1)\nif x == i64(3):\n    print(x)\nelse:\n    print(i64(-1))\n','3\n');
+for (const [name,body] of [
+  ['brace-sections','{# State #\nx: i64 = i64(0)\n}\nwhile x < i64(3): {# Advance #\nx = x + i64(1)\n}\nif x == i64(3): {\n{# Output #\nprint(x)\n}\n} else: {\nprint(i64(-1))\n}\n'],
+  ['depth-markers','x: i64 = i64(0)\nwhile x < i64(3):(0)\n    x = x + i64(1)\nif x == i64(3):(0)\n    print(x)\nelse:(0)\n    print(i64(-1))\n'],
+  ['mixed-styles','x: i64 = i64(0)\nwhile x < i64(3): {\n  x = x + i64(1)\n}\nif x == i64(3):\n    {# Output #\nprint(x)\n    }\nelse: {\nprint(i64(-1))\n}\n'],
+]) {
+  const variant = run(name,body,'3\n',0,'','naja');
+  assert.deepEqual(readFileSync(variant.output),readFileSync(blockReference.output),name+': transparent native lowering');
+  console.log('PASS '+name+' emits identical machine code to indentation baseline');
+  passed++;
+}
+const compatibilityBlock = join(directory,'brace-isolation.py');
+writeFileSync(compatibilityBlock,prefix+'if i64(1) == i64(1): {\nprint(i64(1))\n}\n');
+const compatibilityCheck = command(executable,['check',compatibilityBlock]);
+assert.equal(compatibilityCheck.status,1, 'CLI .py dialect must reject NAJA suite braces');
+console.log('PASS CLI .py dialect keeps NAJA brace syntax isolated');
+passed++;
 for(const [name,expression] of [['add','i64(9223372036854775807) + i64(1)'],['subtract','i64(-9223372036854775808) - i64(1)'],['multiply','i64(9223372036854775807) * i64(2)'],['negate','-x']]) {
   run('overflow-'+name,'x: i64 = i64(-9223372036854775808)\nprint('+expression+')\n','',101,'NJA201: checked i64 overflow\n');
 }
@@ -97,6 +114,8 @@ for(const [name,source,code] of [
   ['bare-int-after-import',prefix+'print(9223372036854775807 + 1)\n','NJA101'],
   ['lexical-error','from naja.core import i64\nprint("unterminated)\n',null],
   ['expression-limit',prefix+'print('+Array(140).fill('i64(1)').join('+')+')\n','NJA101'],
+  ['wrong-depth',prefix+'if i64(1) == i64(1):(1)\n    print(i64(1))\n','NJA101'],
+  ['missing-brace',prefix+'if i64(1) == i64(1): {\nprint(i64(1))\n',null],
 ]) {
   const input=join(directory,name+'.naja');
   const output=join(directory,name+'.rejected');

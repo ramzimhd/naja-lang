@@ -39,6 +39,8 @@ pub struct Condition {
 
 #[derive(Clone, Debug)]
 pub enum Statement {
+    /// Transparent source grouping; emits only its body in the same local frame.
+    Group(Vec<Statement>),
     Assign(usize, Expression),
     Print(Expression),
     If(Condition, Vec<Statement>, Vec<Statement>),
@@ -155,6 +157,7 @@ impl Generator {
         }
         for statement in statements {
             match statement {
+                Statement::Group(body) => self.statements(body, depth + 1)?,
                 Statement::Assign(slot, expression) => {
                     self.validate_slot(*slot)?;
                     self.expression(expression, 0)?;

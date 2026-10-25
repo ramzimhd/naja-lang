@@ -6,7 +6,7 @@ use std::{
     process::ExitCode,
 };
 
-const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja lex SOURCE\n  naja check SOURCE\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE\n\nThis seed supports a bounded explicit checked-i64 subset only.\nFull grammar, hosted int, aliases, depth markers and self-hosting remain unimplemented.\nBuild never runs user code and refuses to overwrite an existing output.\n";
+const HELP: &str = "NAJA HATCH 0.0.1 experimental Rust seed\n\nUsage:\n  naja --version\n  naja lex SOURCE\n  naja check SOURCE\n  naja build SOURCE --target x86_64-unknown-linux-gnu --output NEW_FILE\n\nThis seed supports a bounded explicit checked-i64 subset only.\n.naja selects edition 2026.1 with brace suites, named sections and indentation depth markers.\n.py keeps the separate compatibility dialect.\nFull grammar, hosted int, aliases and self-hosting remain unimplemented.\nBuild never runs user code and refuses to overwrite an existing output.\n";
 
 fn main() -> ExitCode {
     match run() {
@@ -85,8 +85,13 @@ fn run() -> Result<(), String> {
         return Err("NJA100: source exceeds the experimental 1 MiB limit".into());
     }
     let source = String::from_utf8(bytes).map_err(|_| "NJA005: source must be UTF-8")?;
+    let dialect = if path.extension().is_some_and(|value| value == "naja") {
+        naja_frontend::Dialect::Naja2026
+    } else {
+        naja_frontend::Dialect::Python
+    };
     if operation == "lex" {
-        let lexed = naja_frontend::lex(&source);
+        let lexed = naja_frontend::lex_with_dialect(&source, dialect);
         if !lexed.diagnostics.is_empty() {
             return Err(diagnostics(path, &source, &lexed.diagnostics));
         }
@@ -102,12 +107,13 @@ fn run() -> Result<(), String> {
         return Ok(());
     }
     if operation == "check" {
-        naja_seed::check(&source).map_err(|errors| diagnostics(path, &source, &errors))?;
+        naja_seed::check_with_dialect(&source, dialect)
+            .map_err(|errors| diagnostics(path, &source, &errors))?;
         println!("Checked experimental i64 subset: {}", path.display());
         return Ok(());
     }
-    let binary =
-        naja_seed::compile(&source).map_err(|errors| diagnostics(path, &source, &errors))?;
+    let binary = naja_seed::compile_with_dialect(&source, dialect)
+        .map_err(|errors| diagnostics(path, &source, &errors))?;
     let output = output.unwrap();
     let mut options = OpenOptions::new();
     options.write(true).create_new(true);
