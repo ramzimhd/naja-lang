@@ -1,0 +1,28 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "5c555bc6e3ff51c9f2f945b069654aa287bc446b",
+  "target": "GitHub hosted macOS15.7.9 arm64, image20260907.0337.1",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "--offline"
+  ],
+  "tool_versions": {
+    "rustc": "1.97.1 (8bab26f4f 2026-07-14); installation observed in job log",
+    "node": "v24.11.0; observed in job log",
+    "git": "2.55.0; observed in job log"
+  },
+  "exit_code": 101,
+  "result": "failed",
+  "timestamp": "2026-10-25T19:38:45.192Z",
+  "log_path": "reports/checks/v13-ci-macos-failure.log",
+  "log_sha256": "7d19560bbaa2b5aa9f0eecfe095a68c8e1430ee7cb9cfabef12533187d4b6bc3",
+  "limitations": [
+    "Actual failed step from run40226205703/job121268005546; retained output is the complete cargo-test step excerpt with CI workspace path sanitized, not the full authentication/setup job log.",
+    "The Unix invalid-filename fixture failed during creation with macOS EILSEQ before the product guard ran. Windows/Linux jobs passed at this source; that does not convert this macOS result to success.",
+    "The subsequent fix adds an OS-string conversion guard test on every host and retains end-to-end discovery when the filesystem accepts the invalid-name fixture. Its macOS CI result is pending."
+  ]
+}

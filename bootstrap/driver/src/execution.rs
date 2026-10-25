@@ -492,6 +492,11 @@ pub fn discover(path: &Path, filter: Option<&str>) -> Result<Vec<TestFile>, Stri
     Ok(files)
 }
 
+fn unicode_entry_name(name: &OsStr) -> Result<&str, &'static str> {
+    name.to_str()
+        .ok_or("NJA014: test discovery names must be Unicode")
+}
+
 fn visit(
     root: &Path,
     directory: &Path,
@@ -517,9 +522,7 @@ fn visit(
             continue;
         }
         let entry_name = entry.file_name();
-        let name = entry_name
-            .to_str()
-            .ok_or("NJA014: test discovery names must be Unicode")?;
+        let name = unicode_entry_name(&entry_name)?;
         let path = entry.path();
         if kind.is_dir() {
             visit(root, &path, depth + 1, entries, files)?;
@@ -699,6 +702,25 @@ mod tests {
         }
     }
 
+    #[test]
+    fn discovery_rejects_nonunicode_os_names_before_selection() {
+        #[cfg(unix)]
+        let name = {
+            use std::os::unix::ffi::OsStringExt;
+            OsString::from_vec(b"test_\xff.py".to_vec())
+        };
+        #[cfg(windows)]
+        let name = {
+            use std::os::windows::ffi::OsStringExt;
+            OsString::from_wide(&[0x74, 0x65, 0x73, 0x74, 0x5f, 0xdc00])
+        };
+        assert!(
+            unicode_entry_name(&name)
+                .unwrap_err()
+                .contains("must be Unicode")
+        );
+    }
+
     #[cfg(unix)]
     #[test]
     fn discovery_preserves_unix_backslashes_and_rejects_nonunicode_names() {
@@ -722,13 +744,24 @@ mod tests {
         let invalid = artifact
             .directory
             .join(OsString::from_vec(b"test_\xff.py".to_vec()));
-        fs::write(&invalid, b"print(3)").unwrap();
-        assert!(
-            discover(&artifact.directory, None)
-                .unwrap_err()
-                .contains("must be Unicode")
-        );
-        fs::remove_file(invalid).unwrap();
+        match fs::write(&invalid, b"print(3)") {
+            Ok(()) => {
+                assert!(
+                    discover(&artifact.directory, None)
+                        .unwrap_err()
+                        .contains("must be Unicode")
+                );
+                fs::remove_file(invalid).unwrap();
+            }
+            Err(error) if cfg!(target_os = "macos") && error.raw_os_error() == Some(92) => {
+                // APFS can reject this fixture at creation with EILSEQ. The
+                // independent OsStr test above still exercises our guard.
+                eprintln!(
+                    "Filesystem rejected the non-Unicode fixture with EILSEQ; discovery's conversion guard is tested separately"
+                );
+            }
+            Err(error) => panic!("cannot create non-Unicode discovery fixture: {error}"),
+        }
         fs::remove_file(flat).unwrap();
         fs::remove_file(nested).unwrap();
         fs::remove_dir(directory).unwrap();

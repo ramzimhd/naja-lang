@@ -1,0 +1,216 @@
+GitHub Actions run 40226205703, job 121268005546
+Source: 5c555bc6e3ff51c9f2f945b069654aa287bc446b
+Command: cargo test --workspace --locked --offline
+Observed step exit: 101
+Retained step excerpt; CI workspace path sanitized.
+2026-10-25T19:28:56.7901890Z ##[group]Run cargo test --workspace --locked --offline
+2026-10-25T19:28:56.7902330Z [36;1mcargo test --workspace --locked --offline[0m
+2026-10-25T19:28:56.7932780Z shell: /bin/bash -e {0}
+2026-10-25T19:28:56.7933000Z ##[endgroup]
+2026-10-25T19:28:56.9022240Z    Compiling tinyvec_macros v0.1.1
+2026-10-25T19:28:56.9023150Z    Compiling unicode-ident v1.0.24
+2026-10-25T19:28:56.9024190Z    Compiling naja-native v0.0.1 (<ci-workspace>/backends/native)
+2026-10-25T19:28:56.9910760Z    Compiling tinyvec v1.12.0
+2026-10-25T19:28:57.2732040Z    Compiling unicode-normalization v0.1.25
+2026-10-25T19:28:57.5598470Z    Compiling naja-frontend v0.1.0 (<ci-workspace>/bootstrap/frontend)
+2026-10-25T19:28:58.4072920Z    Compiling naja-seed v0.0.1 (<ci-workspace>/bootstrap/driver)
+2026-10-25T19:29:01.3821570Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 4.52s
+2026-10-25T19:29:01.3843150Z      Running unittests src/lib.rs (target/debug/deps/naja_frontend-97f229d5fc844c6c)
+2026-10-25T19:29:01.3954160Z 
+2026-10-25T19:29:01.4001880Z running 4 tests
+2026-10-25T19:29:01.4044400Z test lexer::tests::header_cache_observes_each_token_once_with_fixed_history_storage ... ok
+2026-10-25T19:29:01.4054300Z test lexer::tests::header_cache_preserves_async_markers_and_companion_resets ... ok
+2026-10-25T19:29:01.4766990Z test identifier::tests::versioned_xid_properties_match_official_data_for_every_unicode_scalar ... ok
+2026-10-25T19:29:02.2532100Z test identifier::tests::nfkc_matches_all_official_normalization_vectors_and_default_scalars ... ok
+2026-10-25T19:29:02.2532520Z 
+2026-10-25T19:29:02.2533260Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.87s
+2026-10-25T19:29:02.2533650Z 
+2026-10-25T19:29:02.2534120Z      Running ../../tests/syntax/frontend.rs (target/debug/deps/syntax-d43d4f0e640666e6)
+2026-10-25T19:29:02.2560450Z 
+2026-10-25T19:29:02.2661230Z running 119 tests
+2026-10-25T19:29:02.2771960Z test aliases::all_eight_documented_targets_map_to_canonical_nodes ... ok
+2026-10-25T19:29:02.2872270Z test aliases::comments_and_hashes_are_recognized_only_outside_basic_strings ... ok
+2026-10-25T19:29:02.2975830Z test aliases::comparison_mapping_preserves_the_exact_canonical_operators ... ok
+2026-10-25T19:29:02.3028790Z test aliases::cache_identity_is_exact_deterministic_and_length_delimited ... ok
+2026-10-25T19:29:02.3029700Z test aliases::diagnostic_accumulation_is_capped_and_invalid_tables_do_not_leak_previous_context ... ok
+2026-10-25T19:29:02.3030510Z test aliases::duplicate_names_are_detected_across_targets_tables_and_nfkc_spellings ... ok
+2026-10-25T19:29:02.3031180Z test aliases::duplicate_schema_tables_and_decoded_keys_are_rejected ... ok
+2026-10-25T19:29:02.3031840Z test aliases::empty_optional_configuration_and_default_schema_are_supported ... ok
+2026-10-25T19:29:02.3032570Z test aliases::error_spans_refer_to_original_config_not_source_or_decoded_alias_bytes ... ok
+2026-10-25T19:29:02.3033340Z test aliases::every_disallowed_unescaped_ascii_control_is_rejected_in_strings_and_comments ... ok
+2026-10-25T19:29:02.3034050Z test aliases::invalid_names_and_glyph_aliases_are_not_silently_reinterpreted ... ok
+2026-10-25T19:29:02.3034890Z test aliases::lookup_does_not_mutate_tokens_members_bindings_comments_or_string_data ... ok
+2026-10-25T19:29:02.3035660Z test aliases::multilingual_and_non_bmp_aliases_use_the_shared_identifier_rules ... ok
+2026-10-25T19:29:02.3039250Z test aliases::nfkc_keyword_lookalikes_keep_the_existing_raw_keyword_contract ... ok
+2026-10-25T19:29:02.3039950Z test aliases::original_configuration_and_quoted_spans_survive_escape_decoding ... ok
+2026-10-25T19:29:02.3040620Z test aliases::config_alias_and_environment_resource_boundaries_are_explicit ... ok
+2026-10-25T19:29:02.3041320Z test aliases::physical_lf_and_crlf_preserve_mapping_but_change_exact_cache_identity ... ok
+2026-10-25T19:29:02.3043160Z test aliases::raw_keywords_and_canonical_builtin_conflicts_are_rejected ... ok
+2026-10-25T19:29:02.3043870Z test aliases::syntax_is_strict_and_unknown_toml_forms_do_not_fall_back ... ok
+2026-10-25T19:29:02.3044530Z test aliases::toml_quoted_escapes_decode_before_identifier_validation ... ok
+2026-10-25T19:29:02.3045140Z test aliases::unicode_equivalent_names_resolve_without_case_folding ... ok
+2026-10-25T19:29:02.3045840Z test aliases::unimplemented_tables_and_canonical_targets_are_explicitly_unsupported ... ok
+2026-10-25T19:29:02.3046650Z test aliases::unknown_malformed_and_nonscalar_toml_escapes_are_errors ... ok
+2026-10-25T19:29:02.3047300Z test aliases_attributes_and_keywords_are_plain_identifiers_at_lexical_stage ... ok
+2026-10-25T19:29:02.3047870Z test arbitrary_integer_lexemes_are_never_narrowed ... ok
+2026-10-25T19:29:02.3048360Z test blank_and_comment_lines_do_not_change_indentation ... ok
+2026-10-25T19:29:02.3049010Z test blocks::brace_body_indentation_is_stylistic_only_at_its_own_level ... ok
+2026-10-25T19:29:02.3049760Z test blocks::brace_close_requires_physical_dedent_of_nested_indentation ... ok
+2026-10-25T19:29:02.3050470Z test blocks::brace_newlines_and_trivia_transformations_preserve_token_structure ... ok
+2026-10-25T19:29:02.3051180Z test blocks::closing_on_statement_line_inserts_empty_span_logical_newline ... ok
+2026-10-25T19:29:02.3063580Z test blocks::depth_markers_remain_tokens_and_can_decorate_brace_local_indentation ... ok
+2026-10-25T19:29:02.3064500Z test blocks::dictionary_set_strings_regex_text_and_comments_keep_their_roles ... ok
+2026-10-25T19:29:02.3065350Z test blocks::explicit_python_dialect_preserves_both_legacy_entry_points ... ok
+2026-10-25T19:29:02.3077930Z test blocks::frontend_block_limits_fail_explicitly_and_preserve_every_byte ... ok
+2026-10-25T19:29:02.3078650Z test blocks::indentation_around_named_section_is_suspended_and_resumes ... ok
+2026-10-25T19:29:02.3080020Z test blocks::intermediate_dedent_is_rejected_inside_brace_local_indentation ... ok
+2026-10-25T19:29:02.3081090Z test blocks::generated_naja_delimiter_and_label_fragments_terminate_losslessly ... ok
+2026-10-25T19:29:02.3081830Z test blocks::malformed_labels_and_opening_line_code_have_explicit_diagnostics ... ok
+2026-10-25T19:29:02.3082650Z test blocks::missing_close_metadata_and_stray_closers_are_diagnosed ... ok
+2026-10-25T19:29:02.3083440Z test blocks::multiline_headers_use_first_physical_line_baseline ... ok
+2026-10-25T19:29:02.3084150Z test blocks::nested_brace_close_does_not_dedent_suspended_parent_suite ... ok
+2026-10-25T19:29:02.3084890Z test blocks::nested_braces_preserve_surrounding_indentation_frames ... ok
+2026-10-25T19:29:02.3085500Z test blocks::nested_indentation_uses_its_header_physical_baseline ... ok
+2026-10-25T19:29:02.3086200Z test blocks::nested_suite_metadata_preserves_duplicate_unicode_labels_without_binding_them ... ok
+2026-10-25T19:29:02.3086900Z test blocks::optional_marker_candidate_preserves_active_parent_indentation ... ok
+2026-10-25T19:29:02.3098500Z test blocks::ordinary_after_open_comment_and_spaced_label_are_distinguished ... ok
+2026-10-25T19:29:02.3102400Z test blocks::same_and_following_line_companion_clauses_keep_structural_tokens ... ok
+2026-10-25T19:29:02.3103110Z test blocks::same_line_parenthesized_suite_does_not_require_an_indented_body ... ok
+2026-10-25T19:29:02.3103730Z test blocks::suite_delimiters_and_labels_have_exact_original_spans ... ok
+2026-10-25T19:29:02.3104310Z test blocks::unnamed_standalone_brace_stays_an_expression ... ok
+2026-10-25T19:29:02.3105010Z test aliases::bounded_malformed_configuration_vectors_have_safe_diagnostic_spans ... ok
+2026-10-25T19:29:02.3105620Z test brackets_suppress_logical_newlines_and_indentation ... ok
+2026-10-25T19:29:02.3106100Z test bytes_reject_literal_non_ascii_data ... ok
+2026-10-25T19:29:02.3106550Z test cell_separator_remains_an_ordinary_comment ... ok
+2026-10-25T19:29:02.3107040Z test comments_and_strings_do_not_open_delimiters ... ok
+2026-10-25T19:29:02.3107480Z test delimiter_failures_are_precise ... ok
+2026-10-25T19:29:02.3108160Z test empty_and_trivia_only_sources_are_lossless ... ok
+2026-10-25T19:29:02.3108830Z test explicit_line_continuation_is_retained_and_does_not_indent ... ok
+2026-10-25T19:29:02.3109340Z test float_lexemes_include_exponent_signs ... ok
+2026-10-25T19:29:02.3109880Z test formatted_and_template_strings_are_explicitly_unsupported ... ok
+2026-10-25T19:29:02.3110410Z test formfeed_resets_indentation_columns ... ok
+2026-10-25T19:29:02.3111030Z test identifiers::canonical_names_apply_nfkc_without_case_folding_or_keyword_reservation ... ok
+2026-10-25T19:29:02.3111810Z test identifiers::compatibility_spelling_does_not_turn_into_a_keyword_string_prefix_or_label ... ok
+2026-10-25T19:29:02.3112600Z test identifiers::invalid_identifier_boundaries_return_precise_name_relative_byte_spans ... ok
+2026-10-25T19:29:02.3113400Z test identifiers::invalid_unicode_source_reports_the_offending_scalar_without_consuming_neighbors ... ok
+2026-10-25T19:29:02.3114190Z test identifiers::multilingual_identifiers_and_combining_continuations_are_original_tokens ... ok
+2026-10-25T19:29:02.3114890Z test bounded_character_combinations_are_always_lossless_and_terminate ... ok
+2026-10-25T19:29:02.3115570Z test identifiers::numeric_unicode_suffixes_are_rejected_without_reinterpreting_values ... ok
+2026-10-25T19:29:02.3116220Z test imaginary_literals_have_explicit_unsupported_diagnostic ... ok
+2026-10-25T19:29:02.3116780Z test indentation_and_eof_dedent_are_structural_empty_spans ... ok
+2026-10-25T19:29:02.3117330Z test inserting_trivia_preserves_significant_token_spelling ... ok
+2026-10-25T19:29:02.3117790Z test integer_radices_and_separators ... ok
+2026-10-25T19:29:02.3118290Z test invalid_numbers_are_diagnosed_without_losing_source ... ok
+2026-10-25T19:29:02.3118780Z test lf_crlf_and_cr_have_same_structural_tokens ... ok
+2026-10-25T19:29:02.3119350Z test literals::all_byte_values_have_equivalent_hex_and_octal_spellings ... ok
+2026-10-25T19:29:02.3119950Z test literals::all_physical_newline_forms_normalize_inside_triples ... ok
+2026-10-25T19:29:02.3120670Z test identifiers::normalization_is_idempotent_and_long_names_preserve_utf8_source_bounds ... ok
+2026-10-25T19:29:02.3121370Z test blocks::long_expression_brace_vectors_keep_context_and_losslessness ... ok
+2026-10-25T19:29:02.3122030Z test literals::bytes_reject_nonascii_source_even_when_raw_or_backslash_prefixed ... ok
+2026-10-25T19:29:02.3122730Z test literals::diagnostics_retain_original_absolute_utf8_and_crlf_byte_positions ... ok
+2026-10-25T19:29:02.3123410Z test literals::escaped_physical_newlines_are_removed_only_without_raw_prefix ... ok
+2026-10-25T19:29:02.3123990Z test literals::every_case_variant_of_bytes_and_raw_prefixes ... ok
+2026-10-25T19:29:02.3124530Z test literals::every_truncated_or_nonhex_escape_is_rejected ... ok
+2026-10-25T19:29:02.3125160Z test literals::fabricated_tokens_require_exact_prefix_and_delimiter_grammar ... ok
+2026-10-25T19:29:02.3125820Z test literals::formatted_and_template_prefixes_remain_explicitly_unsupported ... ok
+2026-10-25T19:29:02.3126510Z test literals::generated_scalar_spellings_decode_to_the_same_original_text ... ok
+2026-10-25T19:29:02.3127190Z test literals::hexadecimal_escapes_consume_exact_width_and_keep_remaining_digits ... ok
+2026-10-25T19:29:02.3127870Z test literals::malformed_external_spans_never_panic_and_produce_safe_error_spans ... ok
+2026-10-25T19:29:02.3128550Z test literals::named_escapes_are_explicitly_unsupported_only_in_nonraw_text ... ok
+2026-10-25T19:29:02.3129210Z test literals::no_unescaped_physical_newline_is_allowed_in_short_strings ... ok
+2026-10-25T19:29:02.3129780Z test literals::octal_consumes_one_to_three_ascii_digits ... ok
+2026-10-25T19:29:02.3130300Z test literals::ordinary_quotes_and_noop_unicode_prefixes ... ok
+2026-10-25T19:29:02.3130860Z test literals::overflowing_bytes_octal_is_explicitly_unsupported ... ok
+2026-10-25T19:29:02.3131430Z test literals::raw_escaped_quotes_keep_both_characters ... ok
+2026-10-25T19:29:02.3131990Z test literals::source_nul_is_rejected_but_escaped_nul_is_data ... ok
+2026-10-25T19:29:02.3132680Z test literals::standard_control_quote_and_backslash_escapes ... ok
+2026-10-25T19:29:02.3133420Z test literals::structural_looking_data_is_opaque_in_both_dialects_and_all_quotes ... ok
+2026-10-25T19:29:02.3134120Z test literals::surrogate_escapes_are_unsupported_without_pair_reinterpretation ... ok
+2026-10-25T19:29:02.3135650Z test literals::text_scalar_boundaries_include_noncharacters_and_decoded_nul ... ok
+2026-10-25T19:29:02.3136330Z test literals::triple_quotes_close_only_at_first_unescaped_matching_run ... ok
+2026-10-25T19:29:02.3136940Z test literals::unicode_escape_values_above_the_codespace_are_errors ... ok
+2026-10-25T19:29:02.3137560Z test literals::unknown_escapes_keep_the_backslash_and_original_character ... ok
+2026-10-25T19:29:02.3138160Z test lossless_cst_has_contiguous_token_ranges_and_tracks_line_depth ... ok
+2026-10-25T19:29:02.3138690Z test marker_candidates_are_never_textually_rewritten ... ok
+2026-10-25T19:29:02.3139210Z test multiline_string_does_not_create_indentation_events ... ok
+2026-10-25T19:29:02.3139860Z test non_ascii_whitespace_does_not_misclassify_previous_ascii_identifier ... ok
+2026-10-25T19:29:02.3140410Z test nul_is_rejected_even_in_strings_and_comments ... ok
+2026-10-25T19:29:02.3140820Z test operators_use_longest_match ... ok
+2026-10-25T19:29:02.3141220Z test standard_same_line_suite_is_preserved ... ok
+2026-10-25T19:29:02.3141680Z test string_prefixes_quotes_raw_escapes_and_triples ... ok
+2026-10-25T19:29:02.3142230Z test tabs_and_spaces_are_checked_at_equal_and_deeper_columns ... ok
+2026-10-25T19:29:02.3142880Z test tokens_preserve_names_operators_and_trivia ... ok
+2026-10-25T19:29:02.3143370Z test unfinished_explicit_continuation_is_rejected ... ok
+2026-10-25T19:29:02.3143880Z test unicode_identifiers_have_lossless_original_name_tokens ... ok
+2026-10-25T19:29:02.3144390Z test unicode_user_data_and_byte_spans_are_preserved ... ok
+2026-10-25T19:29:02.3144840Z test unmatched_dedent_has_exact_source_span ... ok
+2026-10-25T19:29:02.3145340Z test unterminated_strings_recover_without_losing_newline ... ok
+2026-10-25T19:29:02.3377840Z test literals::bounded_fabricated_token_vectors_have_safe_results_and_diagnostics ... ok
+2026-10-25T19:29:02.3440400Z test literals::bounded_large_vectors_and_exact_limit_preserve_output_size ... ok
+2026-10-25T19:29:02.3440710Z 
+2026-10-25T19:29:02.3441070Z test result: ok. 119 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+2026-10-25T19:29:02.3441360Z 
+2026-10-25T19:29:02.3442960Z      Running unittests src/lib.rs (target/debug/deps/naja_native-151c73200bdd3121)
+2026-10-25T19:29:02.3467690Z 
+2026-10-25T19:29:02.3468620Z running 8 tests
+2026-10-25T19:29:02.3472280Z test hosted::tests::decimal_preserves_values_beyond_machine_width_and_normalizes_zero ... ok
+2026-10-25T19:29:02.3474530Z test dynamic::tests::images_are_deterministic_static_and_keep_literal_data_exact ... ok
+2026-10-25T19:29:02.3475230Z test dynamic::tests::invalid_ir_limits_and_initialization_are_rejected ... ok
+2026-10-25T19:29:02.3475880Z test hosted::tests::local_use_must_be_initialized_on_every_executed_path ... ok
+2026-10-25T19:29:02.3476580Z test tests::deterministic_elf_has_no_interpreter_and_no_writable_executable_segment ... ok
+2026-10-25T19:29:02.3477130Z test tests::reject_out_of_frame_access ... ok
+2026-10-25T19:29:02.3487410Z test hosted::tests::emitter_validates_limits_and_has_no_interpreter_or_writable_code ... ok
+2026-10-25T19:29:02.3576540Z test hosted::tests::invalid_literals_are_rejected_without_conversion_or_truncation ... ok
+2026-10-25T19:29:02.3576890Z 
+2026-10-25T19:29:02.3577240Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+2026-10-25T19:29:02.3577630Z 
+2026-10-25T19:29:02.3578660Z      Running unittests src/lib.rs (target/debug/deps/naja_seed-a3b10c74ea6a495c)
+2026-10-25T19:29:02.3607870Z 
+2026-10-25T19:29:02.3608150Z running 12 tests
+2026-10-25T19:29:02.3613950Z test tests::accept_minimum_integer_and_standard_same_line_suite ... ok
+2026-10-25T19:29:02.3618800Z test tests::adjacent_closers_leave_parent_indentation_dedent_owned_by_parent ... ok
+2026-10-25T19:29:02.3619950Z test tests::comments_crlf_and_parenthesized_multiline_have_same_binary ... ok
+2026-10-25T19:29:02.3620520Z test tests::compile_loops_branches_and_precedence ... ok
+2026-10-25T19:29:02.3621100Z test tests::block_styles_preserve_machine_code_and_transparent_names ... ok
+2026-10-25T19:29:02.3621810Z test tests::depth_markers_check_nesting_and_reject_combined_decorations ... ok
+2026-10-25T19:29:02.3622480Z test tests::hosted_parser_retains_all_decimal_digits_and_uses_shared_suites ... ok
+2026-10-25T19:29:02.3623330Z test tests::hosted_definite_initialization_requires_each_control_path ... ok
+2026-10-25T19:29:02.3623930Z test tests::reject_hosted_integer_narrowing_unsupported_features_and_bad_scopes ... ok
+2026-10-25T19:29:02.3624490Z test tests::sections_preserve_control_scope_and_enforce_resource_limits ... ok
+2026-10-25T19:29:02.3625040Z test tests::unicode_symbols_use_nfkc_keys_and_preserve_raw_keyword_rules ... ok
+2026-10-25T19:29:02.4251290Z test tests::same_line_suites_count_toward_depth_and_statement_limits ... ok
+2026-10-25T19:29:02.4251640Z 
+2026-10-25T19:29:02.4251980Z test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+2026-10-25T19:29:02.4252270Z 
+2026-10-25T19:29:02.4253080Z      Running unittests src/main.rs (target/debug/deps/naja-a413c4b156656936)
+2026-10-25T19:29:02.4279060Z 
+2026-10-25T19:29:02.4279860Z running 12 tests
+2026-10-25T19:29:02.4282490Z test execution::tests::arguments_remain_separate_and_literal ... ok
+2026-10-25T19:29:02.4395140Z test execution::tests::artifact_cleanup_is_nonrecursive_and_never_overwrites ... ok
+2026-10-25T19:29:02.4395940Z test execution::tests::discovery_never_follows_symbolic_links ... ok
+2026-10-25T19:29:02.4418860Z test execution::tests::discovery_preserves_unix_backslashes_and_rejects_nonunicode_names ... FAILED
+2026-10-25T19:29:02.4426640Z test execution::tests::failed_creation_and_drop_leave_no_owned_artifact ... ok
+2026-10-25T19:29:02.4427450Z test execution::tests::json_escapes_control_characters_without_losing_unicode ... ok
+2026-10-25T19:29:02.4428060Z test execution::tests::output_storage_is_bounded_and_overflow_is_observed ... ok
+2026-10-25T19:29:02.4428730Z test execution::tests::only_valid_static_native_elf_images_reach_the_process_adapter ... ok
+2026-10-25T19:29:02.4429390Z test tests::execution_options_are_strict_and_preserve_child_arguments ... ok
+2026-10-25T19:29:02.4429900Z test tests::machine_report_retains_runtime_and_compile_failures ... ok
+2026-10-25T19:29:02.4430500Z test tests::diagnostic_output_is_bounded_and_retains_original_unicode_crlf_positions ... ok
+2026-10-25T19:29:02.4572000Z error: test failed, to rerun pass `-p naja-seed --bin naja`
+2026-10-25T19:29:02.4572730Z test execution::tests::discovery_is_sorted_filtered_and_bounded ... ok
+2026-10-25T19:29:02.4575370Z 
+2026-10-25T19:29:02.4575840Z failures:
+2026-10-25T19:29:02.4576170Z 
+2026-10-25T19:29:02.4576760Z ---- execution::tests::discovery_preserves_unix_backslashes_and_rejects_nonunicode_names stdout ----
+2026-10-25T19:29:02.4577200Z 
+2026-10-25T19:29:02.4577860Z thread 'execution::tests::discovery_preserves_unix_backslashes_and_rejects_nonunicode_names' (16422) panicked at bootstrap/driver/src/execution.rs:725:42:
+2026-10-25T19:29:02.4578890Z called `Result::unwrap()` on an `Err` value: Os { code: 92, kind: Uncategorized, message: "Illegal byte sequence" }
+2026-10-25T19:29:02.4579540Z note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+2026-10-25T19:29:02.4579790Z 
+2026-10-25T19:29:02.4579800Z 
+2026-10-25T19:29:02.4579860Z failures:
+2026-10-25T19:29:02.4580210Z     execution::tests::discovery_preserves_unix_backslashes_and_rejects_nonunicode_names
+2026-10-25T19:29:02.4580500Z 
+2026-10-25T19:29:02.4580850Z test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+2026-10-25T19:29:02.4581140Z 
+2026-10-25T19:29:02.4590030Z ##[error]Process completed with exit code 101.
