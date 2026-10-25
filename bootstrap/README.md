@@ -87,7 +87,10 @@ and method suites share the same frontend; `.naja` class/method/control depth
 markers count each enclosing header. Constructors use completed class metadata
 for exact arity, including calls from an earlier method to a later initializer.
 Class names are static bindings; class/function values, rebinding and forward
-class references remain unsupported. Method names occupy their class rather
+class references remain unsupported. Class-context private names (`__name`
+without a trailing `__`) are diagnosed until contextual name mangling is
+implemented; outside-class private spelling and string data stay unchanged.
+Method names occupy their class rather
 than the module namespace. Local parameters can shadow class names as values.
 
 Member names use canonical Unicode keys, so equivalent spellings address the

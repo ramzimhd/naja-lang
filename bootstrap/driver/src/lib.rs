@@ -317,14 +317,23 @@ impl<V: Values> Parser<V> {
         }
     }
     fn canonical_name(&self) -> Parsed<String> {
-        canonical_identifier(self.text()).map_err(|error| Diagnostic {
+        let name = canonical_identifier(self.text()).map_err(|error| Diagnostic {
             code: "NJA105",
             message: "invalid Unicode identifier".into(),
             span: Span::new(
                 self.token().span.start + error.span.start,
                 self.token().span.start + error.span.end,
             ),
-        })
+        })?;
+        // Private spelling applies throughout the textual class scope, including
+        // method parameters and bodies. Until contextual mangling is implemented,
+        // diagnose it rather than binding a different public runtime name.
+        if self.class_body.is_some() && name.starts_with("__") && !name.ends_with("__") {
+            return Err(self.error(
+                "class-context private names require name mangling, which is not implemented",
+            ));
+        }
+        Ok(name)
     }
     fn take_binding(&mut self, value: &str) -> bool {
         if self.token().kind == TokenKind::Identifier
@@ -2041,5 +2050,35 @@ mod tests {
             compile_with_dialect("class int: pass\nvalue: int = 7\n", Dialect::Naja2026).is_err()
         );
         assert!(compile("class int: pass\nvalue: int = 7\n").is_ok());
+    }
+    #[test]
+    fn unsupported_class_private_spelling_rejects_before_binding_in_every_name_position() {
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            for source in [
+                "class C:\n    def __private(self): pass\n",
+                "class C:\n    def f(self, __private): return 7\n",
+                "class C:\n    def f(self):\n        __private = 7\n",
+                "__private = 7\nclass C:\n    def f(self): return __private\n",
+                "class C:\n    def f(self): return self.__private\n",
+                "class C:\n    def f(self): self.__private = 7\n",
+                "class C:\n    def f(self): self._＿private = 7\n",
+            ] {
+                let error = check_with_dialect(source, dialect).unwrap_err().remove(0);
+                assert_eq!(error.code, "NJA101");
+                assert!(error.message.contains("name mangling"), "{error:?}");
+                assert!(
+                    canonical_identifier(&source[error.span.start..error.span.end])
+                        .unwrap()
+                        .starts_with("__")
+                );
+            }
+            for source in [
+                "__private = 7\nprint(__private)\n",
+                "class C: pass\nvalue = C()\nvalue.__private = 7\nprint(value.__private)\n",
+                "class _C:\n    def __init__(self): self._value = '__private'\nprint(_C()._value)\n",
+            ] {
+                assert!(compile_with_dialect(source, dialect).is_ok(), "{source}");
+            }
+        }
     }
 }
