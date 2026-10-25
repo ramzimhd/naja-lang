@@ -31,6 +31,11 @@ bounded native byte-file operations and immutable conversion views. See
 [native files](../../tests/files/README.md) for the two write evaluation orders,
 Linux UAPI provenance, fixed retry policy and filesystem limitations.
 
+The additive `dynamic::ObjectProgram` supports bounded ordinary instances,
+attribute storage, initializer calls and dynamic native method dispatch. See
+[native objects](../../tests/objects/README.md) for its frozen IR contract,
+identity/evaluation rules, resource bounds and unsupported class semantics.
+
 The original `naja_native::emit_elf` keeps the explicit checked-i64 IR and overflow
 policy. `naja_native::hosted::emit_elf` accepts a separate hosted-integer IR with
 `Integer(String)`, locals, negation, addition/subtraction/multiplication, signed
