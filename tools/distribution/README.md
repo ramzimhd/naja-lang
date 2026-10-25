@@ -7,7 +7,7 @@ It belongs to T12/FC1-01 groundwork. T22 is a different build-closure task.
 This historical experiment requires compiler inputs identical to the pinned
 source below. The current class compiler has newer inputs, so the verifier
 deliberately refuses to package it under the old source identity. Reproduce the
-experiment from a separate checkout at `72ef3b0` (which contains these tools and
+experiment from a separate checkout at `ef3a97428c1cdf3525be6b9a0d7887bb95a032ef` (which contains these tools and
 the original compiler inputs), on the observed Windows/Ubuntu WSL host:
 
 ```text
