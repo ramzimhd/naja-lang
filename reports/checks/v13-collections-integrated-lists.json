@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "91d94d15ec273e5c71ec6c8d95e5baa824861148",
+  "target": "Windows x64 seed; emitted Linux x86-64 through explicit local WSL",
+  "command": [
+    "node",
+    "scripts/test-lists.mjs"
+  ],
+  "tool_versions": {
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "git": "git version 2.51.0.windows.1",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "powershell": "7.6.4"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-25T21:05:08.8936894+00:00",
+  "log_path": "reports/checks/v13-collections-integrated-lists.log",
+  "log_sha256": "d3777ebd5af7cda04903d769eb9e881f94e10f6a1c0ae6e05c762f3c7c666952",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

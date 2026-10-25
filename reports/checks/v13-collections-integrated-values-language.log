@@ -1,0 +1,113 @@
+Recorded command: node scripts/test-values-language.mjs
+Recorded exit code: 0
+--- captured output ---
+PASSED literal-values exit=0
+PASSED literal-values-python exit=0
+PASSED truthy-control exit=0
+PASSED boolean-precedence-and-operands exit=0
+PASSED naja-int-annotation exit=0
+PASSED python-informational-annotation exit=0
+PASSED comparison-chains exit=0
+PASSED equality-cross-kinds exit=0
+PASSED ordered-value-comparisons exit=0
+PASSED truth-and-returned-operand-matrix exit=0
+PASSED numeric-bool-arithmetic exit=0
+PASSED signed-divrem-matrix-naja exit=0
+PASSED signed-divrem-matrix-py exit=0
+PASSED divrem-large-immutable-alias exit=0
+PASSED divrem-precedence-associativity exit=0
+PASSED divrem-short-circuit exit=0
+PASSED floor-zero exit=106
+PASSED modulo-computed-zero exit=106
+PASSED floor-false exit=106
+PASSED divrem-left-error-order exit=105
+PASSED divrem-right-before-operand-guard exit=106
+PASSED divrem-work-limit exit=103
+PASSED divrem-fixed-domain-floor
+PASSED divrem-fixed-domain-modulo
+PASSED all-byte-formatting exit=0
+PASSED immutable-text-and-byte-aliases exit=0
+PASSED text-subtraction exit=105
+PASSED mixed-concatenation exit=105
+PASSED numeric-text-addition exit=105
+PASSED text-negation exit=105
+PASSED text-positive exit=105
+PASSED numeric-len exit=105
+PASSED bool-len exit=105
+PASSED text-floor-division exit=105
+PASSED bytes-modulo exit=105
+PASSED none-ordering exit=105
+PASSED unrelated-ordering exit=105
+PASSED byte-text-ordering exit=105
+PASSED runtime-text-repetition exit=105
+PASSED byte-repetition exit=105
+PASSED chain-live-type-error exit=105
+PASSED and-live-type-error exit=105
+PASSED or-live-type-error exit=105
+PASSED annotation-initial-guard exit=105
+PASSED annotation-reassignment-guard exit=105
+PASSED annotation-none-guard exit=105
+PASSED tuple-display-guard exit=105
+PASSED list-display-guard exit=105
+PASSED false-truth-assertion-0 exit=104
+PASSED false-truth-assertion-1 exit=104
+PASSED false-truth-assertion-2 exit=104
+PASSED false-truth-assertion-3 exit=104
+PASSED false-truth-assertion-4 exit=104
+PASSED chain-middle-once-arena exit=0
+PASSED duplicate-middle-resource-control exit=103
+PASSED unsupported-float
+PASSED unsupported-function-default
+PASSED unsupported-list-comprehension
+PASSED unsupported-dictionary
+PASSED unsupported-tuple-unpacking
+PASSED unsupported-set
+PASSED unsupported-method
+PASSED unsupported-formatted-string
+PASSED unsupported-named-escape
+PASSED unsupported-surrogate-escape
+PASSED unsupported-byte-octal
+PASSED unsupported-adjacent-literals
+PASSED unsupported-other-annotation
+PASSED unsupported-division
+PASSED explicit-project-aliases exit=0
+PASSED no-ambient-alias-activation
+PASSED run-explicit-project-root exit=0
+PASSED test-explicit-project-root exit=0
+PASSED bound-builtin-alias-not-rewritten
+PASSED builtin-alias-not-an-operator
+PASSED operator-alias-not-a-builtin
+PASSED alias-case-is-not-corrected
+PASSED alias-use-retains-source-position
+PASSED project-a-table exit=0
+PASSED project-b-table exit=0
+PASSED project-a-remains-owned exit=0
+PASSED changed-table-not-stale exit=0
+PASSED module-outside-root
+PASSED nested-module-owner-boundary
+PASSED nested-explicit-owner exit=0
+PASSED cwd-relative-source-with-explicit-root exit=0
+PASSED unicode-contextual-aliases exit=0
+PASSED nfkc-alias-use exit=0
+PASSED optional-missing-alias-table exit=0
+PASSED ambient-invalid-config-not-loaded exit=0
+PASSED python-project-activation-is-error
+PASSED project-unsupported-table
+PASSED project-duplicate-target
+PASSED project-context-name-collision
+PASSED project-nfkc-name-collision
+PASSED project-oversized-table
+PASSED manifest-comment-only
+PASSED manifest-malformed
+PASSED manifest-profile
+PASSED manifest-target
+PASSED manifest-style
+PASSED manifest-dependencies
+PASSED manifest-dialect
+PASSED project-marker-required
+PASSED module-parent-traversal-rejected
+PASSED module-link-rejected
+PASSED root-link-rejected
+PASSED alias-link-rejected
+Source/native value checks: 108 passed; 0 not run; artifacts retained under target/values-language-H1aVpF.
+Limits: supported value slice and explicit project alias ownership; no Python, full compatibility, cache implementation, managed memory, FC1 or HATCH claim.

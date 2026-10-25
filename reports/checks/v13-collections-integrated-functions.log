@@ -1,0 +1,46 @@
+Recorded command: node scripts/test-functions.mjs
+Recorded exit code: 0
+--- captured output ---
+PASS nested-calls-independent-local-frames exit=0 sha256=c36120cdf63c13e09feecef5f103ab3a4e899b01f786ea416149857dd5738fe0
+PASS arbitrary-integer-call-oracle-and-repeated-results exit=0 sha256=67717abfa89812f6197cc4395dadbafe9d3670ab8eb93c5e6ffe89dcaf640d70
+PASS self-recursion-factorial-and-branching-fibonacci exit=0 sha256=4589c47f37b3793b687db9bde7102c8dcd2d70b1bd4198982d95a3306b4dc805
+PASS return-exits-loops-groups-and-skips-body exit=0 sha256=33d5878cf17a14178f46012e610d0dc35d352d96a06d424733441fd94e6b9f7a
+PASS returning-branch-preserves-live-local-initialization exit=0 sha256=1044095b4c84359b6a8d83a31f89c8ad0882ab7ca12e4e5cbffefa84fe2bc5f6
+PASS fallthrough-none-and-returned-descriptor-types exit=0 sha256=28792b6e56b609a6e6f03e8b86938b785db0a1d37984b2c1a0370632af8dde0d
+PASS forward-known-native-label exit=0 sha256=069a482f3ed0a518ea18ecd4bef09d736f814ebfa990f542e87604b104b70893
+PASS arguments-once-left-to-right-with-observable-print exit=0 sha256=49691a957aa68f8e001e5bdd58c3919fd7972c3ba8899c9bc892dfb0f9ae76a3
+PASS nested-argument-calls-preserve-pending-values exit=0 sha256=58eddd48145728c28e7bad29c5d636996c6cffad3054803ede51ef312180206f
+PASS arguments-before-depth-check-and-first-error exit=106 sha256=bebfdeb75ffcf8f6b411445ff02d38b2ad44caf51d629828aa3afedeb5794370
+PASS argument-first-error-stops-later-call exit=105 sha256=1deb614134c84f55427131be3e315603badab81e9a999a97e96d50b9af9abedd
+PASS short-circuit-skips-call-side-effects exit=0 sha256=582a3eab97b07ee3676c9dcafd3a0750dc19c040df7fd44024fdb9259fa5d673
+PASS caller-aliases-remain-immutable exit=0 sha256=166faed92ba604a83bcd948af5c9fae5ba876086670e288a11edce1eb00eb13f
+PASS depth-256-succeeds exit=0 sha256=5ecf3d7c1c712a03e67e683796e8573b769b9c8ae4410516cb6c209cc0de57cd
+PASS depth-257-is-explicit-resource-failure exit=103 sha256=d743ebdfb60d64de3476d54b016219a75803fa7af139355e9e51b0f0c6da7337
+PASS unbounded-recursion-stops-before-frame-allocation exit=103 sha256=097f234948729dcfe812ab52ffe7d9c73c78df1999e152774f30661c9b620ec9
+PASS argument-type-error-precedes-next-depth-check exit=105 sha256=3097f04275fccb50ee401327448eca3ce9967c15838871653e02ea3024e8e7ea
+PASS depth-counter-restored-on-every-return exit=0 sha256=44bf822e64de46c4e124ad5ee6dbcccfef0667ae8d8e37fcc186249fb89c73da
+PASS nested-pending-stack-calculated-boundary-succeeds exit=0 sha256=a22449fddf27f0585b3ff1cb59ab52e8f0343b16e2fc4255088b5c68e565279f
+PASS nested-pending-stack-exceeds-before-depth-limit exit=103 sha256=47c865ee72bbfc84352bd7d05008fba3e1cb2878215aa7e1b02003eb40f3577b
+PASS 128-parameters-stack-layout exit=0 sha256=a693cc6c0e79ebea193a07a8201d88407a54de82894c7ac921207455771abfd6
+PASS 128-functions-direct-label-table exit=0 sha256=251aee967296887f2b9c85c1c9c9c54864cb8375be0949d82a99a96ed0ef6b16
+PASS argument-once-allocation-pressure exit=0 sha256=8653db72847538e8fc5817fb972ed43750d8fb90a25412e175286dda837f1c0e
+PASS shared-arena-accumulates-across-function-returns exit=103 sha256=826d8f01609e23a030aa1e26da754fafe2e45c5ee03598cea30631380161fa84
+PASS function-assertion-failure exit=104 sha256=7a9e371f85f08ec91a32774c8b04b37bc051099ce0a1a9e5c352e22514a7324c
+PASS function-type-failure exit=105 sha256=70e16b21d4736a6505e15b2af8705892fff50c63218f1fe12e3f77dc7b0d783c
+PASS function-division-and-remainder-retain-exact-semantics exit=0 sha256=c7a91e44ad5a0ae1f82ae4d9a3c1419cf7647aebdd6ae84a86a41955d47a1f7b
+PASS invalid program rejected before output: return-main
+PASS invalid program rejected before output: unknown-function
+PASS invalid program rejected before output: wrong-arity
+PASS invalid program rejected before output: uninitialized-parameter
+PASS invalid program rejected before output: caller-is-not-global
+PASS invalid program rejected before output: unused-function-invalid
+PASS invalid program rejected before output: dead-code-invalid
+PASS invalid program rejected before output: branch-local-not-definite
+PASS invalid program rejected before output: loop-local-not-definite
+PASS invalid program rejected before output: 129-parameters
+PASS invalid program rejected before output: skipped-call-invalid
+PASS nested pending arguments obey the emitted stack floor mutant
+PASS frame reservation obeys stack floor mutant before allocation
+PASS parameter offset mutant changes subtraction result
+PASS function body literal mutant changes native result
+PASS 43 direct-function checks; 294 independent oracle outputs; target=Linux x86_64; artifact timeout=5s; artifacts=<workspace>\target\functions-native-U5TwVS

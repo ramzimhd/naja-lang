@@ -9,8 +9,9 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url), core = require('../editor/vscode/core.cjs');
 const root = fileURLToPath(new URL('../', import.meta.url));
-const pinned = '662bcdcff3a5742d9271b5f449becaa724503d78';
-assert.deepEqual(process.argv.slice(2), []);
+const arguments_ = process.argv.slice(2);
+assert.ok(arguments_.length === 0 || arguments_.length === 2 && arguments_[0] === '--compiler-source' && /^[0-9a-f]{40}$/.test(arguments_[1]), 'Use optional --compiler-source FULL_COMMIT_HASH');
+let pinned = null;
 mkdirSync(path.join(root, 'editor/vscode/artifacts'), { recursive: true });
 const directory = mkdtempSync(path.join(root, 'editor/vscode/artifacts/checks-'));
 const started = Date.now(), commands = [], cases = [];
@@ -34,10 +35,15 @@ function command(tool, args, options = {}) {
   return result;
 }
 function pass(name) { cases.push({ name, result: 'passed' }); console.log('PASS ' + name); }
-const diff = command('git', ['diff', pinned, '--', 'bootstrap/', 'backends/', 'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml']); assert.equal(diff.status, 0); assert.equal(diff.stdout.toString(), '');
-const unknown = command('git', ['ls-files', '--others', '--exclude-standard', '--', 'bootstrap/', 'backends/']); assert.equal(unknown.status, 0); assert.equal(unknown.stdout.toString(), '');
 const current = command('git', ['rev-parse', 'HEAD']); assert.equal(current.status, 0);
 adapterSource = current.stdout.toString().trim(); assert.match(adapterSource, /^[0-9a-f]{40}$/);
+pinned = arguments_[1] ?? adapterSource;
+const commit = command('git', ['rev-parse', '--verify', pinned + '^{commit}']); assert.equal(commit.status, 0); assert.equal(commit.stdout.toString().trim(), pinned);
+const adapterPaths = ['editor/vscode/', 'scripts/test-vscode.mjs', 'tests/vscode/'];
+const adapterDiff = command('git', ['diff', 'HEAD', '--', ...adapterPaths]); assert.equal(adapterDiff.status, 0); assert.equal(adapterDiff.stdout.toString(), '', 'Commit adapter changes before retaining execution');
+const adapterUnknown = command('git', ['ls-files', '--others', '--exclude-standard', '--', ...adapterPaths]); assert.equal(adapterUnknown.status, 0); assert.equal(adapterUnknown.stdout.toString(), '');
+const diff = command('git', ['diff', pinned, '--', 'bootstrap/', 'backends/', 'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml']); assert.equal(diff.status, 0); assert.equal(diff.stdout.toString(), '');
+const unknown = command('git', ['ls-files', '--others', '--exclude-standard', '--', 'bootstrap/', 'backends/']); assert.equal(unknown.status, 0); assert.equal(unknown.stdout.toString(), '');
 const units = command(process.execPath, ['--test', path.join(root, 'tests/vscode/adapter.test.mjs')]); assert.equal(units.status, 0, units.stdout.toString() + units.stderr.toString()); pass('adapter-unit-suite');
 const build = command('cargo', ['build', '--workspace', '--locked', '--offline'], { build: true }); assert.equal(build.status, 0, build.stderr.toString()); pass('locked-offline-pinned-compiler-build');
 const compiler = path.join(root, 'target/debug', process.platform === 'win32' ? 'naja.exe' : 'naja');

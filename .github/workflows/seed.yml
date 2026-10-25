@@ -34,6 +34,8 @@ jobs:
         run: node scripts/test-compiler-boundaries.mjs
       - name: Check original-source editor diagnostics
         run: node scripts/test-check-json.mjs
+      - name: Check experimental VS Code adapter with the actual compiler
+        run: node scripts/test-vscode.mjs
       - name: Check project initialization and standalone compilation
         if: runner.os != 'Linux'
         run: node scripts/test-project-cli.mjs --compile-only

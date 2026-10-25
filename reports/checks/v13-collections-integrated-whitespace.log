@@ -1,0 +1,3 @@
+Recorded command: git diff --check a65dddfb0acd73ec326e11e9dc6c8d4a4dd9d122 HEAD -- . :!reports/checks/*.log :!third_party/rust-seed/**/LICENSE*
+Recorded exit code: 0
+--- captured output ---

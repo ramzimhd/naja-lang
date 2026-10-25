@@ -51,3 +51,11 @@ workflow. Do not claim IDE end-to-end success without running that workflow.
 Official references: [Workspace Trust](https://code.visualstudio.com/api/extension-guides/workspace-trust),
 [publishing/VSIX packaging](https://code.visualstudio.com/api/working-with-extensions/publishing-extension),
 [contribution points](https://code.visualstudio.com/api/references/contribution-points).
+
+The initial execution retains compiler pin 662bcdc. For later integrations,
+`node scripts/test-vscode.mjs` selects the actual HEAD as both compiler and
+adapter source; optional `--compiler-source FULL_COMMIT_HASH` selects a historical
+compiler whose complete build-input diff must still be empty. The harness also
+rejects tracked/untracked adapter-source edits before execution. This changes
+source selection and provenance checking, not the frozen cases, expectations,
+limits, production adapter or packaged VSIX identity.
