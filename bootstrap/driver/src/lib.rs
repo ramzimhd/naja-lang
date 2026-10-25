@@ -269,11 +269,6 @@ impl<V: Values> Parser<V> {
         if self.token().kind == TokenKind::SuiteOpen {
             return self.brace_suite(depth, true).map(V::group);
         }
-        if self.take("assert") {
-            let condition = self.condition()?;
-            self.newline()?;
-            return Ok(V::assertion(condition));
-        }
         if self.take("while") {
             let condition = self.condition()?;
             let initialized = self.initialized.clone();
@@ -418,6 +413,11 @@ impl<V: Values> Parser<V> {
         Ok(body)
     }
     fn simple(&mut self, depth: usize) -> Parsed<V::Statement> {
+        if self.take("assert") {
+            let condition = self.condition()?;
+            self.newline()?;
+            return Ok(V::assertion(condition));
+        }
         if self.take_binding("print") {
             self.expect("(")?;
             let value = self.expression(0, 0)?;

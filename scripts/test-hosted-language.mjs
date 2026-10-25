@@ -47,7 +47,7 @@ run('ordinary-arithmetic',`x = ${huge}\ny: int = 9_999_999_999_999_999_999\nprin
 run('both-branch-initialization','if 1 > 2:\n    result = 99\nelse:\n    result = 123456789012345678901234567890\nprint(result)\n','123456789012345678901234567890\n');
 run('immutable-source-alias',`x = ${huge}\ny = x\nx = x + 1\nprint(y)\nprint(x)\nprint(-y)\nprint(y)\n`,`${huge}\n${huge+1n}\n${-huge}\n${huge}\n`);
 run('unicode-canonical-bindings',`变量 = ${huge}\nＫ = 变量\nK = K + 1\nｐｒｉｎｔ(Ｋ)\nｉｆ = 7\nprint(ｉｆ)\n`,`${huge+1n}\n7\n`,{extension:'py'});
-run('ordinary-runtime-assertion',`x = ${huge}\nassert x + 3 == ${huge+3n}\nprint(x)\n`,`${huge}\n`);
+run('ordinary-runtime-assertion',`x = ${huge}\nif x == ${huge}: assert x + 3 == ${huge+3n}\nif 0 == 1: assert 0 == 1\nprint(x)\n`,`${huge}\n`);
 run('ordinary-failed-assertion',`x = ${huge}\nassert x + 3 == ${huge+2n}\nprint(x)\n`,'',{status:104,stderr:'NJA204: assertion failed\n'});
 run('fixed-failed-assertion','from naja.core import i64\nx: i64 = i64(2)\nassert x == i64(3)\nprint(x)\n','',{status:104,stderr:'NJA204: assertion failed\n'});
 const baseline='x = 0\ntotal = 0\nwhile x < 4:\n    total = total + x * 1000000000000000000000000000000\n    x = x + 1\nif total == 6000000000000000000000000000000:\n    print(total)\nelse:\n    print(-1)\n';
