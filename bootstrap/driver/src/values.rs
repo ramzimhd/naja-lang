@@ -482,6 +482,11 @@ impl Values for Dynamic {
             | Compare(_, left, right)
             | And(left, right)
             | Or(left, right) => 1 + Self::height(left).max(Self::height(right)),
+            IntegerInterval(value, lower, upper) => {
+                1 + Self::height(value)
+                    .max(Self::height(lower))
+                    .max(Self::height(upper))
+            }
             CompareChain(first, rest) => {
                 1 + rest
                     .iter()
