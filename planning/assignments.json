@@ -1306,6 +1306,87 @@
       "handoff": "Exact-stage scoped paths released; preserve original branches/worktrees, first failures and evidence. No further task active.",
       "base_commit": "546f8e366bba182263afd5be1cb4068c15356ea7",
       "contract_commit": "3fa7e09ceb82365948dd2f9793cdbf44dc5dc12f"
+    },
+    {
+      "task_id": "T11",
+      "owner": "/root",
+      "branch": "agent/integer-interval-integration-v13",
+      "base_commit": "44c091d19b1e6d1b17e697694fd5ea28a768110f",
+      "contract_commit": "44c091d19b1e6d1b17e697694fd5ea28a768110f",
+      "worktree": "../naja-worktrees/integer-interval-integration",
+      "paths": [
+        "bootstrap/driver/src/lib.rs",
+        "bootstrap/driver/src/values.rs",
+        "tests/intervals-source/EXECUTION.md",
+        "tests/intervals-source/EXECUTION_daf60e1.json",
+        "tests/intervals-source/REGRESSIONS_daf60e1.json",
+        "reports/reviews/INTEGER_INTERVALS_V13.md",
+        ".github/workflows/seed.yml"
+      ],
+      "status": "completed",
+      "deliverable": "ADR-009 first slice: checked_int and .naja local interval annotations lowered to native IntegerInterval; frozen source148 passed first at daf60e1; 29 inherited suites passed; independent review found no defect.",
+      "acceptance_commands": [
+        [
+          "node",
+          "scripts/test-intervals-language.mjs",
+          "--expect-source",
+          "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+        ],
+        [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "--offline"
+        ]
+      ],
+      "history": [
+        {
+          "task_id": "T11",
+          "owner": "/root",
+          "branch": "agent/native-integer-intervals-v13",
+          "base_commit": "44c091d19b1e6d1b17e697694fd5ea28a768110f",
+          "worktree": "../naja-worktrees/native-integer-intervals",
+          "paths": [
+            "backends/native/",
+            "scripts/test-intervals.mjs",
+            "tests/intervals/"
+          ],
+          "status": "completed",
+          "integrated_commit": "f65d96d",
+          "execution_source": "78b35f300ddee38e2d70a79d0fe70dcb54fd1736",
+          "deliverable": "Native IntegerInterval routine and frozen native113, all passed on first run; two draft fixture defects corrected before freeze."
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root",
+          "branch": "agent/integer-interval-source-v13",
+          "base_commit": "8dbea5fc4a189bf4bf39017febe30d4afa37f056",
+          "worktree": "../naja-worktrees/integer-interval-source",
+          "paths": [
+            "scripts/test-intervals-language.mjs",
+            "tests/intervals-source/"
+          ],
+          "status": "completed",
+          "integrated_commit": "c67be33",
+          "deliverable": "Frozen source148 preparation before compiler work; two draft fixture defects corrected before freeze."
+        },
+        {
+          "task_id": "T11",
+          "owner": "/root (independent read-only subagent)",
+          "branch": "agent/integer-interval-integration-v13",
+          "worktree": "../naja-worktrees/integer-interval-integration",
+          "paths": [
+            "reports/reviews/INTEGER_INTERVALS_V13.md"
+          ],
+          "status": "completed",
+          "execution_source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+          "deliverable": "Read-only review of 78b35f3 and daf60e1 against ADR-009; no correctness defect found."
+        }
+      ],
+      "integrated_commit": "e2db710",
+      "execution_source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+      "handoff": "All interval paths released. Preserve native-integer-intervals, integer-interval-source, integer-interval-integration and the unused integer-interval-review worktree."
     }
   ],
   "coordination": "One integrator, atomic Git-common-directory reservation plus scoped branch/worktree assignments. History retained; JSON alone is not a lock."

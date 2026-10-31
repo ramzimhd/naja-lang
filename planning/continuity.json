@@ -2,15 +2,15 @@
   "schema_version": 1,
   "contract_revision": "1.3",
   "language_edition": "2026.1",
-  "session_id": "01a16e00-72d8-7292-a6df-922bd155cad2",
+  "session_id": "9a6b7a41-983a-4b72-ba1f-82b194ba6d25",
   "owner": "/root",
-  "status": "waiting_for_quota",
+  "status": "running",
   "checkpoint_generation": 26,
-  "head": "05e8dee98a940a1b8c1770b0eadd26d6d21a293b",
+  "head": "e2db710132fde473460173c248f360a33d2e3f3b",
   "branch": "agent/integrator-H0",
-  "last_verified_source": "6d8fb04400cf19f9cf04bebd6bc67fbe1b39cbb0",
+  "last_verified_source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
   "dirty_paths": [],
-  "task": "Exact decimal construction integrated; complete publication and continue FC1/HATCH",
+  "task": "Inclusive integer interval slice integrated; publish branch, observe CI and continue FC1/HATCH",
   "completed": [
     "Revision1.3 contracts, additive foundation/FC1 tracking and scoped assignments integrated.",
     "Edition-aware brace suites, named sections and depth markers execute in the bounded integer subset.",
@@ -66,7 +66,11 @@
     "All1058 exact-suite streams and4 frontend logs were decoded/hash/length/pattern checked. Original frontend failures and transcript-only baseline are retained accurately.",
     "PublicRational487901d passed allthreehosts at exactCI40242650531. Private integrity audit/checkpoint24 advanced retained6d on clean3e76cd3 before metadata.",
     "Host-evidence mismatch failed exact3cb7 Ubuntu CI before exact202 execution; corrected05e8dee preserves all202 cases/oracles/budgets. NewCI40244168721 remains pending.",
-    "Observed provider quota100%used/0%remaining; private checkpoint26 preserved clean05e8dee before final quota metadata."
+    "Observed provider quota100%used/0%remaining; private checkpoint26 preserved clean05e8dee before final quota metadata.",
+    "Recovered the interrupted October 31 interval session: ADR-009 and the CI correction report were committed locally; uncommitted native and source drafts were reviewed, four fixture defects corrected before freezing, then frozen and committed.",
+    "Native IntegerInterval frozen113 passed on first run at78b35f3 (103 WSL Linux ELFs, 10 IR refusals).",
+    "checked_int and .naja local interval annotations lowered at daf60e1; frozen source148 passed on first run (75 ELFs, 66 refusals, 7 check-only).",
+    "At daf60e1: Rust296, fmt, strict Clippy, JSON21, editor, native113 and source148 formal records passed; all29 inherited CI suites passed with zero not_run; independent review found no defect."
   ],
   "checks": [
     {
@@ -1486,6 +1490,134 @@
       "source": "f0f89944b13077bb8afe84466a34e8f73f2654da",
       "log_path": "reports/checks/v13-exact-stage-a-compat.log",
       "log_sha256": "3ec54c0d4cb90d3cbe8e4bf658a8e464e53e7f15f5062ee0cb9c9b4f8ff8e700",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+      "log_path": "reports/checks/v13-interval-fmt.log",
+      "log_sha256": "560220d83fe85dfecebddea62ac1b3b53ecdbdf4f33bd0e48afdd53f379dda9f",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+      "log_path": "reports/checks/v13-interval-rust.log",
+      "log_sha256": "19ed61f6e2ccf7a54959ceb58f9216785c69daf0bdaee55361bede4c14d79079",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+      "log_path": "reports/checks/v13-interval-clippy.log",
+      "log_sha256": "753b9e7dbb5cf4b7c11ac90cec9a2bc8f814237bf25168c58c399747d605e74e",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-check-json.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+      "log_path": "reports/checks/v13-interval-json.log",
+      "log_sha256": "6fd3a78acc8bf217c814f1181074124b5eaef6f2c86704e46f469e446fc622bd",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-vscode.mjs"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+      "log_path": "reports/checks/v13-interval-editor.log",
+      "log_sha256": "6118ad33d40ac4f69a069f8d8bf03c48b382968c2d8e391a6c182f4e8e98cbd8",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-intervals.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+      "log_path": "reports/checks/v13-interval-native.log",
+      "log_sha256": "82c312d401f305f9c72ccdca9ad17356591d41e013056cf8ba7b14b02bcca5f8",
+      "limitations": [
+        "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+        "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+        "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+      ]
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-intervals-language.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "source": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+      "log_path": "reports/checks/v13-interval-source.log",
+      "log_sha256": "9f474c236937e71b42f05d7903cbb57ba01bca1d58f4706298ec9029302e92b1",
       "limitations": [
         "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
         "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
@@ -2968,17 +3100,50 @@
       "path": "reports/checks/v13-exact-stage-a-compat.log",
       "bytes": 5178,
       "sha256": "3ec54c0d4cb90d3cbe8e4bf658a8e464e53e7f15f5062ee0cb9c9b4f8ff8e700"
+    },
+    {
+      "path": "reports/checks/v13-interval-fmt.log",
+      "bytes": 88,
+      "sha256": "560220d83fe85dfecebddea62ac1b3b53ecdbdf4f33bd0e48afdd53f379dda9f"
+    },
+    {
+      "path": "reports/checks/v13-interval-rust.log",
+      "bytes": 27807,
+      "sha256": "19ed61f6e2ccf7a54959ceb58f9216785c69daf0bdaee55361bede4c14d79079"
+    },
+    {
+      "path": "reports/checks/v13-interval-clippy.log",
+      "bytes": 210,
+      "sha256": "753b9e7dbb5cf4b7c11ac90cec9a2bc8f814237bf25168c58c399747d605e74e"
+    },
+    {
+      "path": "reports/checks/v13-interval-json.log",
+      "bytes": 807,
+      "sha256": "6fd3a78acc8bf217c814f1181074124b5eaef6f2c86704e46f469e446fc622bd"
+    },
+    {
+      "path": "reports/checks/v13-interval-editor.log",
+      "bytes": 571,
+      "sha256": "6118ad33d40ac4f69a069f8d8bf03c48b382968c2d8e391a6c182f4e8e98cbd8"
+    },
+    {
+      "path": "reports/checks/v13-interval-native.log",
+      "bytes": 3670,
+      "sha256": "82c312d401f305f9c72ccdca9ad17356591d41e013056cf8ba7b14b02bcca5f8"
+    },
+    {
+      "path": "reports/checks/v13-interval-source.log",
+      "bytes": 5308,
+      "sha256": "9f474c236937e71b42f05d7903cbb57ba01bca1d58f4706298ec9029302e92b1"
     }
   ],
-  "blockers": [
-    "Provider quota100% used/0% remaining observed2026-10-25T23:18:50.686Z; reset2026-11-01T08:14:13Z."
-  ],
+  "blockers": [],
   "unsafe_intermediate_states": [
-    "All exact contributor paths released; preserve branches/worktrees and raw captures.",
-    "Publication review/push and exact new CI observation remain pending.",
-    "All full founder acceptance gates remain open; approaching provider quota is distinct from context and spending."
+    "Interval branch is integrated locally on agent/integrator-H0; remote publication and exact new CI observation are pending.",
+    "All interval contributor paths released; preserve native-integer-intervals, integer-interval-source, integer-interval-integration and the unused integer-interval-review worktree.",
+    "Remaining L09/FC1-06 work (Decimal/Float/Rational intervals, NaN/infinity, named refinements, refined fields/parameters, external-input/FFI invariants, patterns) and all founder gates remain open."
   ],
-  "next_action": "Manually resume after observed quota availability, inspect actual Git/private reservation/checkpoint, verify05e8dee CI40244168721 and any newer metadata-head run, then continue FC1/HATCH.",
+  "next_action": "Review staged files, push agent/integrator-H0 to its own remote branch, observe the exact CI run on all three hosts, then continue the next L09/FC1-06 slice under a frozen ADR.",
   "next_commands": [
     [
       "git",
@@ -2992,13 +3157,17 @@
     ],
     [
       "node",
+      "scripts/validation/check-continuity.mjs"
+    ],
+    [
+      "node",
       "scripts/publication-audit.mjs"
     ],
     [
       "git",
       "push",
       "origin",
-      "HEAD:main"
+      "agent/integrator-H0"
     ]
   ],
   "ownership": {
@@ -3010,20 +3179,20 @@
   },
   "budget": {
     "context": {
-      "status": "unknown",
-      "remaining_tokens": null,
-      "observed_at": null,
-      "source": null
+      "status": "observed",
+      "remaining_tokens": 629636,
+      "observed_at": "2026-10-31T13:20:30.000Z",
+      "source": "Claude desktop app get_usage for this session: 370364 of 1000000 tokens used."
     },
     "provider_quota": {
       "status": "observed",
       "account_shared": true,
-      "used_percent": 100,
-      "remaining_percent": 0,
+      "used_percent": 77,
+      "remaining_percent": 23,
       "window_minutes": 10080,
-      "resets_at": "2026-11-01T08:14:13.000Z",
-      "observed_at": "2026-10-25T23:18:50.686Z",
-      "source": "Codex app get_usage_limits; primary subscription window shared across the account."
+      "resets_at": "2026-11-04T08:00:00.972Z",
+      "observed_at": "2026-10-31T13:20:30.000Z",
+      "source": "Claude desktop app get_usage, weekly all-models Max plan window; the separate 5-hour window was 52% used, resetting 2026-10-31T13:30:00.972Z."
     },
     "rate_limit": {
       "status": "unknown",
@@ -3049,7 +3218,10 @@
       "observed_at": null,
       "source": null
     },
-    "limitations": []
+    "limitations": [
+      "2026-10-31T13:20:30Z: the Claude desktop app reported extra usage disabled; no monetary balance was observed, so spend stays unknown.",
+      "Rate limits and execution deadlines were not observed."
+    ]
   },
   "automatic_runner": {
     "status": "manual_only",
@@ -3058,5 +3230,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-25T23:19:42.985Z"
+  "updated_at": "2026-10-31T13:21:00.000Z"
 }

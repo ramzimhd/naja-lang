@@ -63,6 +63,16 @@ comparisons are supported; ordinary `/`, Rational printing, full hashing and
 general numeric protocols remain open. [ADR-007](docs/decisions/0007-exact-rational-foundation.md)
 and the [native contract](tests/rationals/CONTRACT.md) define the limits.
 
+Inclusive integer intervals check Int and Bool values against signed bounds of
+any size. `from naja.numeric import checked_int` works in both dialects, and
+`.naja` local annotations such as `age: (1 to 40) = value` check every
+assignment to that name. Known constants and wrong literal kinds are refused at
+compile time, while everything else is checked in native code; copies and
+arithmetic results are not refined. [ADR-009](docs/decisions/0009-inclusive-integer-intervals.md)
+defines the limits; the [source proof](tests/intervals-source/EXECUTION.md)
+retains its checks. Decimal, Float and Rational intervals, named refinement
+types and refined fields or parameters remain open.
+
 With the pinned Rust seed, a working platform linker/SDK and the locked packages
 available locally (one-time development preparation: `cargo fetch --locked`):
 

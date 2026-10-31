@@ -533,7 +533,14 @@
         "reports/checks/v13-exact-literal-clippy.json",
         "reports/checks/v13-exact-literal-json.json",
         "reports/checks/v13-exact-literal-editor.json",
-        "reports/checks/v13-exact-stage-a-compat.json"
+        "reports/checks/v13-exact-stage-a-compat.json",
+        "reports/checks/v13-interval-fmt.json",
+        "reports/checks/v13-interval-rust.json",
+        "reports/checks/v13-interval-clippy.json",
+        "reports/checks/v13-interval-json.json",
+        "reports/checks/v13-interval-editor.json",
+        "reports/checks/v13-interval-native.json",
+        "reports/checks/v13-interval-source.json"
       ],
       "note": "Incremental revision1.3 native Dict/Set/membership and explicitly eligible integer suffix construction with exact-source native proofs. Full protocols, numeric/quantity relations and task acceptance remain open; exact Rational foundation is active separately."
     },

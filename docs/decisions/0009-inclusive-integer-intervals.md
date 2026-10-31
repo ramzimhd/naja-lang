@@ -140,3 +140,16 @@ mutants before their native execution. Preserve first failures, exact sources,
 commands, hashes, targets, versions and pending `not_run`. No Python/CPython
 oracle, foreign compiler, canned result, disabled old selector or raised budget
 is authorized. This stage promotes no complete L09/FC1/HATCH requirement or gate.
+
+## Implementation status — October 31, 2026
+
+The contract above is unchanged. Native `IntegerInterval` landed at
+`78b35f300ddee38e2d70a79d0fe70dcb54fd1736` and its frozen 113 checks passed on
+the first run (`tests/intervals/EXECUTION.md`). `checked_int` and `.naja` local
+annotations landed at `daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab`; the frozen 148
+source outcomes passed on the first run (`tests/intervals-source/EXECUTION.md`).
+Four draft fixture defects were corrected before either freeze and are recorded
+in each `PREFREEZE_CORRECTIONS.md`. An independent read-only review found no
+correctness defect (`reports/reviews/INTEGER_INTERVALS_V13.md`). This slice
+promotes no L09, FC1-06 or HATCH requirement or gate; the required work listed
+in the opening paragraph remains open.

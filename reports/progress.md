@@ -1,3 +1,69 @@
+# Inclusive integer interval checkpoint — October 31, 2026
+
+A Claude session resumed the interrupted October 31 interval work as `/root`,
+sole integrator in `C:/naja` on `agent/integrator-H0`. Nothing was lost. The
+three files reported missing were present: ADR-009 (`44c091d`) and
+`reports/governance/CI_EXACT_LITERAL_CORRECTION_2026-10-31.json` (`9f7ba0d`)
+were committed locally but not pushed, and `target/resume-intervals.mjs` is an
+ignored local helper that wrote private checkpoint 28. Public `main` is still
+`8dbea5f`; its CI run 40244261165 (#15) passed on all three hosts.
+
+The interrupted session had left uncommitted drafts in two worktrees. They
+were reviewed before freezing, four fixture defects were corrected, and the
+corrections are recorded in `tests/intervals/PREFREEZE_CORRECTIONS.md` and
+`tests/intervals-source/PREFREEZE_CORRECTIONS.md`. No outcome had been
+observed before the freeze.
+
+ADR-009 first slice, retained source `daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab`:
+
+- Native `IntegerInterval` at `78b35f3`: frozen 113 checks PASS on first run
+  (103 Linux x86-64 ELFs under WSL2, 10 IR refusals). `tests/intervals/`.
+- `from naja.numeric import checked_int` (both dialects) and `.naja` local
+  annotations `name: (lower to upper) = value` at `daf60e1`: frozen 148
+  outcomes PASS on first run (75 ELFs, 66 refusals, 7 check-only).
+  `tests/intervals-source/`.
+- At `daf60e1`: formal records PASS for fmt, Rust 296 tests, strict Clippy,
+  JSON 21, VS Code adapter, native 113 and source 148
+  (`reports/checks/v13-interval-*`). All 29 inherited CI suites PASS, 0 failed,
+  0 not run (`tests/intervals-source/REGRESSIONS_daf60e1.json`).
+- Independent read-only review found no correctness defect
+  (`reports/reviews/INTEGER_INTERVALS_V13.md`).
+- CI now also runs `test-intervals.mjs` and `test-intervals-language.mjs` on
+  Linux.
+
+NOT RUN or still open in L09/FC1-06: Decimal, Float and Rational intervals;
+NaN and infinity policy (no Float type exists yet); named refinement types;
+refined fields, parameters and returns; refined mutable containers;
+external-input, FFI and deserialization invariants; patterns and captures;
+general constant folding and inference. No requirement, task or gate was
+promoted; counts remain 3 verified requirements, 2 tasks, 0 of 19 gates.
+
+Budget observed 2026-10-31T13:20Z through the Claude desktop app: weekly
+all-models window 77% used (resets 2026-11-04T08:00Z), 5-hour window 52% used,
+extra usage disabled, session context 37%. No background runner exists.
+Private reservation fence 2 remains held by `/root`; never reclaim it by age
+or PID.
+
+Preserve every worktree, including `native-integer-intervals`,
+`integer-interval-source`, `integer-interval-integration` and the unused
+`integer-interval-review`, plus the untracked `bootstrap/frontend/Cargo.lock`
+in `C:/naja-worktrees/frontend`.
+
+Next commands:
+
+```text
+git status --short --branch
+node scripts/validation/check-planning.mjs
+node scripts/validation/check-continuity.mjs
+node scripts/publication-audit.mjs
+git push origin agent/integrator-H0
+```
+
+Then observe the exact CI run for the pushed head on all three hosts before
+claiming it, and continue the next L09/FC1-06 slice (freeze an ADR for
+Rational or Decimal interval policy, or refined parameters, before
+implementation). Earlier checkpoint text below is historical.
+
 # Quota stop and exact resume boundary — October 25, 2026
 
 Observed account quota100%used/0%remaining at2026-10-25T23:18:50.686Z; reset2026-11-01T08:14:13Z. Engineering stops at this real quota limit. No automatic runner, paid fallback or background continuation is promised. Manually resume when quota is available.
