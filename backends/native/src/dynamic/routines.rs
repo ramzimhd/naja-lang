@@ -11,6 +11,7 @@ use crate::hosted::{
 mod division;
 mod files;
 mod indexing;
+mod intervals;
 mod mappings;
 mod objects;
 mod rationals;
@@ -54,6 +55,7 @@ pub(super) struct Runtime {
     pub divide_exact: usize,
     pub numerator: usize,
     pub denominator: usize,
+    pub integer_interval: usize,
     rational_check: usize,
     rational_add: usize,
     rational_subtract: usize,
@@ -129,6 +131,7 @@ impl Runtime {
             divide_exact: c.label(),
             numerator: c.label(),
             denominator: c.label(),
+            integer_interval: c.label(),
             rational_check: c.label(),
             rational_add: c.label(),
             rational_subtract: c.label(),
@@ -171,6 +174,7 @@ impl Runtime {
         self.numeric(c, integers);
         self.division(c, integers);
         self.rationals(c, integers);
+        self.intervals(c, integers);
         self.length(c, integers);
         self.tuples(c, integers);
         self.indexing(c, integers);

@@ -1,0 +1,29 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+  "target": "Integer interval integration frozen source148 proof via WSL Linux x86-64",
+  "command": [
+    "node",
+    "scripts/test-intervals-language.mjs",
+    "--expect-source",
+    "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+  ],
+  "tool_versions": {
+    "powershell": "7.6.9",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "git": "git version 2.51.0.windows.1",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "node": "v24.11.0"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-31T13:16:31.1941573+00:00",
+  "log_path": "reports/checks/v13-interval-source.log",
+  "log_sha256": "9f474c236937e71b42f05d7903cbb57ba01bca1d58f4706298ec9029302e92b1",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

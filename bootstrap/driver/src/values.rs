@@ -54,6 +54,16 @@ pub(crate) trait Values {
     fn denominator(_value: Self::Expression) -> Result<Self::Expression, String> {
         Err("Rational APIs are unsupported in this explicit integer domain".into())
     }
+    fn integer_interval(
+        _value: Self::Expression,
+        _lower: Self::Expression,
+        _upper: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Err("integer intervals are unsupported in this explicit integer domain".into())
+    }
+    fn interval_scalar(_value: &Self::Expression) -> IntervalScalar<'_> {
+        IntervalScalar::Unknown
+    }
     fn read_file(_path: Self::Expression) -> Result<Self::Expression, String> {
         Err("file APIs are unsupported in this explicit integer domain".into())
     }
@@ -169,6 +179,44 @@ pub(crate) trait Values {
         no: Vec<Self::Statement>,
     ) -> Self::Statement;
     fn while_loop(condition: Self::Condition, body: Vec<Self::Statement>) -> Self::Statement;
+}
+
+/// What the interval proof knows about an expression without executing it.
+pub(crate) enum IntervalScalar<'a> {
+    /// Negative flag and decimal digits without leading zeros; zero is `(false, "")`.
+    Integer(bool, &'a str),
+    /// A Text, Bytes or None literal, possibly under unary signs.
+    WrongKind,
+    Unknown,
+}
+
+impl<'a> IntervalScalar<'a> {
+    /// Split stored signed decimal digits without a machine-width conversion.
+    pub(crate) fn decimal(text: &'a str) -> Self {
+        let (negative, digits) = text.strip_prefix('-').map_or((false, text), |v| (true, v));
+        let digits = digits.trim_start_matches('0');
+        Self::Integer(negative && !digits.is_empty(), digits)
+    }
+    pub(crate) fn proven(&self) -> Option<(bool, &'a str)> {
+        match *self {
+            Self::Integer(negative, digits) => Some((negative, digits)),
+            _ => None,
+        }
+    }
+}
+
+/// Compare two proven integers by sign, digit count, then digits.
+pub(crate) fn compare_integers(
+    (left_negative, left): (bool, &str),
+    (right_negative, right): (bool, &str),
+) -> std::cmp::Ordering {
+    let magnitude = left.len().cmp(&right.len()).then_with(|| left.cmp(right));
+    match (left_negative, right_negative) {
+        (false, true) => std::cmp::Ordering::Greater,
+        (true, false) => std::cmp::Ordering::Less,
+        (false, false) => magnitude,
+        (true, true) => magnitude.reverse(),
+    }
 }
 
 pub(crate) struct Fixed;
@@ -320,6 +368,35 @@ impl Values for Dynamic {
     }
     fn denominator(value: Self::Expression) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::Denominator(Box::new(value)))
+    }
+    fn integer_interval(
+        value: Self::Expression,
+        lower: Self::Expression,
+        upper: Self::Expression,
+    ) -> Result<Self::Expression, String> {
+        Ok(dynamic::Expression::IntegerInterval(
+            Box::new(value),
+            Box::new(lower),
+            Box::new(upper),
+        ))
+    }
+    fn interval_scalar(value: &Self::Expression) -> IntervalScalar<'_> {
+        // Only literals, Bool and unary signs are proven; calls, arithmetic and
+        // containers stay runtime-checked. Height is already bounded by 128.
+        use dynamic::Expression::*;
+        match value {
+            Integer(text) => IntervalScalar::decimal(text),
+            Boolean(value) => IntervalScalar::Integer(false, if *value { "1" } else { "" }),
+            Text(_) | Bytes(_) | None => IntervalScalar::WrongKind,
+            Positive(value) => Self::interval_scalar(value),
+            Negate(value) => match Self::interval_scalar(value) {
+                IntervalScalar::Integer(negative, digits) => {
+                    IntervalScalar::Integer(!negative && !digits.is_empty(), digits)
+                }
+                other => other,
+            },
+            _ => IntervalScalar::Unknown,
+        }
     }
     fn read_file(path: Self::Expression) -> Result<Self::Expression, String> {
         Ok(dynamic::Expression::ReadFile(Box::new(path)))
@@ -482,6 +559,11 @@ impl Values for Dynamic {
             | Compare(_, left, right)
             | And(left, right)
             | Or(left, right) => 1 + Self::height(left).max(Self::height(right)),
+            IntegerInterval(value, lower, upper) => {
+                1 + Self::height(value)
+                    .max(Self::height(lower))
+                    .max(Self::height(upper))
+            }
             CompareChain(first, rest) => {
                 1 + rest
                     .iter()

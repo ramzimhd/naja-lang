@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+  "target": "Integer interval integration VS Code adapter units and compiler groups",
+  "command": [
+    "node",
+    "scripts/test-vscode.mjs"
+  ],
+  "tool_versions": {
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "powershell": "7.6.9",
+    "git": "git version 2.51.0.windows.1"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-31T13:14:54.5542450+00:00",
+  "log_path": "reports/checks/v13-interval-editor.log",
+  "log_sha256": "6118ad33d40ac4f69a069f8d8bf03c48b382968c2d8e391a6c182f4e8e98cbd8",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "source_commit": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+  "observed_at": "2026-10-31T13:18:28.727Z",
+  "host": "win32-x64, Windows 11 Pro for Workstations 10.0.26200",
+  "node": "v24.11.0",
+  "target": "Linux x86-64 ELFs via WSL2 6.6.87.2-microsoft-standard-WSL2",
+  "runner": "target/run-regressions.sh (sequential; one command per CI suite step)",
+  "passed": 29,
+  "failed": 0,
+  "not_run": 0,
+  "suites": [
+    {
+      "name": "compiler-boundaries",
+      "command": [
+        "node",
+        "scripts/test-compiler-boundaries.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Limits: stable-filesystem validation and a capped 8 MiB compilation stack reservation; no hostile-race confinement, universal OS I/O deadline or sandbox claim. macOS native run/test remains unsupported.",
+      "log_bytes": 842,
+      "log_sha256": "ebbd87d20a43f615e64956adc7de51a5783d8cf55aadea611bb6adb5a59f29bb"
+    },
+    {
+      "name": "check-json",
+      "command": [
+        "node",
+        "scripts/test-check-json.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Artifacts: target/check-json-HqPdyP",
+      "log_bytes": 687,
+      "log_sha256": "103272c76e6a91e5917c67e6794c5d94080b5212e99bfce8a5fc398c46ba9872"
+    },
+    {
+      "name": "vscode",
+      "command": [
+        "node",
+        "scripts/test-vscode.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Retained result: editor/vscode/artifacts/checks-gd5x4Y/result.json",
+      "log_bytes": 467,
+      "log_sha256": "e4f7337d4486c0f9d45b7f47d31ff3926e8f91dad4a1702f6e4f3152928a50c6"
+    },
+    {
+      "name": "project-cli",
+      "command": [
+        "node",
+        "scripts/test-project-cli.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Limits: empty-PATH checks do not establish a clean host; runner preparation is separate from user-program execution; no self-hosting, complete CLI or HATCH claim.",
+      "log_bytes": 1038,
+      "log_sha256": "831eb9644178c142a1c0fc061dce70bf112371d1171d1dc63c66e55698f501bb"
+    },
+    {
+      "name": "native",
+      "command": [
+        "node",
+        "scripts/test-native.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Limits: experimental explicit i64 only; no clean-host, full grammar, self-hosting, performance or release proof.",
+      "log_bytes": 3064,
+      "log_sha256": "a31eb4a68ab0f0592a39af152d1b23fbe212070fcfee64c34ec9dcda5a7d8398"
+    },
+    {
+      "name": "hosted",
+      "command": [
+        "node",
+        "scripts/test-hosted.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Limits: development IR adapter; Linux x86-64 via declared WSL/native target; 64 MiB arena; no complete hosted runtime, frontend, FC1, performance or self-hosting claim.",
+      "log_bytes": 1405,
+      "log_sha256": "904f3f04e8df8212421cf2baaab0a79741cbb07f22bb29196c7089a329695bd5"
+    },
+    {
+      "name": "hosted-language",
+      "command": [
+        "node",
+        "scripts/test-hosted-language.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Limits: decimal integer slice, 64 MiB temporary arena, incomplete values/objects/modules/diagnostics, no FC1/HATCH/performance/self-hosting claim.",
+      "log_bytes": 2235,
+      "log_sha256": "29bd55d550aa838ed61816c797e66d747dda3ae7e7e4375663897f535cfe9bf0"
+    },
+    {
+      "name": "dynamic",
+      "command": [
+        "node",
+        "scripts/test-dynamic.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Limits: B0 development IR; Linuxx64/explicit local WSL; bounded 64MiB temporary arena; no float/container/functions/exception-unwinding, complete runtime, FC1, self-hosting or release claim.",
+      "log_bytes": 9328,
+      "log_sha256": "d3444b4d677269b8173e99a046c763da378cfedc917a1d8b13d73ab16cf95f27"
+    },
+    {
+      "name": "functions",
+      "command": [
+        "node",
+        "scripts/test-functions.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 43 direct-function checks; 294 independent oracle outputs; target=Linux x86_64; artifact timeout=5s; artifacts=<workspace>/target\\functions-native-TM4DRr",
+      "log_bytes": 4528,
+      "log_sha256": "d849fcaa537dda293deb0e0a8e88354e71ca86004d9550dca13471343debb62b"
+    },
+    {
+      "name": "index",
+      "command": [
+        "node",
+        "scripts/test-index.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 72 native index checks; 2107 independent scalar/byte outputs; target=Linux x86_64; artifact timeout=5s; artifacts=<workspace>/target\\index-native-2vvvcF",
+      "log_bytes": 5462,
+      "log_sha256": "71e0c67a49816af513675953fd1e54a107b2d5135e1bb45e1d0878f83782bf35"
+    },
+    {
+      "name": "tuples",
+      "command": [
+        "node",
+        "scripts/test-tuples.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 76 immutable tuple checks; 259 independent element outputs; target=Linux x86_64; artifact timeout=5s; artifacts=<workspace>/target\\tuples-native-0YKWDc",
+      "log_bytes": 7439,
+      "log_sha256": "68fb5662a96c0bb1e48406ac92d6549fb9cf1e9d136022128a86fc72e9c2aa13"
+    },
+    {
+      "name": "lists",
+      "command": [
+        "node",
+        "scripts/test-lists.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 97 mutable-list checks; 385 independent element outputs; target=Linux x86_64; artifact timeout=5s; artifacts=<workspace>/target\\lists-native-4v03kt",
+      "log_bytes": 9377,
+      "log_sha256": "e9cfe76a5d8b776b6b6afafea14d4894fc3a4c1233ea1b90fc350d55c1dc8e26"
+    },
+    {
+      "name": "files",
+      "command": [
+        "node",
+        "scripts/test-files.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 70 native file/UTF8 checks; 48 independent conversion outputs; target=Linux x86_64; timeout=5s; data=/tmp/naja-native-files-75uAox; artifacts=<workspace>/target\\files-native-qvGtZ7",
+      "log_bytes": 5202,
+      "log_sha256": "b4a7178cfb2816538c6b7b396c252d82ea393514f0d1dd2626acdf2239699d86"
+    },
+    {
+      "name": "objects",
+      "command": [
+        "node",
+        "scripts/test-objects.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 74 native object checks; 78 independent output lines; target=Linux x86_64; artifact timeout=5s; artifacts=<workspace>/target\\objects-native-b8hHpb",
+      "log_bytes": 6741,
+      "log_sha256": "f428d387d06e4f152e21ea5ac865c72dd52eefd94b42d2e81b5568cf31d187a0"
+    },
+    {
+      "name": "mappings",
+      "command": [
+        "node",
+        "scripts/test-mappings.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 87 native mapping checks; 964 independent output lines; target=Linux x86_64; artifact timeout=5s; artifacts=<workspace>/target\\mappings-native-l3V7N1",
+      "log_bytes": 7676,
+      "log_sha256": "a7a2d584036557406dbd1b63b2b8ee945f917a30a3ea7dd5a86b3fc77a0bc8e8"
+    },
+    {
+      "name": "rationals",
+      "command": [
+        "node",
+        "scripts/test-rationals.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 101 actual native Rational checks; artifacts=target/rationals-native-bbmMpY",
+      "log_bytes": 3254,
+      "log_sha256": "ec0f3c534e1fd3bd9e83ea93e08ac9337cacc29849f102f738f46d4852db9cfa"
+    },
+    {
+      "name": "intervals",
+      "command": [
+        "node",
+        "scripts/test-intervals.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "PASS 113 actual native interval checks; artifacts=target/intervals-native-o8drn0",
+      "log_bytes": 3403,
+      "log_sha256": "92865d903250dbc4542fec83e99d2ca854319f73b608f2d5b195377f485d9e01"
+    },
+    {
+      "name": "values-language",
+      "command": [
+        "node",
+        "scripts/test-values-language.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Limits: supported value slice and explicit project alias ownership; no Python, full compatibility, cache implementation, managed memory, FC1 or HATCH claim.",
+      "log_bytes": 4113,
+      "log_sha256": "32fc4a92065a0c7a98633f81af182539cb82d30cade42b78944990c85b3aedec"
+    },
+    {
+      "name": "functions-language",
+      "command": [
+        "node",
+        "scripts/test-functions-language.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: bounded top-level function slice; no complete Python grammar, closures, full module system, FC1 or HATCH completion claim.",
+      "log_bytes": 2259,
+      "log_sha256": "174d3787dfe912235a5af14657c01fd51c5caa643913d587a33bd80abca5cacf"
+    },
+    {
+      "name": "index-language",
+      "command": [
+        "node",
+        "scripts/test-index-language.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: bounded Text/Bytes indexing source slice; no slices, general containers, complete Python grammar, FC1 or HATCH completion claim.",
+      "log_bytes": 2533,
+      "log_sha256": "8ae73ad47be51aa065bc26af8de0c2c2af5a769cba6c7d55261ac58b43a65b56"
+    },
+    {
+      "name": "tuples-language",
+      "command": [
+        "node",
+        "scripts/test-tuples-language.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: bounded immutable tuples; tuple printing/comparison/arithmetic, general containers, complete Python grammar, FC1 and HATCH remain unsupported.",
+      "log_bytes": 4326,
+      "log_sha256": "b4eda2c2bb45b43b795aeb05638d81fa6809548d36d62edb60a6c8146e0af4db"
+    },
+    {
+      "name": "lists-language",
+      "command": [
+        "node",
+        "scripts/test-lists-language.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: bounded fixed-count mutable lists; display/comparison/arithmetic, resizing, general containers, complete Python grammar, FC1 and HATCH remain unsupported.",
+      "log_bytes": 5238,
+      "log_sha256": "03e7d76315166bf49bca239eb3532af1db73a4e7f42402abcb8f5aa47403ffc2"
+    },
+    {
+      "name": "files-language",
+      "command": [
+        "node",
+        "scripts/test-files-language.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: private stable-file and strict UTF-8 source cases; no sandbox, OS I/O deadline, complete filesystem/Python, FC1 or HATCH claim.",
+      "log_bytes": 3725,
+      "log_sha256": "0d46c26ae752f1f99cb5dcfa4b80c1b66c5939583188060fccda3157bbe1f7eb"
+    },
+    {
+      "name": "objects-language",
+      "command": [
+        "node",
+        "scripts/test-objects-language.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: bounded ordinary classes; first-class classes/bound methods, inheritance, descriptors, extension/partial classes, complete Python grammar, FC1 and HATCH remain unsupported.",
+      "log_bytes": 5684,
+      "log_sha256": "4f56b3c4929e780a6b79e68ab1590ee30ec77296f7c4976773c3b87fe62a4f06"
+    },
+    {
+      "name": "mappings-language",
+      "command": [
+        "node",
+        "scripts/test-mappings-language.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: bounded Dict/Set source behavior; iteration, resizing/deletion, full key hashing, mapping protocols, complete Python grammar, FC1 and HATCH remain unsupported.",
+      "log_bytes": 7069,
+      "log_sha256": "a460bcfde1de5e008d0365fb863827ac349bb25352b133e64ad2fc6f27c99a12"
+    },
+    {
+      "name": "typed-literals-language",
+      "command": [
+        "node",
+        "scripts/test-typed-literals-language.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: static same-module integer literal construction only. General protocols, exact Rational/Decimal promotion, scale/affine algebra, productivity, FC1 and HATCH remain open.",
+      "log_bytes": 4859,
+      "log_sha256": "43f90dd3ce403620cd43c1de6566d956154a1b847fadfa5150b80a8cff189d24"
+    },
+    {
+      "name": "rationals-language",
+      "command": [
+        "node",
+        "scripts/test-rationals-language.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: bounded exact Rational source behavior; Rational display, full numeric hashing, Decimal and general numeric promotion/scale/affine protocols remain open. No FC1 or HATCH acceptance claim.",
+      "log_bytes": 8619,
+      "log_sha256": "7a0dcdc22b244a7efe496a98543610d240accb1855bb046978b631714c5b26c5"
+    },
+    {
+      "name": "exact-literals-language",
+      "command": [
+        "node",
+        "scripts/test-exact-literals-language.mjs",
+        "--expect-source",
+        "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "Scope: explicit exact same-module literal construction. General Decimal/protocols/quantities, FC1 and HATCH remain open.",
+      "log_bytes": 6719,
+      "log_sha256": "4b99980d50e7ba4577fce5646579ff3d38328857fc17e91afd6701908e98feec"
+    },
+    {
+      "name": "cli",
+      "command": [
+        "node",
+        "scripts/test-cli.mjs"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "final_line": "CLI execution checks passed: 43; target=Linux x86-64 via explicit Windows WSL; fixture artifacts retained under target/",
+      "log_bytes": 2276,
+      "log_sha256": "b8aaa2a3572ca6cb2c1298f257bb92793a8edbeb69db45e03cdba2df0440ed1d"
+    }
+  ],
+  "limits": [
+    "Logs remain in the ignored local target/ directory; only their byte lengths and SHA-256 are retained here.",
+    "Same commands as the Linux CI suite list, run on a Windows host with WSL execution; GitHub CI on all three hosts needs its own observation."
+  ]
+}

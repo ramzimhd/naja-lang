@@ -1,0 +1,34 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+  "target": "Integer interval integration strict workspace all-target Clippy",
+  "command": [
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "--offline",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "tool_versions": {
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "git": "git version 2.51.0.windows.1",
+    "node": "v24.11.0",
+    "powershell": "7.6.9",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-31T13:14:30.4079378+00:00",
+  "log_path": "reports/checks/v13-interval-clippy.log",
+  "log_sha256": "753b9e7dbb5cf4b7c11ac90cec9a2bc8f814237bf25168c58c399747d605e74e",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}
