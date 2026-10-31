@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-31T11:52:34Z",
+  "source_commit": "8dbea5fc4a189bf4bf39017febe30d4afa37f056",
+  "run_id": 40244261165,
+  "url": "https://github.com/ramzimhd/naja-lang/actions/runs/40244261165",
+  "result": "passed",
+  "observation_method": "Public GitHub Actions exact-head run and jobs REST endpoints",
+  "jobs": [
+    { "id": 121322399274, "name": "seed (macos-15)", "conclusion": "success" },
+    { "id": 121322399422, "name": "seed (windows-2025)", "conclusion": "success" },
+    { "id": 121322399492, "name": "seed (ubuntu-24.04)", "conclusion": "success" }
+  ],
+  "limits": [
+    "Original failed3cb7 host-metadata CI remains failed; only this exact later run is verified here.",
+    "Native ELF/source execution is the declared Linux reference target; host compiler checks on other systems do not establish emitted native targets there.",
+    "No founder acceptance gate, self-hosting, clean-host or human productivity claim follows."
+  ]
+}
