@@ -1,0 +1,27 @@
+{
+  "contract_revision": "1.3",
+  "requirement_id": "QA-04",
+  "commit": "daf60e1749ba4a3d4a0ee6c4347b3bee499f93ab",
+  "target": "Integer interval integration original-source structured diagnostics",
+  "command": [
+    "node",
+    "scripts/test-check-json.mjs"
+  ],
+  "tool_versions": {
+    "powershell": "7.6.9",
+    "git": "git version 2.51.0.windows.1",
+    "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+    "node": "v24.11.0",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)"
+  },
+  "exit_code": 0,
+  "result": "passed",
+  "timestamp": "2026-10-31T13:14:47.2922830+00:00",
+  "log_path": "reports/checks/v13-interval-json.log",
+  "log_sha256": "6fd3a78acc8bf217c814f1181074124b5eaef6f2c86704e46f469e446fc622bd",
+  "limitations": [
+    "This check covers only the command and target recorded here; requirement completion requires its full acceptance criteria.",
+    "Logs sanitize local workspace and user paths. No claim of a clean-room host, full HATCH acceptance or human productivity follows.",
+    "Source identity and visible cleanliness were checked at command boundaries; transient changes that were fully restored are not detected."
+  ]
+}
