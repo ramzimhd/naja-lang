@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-31T13:50:30Z",
+  "source_commit": "c6838e3dd0a65dd025e755bdc945aa2ce074ffd7",
+  "branch": "agent/integrator-H0",
+  "run_id": 41207010140,
+  "run_number": 16,
+  "url": "https://github.com/ramzimhd/naja-lang/actions/runs/41207010140",
+  "result": "passed",
+  "observation_method": "Public GitHub Actions exact-head run and jobs REST endpoints",
+  "jobs": [
+    { "id": 124554046662, "name": "seed (macos-15)", "conclusion": "success" },
+    { "id": 124554046814, "name": "seed (ubuntu-24.04)", "conclusion": "success" },
+    { "id": 124554046851, "name": "seed (windows-2025)", "conclusion": "success" }
+  ],
+  "limits": [
+    "The Linux-only step that runs test-intervals.mjs and test-intervals-language.mjs with --expect-source succeeded on ubuntu-24.04 and is skipped by design on macOS and Windows; job logs were not downloaded.",
+    "Native ELF/source execution is the declared Linux reference target; host compiler checks on other systems do not establish emitted native targets there.",
+    "This run is for the pushed branch head, not public main, which remains at 8dbea5f.",
+    "No founder acceptance gate, self-hosting, clean-host or human productivity claim follows."
+  ]
+}

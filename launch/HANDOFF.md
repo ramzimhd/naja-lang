@@ -59,8 +59,14 @@ node scripts/publication-audit.mjs
 git push origin agent/integrator-H0
 ```
 
-Then observe the exact CI run for the pushed head on all three hosts before
-claiming it, and continue the next L09/FC1-06 slice (freeze an ADR for
+Published: `agent/integrator-H0` was pushed as its own remote branch at
+`c6838e3`; CI run 41207010140 (#16) PASSED on macOS, Ubuntu and Windows,
+including both interval suites on Linux
+(`reports/governance/CI_INTEGER_INTERVALS_2026-10-31.json`). Public `main` was
+not changed. The later metadata head needs its own CI observation. Private
+checkpoint 30 retains `daf60e1` as the verified source and assessed ready.
+
+Then continue the next L09/FC1-06 slice (freeze an ADR for
 Rational or Decimal interval policy, or refined parameters, before
 implementation). Earlier checkpoint text below is historical.
 

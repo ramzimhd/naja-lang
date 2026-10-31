@@ -70,7 +70,8 @@
     "Recovered the interrupted October 31 interval session: ADR-009 and the CI correction report were committed locally; uncommitted native and source drafts were reviewed, four fixture defects corrected before freezing, then frozen and committed.",
     "Native IntegerInterval frozen113 passed on first run at78b35f3 (103 WSL Linux ELFs, 10 IR refusals).",
     "checked_int and .naja local interval annotations lowered at daf60e1; frozen source148 passed on first run (75 ELFs, 66 refusals, 7 check-only).",
-    "At daf60e1: Rust296, fmt, strict Clippy, JSON21, editor, native113 and source148 formal records passed; all29 inherited CI suites passed with zero not_run; independent review found no defect."
+    "At daf60e1: Rust296, fmt, strict Clippy, JSON21, editor, native113 and source148 formal records passed; all29 inherited CI suites passed with zero not_run; independent review found no defect.",
+    "Pushed agent/integrator-H0 at c6838e3 as its own remote branch; CI run 41207010140 passed on all three hosts. Public main unchanged at 8dbea5f."
   ],
   "checks": [
     {
@@ -3139,11 +3140,11 @@
   ],
   "blockers": [],
   "unsafe_intermediate_states": [
-    "Interval branch is integrated locally on agent/integrator-H0; remote publication and exact new CI observation are pending.",
+    "agent/integrator-H0 is pushed; public main is unchanged at 8dbea5f. The metadata head after c6838e3 needs its own CI observation.",
     "All interval contributor paths released; preserve native-integer-intervals, integer-interval-source, integer-interval-integration and the unused integer-interval-review worktree.",
     "Remaining L09/FC1-06 work (Decimal/Float/Rational intervals, NaN/infinity, named refinements, refined fields/parameters, external-input/FFI invariants, patterns) and all founder gates remain open."
   ],
-  "next_action": "Review staged files, push agent/integrator-H0 to its own remote branch, observe the exact CI run on all three hosts, then continue the next L09/FC1-06 slice under a frozen ADR.",
+  "next_action": "Decide whether to fast-forward public main to agent/integrator-H0, observe CI for the latest metadata head, then freeze the next L09/FC1-06 slice ADR before implementation.",
   "next_commands": [
     [
       "git",
@@ -3160,14 +3161,9 @@
       "scripts/validation/check-continuity.mjs"
     ],
     [
-      "node",
-      "scripts/publication-audit.mjs"
-    ],
-    [
       "git",
-      "push",
-      "origin",
-      "agent/integrator-H0"
+      "fetch",
+      "origin"
     ]
   ],
   "ownership": {
@@ -3230,5 +3226,5 @@
     "provider_requests_started": false,
     "instructions": "The active authorized chat continues through supported compaction. After client or machine exit, manually reopen with launch/RESUME_PROMPT.md and reconcile observed ownership before writes; no unattended provider runner exists."
   },
-  "updated_at": "2026-10-31T13:21:00.000Z"
+  "updated_at": "2026-10-31T13:51:00.000Z"
 }
