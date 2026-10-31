@@ -11,7 +11,13 @@ mod literal_construction;
 pub mod manifest;
 mod values;
 use literal_construction::{Expansion, MAX_LITERAL_BYTES};
-use values::{Dynamic, Fixed, Hosted, Values};
+use values::{Dynamic, Fixed, Hosted, IntervalScalar, Values, compare_integers};
+
+const INTERVAL_KIND: &str = "integer interval requires Int or Bool";
+const INTERVAL_EMPTY: &str = "integer interval lower bound exceeds upper bound";
+const INTERVAL_OUTSIDE: &str = "constant is outside the inclusive integer interval";
+const INTERVAL_ENDPOINT: &str =
+    "integer interval endpoints require signed decimal integer literals";
 
 /// Bounded temporary seed stack reservation, plus platform thread overhead.
 /// This supports the advertised parser/IR depths independently of the caller's
@@ -208,6 +214,7 @@ fn parse_lexed<V: Values>(
         locals: BTreeMap::new(),
         initialized: BTreeSet::new(),
         integer_annotations: BTreeSet::new(),
+        interval_annotations: BTreeMap::new(),
         imported_i64: false,
         imports: BTreeMap::new(),
         nodes: 0,
@@ -245,6 +252,8 @@ struct Parser<V: Values> {
     locals: BTreeMap<String, usize>,
     initialized: BTreeSet<usize>,
     integer_annotations: BTreeSet<usize>,
+    /// Stored signed endpoint digits for each `.naja` interval slot.
+    interval_annotations: BTreeMap<usize, (String, String)>,
     imported_i64: bool,
     imports: BTreeMap<String, ImportedApi>,
     nodes: usize,
@@ -282,6 +291,7 @@ enum ImportedApi {
     DivideExact,
     Numerator,
     Denominator,
+    CheckedInt,
 }
 
 impl ImportedApi {
@@ -293,7 +303,9 @@ impl ImportedApi {
         }
     }
     fn arity(self) -> usize {
-        if matches!(self, Self::WriteBytes | Self::Rational | Self::DivideExact) {
+        if matches!(self, Self::CheckedInt) {
+            3
+        } else if matches!(self, Self::WriteBytes | Self::Rational | Self::DivideExact) {
             2
         } else {
             1
@@ -641,6 +653,7 @@ impl<V: Values> Parser<V> {
                 ("numeric", "divide_exact") => ImportedApi::DivideExact,
                 ("numeric", "numerator") => ImportedApi::Numerator,
                 ("numeric", "denominator") => ImportedApi::Denominator,
+                ("numeric", "checked_int") => ImportedApi::CheckedInt,
                 _ => return Err(self.error("unknown API in this explicit native module")),
             };
             self.advance();
@@ -829,6 +842,7 @@ impl<V: Values> Parser<V> {
         let outer_locals = std::mem::replace(&mut self.locals, parameters);
         let outer_initialized = std::mem::replace(&mut self.initialized, (0..count).collect());
         let outer_annotations = std::mem::take(&mut self.integer_annotations);
+        let outer_intervals = std::mem::take(&mut self.interval_annotations);
         let outer_flow = std::mem::replace(&mut self.flow_live, true);
         self.in_function = true;
         let body = self.suite(depth + 1)?;
@@ -836,6 +850,7 @@ impl<V: Values> Parser<V> {
         self.locals = outer_locals;
         self.initialized = outer_initialized;
         self.integer_annotations = outer_annotations;
+        self.interval_annotations = outer_intervals;
         self.flow_live = outer_flow;
         let function = V::function(count, body).map_err(|message| self.error(message))?;
         self.functions.push(function);
@@ -1093,12 +1108,20 @@ impl<V: Values> Parser<V> {
         }
         self.advance();
         let declared = self.take(":");
+        // `(lower to upper)` replaces the type name only in ordinary-value .naja;
+        // .py keeps its informational int annotation and refuses this grammar.
+        let interval =
+            if declared && V::DYNAMIC && self.dialect == Dialect::Naja2026 && self.text() == "(" {
+                Some(self.interval_annotation()?)
+            } else {
+                None
+            };
         let creates = declared || (V::HOSTED && !self.locals.contains_key(&name));
         let slot = if creates {
             if !V::HOSTED && depth != 0 {
                 return Err(self.error("this native spike requires local declarations at top level for definite initialization"));
             }
-            if declared {
+            if declared && interval.is_none() {
                 if V::DYNAMIC
                     && self.dialect == Dialect::Naja2026
                     && (self.locals.contains_key("int")
@@ -1129,15 +1152,22 @@ impl<V: Values> Parser<V> {
             *self.locals.get(&name).ok_or_else(|| self.error("declare the variable with ': i64' before assignment; hosted int inference is not implemented"))?
         };
         self.expect("=")?;
+        let start = self.token().span.start;
         let mut value = self.expression(0, 0)?;
+        let rhs = Span::new(start, self.tokens[self.cursor - 1].span.end);
         self.newline()?;
         if V::DYNAMIC && self.dialect == Dialect::Naja2026 {
-            if declared {
+            if let Some(bounds) = interval {
+                self.interval_annotations.insert(slot, bounds);
+            } else if declared {
                 self.integer_annotations.insert(slot);
             }
             if self.integer_annotations.contains(&slot) {
                 self.account_expression()?;
                 value = V::require_integer(value);
+            }
+            if self.interval_annotations.contains_key(&slot) {
+                value = self.interval_assignment(slot, value, rhs)?;
             }
         }
         if creates {
@@ -1145,6 +1175,122 @@ impl<V: Values> Parser<V> {
         }
         self.initialized.insert(slot);
         Ok(V::assign(slot, value))
+    }
+    fn interval_annotation(&mut self) -> Parsed<(String, String)> {
+        let open = self.token().span;
+        self.advance();
+        let lower = self.interval_endpoint()?;
+        // `to` is a raw ASCII contextual keyword here only, never canonicalized.
+        if self.token().kind != TokenKind::Identifier || self.text() != "to" {
+            return Err(self.error(INTERVAL_ENDPOINT));
+        }
+        self.advance();
+        let upper = self.interval_endpoint()?;
+        if self.text() != ")" {
+            return Err(self.error(INTERVAL_ENDPOINT));
+        }
+        let close = self.token().span;
+        self.advance();
+        let bounds = [&lower, &upper].map(|bound| IntervalScalar::decimal(bound).proven());
+        if let [Some(low), Some(high)] = bounds
+            && compare_integers(low, high).is_gt()
+        {
+            let span = Span::new(open.start, close.end);
+            return Err(interval_error(INTERVAL_EMPTY, span));
+        }
+        Ok((lower, upper))
+    }
+    fn interval_endpoint(&mut self) -> Parsed<String> {
+        let negative = self.text() == "-";
+        if negative || self.text() == "+" {
+            self.advance();
+        }
+        let digits = self.text().replace('_', "");
+        if self.token().kind != TokenKind::Integer
+            || digits.is_empty()
+            || !digits.bytes().all(|byte| byte.is_ascii_digit())
+        {
+            return Err(self.error(INTERVAL_ENDPOINT));
+        }
+        self.advance();
+        Ok(if negative {
+            format!("-{digits}")
+        } else {
+            digits
+        })
+    }
+    fn interval_assignment(
+        &mut self,
+        slot: usize,
+        value: V::Expression,
+        rhs: Span,
+    ) -> Parsed<V::Expression> {
+        let (lower, upper) = &self.interval_annotations[&slot];
+        let bounds = [lower, upper].map(|bound| IntervalScalar::decimal(bound).proven());
+        let bytes = lower.len().checked_add(upper.len());
+        match V::interval_scalar(&value) {
+            IntervalScalar::WrongKind => return Err(interval_error(INTERVAL_KIND, rhs)),
+            IntervalScalar::Integer(negative, digits) => {
+                if let [Some(low), Some(high)] = bounds
+                    && (compare_integers((negative, digits), low).is_lt()
+                        || compare_integers((negative, digits), high).is_gt())
+                {
+                    return Err(interval_error(INTERVAL_OUTSIDE, rhs));
+                }
+            }
+            IntervalScalar::Unknown => {}
+        }
+        // Both stored endpoints are charged together on every store, before
+        // either fresh leaf is cloned; the RHS keeps its own literal charges.
+        self.reserve_literal(
+            bytes.ok_or_else(|| {
+                self.error("dynamic IR exceeds the 1 MiB aggregate literal budget")
+            })?,
+        )?;
+        let (lower, upper) = self.interval_annotations[&slot].clone();
+        for _ in 0..3 {
+            self.account_expression()?;
+        }
+        let lower = V::integer(lower).map_err(|message| self.error(message))?;
+        let upper = V::integer(upper).map_err(|message| self.error(message))?;
+        let value =
+            V::integer_interval(value, lower, upper).map_err(|message| self.error(message))?;
+        if V::height(&value) > 128 {
+            return Err(self.error("experimental expression tree depth exceeds 128"));
+        }
+        Ok(value)
+    }
+    fn checked_int(&self, arguments: Vec<(V::Expression, Span)>) -> Parsed<V::Expression> {
+        {
+            let scalars: Vec<_> = arguments
+                .iter()
+                .map(|(value, _)| V::interval_scalar(value))
+                .collect();
+            // Known wrong kinds win in argument order, before bounds or range.
+            for (scalar, (_, span)) in scalars.iter().zip(&arguments) {
+                if matches!(scalar, IntervalScalar::WrongKind) {
+                    return Err(interval_error(INTERVAL_KIND, *span));
+                }
+            }
+            if let [value, lower, upper] = scalars.as_slice()
+                && let (Some(low), Some(high)) = (lower.proven(), upper.proven())
+            {
+                if compare_integers(low, high).is_gt() {
+                    let span = Span::new(arguments[1].1.start, arguments[2].1.end);
+                    return Err(interval_error(INTERVAL_EMPTY, span));
+                }
+                if let Some(value) = value.proven()
+                    && (compare_integers(value, low).is_lt()
+                        || compare_integers(value, high).is_gt())
+                {
+                    return Err(interval_error(INTERVAL_OUTSIDE, arguments[0].1));
+                }
+            }
+        }
+        let mut arguments = arguments.into_iter().map(|(value, _)| value);
+        let mut next = || arguments.next().expect("checked_int arity was checked");
+        let (value, lower, upper) = (next(), next(), next());
+        V::integer_interval(value, lower, upper).map_err(|message| self.error(message))
     }
     fn condition(&mut self) -> Parsed<V::Condition> {
         if V::DYNAMIC {
@@ -1612,13 +1758,17 @@ impl<V: Values> Parser<V> {
             self.function_signatures.get(name).copied().ok_or_else(|| self.error("unknown function; this slice supports explicit API imports, self-recursion and earlier top-level definitions only"))?
         };
         self.advance();
-        let arguments = self.call_arguments(depth, MAX_LOCALS)?;
+        let arguments = self.spanned_call_arguments(depth, MAX_LOCALS)?;
         if arguments.len() != arity {
             return Err(self.error(format!(
                 "function requires {arity} positional arguments; received {}",
                 arguments.len()
             )));
         }
+        if let Some(ImportedApi::CheckedInt) = api {
+            return self.checked_int(arguments);
+        }
+        let arguments: Vec<_> = arguments.into_iter().map(|(value, _)| value).collect();
         let value = if let Some(api) = api {
             let mut arguments = arguments.into_iter();
             // Exact arity was checked above. IR operands preserve source call
@@ -1644,6 +1794,7 @@ impl<V: Values> Parser<V> {
                 ImportedApi::IntegerLiteral | ImportedApi::ExactLiteral => {
                     unreachable!("literal marker calls reject before arguments")
                 }
+                ImportedApi::CheckedInt => unreachable!("checked_int lowers with its spans"),
             }
         } else {
             V::call(index, arguments)
@@ -1651,6 +1802,14 @@ impl<V: Values> Parser<V> {
         value.map_err(|message| self.error(message))
     }
     fn call_arguments(&mut self, depth: usize, limit: usize) -> Parsed<Vec<V::Expression>> {
+        let arguments = self.spanned_call_arguments(depth, limit)?;
+        Ok(arguments.into_iter().map(|(value, _)| value).collect())
+    }
+    fn spanned_call_arguments(
+        &mut self,
+        depth: usize,
+        limit: usize,
+    ) -> Parsed<Vec<(V::Expression, Span)>> {
         self.expect("(")?;
         let mut arguments = Vec::new();
         if self.text() != ")" {
@@ -1660,7 +1819,10 @@ impl<V: Values> Parser<V> {
                         "experimental explicit call argument limit of {limit} exceeded"
                     )));
                 }
-                arguments.push(self.expression(0, depth + 1)?);
+                let start = self.token().span.start;
+                let value = self.expression(0, depth + 1)?;
+                let end = self.tokens[self.cursor - 1].span.end;
+                arguments.push((value, Span::new(start, end)));
                 if !self.take(",") || self.text() == ")" {
                     break;
                 }
@@ -1668,6 +1830,14 @@ impl<V: Values> Parser<V> {
         }
         self.expect(")")?;
         Ok(arguments)
+    }
+}
+
+fn interval_error(message: &str, span: Span) -> Diagnostic {
+    Diagnostic {
+        code: "NJA101",
+        message: message.into(),
+        span,
     }
 }
 
@@ -2521,6 +2691,81 @@ mod tests {
             )
             .is_err()
         );
+    }
+    #[test]
+    fn interval_annotations_lower_to_the_explicit_check_on_every_store() {
+        let header = "from naja.numeric import checked_int\ndef v(): return 7\n";
+        let annotated =
+            format!("{header}age: (+1_0 to 40) = v()\nif False:\n    age = v()\nprint(age)\n");
+        let explicit = format!(
+            "{header}age = checked_int(v(), 10, 40)\nif False:\n    age = checked_int(v(), 10, 40)\nprint(age)\n"
+        );
+        assert_eq!(
+            compile_with_dialect(&annotated, Dialect::Naja2026).unwrap(),
+            compile_with_dialect(&explicit, Dialect::Naja2026).unwrap()
+        );
+        // Copies and functions start without the refinement; `int` stays a plain name.
+        let unrefined = "int = 3\nage: (1 to 2) = 1\ncopy = age\ncopy = 9\ndef f(): \n    age = 9\n    return age\nprint(f())\n";
+        assert!(check_with_dialect(unrefined, Dialect::Naja2026).is_ok());
+        assert!(check_with_dialect("age: (1 to 2) = 1\n", Dialect::Python).is_err());
+        for dialect in [Dialect::Python, Dialect::Naja2026] {
+            assert!(check_with_dialect(&explicit, dialect).is_ok());
+        }
+    }
+    #[test]
+    fn interval_static_proofs_report_original_spans_and_keep_unknowns_dynamic() {
+        let api = "from naja.numeric import checked_int\n";
+        for (source, message, text) in [
+            (
+                format!("{api}checked_int(((+2)), 0, 1)\n"),
+                INTERVAL_OUTSIDE,
+                "((+2))",
+            ),
+            (
+                format!("{api}checked_int(0, -(+b\"x\"), None)\n"),
+                INTERVAL_KIND,
+                "-(+b\"x\")",
+            ),
+            (
+                format!("{api}def f(): return 0\nchecked_int(f(), 2, 1)\n"),
+                INTERVAL_EMPTY,
+                "2, 1",
+            ),
+            (
+                "# é🙂\nage: (0 to 1) = True\nage = -(-(-True))\n".into(),
+                INTERVAL_OUTSIDE,
+                "-(-(-True))",
+            ),
+            (
+                "def f(): return 0\nage: (2 to -1_0) = f()\n".into(),
+                INTERVAL_EMPTY,
+                "(2 to -1_0)",
+            ),
+            ("age: (0 to 1) = \"x\"\n".into(), INTERVAL_KIND, "\"x\""),
+            ("age: (1 To 2) = 1\n".into(), INTERVAL_ENDPOINT, "To"),
+            ("age: (0x1 to 2) = 1\n".into(), INTERVAL_ENDPOINT, "0x1"),
+        ] {
+            let error = check_with_dialect(&source, Dialect::Naja2026)
+                .unwrap_err()
+                .remove(0);
+            assert_eq!(
+                (error.code, error.message.as_str()),
+                ("NJA101", message),
+                "{source}"
+            );
+            assert_eq!(&source[error.span.start..error.span.end], text, "{source}");
+        }
+        for source in [
+            format!("{api}checked_int(1 + 1, 0, 1)\n"),
+            format!("{api}checked_int([], 0, 1)\n"),
+            format!("{api}def f(): return 0\nchecked_int(-1, f(), 1)\n"),
+            "age: (-0_0 to +0_0) = False\nage = -0\n".into(),
+        ] {
+            assert!(
+                check_with_dialect(&source, Dialect::Naja2026).is_ok(),
+                "{source}"
+            );
+        }
     }
     #[test]
     fn literal_marker_rejects_implicit_eligibility_bad_initializers_and_execution() {
