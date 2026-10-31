@@ -31,6 +31,7 @@ pub const MAX_ATTRIBUTE_NAME_BYTES: usize = 256;
 pub const MAX_MAPPING_ENTRIES: usize = 128;
 pub const MAX_MAPPING_KEY_WORK: usize = 1_000_000;
 pub const MAX_RATIONAL_WORK: usize = 1_000_000;
+pub const MAX_INTEGER_INTERVAL_WORK: usize = 1_000_000;
 // The shared native array constructor has one defensive capacity check.
 const _: () = assert!(MAX_LIST_ELEMENTS == MAX_TUPLE_ELEMENTS);
 const HELPER_STACK_RESERVE: i32 = 4096;
@@ -116,6 +117,7 @@ pub enum Expression {
     DivideExact(Box<Self>, Box<Self>),
     Numerator(Box<Self>),
     Denominator(Box<Self>),
+    IntegerInterval(Box<Self>, Box<Self>, Box<Self>),
 }
 
 #[derive(Clone, Debug)]
@@ -342,6 +344,12 @@ impl Validator<'_> {
                     }
                     self.expression(value, initialized, depth + 1)?;
                 }
+                0
+            }
+            Expression::IntegerInterval(value, lower, upper) => {
+                self.expression(value, initialized, depth + 1)?;
+                self.expression(lower, initialized, depth + 1)?;
+                self.expression(upper, initialized, depth + 1)?;
                 0
             }
             Expression::Binary(_, left, right)
@@ -710,6 +718,17 @@ impl Emitter {
             Expression::Negate(value) => {
                 self.expression(value)?;
                 self.code.call(self.runtime.negate);
+            }
+            Expression::IntegerInterval(value, lower, upper) => {
+                self.expression(value)?;
+                self.push_value(Ax);
+                self.expression(lower)?;
+                self.push_value(Ax);
+                self.expression(upper)?;
+                self.code.mov(Dx, Ax);
+                self.code.pop(Si);
+                self.code.pop(Di);
+                self.code.call(self.runtime.integer_interval);
             }
             Expression::Rational(left, right) | Expression::DivideExact(left, right) => {
                 self.operands(left, right)?;
